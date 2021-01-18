@@ -1,0 +1,29 @@
+{
+  "name": "worms-league",
+  "version": "0.1.0",
+  "description": "Best Worms League out there.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Zemke/worms-league.git"
+  },
+  "keywords": [
+    "worms",
+    "league",
+    "armageddon",
+    "greatness"
+  ],
+  "author": "Zemke <florian@zemke.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Zemke/worms-league/issues"
+  },
+  "homepage": "https://github.com/Zemke/worms-league#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
