@@ -29,6 +29,10 @@ async function onApi(req, res) {
   const client = new Client({user: 'postgres', password: 'postgres'});
   try {
     if (req.url === '/api/sign-up' && req.method === 'POST') {
+      const body = await readBody(req);
+      console.log('data', body);
+      res.end(body);
+      // TODO persist
     } else if (req.url === '/api/hello-world' && req.method === 'GET') {
       await client.connect();
       const result = await client.query('SELECT $1::text as message', ['Hello world!']);
@@ -39,6 +43,14 @@ async function onApi(req, res) {
   } finally {
     await client.end();
   }
+}
+
+async function readBody(req) {
+    return new Promise(resolve => {
+      let body = '';
+      req.on('data', chunk => body += chunk);
+      req.on('end', () => resolve(body));
+    });
 }
 
 server.listen(7171);
