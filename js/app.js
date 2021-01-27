@@ -1,5 +1,21 @@
 const wl = {}
 
+const api = {};
+
+api.post = async (url, body) => {
+    return await fetch(
+        url,
+        {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: {
+            'content-type': 'application/json',
+            'accept': 'application/json',
+          }
+        })
+        .then(res => res.json());
+};
+
 async function Routing() {
   const path = window.location.pathname;
   let res;
@@ -18,14 +34,15 @@ async function Routing() {
 
 function SignUp() {
   wl.submit = async form => {
-    const payload = Array.from(form).reduce((acc, curr) => {
+    const body = Array.from(form).reduce((acc, curr) => {
       console.log(curr);
       if (curr.value && curr.name) acc[curr.name] = curr.value;
       return acc;
     }, {});
-    console.log('payload', payload);
-    const res = await fetch('/api/sign-up').then(res => res.json());
-    console.log('res', res);
+    console.log('body', body);
+    const response = await api.post('/api/sign-up', body);
+    console.log('response', response);
   }
 }
+
 
