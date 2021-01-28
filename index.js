@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const {Client} = require('pg');
+const bcrypt = require('bcrypt');
 
 const server = http.createServer(async (req, res) => {
   try {
@@ -32,9 +33,10 @@ async function onApi(req, res) {
     if (req.url === '/api/sign-up' && req.method === 'POST') {
       const body = await readBody(req);
       console.log('data', body);
+      const hash = await bcrypt.hash(body.password, 10);
       const result = await client.query(
-            `insert into "user" (username, email) values ($1, $2)`, [body.username, body.email]);
-      // TODO save hashed password
+            `insert into "user" (username, email, password) values ($1, $2, $3)`,
+            [body.username, body.email, hash]);
       console.log('from db', result);
       res.writeHead(200, {"content-type": "application/javascript"});
       res.end(JSON.stringify(result));
