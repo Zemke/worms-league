@@ -28,21 +28,32 @@ async function Routing() {
   document.getElementById('content').innerHTML = res;
 }
 
-(() => {
-  Routing();
-})();
-
 function SignUp() {
   wl.submit = async form => {
-    const body = Array.from(form).reduce((acc, curr) => {
-      console.log(curr);
-      if (curr.value && curr.name) acc[curr.name] = curr.value;
-      return acc;
-    }, {});
-    console.log('body', body);
+    const body = fromForm(form.elements);
     const response = await api.post('/api/sign-up', body);
-    console.log('response', response);
   }
 }
 
+function Report() {
+  wl.submit = async form => {
+    const body = fromForm(form.elements);
+    const response = await api.post('/api/sign-up', body);
+  }
+}
 
+function fromForm(elements) {
+  const body = Array.from(elements).reduce((acc, curr) => {
+    if (curr.value && curr.name) acc[curr.name] = curr.value;
+    return acc;
+  }, {});
+  return body;
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    fromForm
+  };
+} else {
+  Routing();
+}
