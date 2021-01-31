@@ -26,7 +26,7 @@ const form = [
 
 const actual = fromForm(form);
 const expected = {
-  username: 'patricks',
+  username: 'patrick',
   email: 'patrick@star.com'
 };
 assertThat(actual).isEqualTo(expected);
@@ -42,3 +42,4 @@ function assertThat(actual) {
   };
 }
 
+console.log('success');
