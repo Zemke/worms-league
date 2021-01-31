@@ -1,8 +1,8 @@
 const http = require('http');
 const fs = require('fs');
 const {Client} = require('pg');
-const bcrypt = require('bcrypt');
 const jwt = require('./jwt.js');
+const hash = require('./hash.js');
 
 const server = http.createServer(async (req, res) => {
   try {
@@ -22,8 +22,7 @@ const server = http.createServer(async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-    res.statusCode = 500;
-    res.end('500');
+    end(res, '500', 500);
   }
 });
 
@@ -34,31 +33,45 @@ async function onApi(req, res) {
     if (req.url === '/api/sign-up' && req.method === 'POST') {
       const body = await readBody(req);
       console.log('data', body);
-      const hash = await bcrypt.hash(body.password, 10);
+      const hash = await hash.hash(body.password);
       const result = await client.query(
             `insert into "user" (username, email, password) values ($1, $2, $3)`,
             [body.username, body.email, hash]);
       console.log('from db', result);
-      end(result, res);
+      return end(res, result);
     } else if (req.url === '/api/sign-in' && req.method === 'POST') {
       const body = await readBody(req);
+      if (!body?.username || !body?.password) {
+        return end(res, {err: 'username and/or password missing'}, 400);
+      }
+      const {rows} = await client.query(
+        'select username, password from "user" where username = $1',
+        [body.username]);
+      if (rows?.length !== 1) {
+        console.info('rows:', rows);
+        return end(res, {err: 'wrong credentials'}, 400);
+      }
+      if (!(await hash.compare(body.password, rows[0].password))) {
+        return end(res, {err: 'wrong credentials'}, 400);
+      }
       const token = await jwt.jwtSign({hello: 'world'});
-      end({token}, res);
+      return end(res, {token});
     } else if (req.url === '/api/hello-world' && req.method === 'GET') {
       const result = await client.query('SELECT $1::text as message', ['Hello world!']);
       console.log('from db', result.rows[0].message);; // Hello world!
-      end({response: result.rows[0].message}, res);
+      return end(res, {response: result.rows[0].message});
     }
   } finally {
     await client.end();
   }
+  return end(res, undefined, 404);
 }
 
-function end(body, res) {
-    res.writeHead(200, {"content-type": "application/javascript"});
+function end(res, body, status = 200) {
+    res.writeHead(status, {"content-type": "application/javascript"});
     const payload = JSON.stringify(body);
-    console.info('response payload', payload);
     res.end(payload);
+    console.info(`Response: ${status}\n${payload}`);
 }
 
 async function readBody(req) {
