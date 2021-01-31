@@ -2,6 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const {Client} = require('pg');
 const bcrypt = require('bcrypt');
+const jwt = require('./jwt.js');
 
 const server = http.createServer(async (req, res) => {
   try {
@@ -38,24 +39,40 @@ async function onApi(req, res) {
             `insert into "user" (username, email, password) values ($1, $2, $3)`,
             [body.username, body.email, hash]);
       console.log('from db', result);
-      res.writeHead(200, {"content-type": "application/javascript"});
-      res.end(JSON.stringify(result));
+      end(result, res);
+    } else if (req.url === '/api/sign-in' && req.method === 'POST') {
+      const body = await readBody(req);
+      const token = await jwt.jwtSign({hello: 'world'});
+      end({token}, res);
     } else if (req.url === '/api/hello-world' && req.method === 'GET') {
       const result = await client.query('SELECT $1::text as message', ['Hello world!']);
       console.log('from db', result.rows[0].message);; // Hello world!
-      res.writeHead(200, {"content-type": "application/javascript"});
-      res.end(JSON.stringify({response: result.rows[0].message}));
+      end({response: result.rows[0].message}, res);
     }
   } finally {
     await client.end();
   }
 }
 
+function end(body, res) {
+    res.writeHead(200, {"content-type": "application/javascript"});
+    const payload = JSON.stringify(body);
+    console.info('response payload', payload);
+    res.end(payload);
+}
+
 async function readBody(req) {
   return new Promise(resolve => {
     let body = '';
     req.on('data', chunk => body += chunk);
-    req.on('end', () => resolve(JSON.parse(body)));
+    req.on('end', () => {
+      try {
+        resolve(JSON.parse(body));
+      } catch (err) {
+        console.error(err);
+        resolve(body);
+      }
+    });
   });
 }
 
