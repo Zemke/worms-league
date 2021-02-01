@@ -7,18 +7,18 @@ const hash = require('./hash.js');
 const server = http.createServer(async (req, res) => {
   try {
     if (req.url.startsWith("/api")) {
-      await onApi(req, res);
-    } else if (req.url === '/app.js') {
-      res.writeHead(200, {"content-type": "application/javascript"});
-      const file = fs.readFileSync('./client/js/app.js');
-      res.end(file);
+      return await onApi(req, res);
+    } else if (req.url.startsWith('/styles')) {
+      return file(res, "text/css", './client' + req.url);
+    } else if (req.url.startsWith('/js')) {
+      return file(res, "application/javascript", './client' + req.url);
+    } else if (req.url.startsWith('/img')) {
+      const ext = req.url.match(/\.([^.]+)$/)[1];
+      return file(res, `image/${ext}`, './client' + req.url);
     } else if (req.url.startsWith('/tpl')) {
-      const file = fs.readFileSync('./client' + req.url);
-      res.end(file);
+      return file(res, "text/html", './client' + req.url);
     } else {
-      res.writeHead(200, {"content-type": "text/html"});
-      const file = fs.readFileSync('./client/index.html');
-      res.end(file);
+      return file(res, 'text/html', './client/index.html');
     }
   } catch (err) {
     console.error(err);
@@ -72,6 +72,17 @@ function end(res, body, status = 200) {
     const payload = JSON.stringify(body);
     res.end(payload);
     console.info(`Response: ${status}\n${payload}`);
+}
+
+function file(res, contentType, path) {
+  try {
+    const f = fs.readFileSync(path);
+    res.writeHead(200, {"content-type": contentType});
+    return res.end(f);
+  } catch (err) {
+    console.error(err);
+    return end(res, undefined, 404);
+  }
 }
 
 async function readBody(req) {
