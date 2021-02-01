@@ -1,5 +1,6 @@
 body, html {
   background: url('/img/checker.gif') repeat;
+  font-family: "Lucida Grande", sans-serif;
 }
 
 * {

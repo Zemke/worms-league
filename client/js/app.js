@@ -1,6 +1,36 @@
 const wl = {}
 
+const R = {
+  '/sign-up': {
+    controller: SignUp,
+    template: '/tpl/sign-up.html',
+  },
+  '/': {
+    template: '/tpl/home.html',
+  }
+};
+
 const api = {};
+
+const nav = {};
+
+nav.navigate = async function (url) {
+  const pathname = url.pathname;
+  window.history.pushState({}, null, url);
+  const r = R[pathname];
+  const template = await fetch(r.template).then(res => res.text());
+  document.getElementById('content').innerHTML = template;
+  r.controller && r.controller();
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('click', e => {
+    if (e.target.tagName === 'A') {
+      e.preventDefault();
+      nav.navigate(new URL(e.target.href));
+    }
+  });
+});
 
 api.post = async (url, body) => {
     return await fetch(
@@ -16,16 +46,8 @@ api.post = async (url, body) => {
         .then(res => res.json());
 };
 
-async function Routing() {
-  const path = window.location.pathname;
-  let res;
-  if (path === "/") {
-    res = await (await fetch("/tpl/home.html")).text();
-  } else if (path === "/sign-up") {
-    res = await (await fetch("/tpl/sign-up.html")).text();
-    ctrl = SignUp();
-  }
-  document.getElementById('content').innerHTML = res;
+function Routing() {
+  nav.navigate(new URL(window.location));
 }
 
 function SignUp() {
