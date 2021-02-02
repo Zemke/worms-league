@@ -1,5 +1,6 @@
 const wl = {}
 
+
 const R = {
   '/sign-up': {
     controller: SignUp,
@@ -14,22 +15,31 @@ const api = {};
 
 const nav = {};
 
+nav.setTemplate = async function (r) {
+  const template = await fetch(r.template).then(res => res.text());
+  document.getElementById('content').innerHTML = template;
+}
+
 nav.navigate = async function (url) {
   const pathname = url.pathname;
   window.history.pushState({}, null, url);
   const r = R[pathname];
-  const template = await fetch(r.template).then(res => res.text());
-  document.getElementById('content').innerHTML = template;
+  nav.setTemplate(r);
   r.controller && r.controller();
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Link clicks
   document.addEventListener('click', e => {
     if (e.target.tagName === 'A') {
       e.preventDefault();
       nav.navigate(new URL(e.target.href));
     }
   });
+  // Browser back/forward buttons
+  window.onpopstate = e => {
+    nav.setTemplate(R[new URL(e.target.location).pathname])
+  };
 });
 
 api.post = async (url, body) => {
@@ -47,7 +57,7 @@ api.post = async (url, body) => {
 };
 
 function Routing() {
-  nav.navigate(new URL(window.location));
+  nav.setTemplate(R[new URL(window.location).pathname]);
 }
 
 function SignUp() {
