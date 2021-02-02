@@ -33,10 +33,10 @@ async function onApi(req, res) {
     if (req.url === '/api/sign-up' && req.method === 'POST') {
       const body = await readBody(req);
       console.log('data', body);
-      const hash = await hash.hash(body.password);
+      const hashed = await hash.hash(body.password);
       const result = await client.query(
             `insert into "user" (username, email, password) values ($1, $2, $3)`,
-            [body.username, body.email, hash]);
+            [body.username, body.email, hashed]);
       console.log('from db', result);
       return end(res, result);
     } else if (req.url === '/api/sign-in' && req.method === 'POST') {
@@ -51,7 +51,7 @@ async function onApi(req, res) {
         console.info('rows:', rows);
         return end(res, {err: 'wrong credentials'}, 400);
       }
-      if (!(await hash.compare(body.password, rows[0].password))) {
+      if (!(await hashed.compare(body.password, rows[0].password))) {
         return end(res, {err: 'wrong credentials'}, 400);
       }
       const token = await jwt.jwtSign({hello: 'world'});

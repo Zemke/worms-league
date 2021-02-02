@@ -5,7 +5,7 @@ const HASH_ROUNDS = 10;
 const api = {};
 
 api.hash = async function(plain) {
-  return bcrypt.hash(body.password, HASH_ROUNDS);
+  return bcrypt.hash(plain, HASH_ROUNDS);
 };
 
 api.compare = async function(plain, hash) {
