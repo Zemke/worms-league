@@ -15,17 +15,17 @@ const api = {};
 
 const nav = {};
 
-nav.setTemplate = async function (r) {
+nav.loadTemplate = async function (url) {
+  const r = R[url.pathname];
   const template = await fetch(r.template).then(res => res.text());
   document.getElementById('content').innerHTML = template;
+  r.controller && r.controller();
 }
 
 nav.navigate = async function (url) {
   const pathname = url.pathname;
   window.history.pushState({}, null, url);
-  const r = R[pathname];
-  nav.setTemplate(r);
-  r.controller && r.controller();
+  nav.loadTemplate(url);
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   // Browser back/forward buttons
   window.onpopstate = e => {
-    nav.setTemplate(R[new URL(e.target.location).pathname])
+    nav.loadTemplate(new URL(e.target.location));
   };
 });
 
@@ -57,7 +57,7 @@ api.post = async (url, body) => {
 };
 
 function Routing() {
-  nav.setTemplate(R[new URL(window.location).pathname]);
+  nav.loadTemplate(new URL(window.location));
 }
 
 function SignUp() {
