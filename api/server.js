@@ -3,6 +3,7 @@ const fs = require('fs');
 const {Client} = require('pg');
 const jwt = require('./jwt.js');
 const hash = require('./hash.js');
+const validate = require('./validate.js');
 
 const server = http.createServer(async (req, res) => {
   try {
@@ -31,13 +32,22 @@ async function onApi(req, res) {
   try {
     await client.connect();
     if (req.url === '/api/sign-up' && req.method === 'POST') {
-      const body = await readBody(req);
-      console.log('data', body);
-      const hashed = await hash.hash(body.password);
+      const {username, email, password} = await readBody(req);
+      if (!validate.req(username)) return end(res, {err: 'validation.required.username'}, 400);
+      if (!validate.req(password)) return end(res, {err: 'validation.required.password'}, 400);
+      if (!validate.req(email)) return end(res, {err: 'validation.email.required'}, 400);
+      if (!validate.email(email)) return end(res, {err: 'validation.email.invalid'}, 400);
+      if (!validate.minLen(username, 3)) return end(res, {err: 'validation.username.tooShort'}, 400);
+      if (!validate.maxLen(username, 16)) return end(res, {err: 'validation.username.tooLong'}, 400);
+      if (!validate.regex(/^[a-z0-9-]+$/i)) return end(res, {err: 'validation.username.invalid'}, 400);
+      const result = await client.query(
+            'select * from "user" where lower(username) = lower($1)',
+            [username]);
+      if (result.rows.length > 0) return end(res, {err: 'validation.username.exists'}, 400);
+      const hashed = await hash.hash(password);
       const result = await client.query(
             `insert into "user" (username, email, password) values ($1, $2, $3)`,
-            [body.username, body.email, hashed]);
-      console.log('from db', result);
+            [username, email, hashed]);
       return end(res, result);
     } else if (req.url === '/api/sign-in' && req.method === 'POST') {
       const body = await readBody(req);
