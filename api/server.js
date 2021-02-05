@@ -39,16 +39,16 @@ async function onApi(req, res) {
       if (!validate.email(email)) return end(res, {err: 'validation.email.invalid'}, 400);
       if (!validate.minLen(username, 3)) return end(res, {err: 'validation.username.tooShort'}, 400);
       if (!validate.maxLen(username, 16)) return end(res, {err: 'validation.username.tooLong'}, 400);
-      if (!validate.regex(/^[a-z0-9-]+$/i)) return end(res, {err: 'validation.username.invalid'}, 400);
+      if (!validate.regex(username, /^[a-z0-9-]+$/i)) return end(res, {err: 'validation.username.invalid'}, 400);
       const result = await client.query(
             'select * from "user" where lower(username) = lower($1)',
             [username]);
       if (result.rows.length > 0) return end(res, {err: 'validation.username.exists'}, 400);
       const hashed = await hash.hash(password);
-      const result = await client.query(
+      await client.query(
             `insert into "user" (username, email, password) values ($1, $2, $3)`,
             [username, email, hashed]);
-      return end(res, result);
+      return end(res, {username, email});
     } else if (req.url === '/api/sign-in' && req.method === 'POST') {
       const body = await readBody(req);
       if (!body?.username || !body?.password) {
