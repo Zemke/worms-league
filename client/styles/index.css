@@ -45,9 +45,15 @@ body, html {
   color: #000;
   font-size: 5rem;
 }
+div.uber h1 .worm,
 div.uber h1 .worms,
 div.uber h1 .league {
   position: absolute;
+}
+
+div.uber h1 .worm {
+  top: 6rem;
+  left: 22.1rem;
 }
 
 div.uber h1 .league {
