@@ -132,6 +132,8 @@ nav.nav .nav-item.active {
   font-weight: bold;
   padding: .5rem 0;
   font-size: 1.2rem;
+  margin: -1.2rem;
+  margin-bottom: 1.2rem;
 }
 
 .page {
@@ -189,3 +191,21 @@ a:active {
   color: #05404b;
 }
 
+form .control {
+  padding: .4rem 0;
+}
+
+form .control label {
+  display: block;
+  color: #1f3f5e;
+}
+
+p.lead {
+  color: #1f3f5e;
+  padding: 1rem 0;
+  font-size: 1.2rem;
+}
+
+.text-center {
+  text-align: center;
+}

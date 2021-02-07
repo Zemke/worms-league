@@ -1,9 +1,32 @@
-Sign up here.
+<div class="head">
+  Sign up
+</div>
 
-<form onsubmit="wl.submit(this); return false;">
-  <input type="text" name="username" placeholder="Username"/>
-  <input type="email" name="email" placeholder="Email"/>
-  <input type="password" name="password" placeholder="Password"/>
-  <input type="submit" value="Sign Up"/>
-</form>
+<div class="text-center">
+  <p class="lead">
+    Sign up now and be part of the <b>Worms League</b>.
+  </p>
+
+  <form onsubmit="wl.submit(this); return false;">
+    <div class="control">
+      <label for="username">Username</label>
+      <input type="text" required
+             pattern="^[a-zA-Z0-9-]+$" minlength="3" maxlength="16"
+             id="username" name="username" placeholder="Username"/>
+    </div>
+    <div class="control">
+      <label for="email">Email</label>
+      <input type="email" required
+             id="email" name="email" placeholder="Email"/>
+    </div>
+    <div class="control">
+      <label for="password">Password</label>
+      <input type="password" required
+             id="password" name="password" placeholder="Password"/>
+    </div>
+    <div class="control">
+      <input type="submit" value="Sign Up"/>
+    </div>
+  </form>
+</div>
 
