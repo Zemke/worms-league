@@ -8,7 +8,7 @@ const R = {
   },
   '/': {
     template: '/tpl/home.html',
-  }
+  },
 };
 
 const api = {};
@@ -17,7 +17,10 @@ const nav = {};
 
 nav.loadTemplate = async function (url) {
   const r = R[url.pathname];
-  if (r == null) return;
+  if (r == null) {
+    document.getElementById('content').innerHTML = 'This page does not exist.';
+    return;
+  }
   const template = await fetch(r.template).then(res => res.text());
   document.getElementById('content').innerHTML = template;
   r.controller && r.controller();
