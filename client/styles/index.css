@@ -37,7 +37,7 @@ body, html {
 .uber {
   margin: 0 auto;
   margin-left: 25%;
-  height: 13rem;
+  height: 12rem;
 }
 
 .uber h1 {
@@ -78,6 +78,56 @@ div.uber h1 .league .first-letter {
 
 .content {
   margin-top: -2.3rem;
+}
+
+nav.nav {
+  display: flex;
+  border-top: 1px solid #000;
+  border-left: 1px solid #000;
+}
+
+nav.nav .nav-item {
+  flex-grow: 1;
+  text-align: center;
+  background: linear-gradient(#153940 30%, #348b9d);
+  padding: .5rem;
+  font-weight: bold;
+  font-size: 1rem;
+  border: 1px solid #000;
+  border-left: none;
+  color: #fff;
+  text-decoration: none;
+}
+
+nav.nav .nav-item:first-child {
+  border-left: 1px solid #000;
+}
+
+nav.nav .nav-item:hover {
+  background: linear-gradient(#fff, #46acc1);
+  color: #1f3f5e;
+}
+
+nav.nav .nav-item:active {
+  box-shadow: inset 0.1rem 0.1rem 0.5rem 0rem #000;
+}
+
+.head {
+  border: 1px solid #000;
+  border-top: 2px solid #316396;
+  background-color: #1f3f5e;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  padding: .5rem 0;
+  font-size: 1.2rem;
+}
+
+.page {
+  border: 1px solid #000;
+  background: rgba(220, 220, 220, .85);
+  padding: 1.2rem;
+  margin-bottom: 2.5rem;
 }
 
 button,
