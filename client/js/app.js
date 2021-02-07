@@ -33,9 +33,10 @@ nav.navigate = async function (url) {
 document.addEventListener('DOMContentLoaded', () => {
   // Link clicks
   document.addEventListener('click', e => {
-    if (e.target.tagName === 'A') {
+    const aElem = e.target.closest('a');
+    if (aElem != null) {
       e.preventDefault();
-      nav.navigate(new URL(e.target.href));
+      nav.navigate(new URL(aElem.href));
     }
   });
   // Browser back/forward buttons
@@ -71,8 +72,6 @@ function updateNav(url) {
   document.querySelectorAll(`nav.nav a.nav-item`)
       .forEach(i => i.classList.remove('active'));
   const activeNavItem = document.querySelector(`nav.nav .nav-item[href='${url.pathname}']`)
-  console.log('activeNavItem', activeNavItem);
-  console.log('pah', url.pathname);
   activeNavItem && activeNavItem.classList.add('active');
 }
 
