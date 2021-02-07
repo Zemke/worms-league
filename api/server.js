@@ -33,22 +33,36 @@ async function onApi(req, res) {
     await client.connect();
     if (req.url === '/api/sign-up' && req.method === 'POST') {
       const {username, email, password} = await readBody(req);
-      if (!validate.req(username)) return end(res, {err: 'validation.required.username'}, 400);
-      if (!validate.req(password)) return end(res, {err: 'validation.required.password'}, 400);
-      if (!validate.req(email)) return end(res, {err: 'validation.email.required'}, 400);
-      if (!validate.email(email)) return end(res, {err: 'validation.email.invalid'}, 400);
-      if (!validate.minLen(username, 3)) return end(res, {err: 'validation.username.tooShort'}, 400);
-      if (!validate.maxLen(username, 16)) return end(res, {err: 'validation.username.tooLong'}, 400);
-      if (!validate.regex(username, /^[a-z0-9-]+$/i)) return end(res, {err: 'validation.username.invalid'}, 400);
+      let err;
+      if (!validate.req(username)) {
+        err = 'validation.required.username';
+      } else if (!validate.req(password)) {
+        err = 'validation.required.password';
+      } else if (!validate.req(email)) {
+        err = 'validation.email.required';
+      } else if (!validate.email(email)) {
+        err = 'validation.email.invalid';
+      } else if (!validate.minLen(username, 3)) {
+        err = 'validation.username.tooShort';
+      } else if (!validate.maxLen(username, 16)) {
+        err = 'validation.username.tooLong';
+      } else if (!validate.regex(username, /^[a-z0-9-]+$/i)) {
+        err = 'validation.username.invalid';
+      }
+      if (err) return end(res, {err}, 400);
       const result = await client.query(
             'select * from "user" where lower(username) = lower($1)',
             [username]);
-      if (result.rows.length > 0) return end(res, {err: 'validation.username.exists'}, 400);
+      if (result.rows.length > 0) {
+        return end(res, {err: 'validation.username.exists'}, 400);
+      }
       const hashed = await hash.hash(password);
       await client.query(
-            `insert into "user" (username, email, password) values ($1, $2, $3)`,
+            `insert into "user" (username, email, password)
+             values ($1, $2, $3)`,
             [username, email, hashed]);
-      return end(res, {username, email});
+      const token = await jwt.jwtSign({username, email});
+      return end(res, {username, email, token});
     } else if (req.url === '/api/sign-in' && req.method === 'POST') {
       const body = await readBody(req);
       if (!body?.username || !body?.password) {
@@ -64,10 +78,15 @@ async function onApi(req, res) {
       if (!(await hashed.compare(body.password, rows[0].password))) {
         return end(res, {err: 'wrong credentials'}, 400);
       }
-      const token = await jwt.jwtSign({hello: 'world'});
+      const token = await jwt.jwtSign({
+          username: body.username,
+          email: body.email
+        });
       return end(res, {token});
     } else if (req.url === '/api/hello-world' && req.method === 'GET') {
-      const result = await client.query('SELECT $1::text as message', ['Hello world!']);
+      const result = await client.query(
+          'SELECT $1::text as message',
+          ['Hello world!']);
       console.log('from db', result.rows[0].message);; // Hello world!
       return end(res, {response: result.rows[0].message});
     }

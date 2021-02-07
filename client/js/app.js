@@ -1,6 +1,5 @@
 const wl = {}
 
-
 const R = {
   '/sign-up': {
     controller: SignUp,
@@ -15,6 +14,10 @@ const api = {};
 
 const nav = {};
 
+nav.setContent = function (content) {
+  document.getElementById('content').innerHTML = content;
+}
+
 nav.loadTemplate = async function (url) {
   const r = R[url.pathname];
   if (r == null) {
@@ -22,7 +25,7 @@ nav.loadTemplate = async function (url) {
     return;
   }
   const template = await fetch(r.template).then(res => res.text());
-  document.getElementById('content').innerHTML = template;
+  nav.setContent(template);
   r.controller && r.controller();
 }
 
@@ -51,8 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
   Routing();
 });
 
-api.post = async (url, body) => {
-    return await fetch(
+api.post = function (url, body) {
+    return fetch(
         url,
         {
           method: 'POST',
@@ -62,7 +65,8 @@ api.post = async (url, body) => {
             'accept': 'application/json',
           }
         })
-        .then(res => res.json());
+        .then(async res =>
+            res.ok ? res.json() : Promise.reject(await res.json()));
 };
 
 function Routing() {
@@ -74,14 +78,22 @@ function Routing() {
 function updateNav(url) {
   document.querySelectorAll(`nav.nav a.nav-item`)
       .forEach(i => i.classList.remove('active'));
-  const activeNavItem = document.querySelector(`nav.nav .nav-item[href='${url.pathname}']`)
+  const activeNavItem = document.querySelector(
+      `nav.nav .nav-item[href='${url.pathname}']`)
   activeNavItem && activeNavItem.classList.add('active');
 }
 
 function SignUp() {
-  wl.submit = async form => {
-    const body = fromForm(form.elements);
-    const response = await api.post('/api/sign-up', body);
+  wl.submit = form => {
+    api.post('/api/sign-up', fromForm(form.elements)).then(res => {
+      nav.setContent(`
+          <p class="lead">
+            Welcome to the <b>Worms League</b>!
+            You are now signed in.
+          </p>`);
+      window.localStorage.setItem('auth', res.token);
+    }).catch(({err}) => toast(err));
+    return false;
   }
 }
 
@@ -98,6 +110,10 @@ function fromForm(elements) {
     return acc;
   }, {});
   return body;
+}
+
+function toast(message) {
+  alert(message); // TODO display actual toast
 }
 
 if (typeof module !== 'undefined' && module.exports) {
