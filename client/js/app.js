@@ -17,6 +17,7 @@ const nav = {};
 
 nav.loadTemplate = async function (url) {
   const r = R[url.pathname];
+  if (r == null) return;
   const template = await fetch(r.template).then(res => res.text());
   document.getElementById('content').innerHTML = template;
   r.controller && r.controller();
@@ -26,6 +27,7 @@ nav.navigate = async function (url) {
   const pathname = url.pathname;
   window.history.pushState({}, null, url);
   nav.loadTemplate(url);
+  updateNav(url);
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -40,6 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
   window.onpopstate = e => {
     nav.loadTemplate(new URL(e.target.location));
   };
+
+  // TODO Start HTTP requests earlier and don't wait for DOMContentLoaded.
+  Routing();
 });
 
 api.post = async (url, body) => {
@@ -57,7 +62,18 @@ api.post = async (url, body) => {
 };
 
 function Routing() {
-  nav.loadTemplate(new URL(window.location));
+  const url = new URL(window.location);
+  nav.loadTemplate(url);
+  updateNav(url);
+}
+
+function updateNav(url) {
+  document.querySelectorAll(`nav.nav a.nav-item`)
+      .forEach(i => i.classList.remove('active'));
+  const activeNavItem = document.querySelector(`nav.nav .nav-item[href='${url.pathname}']`)
+  console.log('activeNavItem', activeNavItem);
+  console.log('pah', url.pathname);
+  activeNavItem && activeNavItem.classList.add('active');
 }
 
 function SignUp() {
@@ -86,6 +102,5 @@ if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     fromForm
   };
-} else {
-  Routing();
 }
+
