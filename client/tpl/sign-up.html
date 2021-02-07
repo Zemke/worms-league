@@ -10,18 +10,18 @@
   <form onsubmit="wl.submit(this); return false;">
     <div class="control">
       <label for="username">Username</label>
-      <input type="text" required
+      <input type="text" required autocomplete="off"
              pattern="^[a-zA-Z0-9-]+$" minlength="3" maxlength="16"
              id="username" name="username" placeholder="Username"/>
     </div>
     <div class="control">
       <label for="email">Email</label>
-      <input type="email" required
+      <input type="email" required autocomplete="off"
              id="email" name="email" placeholder="Email"/>
     </div>
     <div class="control">
       <label for="password">Password</label>
-      <input type="password" required
+      <input type="password" required autocomplete="off"
              id="password" name="password" placeholder="Password"/>
     </div>
     <div class="control">
