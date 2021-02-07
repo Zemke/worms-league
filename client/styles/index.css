@@ -28,10 +28,15 @@ body, html {
 .top-bar input {
   padding: .2rem;
 }
+
 .top-bar button,
 .top-bar input[type=submit],
 .top-bar input[type=button] {
   padding: .05rem .2rem;
+}
+
+.top-bar a {
+  color: #528FA1;
 }
 
 .uber {

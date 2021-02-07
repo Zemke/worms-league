@@ -5,6 +5,10 @@ const R = {
     controller: SignUp,
     template: '/tpl/sign-up.html',
   },
+  '/account': {
+    controller: Account,
+    template: '/tpl/account.html',
+  },
   '/': {
     template: '/tpl/home.html',
   },
@@ -69,10 +73,30 @@ api.post = function (url, body) {
             res.ok ? res.json() : Promise.reject(await res.json()));
 };
 
+api.signIn = function (username) {
+  const signInElem = document.getElementById('sign-in');
+  if (signInElem) signInElem.style.display = 'none';
+  const accountElem = document.getElementById('account');
+  accountElem.innerHTML = `<a href="/account">${username}</a>`;
+};
+
+api.userFromToken = function () {
+  const token = window.localStorage.getItem('auth');
+  if (token == null) return null;
+  const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+  const payload = decodeURIComponent(atob(base64)
+    .split('')
+    .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+    .join(''));
+  return JSON.parse(payload).data;
+}
+
 function Routing() {
   const url = new URL(window.location);
   nav.loadTemplate(url);
   updateNav(url);
+  const user = api.userFromToken();
+  if (user != null) api.signIn(user.username);
 }
 
 function updateNav(url) {
@@ -95,6 +119,11 @@ function SignUp() {
     }).catch(({err}) => toast(err));
     return false;
   }
+}
+
+function Account() {
+  const {username} = api.userFromToken();
+  document.getElementById('username').innerHTML = username;
 }
 
 function Report() {
