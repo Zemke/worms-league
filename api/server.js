@@ -6,6 +6,12 @@ const hash = require('./hash.js');
 const validate = require('./validate.js');
 
 const server = http.createServer(async (req, res) => {
+  if (req.url === '/favicon.ico') {
+    return file(res, "image/x-icon", "./client/img/icons/favicon.ico");
+  } else if (req.url === "/manifest.json") {
+    return file(res, 'application/json',
+                "./client/img/icons/manifest.json");
+  }
   try {
     if (req.url.startsWith("/api")) {
       return await onApi(req, res);
