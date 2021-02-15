@@ -81,7 +81,7 @@ async function onApi(req, res) {
         console.info('rows:', rows);
         return end(res, {err: 'wrong credentials'}, 400);
       }
-      if (!(await hashed.compare(body.password, rows[0].password))) {
+      if (!(await hash.compare(body.password, rows[0].password))) {
         return end(res, {err: 'wrong credentials'}, 400);
       }
       const token = await jwt.jwtSign({

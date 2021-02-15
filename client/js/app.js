@@ -78,6 +78,17 @@ api.signIn = function (username) {
   if (signInElem) signInElem.style.display = 'none';
   const accountElem = document.getElementById('account');
   accountElem.innerHTML = `<a href="/account">${username}</a>`;
+  const signOutElem = document.getElementById("sign-out");
+  if (signOutElem) signOutElem.style.display = 'inline';
+};
+
+api.signOut = function () {
+  const signInElem = document.getElementById('sign-in');
+  if (signInElem) signInElem.style.display = 'block';
+  const accountElem = document.getElementById('account');
+  accountElem.innerHTML = '';
+  const signOutElem = document.getElementById("sign-out");
+  if (signOutElem) signOutElem.style.display = 'none';
 };
 
 api.userFromToken = function () {
@@ -96,7 +107,22 @@ function Routing() {
   nav.loadTemplate(url);
   updateNav(url);
   const user = api.userFromToken();
-  if (user != null) api.signIn(user.username);
+  console.log('user', user);
+  user == null ? api.signOut() : api.signIn(user.username);
+}
+
+function signIn(form) {
+  api.post('/api/sign-in', fromForm(form.elements)).then(res => {
+    window.localStorage.setItem('auth', res.token);
+    const {username} = api.userFromToken();
+    api.signIn(username);
+  }).catch(({err}) => toast(err));
+  return false;
+}
+
+function signOut() {
+  window.localStorage.removeItem('auth');
+  api.signOut();
 }
 
 function updateNav(url) {

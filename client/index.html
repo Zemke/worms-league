@@ -13,15 +13,22 @@
   <div class="top-bar">
     <div class="container">
       <div>
+        <span id="account">
+        </span>
+        <button type="button" id="sign-out" onclick="signOut()">
+          Sign out
+        </button>
       </div>
       <div class="sign-in">
-        <form id="sign-in">
-          <input type="text" name="username" placeholder="Username">
-          <input type="password" name="password" placeholder="Password">
+        <form id="sign-in" onsubmit="return signIn(this)">
+          <input type="text"
+                 name="username" placeholder="Username"
+                 required>
+          <input type="password"
+                 name="password" placeholder="Password"
+                 required>
           <input type="submit" value="Sign in">
         </form>
-        <div id="account">
-        </div>
       </div>
     </div>
   </div>

@@ -12,9 +12,10 @@ body, html {
   background-color: #2e2e2e;
   padding: .2rem 0;
 }
+
 .top-bar .container {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .top-bar input,
