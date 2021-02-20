@@ -4,3 +4,9 @@
 
 Here goes account and profile settings.
 
+<script>
+(() => {
+  const {username} = api.userFromToken();
+  document.getElementById('username').innerHTML = username;
+})();
+</script>

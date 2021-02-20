@@ -30,3 +30,19 @@
   </form>
 </div>
 
+<script>
+(() => {
+  wl.submit = form => {
+    api.post('/api/sign-up', api.fromForm(form.elements)).then(res => {
+      nav.setContent(`
+          <p class="lead">
+            Welcome to the <b>Worms League</b>!
+            You are now signed in.
+          </p>`);
+      window.localStorage.setItem('auth', res.token);
+    }).catch(({err}) => toast(err));
+    return false;
+  }
+})();
+</script>
+
