@@ -1,4 +1,4 @@
-const {fromForm} = require('./js/app.js');
+const {fromForm} = require('./js/api.js');
 
 const form = [
   {

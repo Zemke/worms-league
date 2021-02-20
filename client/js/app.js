@@ -14,8 +14,6 @@ const R = {
   },
 };
 
-const api = {};
-
 const nav = {};
 
 nav.setContent = function (content) {
@@ -58,48 +56,24 @@ document.addEventListener('DOMContentLoaded', () => {
   Routing();
 });
 
-api.post = function (url, body) {
-    return fetch(
-        url,
-        {
-          method: 'POST',
-          body: JSON.stringify(body),
-          headers: {
-            'content-type': 'application/json',
-            'accept': 'application/json',
-          }
-        })
-        .then(async res =>
-            res.ok ? res.json() : Promise.reject(await res.json()));
-};
-
-api.signIn = function (username) {
-  const signInElem = document.getElementById('sign-in');
-  if (signInElem) signInElem.style.display = 'none';
-  const accountElem = document.getElementById('account');
-  accountElem.innerHTML = `<a href="/account">${username}</a>`;
-  const signOutElem = document.getElementById("sign-out");
-  if (signOutElem) signOutElem.style.display = 'inline';
-};
-
-api.signOut = function () {
-  const signInElem = document.getElementById('sign-in');
-  if (signInElem) signInElem.style.display = 'block';
-  const accountElem = document.getElementById('account');
-  accountElem.innerHTML = '';
-  const signOutElem = document.getElementById("sign-out");
-  if (signOutElem) signOutElem.style.display = 'none';
-};
-
-api.userFromToken = function () {
-  const token = window.localStorage.getItem('auth');
-  if (token == null) return null;
-  const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
-  const payload = decodeURIComponent(atob(base64)
-    .split('')
-    .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-    .join(''));
-  return JSON.parse(payload).data;
+function updateTopBar() {
+  const auth = api.userFromToken();
+  if (auth == null) {
+    const signInElem = document.getElementById('sign-in');
+    if (signInElem) signInElem.style.display = 'block';
+    const accountElem = document.getElementById('account');
+    accountElem.innerHTML = '';
+    const signOutElem = document.getElementById("sign-out");
+    if (signOutElem) signOutElem.style.display = 'none';
+  } else {
+    const username = auth.username;
+    const signInElem = document.getElementById('sign-in');
+    if (signInElem) signInElem.style.display = 'none';
+    const accountElem = document.getElementById('account');
+    accountElem.innerHTML = `<a href="/account">${username}</a>`;
+    const signOutElem = document.getElementById("sign-out");
+    if (signOutElem) signOutElem.style.display = 'inline';
+  }
 }
 
 function Routing() {
@@ -108,21 +82,20 @@ function Routing() {
   updateNav(url);
   const user = api.userFromToken();
   console.log('user', user);
-  user == null ? api.signOut() : api.signIn(user.username);
+  updateTopBar();
 }
 
 function signIn(form) {
-  api.post('/api/sign-in', fromForm(form.elements)).then(res => {
+  api.post('/api/sign-in', api.fromForm(form.elements)).then(res => {
     window.localStorage.setItem('auth', res.token);
-    const {username} = api.userFromToken();
-    api.signIn(username);
+    updateTopBar();
   }).catch(({err}) => toast(err));
   return false;
 }
 
 function signOut() {
   window.localStorage.removeItem('auth');
-  api.signOut();
+  updateTopBar();
 }
 
 function updateNav(url) {
@@ -135,7 +108,7 @@ function updateNav(url) {
 
 function SignUp() {
   wl.submit = form => {
-    api.post('/api/sign-up', fromForm(form.elements)).then(res => {
+    api.post('/api/sign-up', api.fromForm(form.elements)).then(res => {
       nav.setContent(`
           <p class="lead">
             Welcome to the <b>Worms League</b>!
@@ -154,26 +127,12 @@ function Account() {
 
 function Report() {
   wl.submit = async form => {
-    const body = fromForm(form.elements);
+    const body = api.fromForm(form.elements);
     const response = await api.post('/api/sign-up', body);
   }
 }
 
-function fromForm(elements) {
-  const body = Array.from(elements).reduce((acc, curr) => {
-    if (curr.value && curr.name) acc[curr.name] = curr.value;
-    return acc;
-  }, {});
-  return body;
-}
-
 function toast(message) {
   alert(message); // TODO display actual toast
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {
-    fromForm
-  };
 }
 
