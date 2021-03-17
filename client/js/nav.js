@@ -38,6 +38,9 @@ const R = {
   '/account': {
     template: '/tpl/account.html',
   },
+  '/report': {
+    template: '/tpl/report.html',
+  },
   '/': {
     template: '/tpl/home.html',
   },

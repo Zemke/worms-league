@@ -169,7 +169,7 @@ input[type=button]:active {
   border-style: inset;
 }
 
-input, textarea {
+select, input, textarea {
   background-color: #ececec;
   border: 1px #ececec inset;
   font-size: 1rem;

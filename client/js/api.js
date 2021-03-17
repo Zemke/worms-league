@@ -15,6 +15,19 @@ api.post = function (url, body) {
             res.ok ? res.json() : Promise.reject(await res.json()));
 };
 
+api.get = function (url) {
+    return fetch(
+        url,
+        {
+          method: 'GET',
+          headers: {
+            'accept': 'application/json',
+          }
+        })
+        .then(async res =>
+            res.ok ? res.json() : Promise.reject(await res.json()));
+};
+
 api.userFromToken = function () {
   const token = window.localStorage.getItem('auth');
   if (token == null) return null;

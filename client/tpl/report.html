@@ -2,3 +2,53 @@
   Report Game
 </div>
 
+<form onsubmit="return wl.submit(this)">
+  <div class="control">
+    <label for="email">Your Score</label>
+    <input type="number" required
+           id="yourScore" name="yourScore"/>
+  </div>
+  <div class="control">
+    <label for="opponentScore">Opponent’s Score</label>
+    <input type="number" required
+           id="opponentScore" name="opponentScore"/>
+  </div>
+  <div class="control">
+    <label for="username">Opponent</label>
+    <select id="opponent" name="opponent">
+      <option selected disabled>Select opponent</option>
+    </select>
+  </div>
+  <div class="control">
+    <input type="submit" value="Submit"/>
+  </div>
+</form>
+
+<script>
+(async () => {
+  const authUser = api.userFromToken();
+  const opponents = (await api.get('/api/users')).filter(u => u.id !== authUser.id);
+  const opponentSelect = document.getElementById('opponent');
+  opponents
+    .sort((o1, o2) => o1.username.localeCompare(o2.username))
+    .forEach(o => {
+      const opt = document.createElement('option');
+      opt.value = o.id;
+      opt.textContent = o.username;
+      opponentSelect.append(opt);
+    });
+
+  wl.submit = form => {
+    api.post('/api/sign-up', api.fromForm(form.elements)).then(res => {
+      nav.setContent(`
+          <p class="lead">
+            Welcome to the <b>Worms League</b>!
+            You are now signed in.
+          </p>`);
+      window.localStorage.setItem('auth', res.token);
+    }).catch(({err}) => toast(err));
+    return false;
+  }
+})();
+</script>
+

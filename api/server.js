@@ -98,6 +98,10 @@ async function onApi(req, res) {
           ['Hello world!']);
       console.log('from db', result.rows[0].message);; // Hello world!
       return end(res, {response: result.rows[0].message});
+    } else if (req.url === '/api/users' && req.method === 'GET') {
+      const result = await client.query('select id, username from "user"');
+      //const users = result.rows.map(r => ({id: r.id, username: r.username}));
+      return end(res, result.rows);
     }
   } finally {
     await client.end();
