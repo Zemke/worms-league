@@ -38,7 +38,8 @@ async function onApi(req, res) {
   try {
     await client.connect();
     if (req.url === '/api/sign-up' && req.method === 'POST') {
-      const {username, email, password} = await readBody(req);
+      const {username, email, password, spamcheck} = await readBody(req);
+      const spamcheckValids = ['testing']; // TODO Externalize configuration.
       let err;
       if (!validate.req(username)) {
         err = 'validation.required.username';
@@ -54,6 +55,8 @@ async function onApi(req, res) {
         err = 'validation.username.tooLong';
       } else if (!validate.regex(username, /^[a-z0-9-]+$/i)) {
         err = 'validation.username.invalid';
+      } else if (!spamcheckValids?.includes(spamcheck)) {
+        err = 'validation.spamcheck';
       }
       if (err) return end(res, {err}, 400);
       const result = await client.query(
