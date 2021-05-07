@@ -92,6 +92,8 @@ async function onApi(req, res) {
           email: body.email
         });
       return end(res, {token});
+    } else if (req.url === '/api/game' && req.method === 'POST') {
+      // TODO game reporting as form data with replay files
     } else if (req.url === '/api/hello-world' && req.method === 'GET') {
       const result = await client.query(
           'SELECT $1::text as message',

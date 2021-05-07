@@ -1,3 +1,59 @@
 This is the best league out there.
 <a href="/sign-up">Sign up</a> now!
 
+
+<div id="replay-dropzone" ondrop="wl.onDrop(event)" ondragover="event.preventDefault();">
+</div>
+
+<style>
+  #replay-dropzone {
+    height: 100px;
+    width: 100px;
+    border: 1px solid red;
+  }
+</style>
+<script>
+  (() => {
+    wl.files = [];
+    wl.reportPopup = null;
+    wl.onDrop = (e) => {
+      e.preventDefault();
+      const items = e.dataTransfer.items || e.dataTransfer.files;
+      if (!items) return;
+      wl.reportPopup = popup(`
+<div id="quick-report">
+  <h1>Report</h1>
+  Report these games?
+  <ul id="quick-report-replays">
+  </ul>
+  <button onclick="wl.report()">Yes</button>
+  <button onclick="wl.cancel()">No</button>
+</div>
+`);
+      wl.reportPopup.show();
+      const replaysElem = document.getElementById("quick-report-replays");
+      const replays = Array.from(items)
+          .filter(item => item.kind === "file")
+          .map(item => item.getAsFile())
+          .filter(item => item.name.toLowerCase().endsWith(".wagame"));
+      wl.files = [...replays];
+      replays.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item.name;
+        replaysElem.append(li);
+      });
+    }
+
+    wl.report = () => {
+      // TODO actual reporting
+      // api.post('game',
+      cancel();
+    }
+
+    wl.cancel = () => {
+      wl.files = [];
+      document.getElementById("quick-report-replays").innerHTML = '';
+      wl.reportPopup.remove();
+    }
+  })();
+</script>
