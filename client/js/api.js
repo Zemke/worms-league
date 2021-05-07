@@ -1,31 +1,31 @@
 const api = {};
 
 api.post = function (url, body) {
-    return fetch(
-        url,
-        {
-          method: 'POST',
-          body: JSON.stringify(body),
-          headers: {
-            'content-type': 'application/json',
-            'accept': 'application/json',
-          }
-        })
-        .then(async res =>
-            res.ok ? res.json() : Promise.reject(await res.json()));
+  return fetch(
+      url,
+      {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'content-type': 'application/json',
+          'accept': 'application/json',
+        }
+      })
+      .then(async res =>
+          res.ok ? res.json() : Promise.reject(await res.json()));
 };
 
 api.get = function (url) {
-    return fetch(
-        url,
-        {
-          method: 'GET',
-          headers: {
-            'accept': 'application/json',
-          }
-        })
-        .then(async res =>
-            res.ok ? res.json() : Promise.reject(await res.json()));
+  return fetch(
+      url,
+      {
+        method: 'GET',
+        headers: {
+          'accept': 'application/json',
+        }
+      })
+      .then(async res =>
+          res.ok ? res.json() : Promise.reject(await res.json()));
 };
 
 api.userFromToken = function () {
