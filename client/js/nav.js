@@ -1,4 +1,6 @@
 const nav = {};
+let wl = {}
+
 
 nav.setContent = function (content) {
   document.getElementById('content').innerHTML = content;
@@ -12,6 +14,7 @@ nav.loadTemplate = async function (url) {
   }
   const template = await fetch(r.template).then(res => res.text());
   nav.setContent(template);
+  wl = {};
 
   // running the script tag JS in the template file
   const templateContainer = document.getElementById('content');

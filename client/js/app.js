@@ -1,4 +1,4 @@
-const wl = {}
+// TODO namespace
 
 function updateTopBar() {
   const auth = api.userFromToken();
