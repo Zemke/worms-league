@@ -37,3 +37,14 @@ function toast(message) {
   alert(message); // TODO display actual toast
 }
 
+function popup(innerHTML) {
+  const elem = document.createElement('div');
+  elem.classList.add("popup");
+  elem.innerHTML = innerHTML;
+  document.body.append(elem);
+  const remove = () => elem.remove();
+  const hide = () => elem.classList.remove("show");
+  const show = () => elem.classList.add("show");
+  return {elem, remove, hide, show};
+}
+

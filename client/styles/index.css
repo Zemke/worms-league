@@ -215,3 +215,13 @@ p.lead {
 .text-center {
   text-align: center;
 }
+
+.popup {
+  display: none;
+  position: absolute;
+}
+
+.popup.show {
+  display: block;
+}
+
