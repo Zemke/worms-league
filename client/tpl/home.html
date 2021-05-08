@@ -44,10 +44,20 @@ This is the best league out there.
       });
     }
 
-    wl.report = () => {
+    wl.report = async () => {
       // TODO actual reporting
-      // api.post('game',
-      cancel();
+      const formData = new FormData();
+      for (let i = 0; i < wl.files.length; i++) {
+        formData.append("replay" + i, wl.files[i]);
+      }
+      console.log('sending', formData, formData.entries(), Array.from(formData.entries()));
+      try {
+        const response = await api.postForm('/api/game', formData)
+        wl.cancel();
+      } catch (err) {
+        toast("Reporting failed.");
+        console.error('post failed', err);
+      }
     }
 
     wl.cancel = () => {

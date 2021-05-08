@@ -15,6 +15,20 @@ api.post = function (url, body) {
           res.ok ? res.json() : Promise.reject(await res.json()));
 };
 
+api.postForm = function (url, body) {
+  return fetch(
+      url,
+      {
+        method: 'POST',
+        body,
+        headers: {
+          'accept': 'application/json',
+        }
+      })
+      .then(async res =>
+          res.ok ? res.json() : Promise.reject(await res.json()));
+};
+
 api.get = function (url) {
   return fetch(
       url,
@@ -46,6 +60,12 @@ api.fromForm = function (elements) {
   }, {});
   return body;
 }
+
+api.toFormData = function (json) {
+  const formData = new FormData();
+  Object.keys(json).forEach(k => formData.append(k, json[k]));
+  return formData;
+};
 
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = api;

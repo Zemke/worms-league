@@ -94,6 +94,13 @@ async function onApi(req, res) {
       return end(res, {token});
     } else if (req.url === '/api/game' && req.method === 'POST') {
       // TODO game reporting as form data with replay files
+      const body = await readBody(req, false);
+      // TODO Persist game
+      // TODO Respond to user that game is being processed
+      // TODO Send to WAaaS to extract logs
+      // TODO R script
+      // TODO Persist ranking
+      // TODO If anything after game persistence fails the game is pending
     } else if (req.url === '/api/hello-world' && req.method === 'GET') {
       const result = await client.query(
           'SELECT $1::text as message',
@@ -129,13 +136,13 @@ function file(res, contentType, path) {
   }
 }
 
-async function readBody(req) {
+async function readBody(req, json = true) {
   return new Promise(resolve => {
     let body = '';
     req.on('data', chunk => body += chunk);
     req.on('end', () => {
       try {
-        resolve(JSON.parse(body));
+        resolve(json ? JSON.parse(body) : body);
       } catch (err) {
         console.error(err);
         resolve(body);
