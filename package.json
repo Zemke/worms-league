@@ -29,6 +29,8 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "formdata-node": "^3.5.4",
+    "formidable": "^1.2.2",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.5.1"
   }
