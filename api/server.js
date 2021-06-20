@@ -4,6 +4,8 @@ const {Client} = require('pg');
 const jwt = require('./jwt.js');
 const hash = require('./hash.js');
 const validate = require('./validate.js');
+const waaas = require('./waaas.js');
+const formidable = require('formidable');
 
 const server = http.createServer(async (req, res) => {
   if (req.url === '/favicon.ico') {
@@ -93,6 +95,53 @@ async function onApi(req, res) {
         });
       return end(res, {token});
     } else if (req.url === '/api/game' && req.method === 'POST') {
+      const form = await new Promise((resolve, reject) => {
+        formidable().parse(req, (err, fields, files) => {
+          err ? reject(err) : resolve({fields, files});
+        });
+      });
+
+      //{
+      //  fields: {},
+      //  files: {
+      //    replay0: File {
+      //      _events: [Object: null prototype] {},
+      //      _eventsCount: 0,
+      //      _maxListeners: undefined,
+      //      size: 42288,
+      //      path: '/var/folders/d8/yhw8dhsn0njgq7txxng0b_380000gn/T/upload_6f7a35029efd00bc984f6e0fc06260d0',
+      //      name: '2021-06-17 15.38.17 [Online Round 3] TdCxSenator, @Albus.WAgame',
+      //      type: 'application/octet-stream',
+      //      hash: null,
+      //      lastModifiedDate: 2021-06-20T08:52:47.714Z,
+      //      _writeStream: [WriteStream],
+      //      [Symbol(kCapture)]: false
+      //    },
+      //    ...
+      //  }
+      //}
+      console.log('form', form);
+
+      for (const file in form.files) {
+        if (!file.name.toLowerCase().endsWith('.wagame')) {
+          return end(res, {[file]: 'no WAgame file'}, 400);
+        } else if (file.size > 150000) {
+          return end(res, {[file]: 'too large'}, 400);
+        } else if (file.size < 10) {
+          return end(res, {[file]: 'too small'}, 400);
+        }
+      }
+
+      const stats = await waaas.waaas(form.files);
+
+      return end(res, {hello: 'world'});
+
+      // TODO connection pooling and transactions
+
+      //const result = await client.query(
+      //    `insert into game (home_id, away_id, score_home, score_away)
+      //     values ($1, $2, $3, $4)`,
+      //    ['']);
       // TODO game reporting as form data with replay files
       const body = await readBody(req, false);
       // TODO Persist game
