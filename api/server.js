@@ -133,6 +133,13 @@ async function onApi(req, res) {
 
     const stats = await waaas.waaas(form.files);
 
+    await tx(async client => {
+      const result = await client.query(
+          `insert into game (home_id, away_id, score_home, score_away)
+           values ($1, $2, $3, $4)`,
+          ['']);
+    });
+
     return end(res, {hello: 'world'});
 
     // TODO connection pooling and transactions
@@ -199,6 +206,20 @@ async function readBody(req, json = true) {
       }
     });
   });
+}
+
+function tx(fn) {
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN')
+    await fn(client);
+    await client.query('COMMIT')
+  } catch (e) {
+    await client.query('ROLLBACK')
+    throw e
+  } finally {
+    client.release()
+  }
 }
 
 function tearDown(msg, reason) {
