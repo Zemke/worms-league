@@ -1,0 +1,116 @@
+Game ID: "12311422"
+Game Started at 2021-02-08 16:06:21 GMT
+Game Engine Version: 3.8.1
+File Format Version: 3.7.3.0 - 3.8.1
+Exported with Version: 3.8.1 (Steam)
+
+Red:  "chesnut" as "gusis" [Host]
+Blue: "Veals"   as "Veals" [Local Player]
+
+[00:00:00.00] ••• gusis (chesnut) starts turn
+[00:00:14.62] ••• gusis (chesnut) fires Select Worm
+[00:00:21.42] ••• gusis (chesnut) fires Ninja Rope
+[00:00:29.40] ••• gusis (chesnut) fires Baseball Bat
+[00:00:32.98] ••• gusis (chesnut) ends turn; time used: 25.86 sec turn, 3.00 sec retreat
+[00:00:37.86] ••• Damage dealt: 180 (2 kills) to Veals (Veals)
+[00:00:37.86] ••• Veals (Veals) starts turn
+[00:00:45.64] ••• Veals (Veals) fires Select Worm
+[00:01:02.96] ••• Veals (Veals) fires Select Worm
+[00:01:10.72] ••• Veals (Veals) fires Shotgun
+[00:01:24.42] ••• Veals (Veals) fires Shotgun
+[00:01:28.58] ••• Veals (Veals) ends turn; time used: 34.08 sec turn, 3.00 sec retreat
+[00:01:33.80] ••• Damage dealt: 90 (1 kill) to gusis (chesnut)
+[00:01:33.80] ••• gusis (chesnut) starts turn
+[00:02:17.08] ••• gusis (chesnut) fires Grenade (3 sec, min bounce)
+[00:02:20.34] ••• gusis (chesnut) ends turn; time used: 42.88 sec turn, 3.00 sec retreat
+[00:02:28.00] ••• Damage dealt: 90 (1 kill) to Veals (Veals)
+[00:02:28.00] ••• Veals (Veals) starts turn
+[00:03:07.20] ••• Veals (Veals) fires Baseball Bat
+[00:03:10.40] ••• Veals (Veals) ends turn; time used: 38.16 sec turn, 3.00 sec retreat
+[00:03:15.30] ••• Damage dealt: 90 (1 kill) to gusis (chesnut)
+[00:03:15.30] ••• gusis (chesnut) starts turn
+[00:03:22.80] ••• gusis (chesnut) fires Select Worm
+[00:03:35.48] ••• gusis (chesnut) fires Low Gravity
+[00:04:01.72] ••• gusis (chesnut) fires Dynamite
+[00:04:06.90] ••• gusis (chesnut) ends turn; time used: 43.26 sec turn, 5.00 sec retreat
+[00:04:17.58] ••• Damage dealt: 90 (1 kill) to Veals (Veals)
+[00:04:17.58] ••• Veals (Veals) starts turn
+[00:04:44.92] ••• Veals (Veals) fires Ninja Rope
+[00:05:01.52] ••• Veals (Veals) fires Mad Cow (herd of 2)
+[00:05:02.80] ••• Veals (Veals) loses turn due to loss of control; time used: 38.62 sec turn, 0.24 sec retreat
+[00:05:12.58] ••• Damage dealt: 101 to gusis (chesnut), 59 to Veals (Veals)
+[00:05:12.58] ••• gusis (chesnut) starts turn
+[00:05:30.60] ••• gusis (chesnut) fires Shotgun
+[00:05:41.46] ••• gusis (chesnut) fires Shotgun
+[00:05:45.62] ••• gusis (chesnut) ends turn; time used: 17.94 sec turn, 3.00 sec retreat
+[00:05:56.98] ••• Damage dealt: 81 (1 kill) to Veals (Veals)
+[00:05:56.98] ••• Veals (Veals) starts turn
+[00:06:21.22] ••• Veals (Veals) fires Dynamite
+[00:06:26.40] ••• Veals (Veals) ends turn; time used: 19.24 sec turn, 5.00 sec retreat
+[00:06:32.58] ••• Damage dealt: 71 to gusis (chesnut)
+[00:06:32.58] ••• gusis (chesnut) starts turn
+[00:06:56.50] ••• gusis (chesnut) fires Homing Missile
+[00:07:00.94] ••• gusis (chesnut) ends turn; time used: 18.92 sec turn, 3.00 sec retreat
+[00:07:09.56] ••• Damage dealt: 40 (1 kill) to Veals (Veals)
+[00:07:09.56] ••• Veals (Veals) starts turn
+[00:07:12.20] ••• Veals (Veals) fires Teleport
+[00:07:14.68] ••• Veals (Veals) ends turn; time used: 1.36 sec turn, 0.02 sec retreat
+[00:07:15.24] ••• gusis (chesnut) starts turn
+[00:07:40.52] ••• gusis (chesnut) fires Air Strike
+[00:07:44.00] ••• gusis (chesnut) ends turn; time used: 20.28 sec turn, 3.00 sec retreat
+[00:07:46.70] ••• Damage dealt: 3 to gusis (chesnut), 47 to Veals (Veals)
+[00:07:46.70] ••• Veals (Veals) starts turn
+[00:08:09.48] ••• Veals (Veals) fires Ninja Rope
+[00:08:17.04] ••• Veals (Veals) fires Sheep
+[00:08:22.06] ••• Veals (Veals) ends turn; time used: 25.08 sec turn, 5.00 sec retreat
+[00:08:30.28] ••• Damage dealt: 54 (1 kill) to gusis (chesnut)
+[00:08:30.28] ••• gusis (chesnut) starts turn
+[00:08:36.16] ••• gusis (chesnut) fires Select Worm
+[00:08:49.88] ••• gusis (chesnut) fires Sheep
+[00:08:49.98] ••• gusis (chesnut) loses turn due to loss of control; time used: 14.54 sec turn, 0.00 sec retreat
+[00:09:01.54] ••• Damage dealt: 22 (1 kill) to gusis (chesnut), 85 to Veals (Veals)
+[00:09:01.54] ••• Veals (Veals) starts turn
+[00:09:26.94] ••• Veals (Veals) uses Bungee
+[00:09:33.02] ••• Veals (Veals) fires Ninja Rope
+[00:09:47.42] ••• Veals (Veals) fires Mine
+[00:09:52.60] ••• Veals (Veals) ends turn; time used: 40.60 sec turn, 5.00 sec retreat
+[00:10:01.44] ••• Damage dealt: 90 (1 kill) to gusis (chesnut)
+[00:10:01.44] ••• gusis (chesnut) starts turn
+[00:10:04.92] ••• gusis (chesnut) fires Kamikaze
+[00:10:06.16] ••• gusis (chesnut) loses turn due to loss of control; time used: 1.00 sec turn, 0.00 sec retreat
+[00:10:16.58] ••• Damage dealt: 19 (1 kill) to gusis (chesnut), 5 (1 kill) to Veals (Veals)
+[00:10:16.58] ••• Veals (Veals) starts turn
+[00:10:22.80] ••• Veals (Veals) fires Ninja Rope
+[00:10:43.30] ••• Veals (Veals) fires Ninja Rope
+[00:10:56.40] ••• Veals (Veals) fires Shotgun
+[00:10:57.30] ••• Veals (Veals) loses turn due to loss of control; time used: 34.62 sec turn, 0.00 sec retreat
+[00:11:04.86] ••• Damage dealt: 90 (1 kill) to gusis (chesnut), 9 to Veals (Veals)
+[00:11:04.86] ••• gusis (chesnut) starts turn
+[00:11:05.60] ••• gusis (chesnut) fires Jet Pack
+[00:11:11.38] ••• gusis (chesnut) used 22 units of Jet Pack fuel
+[00:11:20.24] ••• gusis (chesnut) fires Parachute
+[00:11:21.46] [Veals] gg)
+[00:11:22.64] ••• gusis (chesnut) fires Bazooka
+[00:11:25.62] [chesnut] gg
+[00:11:26.68] ••• gusis (chesnut) ends turn; time used: 17.34 sec turn, 2.46 sec retreat
+[00:11:38.56] *** Round Finish acknowledged by chesnut
+[00:11:40.56] ••• Damage dealt: 34 (1 kill) to Veals (Veals)
+[00:11:40.58] ••• Game Ends - Round Finished
+[00:11:40.58] *** Round Finish acknowledged by Veals
+
+Team time totals:
+gusis (chesnut): Turn: 00:03:22.02, Retreat: 00:00:22.46, Total: 00:03:44.48, Turn count: 9
+Veals (Veals):   Turn: 00:03:51.76, Retreat: 00:00:21.26, Total: 00:04:13.02, Turn count: 8
+
+Total Jet Pack fuel used: 22
+
+End of round 2
+
+Round time: 0:11:40
+Total game time elapsed: Unknown
+
+gusis wins the round.
+
+Worm of the round: guseis (gusis)
+Most kills with one shot: 2 - guseis (gusis)
+Most damage with one shot: 180 - guseis (gusis)

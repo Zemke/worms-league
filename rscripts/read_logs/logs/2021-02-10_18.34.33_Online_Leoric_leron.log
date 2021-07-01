@@ -1,0 +1,49 @@
+Game ID: "12317288"
+Game Started at 2021-02-10 18:34:33 GMT
+Game Engine Version: 3.8.1
+File Format Version: 3.7.3.0 - 3.8.1
+Exported with Version: 3.8.1 (Steam)
+
+Red:  "Leoric" as "Rowio" [Local Player] [Host]
+Blue: "leron"  as "B?P?? ???H??"
+
+[00:00:00.00] ••• Rowio (Leoric) starts turn
+[00:00:01.56] [Leoric] hf
+[00:00:14.88] ••• Rowio (Leoric) fires Select Worm
+[00:00:26.46] ••• Rowio (Leoric) fires Shotgun
+[00:00:39.74] ••• Rowio (Leoric) fires Shotgun
+[00:00:43.90] ••• Rowio (Leoric) ends turn; time used: 26.38 sec turn, 3.00 sec retreat
+[00:00:50.08] ••• Damage dealt: 23 to Rowio (Leoric), 92 to B?P?? ???H?? (leron)
+[00:00:50.08] ••• B?P?? ???H?? (leron) starts turn
+[00:01:22.32] ••• B?P?? ???H?? (leron) loses turn due to loss of control; time used: 30.96 sec turn, 0.00 sec retreat
+[00:01:27.36] ••• Damage dealt: 90 (1 kill) to B?P?? ???H?? (leron)
+[00:01:27.36] ••• Rowio (Leoric) starts turn
+[00:02:05.64] ••• Rowio (Leoric) fires Low Gravity
+[00:02:07.98] ••• Rowio (Leoric) fires Baseball Bat
+[00:02:11.56] ••• Rowio (Leoric) ends turn; time used: 35.56 sec turn, 3.00 sec retreat
+[00:02:17.62] ••• Damage dealt: 90 (1 kill) to B?P?? ???H?? (leron)
+[00:02:17.62] ••• B?P?? ???H?? (leron) starts turn
+[00:02:28.16] ••• B?P?? ???H?? (leron) fires Select Worm
+[00:02:58.60] *** leron is quitting
+[00:02:58.60] *** leron is quitting
+[00:02:58.60] *** leron is disconnecting due to quitting
+[00:02:58.60] *** B?P?? ???H?? (leron) forced out by disconnection due to quitting
+[00:02:58.60] ••• B?P?? ???H?? (leron) ends turn; time used: 35.92 sec turn, 0.00 sec retreat
+[00:02:58.76] *** leron disconnected due to quitting
+[00:03:04.12] ••• Game Ends - Round Finished
+[00:03:04.12] *** Round Finish acknowledged by Leoric
+
+Team time totals:
+Rowio (Leoric):       Turn: 00:01:01.94, Retreat: 00:00:06.00, Total: 00:01:07.94, Turn count: 2
+B?P?? ???H?? (leron): Turn: 00:01:06.88, Retreat: 00:00:00.00, Total: 00:01:06.88, Turn count: 2
+
+End of round 1
+
+Round time: 0:03:04
+Total game time elapsed: 0:03:04
+
+Rowio wins the round.
+
+Worm of the round: Berry (Rowio)
+Most kills with one shot: 1 - Berry (Rowio)
+Most damage with one shot: 90 - Berry (Rowio)

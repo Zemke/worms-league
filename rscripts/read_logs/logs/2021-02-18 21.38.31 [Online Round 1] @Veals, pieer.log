@@ -1,0 +1,176 @@
+Game ID: "12342899"
+Game Started at 2021-02-18 21:38:31 GMT
+Game Engine Version: 3.8
+File Format Version: 3.7.3.0 - 3.8.1
+Exported with Version: 3.8.1 (Steam)
+
+Red:  "Veals" as "Veals" [Local Player] [Host]
+Blue: "pieer" as "pieer"
+
+[00:00:00.00] ••• pieer (pieer) starts turn
+[00:00:11.54] ••• pieer (pieer) fires Select Worm
+[00:00:30.42] ••• pieer (pieer) fires Sheep
+[00:00:33.60] ••• pieer (pieer) ends turn; time used: 25.36 sec turn, 3.00 sec retreat
+[00:00:37.16] ••• Damage dealt: 93 to Veals (Veals)
+[00:00:37.16] ••• Veals (Veals) starts turn
+[00:00:51.70] ••• Veals (Veals) fires Shotgun
+[00:01:04.48] ••• Veals (Veals) fires Shotgun
+[00:01:08.64] ••• Veals (Veals) ends turn; time used: 18.52 sec turn, 3.00 sec retreat
+[00:01:15.22] ••• Damage dealt: 28 to pieer (pieer)
+[00:01:15.22] ••• pieer (pieer) starts turn
+[00:01:18.88] ••• pieer (pieer) fires Select Worm
+[00:01:24.82] ••• pieer (pieer) fires Ninja Rope
+[00:01:47.94] ••• pieer (pieer) fires Dynamite
+[00:01:52.98] ••• pieer (pieer) loses turn due to loss of control; time used: 29.30 sec turn, 4.86 sec retreat
+[00:02:08.74] ••• Damage dealt: 99 (2 kills) to Veals (Veals), 3 to pieer (pieer)
+[00:02:08.74] ••• Veals (Veals) starts turn
+[00:02:15.86] ••• Veals (Veals) fires Sheep
+[00:02:24.42] ••• Veals (Veals) loses turn due to loss of control; time used: 6.44 sec turn, 3.00 sec retreat
+[00:02:29.14] ••• Damage dealt: 43 to Veals (Veals)
+[00:02:29.14] ••• pieer (pieer) starts turn
+[00:02:38.46] ••• pieer (pieer) fires Select Worm
+[00:03:00.64] ••• pieer (pieer) fires Mine
+[00:03:05.82] ••• pieer (pieer) ends turn; time used: 26.44 sec turn, 5.00 sec retreat
+[00:03:12.42] ••• Damage dealt: 39 to Veals (Veals)
+[00:03:12.42] ••• Veals (Veals) starts turn
+[00:03:17.70] ••• Veals (Veals) fires Select Worm
+[00:03:32.44] ••• Veals (Veals) fires Ninja Rope
+[00:03:38.42] ••• Veals (Veals) fires Grenade (5 sec, min bounce)
+[00:03:43.44] ••• Veals (Veals) ends turn; time used: 24.10 sec turn, 5.00 sec retreat
+[00:03:52.30] ••• Damage dealt: 111 to pieer (pieer)
+[00:03:52.30] ••• pieer (pieer) starts turn
+[00:03:53.36] [Veals] >_>
+[00:04:12.52] ••• pieer (pieer) fires Bazooka
+[00:04:14.14] ••• pieer (pieer) loses turn due to loss of control; time used: 16.30 sec turn, 0.02 sec retreat
+[00:04:19.28] ••• Damage dealt: 24 to Veals (Veals), 1 to pieer (pieer)
+[00:04:19.28] ••• Veals (Veals) starts turn
+[00:04:44.88] ••• Veals (Veals) fires Shotgun
+[00:04:52.50] ••• Veals (Veals) fires Shotgun
+[00:04:56.66] ••• Veals (Veals) ends turn; time used: 30.44 sec turn, 3.00 sec retreat
+[00:05:02.28] ••• Damage dealt: 41 (2 kills) to pieer (pieer)
+[00:05:02.28] ••• pieer (pieer) starts turn
+[00:05:18.32] ••• pieer (pieer) fires Grenade (3 sec, min bounce)
+[00:05:21.60] ••• pieer (pieer) ends turn; time used: 12.98 sec turn, 3.00 sec retreat
+[00:05:26.50] ••• Damage dealt: 14 to Veals (Veals)
+[00:05:26.50] ••• Veals (Veals) starts turn
+[00:05:41.72] ••• Veals (Veals) fires Select Worm
+[00:06:00.20] ••• Veals (Veals) fires Cluster Bomb (3 sec, min bounce)
+[00:06:03.78] ••• Veals (Veals) ends turn; time used: 31.06 sec turn, 3.00 sec retreat
+[00:06:07.96] ••• Damage dealt: 53 to pieer (pieer)
+[00:06:07.96] ••• pieer (pieer) starts turn
+[00:06:36.42] ••• pieer (pieer) fires Shotgun
+[00:06:43.78] ••• pieer (pieer) fires Shotgun
+[00:06:47.94] ••• pieer (pieer) ends turn; time used: 28.72 sec turn, 3.00 sec retreat
+[00:06:52.36] ••• Damage dealt: 25 to Veals (Veals)
+[00:06:52.36] ••• Veals (Veals) starts turn
+[00:07:08.12] ••• Veals (Veals) uses Bungee
+[00:07:24.44] ••• Veals (Veals) fires Ninja Rope
+[00:07:33.14] ••• Veals (Veals) fires Dynamite
+[00:07:38.16] ••• Veals (Veals) ends turn; time used: 39.38 sec turn, 5.00 sec retreat
+[00:07:42.50] ••• Damage dealt: 5 to Veals (Veals), 46 to pieer (pieer)
+[00:07:42.50] ••• pieer (pieer) starts turn
+[00:08:09.46] ••• pieer (pieer) fires Skunk
+[00:08:24.22] ••• pieer (pieer) ends turn; time used: 21.96 sec turn, 3.00 sec retreat
+[00:08:28.44] ••• Damage dealt: 19 to Veals (Veals)
+[00:08:28.44] ••• Veals (Veals) starts turn
+[00:08:32.28] ••• Veals (Veals) fires Ninja Rope
+[00:08:36.90] ••• Veals (Veals) uses Parachute
+[00:08:55.08] ••• Veals (Veals) fires Mad Cow (herd of 1)
+[00:08:58.62] ••• Veals (Veals) ends turn; time used: 22.64 sec turn, 3.00 sec retreat
+[00:09:03.38] ••• Damage dealt: 129 to pieer (pieer)
+[00:09:03.38] ••• pieer (pieer) starts turn
+[00:09:35.10] ••• pieer (pieer) fires Shotgun
+[00:09:41.90] ••• pieer (pieer) fires Shotgun
+[00:09:46.06] ••• pieer (pieer) ends turn; time used: 31.10 sec turn, 3.00 sec retreat
+[00:09:55.52] ••• Damage dealt: 21 (1 kill) to Veals (Veals)
+[00:09:55.52] ••• Veals (Veals) starts turn
+[00:10:04.56] ••• Veals (Veals) fires Teleport
+[00:10:07.04] ••• Veals (Veals) ends turn; time used: 4.04 sec turn, 0.02 sec retreat
+[00:10:07.60] ••• pieer (pieer) starts turn
+[00:10:23.78] ••• pieer (pieer) fires Shotgun
+[00:10:30.12] ••• pieer (pieer) fires Shotgun
+[00:10:34.28] ••• pieer (pieer) ends turn; time used: 14.50 sec turn, 3.00 sec retreat
+[00:10:44.88] ••• Damage dealt: 28 (1 kill) to Veals (Veals)
+[00:10:44.88] ••• Veals (Veals) starts turn
+[00:10:52.98] ••• Veals (Veals) fires Select Worm
+[00:11:09.10] ••• Veals (Veals) fires Bazooka
+[00:11:13.70] ••• Veals (Veals) ends turn; time used: 19.16 sec turn, 3.00 sec retreat
+[00:11:27.32] ••• Damage dealt: 47 (2 kills) to pieer (pieer)
+[00:11:27.32] ••• pieer (pieer) starts turn
+[00:12:08.36] ••• pieer (pieer) fires Battle Axe
+[00:12:13.26] ••• pieer (pieer) ends turn; time used: 40.18 sec turn, 3.00 sec retreat
+[00:12:17.68] ••• Damage dealt: 45 to Veals (Veals)
+[00:12:17.68] ••• Veals (Veals) starts turn
+[00:12:25.98] ••• Veals (Veals) fires Grenade (5 sec, min bounce)
+[00:12:31.12] ••• Veals (Veals) loses turn due to loss of control; time used: 7.80 sec turn, 3.00 sec retreat
+[00:12:46.26] ••• Damage dealt: 8 to Veals (Veals), 44 (1 kill) to pieer (pieer)
+[00:12:46.26] ••• pieer (pieer) starts turn
+[00:13:22.08] ••• pieer (pieer) fires Shotgun
+[00:13:24.84] ••• pieer (pieer) fires Shotgun
+[00:13:29.00] ••• pieer (pieer) ends turn; time used: 31.48 sec turn, 3.00 sec retreat
+[00:13:31.48] ••• Veals (Veals) starts turn
+[00:13:44.20] ••• Veals (Veals) uses Bungee
+[00:14:01.28] ••• Veals (Veals) fires Shotgun
+[00:14:09.44] ••• Veals (Veals) fires Shotgun
+[00:14:13.60] ••• Veals (Veals) ends turn; time used: 30.64 sec turn, 3.00 sec retreat
+[00:14:22.96] ••• Damage dealt: 37 (1 kill) to pieer (pieer)
+[00:14:22.96] ••• pieer (pieer) starts turn
+[00:14:57.46] ••• pieer (pieer) fires Shotgun
+[00:15:04.34] ••• pieer (pieer) fires Shotgun
+[00:15:08.50] ••• pieer (pieer) ends turn; time used: 34.96 sec turn, 3.00 sec retreat
+[00:15:17.86] ••• Damage dealt: 37 (1 kill) to Veals (Veals)
+[00:15:17.86] ••• Veals (Veals) starts turn
+[00:15:28.38] ••• Veals (Veals) fires Jet Pack
+[00:15:36.88] ••• Veals (Veals) used 30 units of Jet Pack fuel
+[00:15:43.82] ••• Veals (Veals) fires Baseball Bat
+[00:15:47.40] ••• Veals (Veals) ends turn; time used: 20.54 sec turn, 3.00 sec retreat
+[00:15:51.32] ••• Damage dealt: 90 (1 kill) to pieer (pieer)
+[00:15:51.32] ••• pieer (pieer) starts turn
+[00:15:55.96] ••• pieer (pieer) fires Ninja Rope
+[00:15:57.58] ••• pieer (pieer) fires Ninja Rope
+[00:15:59.02] ••• pieer (pieer) fires Ninja Rope
+[00:16:12.04] ••• pieer (pieer) fires Ninja Rope
+[00:16:13.44] ••• pieer (pieer) fires Ninja Rope
+[00:16:28.76] ••• pieer (pieer) fires Baseball Bat
+[00:16:32.34] ••• pieer (pieer) ends turn; time used: 35.36 sec turn, 3.00 sec retreat
+[00:16:36.42] ••• Damage dealt: 90 (1 kill) to Veals (Veals)
+[00:16:36.42] ••• Veals (Veals) starts turn
+[00:16:45.90] ••• Veals (Veals) fires Ninja Rope
+[00:17:16.20] ••• Veals (Veals) fires Grenade (5 sec, min bounce)
+[00:17:21.34] ••• Veals (Veals) ends turn; time used: 38.04 sec turn, 3.00 sec retreat
+[00:17:26.52] ••• Damage dealt: 44 to pieer (pieer)
+[00:17:26.52] ••• pieer (pieer) starts turn
+[00:17:44.52] ••• pieer (pieer) fires Ninja Rope
+[00:17:47.20] ••• pieer (pieer) fires Ninja Rope
+[00:17:48.42] ••• pieer (pieer) fires Ninja Rope
+[00:18:03.60] ••• pieer (pieer) fires Shotgun
+[00:18:19.72] ••• pieer (pieer) fires Shotgun
+[00:18:20.62] ••• pieer (pieer) loses turn due to loss of control; time used: 40.98 sec turn, 0.00 sec retreat
+[00:18:23.72] [Veals] gg
+[00:18:24.66] ••• Damage dealt: 28 to Veals (Veals), 23 to pieer (pieer)
+[00:18:24.66] ••• Veals (Veals) starts turn
+[00:18:30.16] ••• Veals (Veals) fires Ninja Rope
+[00:18:31.12] ••• Veals (Veals) fires Ninja Rope
+[00:18:39.48] ••• Veals (Veals) fires Fire Punch
+[00:18:44.04] ••• Veals (Veals) ends turn; time used: 11.82 sec turn, 2.78 sec retreat
+[00:18:55.00] [pieer] :C
+[00:18:57.92] ••• Damage dealt: 23 (1 kill) to pieer (pieer)
+[00:18:57.94] ••• Game Ends - Round Finished
+[00:18:57.94] *** Round Finish acknowledged by Veals
+[00:19:00.14] *** Round Finish acknowledged by pieer
+
+Team time totals:
+Veals (Veals): Turn: 00:05:04.62, Retreat: 00:00:42.80, Total: 00:05:47.42, Turn count: 14
+pieer (pieer): Turn: 00:06:29.62, Retreat: 00:00:39.88, Total: 00:07:09.50, Turn count: 14
+
+Total Jet Pack fuel used: 30
+
+End of round 1
+
+Round time: 0:18:57
+Total game time elapsed: 0:18:57
+
+Veals wins the round.
+
+Worm of the round: Sorry (pieer)
+Most damage with one shot: 126 - ?ep?? 5 (Veals)

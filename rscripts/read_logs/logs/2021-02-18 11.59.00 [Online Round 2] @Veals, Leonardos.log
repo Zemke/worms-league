@@ -1,0 +1,127 @@
+Game ID: "12341401"
+Game Started at 2021-02-18 11:59:00 GMT
+Game Engine Version: 3.8
+File Format Version: 3.7.3.0 - 3.8.1
+Exported with Version: 3.8.1 (Steam)
+
+Red:  "Veals"     as "Veals" [Local Player] [Host]
+Blue: "Leonardos" as "Leonardos"
+
+[00:00:00.00] ••• Leonardos (Leonardos) starts turn
+[00:00:30.98] ••• Leonardos (Leonardos) fires Shotgun
+[00:00:43.52] ••• Leonardos (Leonardos) fires Shotgun
+[00:00:47.68] ••• Leonardos (Leonardos) ends turn; time used: 33.12 sec turn, 3.00 sec retreat
+[00:00:52.10] ••• Damage dealt: 50 to Veals (Veals)
+[00:00:52.10] ••• Veals (Veals) starts turn
+[00:01:17.58] ••• Veals (Veals) fires Ninja Rope
+[00:01:39.14] ••• Veals (Veals) fires Select Worm
+[00:01:43.82] ••• Veals (Veals) fires Grenade (3 sec, min bounce)
+[00:01:47.18] ••• Veals (Veals) ends turn; time used: 43.88 sec turn, 3.00 sec retreat
+[00:01:55.32] ••• Damage dealt: 132 (1 kill) to Leonardos (Leonardos)
+[00:01:55.32] ••• Leonardos (Leonardos) starts turn
+[00:02:14.10] ••• Leonardos (Leonardos) fires Select Worm
+[00:02:37.54] ••• Leonardos (Leonardos) fires Cluster Bomb (3 sec, min bounce)
+[00:02:41.60] ••• Leonardos (Leonardos) ends turn; time used: 37.16 sec turn, 3.00 sec retreat
+[00:02:45.38] ••• Damage dealt: 26 to Veals (Veals)
+[00:02:45.38] ••• Veals (Veals) starts turn
+[00:03:02.44] ••• Veals (Veals) fires Ninja Rope
+[00:03:26.16] ••• Veals (Veals) fires Mad Cow (herd of 2)
+[00:03:32.16] ••• Veals (Veals) ends turn; time used: 38.34 sec turn, 5.00 sec retreat
+[00:03:41.08] ••• Damage dealt: 2 to Veals (Veals), 139 (2 kills) to Leonardos (Leonardos)
+[00:03:41.08] ••• Leonardos (Leonardos) starts turn
+[00:03:42.86] ••• Leonardos (Leonardos) fires Select Worm
+[00:03:57.38] ••• Leonardos (Leonardos) fires Shotgun
+[00:04:23.50] ••• Leonardos (Leonardos) fires Shotgun
+[00:04:27.66] ••• Leonardos (Leonardos) ends turn; time used: 34.20 sec turn, 3.00 sec retreat
+[00:04:33.28] ••• Damage dealt: 115 (1 kill) to Veals (Veals)
+[00:04:33.28] ••• Veals (Veals) starts turn
+[00:04:48.10] ••• Veals (Veals) fires Select Worm
+[00:05:04.78] ••• Veals (Veals) uses Bungee
+[00:05:21.62] ••• Veals (Veals) fires Dynamite
+[00:05:26.80] ••• Veals (Veals) ends turn; time used: 43.28 sec turn, 5.00 sec retreat
+[00:05:32.28] ••• Damage dealt: 7 to Veals (Veals), 74 to Leonardos (Leonardos)
+[00:05:32.28] ••• Leonardos (Leonardos) starts turn
+[00:06:01.68] ••• Leonardos (Leonardos) fires Shotgun
+[00:06:07.00] ••• Leonardos (Leonardos) fires Shotgun
+[00:06:10.34] ••• Leonardos (Leonardos) loses turn due to loss of control; time used: 28.20 sec turn, 2.18 sec retreat
+[00:06:14.80] ••• Damage dealt: 41 to Veals (Veals), 1 to Leonardos (Leonardos)
+[00:06:14.80] ••• Veals (Veals) starts turn
+[00:06:35.46] ••• Veals (Veals) fires Ninja Rope
+[00:06:45.32] ••• Veals (Veals) fires Longbow
+[00:06:47.36] ••• Veals (Veals) fires Longbow
+[00:06:50.44] ••• Veals (Veals) ends turn; time used: 29.58 sec turn, 3.00 sec retreat
+[00:06:55.26] ••• Damage dealt: 90 (1 kill) to Leonardos (Leonardos)
+[00:06:55.26] ••• Leonardos (Leonardos) starts turn
+[00:07:06.84] ••• Leonardos (Leonardos) fires Select Worm
+[00:07:21.50] ••• Leonardos (Leonardos) fires Longbow
+[00:07:27.96] ••• Leonardos (Leonardos) fires Longbow
+[00:07:31.04] ••• Leonardos (Leonardos) ends turn; time used: 23.20 sec turn, 3.00 sec retreat
+[00:07:35.46] ••• Damage dealt: 34 to Veals (Veals)
+[00:07:35.46] ••• Veals (Veals) starts turn
+[00:08:01.78] ••• Veals (Veals) fires Select Worm
+[00:08:17.66] ••• Veals (Veals) fires Grenade (5 sec, min bounce)
+[00:08:23.26] ••• Veals (Veals) loses turn due to loss of control; time used: 37.14 sec turn, 3.00 sec retreat
+[00:08:37.84] ••• Damage dealt: 8 (1 kill) to Veals (Veals), 79 to Leonardos (Leonardos)
+[00:08:37.84] ••• Leonardos (Leonardos) starts turn
+[00:08:47.44] ••• Leonardos (Leonardos) fires Ninja Rope
+[00:08:48.72] ••• Leonardos (Leonardos) fires Ninja Rope
+[00:09:14.04] ••• Leonardos (Leonardos) fires Cluster Bomb (3 sec, min bounce)
+[00:09:18.40] ••• Leonardos (Leonardos) ends turn; time used: 32.46 sec turn, 3.00 sec retreat
+[00:09:25.98] ••• Damage dealt: 40 (1 kill) to Veals (Veals)
+[00:09:25.98] ••• Veals (Veals) starts turn
+[00:09:43.50] ••• Veals (Veals) fires Jet Pack
+[00:09:51.96] ••• Veals (Veals) used 30 units of Jet Pack fuel
+[00:10:07.50] ••• Veals (Veals) fires Shotgun
+[00:10:23.76] ••• Veals (Veals) fires Shotgun
+[00:10:27.92] ••• Veals (Veals) ends turn; time used: 44.10 sec turn, 3.00 sec retreat
+[00:10:35.58] ••• Damage dealt: 26 (2 kills) to Leonardos (Leonardos)
+[00:10:35.58] ••• Leonardos (Leonardos) starts turn
+[00:10:47.98] ••• Leonardos (Leonardos) fires Dynamite
+[00:10:53.16] ••• Leonardos (Leonardos) ends turn; time used: 8.36 sec turn, 5.00 sec retreat
+[00:11:05.60] ••• Damage dealt: 65 (1 kill) to Veals (Veals)
+[00:11:05.60] ••• Veals (Veals) starts turn
+[00:11:37.10] ••• Veals (Veals) fires Grenade (1 sec, min bounce)
+[00:11:40.94] ••• Veals (Veals) ends turn; time used: 28.62 sec turn, 3.00 sec retreat
+[00:11:44.44] ••• Damage dealt: 41 to Leonardos (Leonardos)
+[00:11:44.44] ••• Leonardos (Leonardos) starts turn
+[00:11:53.98] ••• Leonardos (Leonardos) fires Ninja Rope
+[00:12:02.36] ••• Leonardos (Leonardos) loses turn due to loss of control; time used: 15.48 sec turn, 0.00 sec retreat
+[00:12:06.72] ••• Damage dealt: 1 to Leonardos (Leonardos)
+[00:12:06.72] ••• Veals (Veals) starts turn
+[00:12:11.42] ••• Veals (Veals) fires Grenade (3 sec, min bounce)
+[00:12:14.50] ••• Veals (Veals) loses turn due to loss of control; time used: 3.18 sec turn, 2.86 sec retreat
+[00:12:21.94] ••• Damage dealt: 5 to Veals (Veals), 88 (1 kill) to Leonardos (Leonardos)
+[00:12:21.94] ••• Leonardos (Leonardos) starts turn
+[00:12:41.26] ••• Leonardos (Leonardos) uses Bungee
+[00:12:55.78] ••• Leonardos (Leonardos) fires Sheep
+[00:12:58.96] ••• Leonardos (Leonardos) ends turn; time used: 31.40 sec turn, 3.00 sec retreat
+[00:13:12.72] ••• Damage dealt: 90 (1 kill) to Veals (Veals)
+[00:13:12.72] ••• Veals (Veals) starts turn
+[00:13:19.60] ••• Veals (Veals) fires Ninja Rope
+[00:13:40.52] [Veals] gg
+[00:13:46.02] [Leonardos] gg
+[00:13:47.02] ••• Veals (Veals) fires Low Gravity
+[00:13:52.56] ••• Veals (Veals) fires Sheep
+[00:13:52.70] ••• Veals (Veals) loses turn due to loss of control; time used: 38.36 sec turn, 0.00 sec retreat
+[00:14:08.24] ••• Damage dealt: 67 to Veals (Veals), 49 (1 kill) to Leonardos (Leonardos)
+[00:14:08.26] ••• Game Ends - Round Finished
+[00:14:08.26] *** Round Finish acknowledged by Veals
+[00:14:10.46] *** Round Finish acknowledged by Leonardos
+
+Team time totals:
+Veals (Veals):         Turn: 00:05:06.48, Retreat: 00:00:27.86, Total: 00:05:34.34, Turn count: 9
+Leonardos (Leonardos): Turn: 00:04:03.58, Retreat: 00:00:25.18, Total: 00:04:28.76, Turn count: 9
+
+Total Jet Pack fuel used: 30
+
+End of round 2
+
+Round time: 0:14:08
+Total game time elapsed: Unknown
+
+Veals wins the match!
+
+Worm of the round: ?ep?? 6 (Veals)
+
+Most kills with one shot: 2 - ?ep?? 7 (Veals)
+Most damage with one shot: 141 - ?ep?? 7 (Veals)
