@@ -27,6 +27,7 @@ function formatStats(stats) {
       .filter((val, idx, arr) => arr.indexOf(val) === idx)
   if (users.length !== 2) throw Error(`There should be two users but found: ${users}`);
   return {
+    id: stats.gameId,
     home: users[0],
     homeWon: new Boolean(Math.ceil(Math.random()*2-1)), // TODO find game winner
     away: users[1],
