@@ -23,16 +23,11 @@ const post = fd => new Promise((resolve, reject) => {
 // TODO EventEmitter: continue with result as they arrive.
 // Together with Zemke/waaas#10 this could be super cool.
 api.waaas = files => new Promise(async (resolve, reject) => {
-  const result = {}
+  const result = []
   for (const file in files) {
     const fd = new FormData()
     fd.set('replay', await fileFromPath(files[file].path))
-    try {
-      result[file] = { success: await post(fd) }
-    } catch (error) {
-      console.error('caught error from WAaaS', error);
-      result[file] = { error }
-    }
+    result.push(await post(fd));
   }
   return resolve(result)
 });
