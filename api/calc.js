@@ -25,13 +25,7 @@ function formatStats(stats) {
   const users = stats.turns
       .map(t => t.user)
       .filter((val, idx, arr) => arr.indexOf(val) === idx)
-  if (users.length > 2) throw Error(`There are ${users.length} users but max is 2.`);
-  users.reduce((acc, team, idx) => {
-    if (team in acc && acc[team].includes(curr)) {
-      acc[curr].push(curr)
-    }
-    return acc;
-  }, {});
+  if (users.length !== 2) throw Error(`There should be two users but found: ${users}`);
   return {
     home: users[0],
     homeScore: 0, // TODO
