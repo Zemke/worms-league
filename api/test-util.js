@@ -1,7 +1,9 @@
 function assert(actual, expected) {
-  console.assert(
-    JSON.stringify(actual) === JSON.stringify(expected),
-    JSON.stringify({ actual, expected }, null, 2));
+  const res = JSON.stringify(actual) === JSON.stringify(expected);
+  if (!res) {
+    console.log(JSON.stringify({ actual, expected }, null, 2))
+    throw Error('assertion failed');
+  }
 }
 
 function test(title, fn) {
