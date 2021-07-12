@@ -1,9 +1,15 @@
 const https = require('https');
 const { FormData, fileFromPath } = require('formdata-node');
+const fs = require('fs');
+const path = require('path');
 
 const api = {};
 
 const post = fd => new Promise((resolve, reject) => {
+  if (process.env.WAAAS_MOCK === '1') {
+    return resolve(JSON.parse(
+      fs.readFileSync(path.join(__dirname, '../resources/stats.json'))));
+  }
   const options = {
     hostname: 'waaas.zemke.io',
     port: 443,
