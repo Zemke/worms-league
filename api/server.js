@@ -208,7 +208,7 @@ async function readBody(req, json = true) {
   });
 }
 
-function tx(fn) {
+async function tx(fn) {
   const client = await pool.connect();
   try {
     await client.query('BEGIN')
