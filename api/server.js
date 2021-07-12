@@ -131,18 +131,20 @@ async function onApi(req, res) {
       }
     }
 
-    const stats = await waaas.waaas(form.files);
+    const statsArr = await waaas.waaas(form.files);
+    const game = calc.reduceStats(statsArr.map(s => calc.formatStats(s)));
+    // TODO Find players in DB or create
 
     await tx(async client => {
-      const result = await client.query(
-          `insert into game (home_id, away_id, score_home, score_away)
-           values ($1, $2, $3, $4)`,
-          ['']);
+      for (const stats of statsArr) {
+        const result = await client.query(
+            `insert into game (home_id, away_id, score_home, score_away)
+             values ($1, $2, $3, $4)`,
+            [ game.homeScore, game.awayScore ]);
+      }
     });
 
     return end(res, {hello: 'world'});
-
-    // TODO connection pooling and transactions
 
     //const result = await pool.query(
     //    `insert into game (home_id, away_id, score_home, score_away)
