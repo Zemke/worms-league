@@ -1,0 +1,175 @@
+Game ID: "12343463"
+Game Started at 2021-02-19 00:12:24 GMT
+Game Engine Version: 3.8.1
+File Format Version: 3.7.3.0 - 3.8.1
+Exported with Version: 3.8.1 (Steam)
+
+Red:  "chesnut"    as "gusis" [Local Player] [Host]
+Blue: "tlocoselli" as "Noias"
+
+[00:00:00.00] ••• gusis (chesnut) starts turn
+[00:00:16.42] ••• gusis (chesnut) fires Shotgun
+[00:00:30.82] ••• gusis (chesnut) fires Shotgun
+[00:00:34.98] ••• gusis (chesnut) ends turn; time used: 20.56 sec turn, 3.00 sec retreat
+[00:00:39.40] ••• Damage dealt: 48 to Noias (tlocoselli)
+[00:00:39.40] ••• Noias (tlocoselli) starts turn
+[00:01:01.78] ••• Noias (tlocoselli) fires Grenade (5 sec, min bounce)
+[00:01:06.86] ••• Noias (tlocoselli) ends turn; time used: 18.32 sec turn, 3.00 sec retreat
+[00:01:11.68] ••• Damage dealt: 45 to gusis (chesnut)
+[00:01:11.68] ••• gusis (chesnut) starts turn
+[00:01:26.88] ••• gusis (chesnut) fires Ninja Rope
+[00:01:46.90] ••• gusis (chesnut) fires Sheep
+[00:01:51.92] ••• gusis (chesnut) ends turn; time used: 31.16 sec turn, 5.00 sec retreat
+[00:01:55.88] ••• Damage dealt: 62 to Noias (tlocoselli)
+[00:01:55.88] ••• Noias (tlocoselli) starts turn
+[00:02:05.72] ••• Noias (tlocoselli) fires Fire Punch
+[00:02:10.52] ••• Noias (tlocoselli) ends turn; time used: 8.74 sec turn, 3.00 sec retreat
+[00:02:14.94] ••• Damage dealt: 30 to gusis (chesnut)
+[00:02:14.94] ••• gusis (chesnut) starts turn
+[00:02:26.06] ••• gusis (chesnut) fires Shotgun
+[00:02:45.42] ••• gusis (chesnut) fires Shotgun
+[00:02:49.58] ••• gusis (chesnut) ends turn; time used: 19.98 sec turn, 3.00 sec retreat
+[00:02:54.00] ••• Damage dealt: 83 to Noias (tlocoselli)
+[00:02:54.00] ••• Noias (tlocoselli) starts turn
+[00:02:57.22] ••• Noias (tlocoselli) fires Ninja Rope
+[00:02:58.88] ••• Noias (tlocoselli) fires Ninja Rope
+[00:03:00.34] ••• Noias (tlocoselli) fires Ninja Rope
+[00:03:01.98] ••• Noias (tlocoselli) fires Ninja Rope
+[00:03:26.10] ••• Noias (tlocoselli) fires Dynamite
+[00:03:31.28] ••• Noias (tlocoselli) ends turn; time used: 30.44 sec turn, 5.00 sec retreat
+[00:03:36.30] ••• Damage dealt: 143 to gusis (chesnut)
+[00:03:36.30] ••• gusis (chesnut) starts turn
+[00:03:40.12] ••• gusis (chesnut) fires Bazooka
+[00:03:44.72] ••• gusis (chesnut) ends turn; time used: 2.54 sec turn, 3.00 sec retreat
+[00:03:49.48] ••• Damage dealt: 44 to Noias (tlocoselli)
+[00:03:49.48] ••• Noias (tlocoselli) starts turn
+[00:03:58.86] ••• Noias (tlocoselli) fires Shotgun
+[00:04:04.90] ••• Noias (tlocoselli) fires Shotgun
+[00:04:09.06] ••• Noias (tlocoselli) ends turn; time used: 9.44 sec turn, 3.00 sec retreat
+[00:04:18.42] ••• Damage dealt: 45 (1 kill) to gusis (chesnut)
+[00:04:18.42] ••• gusis (chesnut) starts turn
+[00:04:20.44] ••• gusis (chesnut) fires Select Worm
+[00:04:40.22] ••• gusis (chesnut) fires Ninja Rope
+[00:04:59.20] ••• gusis (chesnut) fires Shotgun
+[00:05:16.26] ••• gusis (chesnut) fires Shotgun
+[00:05:20.42] ••• gusis (chesnut) ends turn; time used: 42.24 sec turn, 3.00 sec retreat
+[00:05:25.64] ••• Damage dealt: 90 (1 kill) to Noias (tlocoselli)
+[00:05:25.64] ••• Noias (tlocoselli) starts turn
+[00:05:31.02] ••• Noias (tlocoselli) fires Shotgun
+[00:05:40.92] ••• Noias (tlocoselli) fires Shotgun
+[00:05:45.08] ••• Noias (tlocoselli) ends turn; time used: 12.50 sec turn, 3.00 sec retreat
+[00:05:53.00] ••• Damage dealt: 18 (1 kill) to gusis (chesnut)
+[00:05:53.00] ••• gusis (chesnut) starts turn
+[00:06:05.22] ••• gusis (chesnut) fires Longbow
+[00:06:13.04] ••• gusis (chesnut) fires Longbow
+[00:06:16.12] ••• gusis (chesnut) ends turn; time used: 14.96 sec turn, 3.00 sec retreat
+[00:06:26.42] ••• Damage dealt: 30 (1 kill) to Noias (tlocoselli)
+[00:06:26.42] ••• Noias (tlocoselli) starts turn
+[00:06:31.40] ••• Noias (tlocoselli) fires Flame Thrower
+[00:06:38.88] ••• Noias (tlocoselli) ends turn; time used: 3.42 sec turn, 3.00 sec retreat
+[00:06:48.58] ••• Damage dealt: 90 (1 kill) to gusis (chesnut)
+[00:06:48.58] ••• gusis (chesnut) starts turn
+[00:06:53.16] ••• gusis (chesnut) fires Dynamite
+[00:06:58.34] ••• gusis (chesnut) ends turn; time used: 2.48 sec turn, 5.00 sec retreat
+[00:07:05.28] ••• Damage dealt: 84 to Noias (tlocoselli)
+[00:07:05.28] ••• Noias (tlocoselli) starts turn
+[00:07:11.98] ••• Noias (tlocoselli) fires Ninja Rope
+[00:07:34.60] ••• Noias (tlocoselli) fires Cluster Bomb (5 sec, min bounce)
+[00:07:40.58] ••• Noias (tlocoselli) ends turn; time used: 28.18 sec turn, 3.00 sec retreat
+[00:07:43.86] ••• Damage dealt: 24 to gusis (chesnut)
+[00:07:43.86] ••• gusis (chesnut) starts turn
+[00:07:52.90] ••• gusis (chesnut) fires Fire Punch
+[00:07:57.70] ••• gusis (chesnut) ends turn; time used: 7.48 sec turn, 3.00 sec retreat
+[00:08:06.64] ••• Damage dealt: 27 (1 kill) to Noias (tlocoselli)
+[00:08:06.64] ••• Noias (tlocoselli) starts turn
+[00:08:08.72] ••• Noias (tlocoselli) fires Select Worm
+[00:08:20.94] ••• Noias (tlocoselli) fires Sheep
+[00:08:23.96] ••• Noias (tlocoselli) ends turn; time used: 12.44 sec turn, 3.00 sec retreat
+[00:08:28.24] ••• Damage dealt: 46 to gusis (chesnut)
+[00:08:28.24] ••• gusis (chesnut) starts turn
+[00:08:43.76] ••• gusis (chesnut) fires Grenade (5 sec, min bounce)
+[00:08:48.86] ••• gusis (chesnut) ends turn; time used: 10.52 sec turn, 3.00 sec retreat
+[00:08:52.88] ••• Noias (tlocoselli) starts turn
+[00:08:57.74] ••• Noias (tlocoselli) fires Ninja Rope
+[00:09:07.76] ••• Noias (tlocoselli) fires Fire Punch
+[00:09:10.42] ••• Noias (tlocoselli) loses turn due to loss of control; time used: 12.84 sec turn, 0.86 sec retreat
+[00:09:20.02] ••• Damage dealt: 19 (1 kill) to gusis (chesnut), 2 to Noias (tlocoselli)
+[00:09:20.02] ••• gusis (chesnut) starts turn
+[00:09:32.58] ••• gusis (chesnut) fires Ninja Rope
+[00:09:48.02] ••• gusis (chesnut) fires Shotgun
+[00:09:54.40] ••• gusis (chesnut) fires Shotgun
+[00:09:58.56] ••• gusis (chesnut) ends turn; time used: 26.20 sec turn, 3.00 sec retreat
+[00:10:02.98] ••• Damage dealt: 47 to Noias (tlocoselli)
+[00:10:02.98] ••• Noias (tlocoselli) starts turn
+[00:10:05.94] ••• Noias (tlocoselli) fires Select Worm
+[00:10:30.12] ••• Noias (tlocoselli) fires Grenade (5 sec, min bounce)
+[00:10:35.24] ••• Noias (tlocoselli) loses turn due to loss of control; time used: 24.36 sec turn, 3.00 sec retreat
+[00:10:44.54] ••• Damage dealt: 44 (1 kill) to gusis (chesnut), 9 to Noias (tlocoselli)
+[00:10:44.54] ••• gusis (chesnut) starts turn
+[00:10:51.56] ••• gusis (chesnut) fires Uzi
+[00:10:55.76] ••• gusis (chesnut) ends turn; time used: 6.10 sec turn, 3.00 sec retreat
+[00:11:05.12] ••• Damage dealt: 6 (1 kill) to Noias (tlocoselli)
+[00:11:05.12] ••• Noias (tlocoselli) starts turn
+[00:11:12.02] ••• Noias (tlocoselli) fires Parachute
+[00:11:25.94] ••• Noias (tlocoselli) fires Ninja Rope
+[00:11:26.92] ••• Noias (tlocoselli) fires Ninja Rope
+[00:11:27.80] ••• Noias (tlocoselli) fires Ninja Rope
+[00:11:28.60] ••• Noias (tlocoselli) fires Ninja Rope
+[00:11:44.30] ••• Noias (tlocoselli) fires Petrol Bomb
+[00:11:48.70] ••• Noias (tlocoselli) ends turn; time used: 35.58 sec turn, 3.00 sec retreat
+[00:11:51.38] ••• Damage dealt: 2 to gusis (chesnut)
+[00:11:51.38] ••• gusis (chesnut) starts turn
+[00:12:00.96] ••• gusis (chesnut) fires Shotgun
+[00:12:05.50] ••• gusis (chesnut) fires Shotgun
+[00:12:09.66] ••• gusis (chesnut) ends turn; time used: 8.96 sec turn, 3.00 sec retreat
+[00:12:17.82] ••• Damage dealt: 46 (1 kill) to Noias (tlocoselli)
+[00:12:17.82] ••• Noias (tlocoselli) starts turn
+[00:12:23.64] ••• Noias (tlocoselli) fires Mine
+[00:12:28.82] ••• Noias (tlocoselli) ends turn; time used: 4.52 sec turn, 5.00 sec retreat
+[00:12:31.60] ••• gusis (chesnut) starts turn
+[00:12:45.42] ••• gusis (chesnut) fires Ninja Rope
+[00:13:01.62] ••• gusis (chesnut) fires Shotgun
+[00:13:11.92] ••• gusis (chesnut) fires Shotgun
+[00:13:16.08] ••• gusis (chesnut) ends turn; time used: 33.68 sec turn, 3.00 sec retreat
+[00:13:21.36] ••• Damage dealt: 3 to gusis (chesnut), 86 to Noias (tlocoselli)
+[00:13:21.36] ••• Noias (tlocoselli) starts turn
+[00:13:24.92] ••• Noias (tlocoselli) fires Select Worm
+[00:13:32.58] ••• Noias (tlocoselli) fires Petrol Bomb
+[00:13:36.66] ••• Noias (tlocoselli) ends turn; time used: 7.82 sec turn, 3.00 sec retreat
+[00:13:40.84] ••• Damage dealt: 14 to gusis (chesnut)
+[00:13:40.84] ••• gusis (chesnut) starts turn
+[00:13:52.90] ••• gusis (chesnut) fires Grenade (5 sec, min bounce)
+[00:13:58.00] ••• gusis (chesnut) ends turn; time used: 11.72 sec turn, 3.00 sec retreat
+[00:14:07.52] ••• Damage dealt: 26 (1 kill) to Noias (tlocoselli)
+[00:14:07.52] ••• Noias (tlocoselli) starts turn
+[00:14:21.82] ••• Noias (tlocoselli) fires Teleport
+[00:14:24.30] ••• Noias (tlocoselli) ends turn; time used: 11.88 sec turn, 0.02 sec retreat
+[00:14:24.90] ••• gusis (chesnut) starts turn
+[00:14:26.08] ••• gusis (chesnut) fires Select Worm
+[00:14:33.98] ••• gusis (chesnut) fires Ninja Rope
+[00:14:34.84] ••• gusis (chesnut) fires Ninja Rope
+[00:15:04.22] ••• gusis (chesnut) fires Shotgun
+[00:15:15.92] ••• gusis (chesnut) fires Shotgun
+[00:15:20.08] ••• gusis (chesnut) ends turn; time used: 40.12 sec turn, 3.00 sec retreat
+[00:15:23.10] [tlocoselli] gg
+[00:15:25.94] [chesnut] gg
+[00:15:29.74] [tlocoselli] rm?
+[00:15:33.78] [chesnut] ok
+[00:15:34.04] ••• Damage dealt: 30 (2 kills) to Noias (tlocoselli)
+[00:15:34.06] ••• Game Ends - Round Finished
+[00:15:34.06] *** Round Finish acknowledged by chesnut
+[00:15:36.60] *** Round Finish acknowledged by tlocoselli
+
+Team time totals:
+gusis (chesnut):    Turn: 00:04:38.70, Retreat: 00:00:49.00, Total: 00:05:27.70, Turn count: 15
+Noias (tlocoselli): Turn: 00:03:40.48, Retreat: 00:00:40.88, Total: 00:04:21.36, Turn count: 14
+
+End of round 1
+
+Round time: 0:15:34
+Total game time elapsed: 0:15:34
+
+gusis wins the round.
+
+Worm of the round: gusinco (gusis)
+Most damage with one shot: 143 - Maniaco do Park (Noias)

@@ -1,0 +1,162 @@
+Game ID: "12316872"
+Game Started at 2021-02-10 16:41:16 GMT
+Game Engine Version: 3.8
+File Format Version: 3.7.3.0 - 3.8.1
+Exported with Version: 3.8.1 (Steam)
+
+Red:   "NNNxDario" as "algunos" [Local Player] [Host]
+Green: "Alpha"     as "Commando"
+
+[00:00:00.00] [NNNxDario] hf
+[00:00:00.00] ••• Commando (Alpha) starts turn
+[00:00:03.46] [Alpha] hf
+[00:00:13.88] ••• Commando (Alpha) fires Select Worm
+[00:00:27.46] ••• Commando (Alpha) fires Parachute
+[00:00:39.20] ••• Commando (Alpha) fires Longbow
+[00:00:54.22] ••• Commando (Alpha) fires Longbow
+[00:00:57.30] ••• Commando (Alpha) ends turn; time used: 43.88 sec turn, 3.00 sec retreat
+[00:01:14.82] ••• Damage dealt: 241 (2 kills) to algunos (NNNxDario)
+[00:01:14.82] ••• algunos (NNNxDario) starts turn
+[00:01:24.64] ••• algunos (NNNxDario) fires Ninja Rope
+[00:01:47.20] ••• algunos (NNNxDario) fires Longbow
+[00:02:05.22] ••• algunos (NNNxDario) fires Longbow
+[00:02:08.30] ••• algunos (NNNxDario) ends turn; time used: 44.40 sec turn, 3.00 sec retreat
+[00:02:19.50] ••• Damage dealt: 105 (1 kill) to Commando (Alpha)
+[00:02:19.50] ••• Commando (Alpha) starts turn
+[00:02:28.04] ••• Commando (Alpha) fires Select Worm
+[00:02:47.12] ••• Commando (Alpha) fires Ninja Rope
+[00:03:07.20] ••• Commando (Alpha) fires Dynamite
+[00:03:12.38] ••• Commando (Alpha) ends turn; time used: 44.40 sec turn, 5.00 sec retreat
+[00:03:19.10] ••• Damage dealt: 126 to algunos (NNNxDario)
+[00:03:19.10] ••• algunos (NNNxDario) starts turn
+[00:03:21.72] ••• algunos (NNNxDario) fires Select Worm
+[00:03:26.70] ••• algunos (NNNxDario) fires Select Worm
+[00:03:37.44] ••• algunos (NNNxDario) fires Ninja Rope
+[00:03:39.20] ••• algunos (NNNxDario) fires Ninja Rope
+[00:03:40.16] ••• algunos (NNNxDario) fires Ninja Rope
+[00:04:04.26] ••• algunos (NNNxDario) fires Baseball Bat
+[00:04:07.84] ••• algunos (NNNxDario) ends turn; time used: 42.54 sec turn, 3.00 sec retreat
+[00:04:12.46] ••• Damage dealt: 90 (1 kill) to Commando (Alpha)
+[00:04:12.46] ••• Commando (Alpha) starts turn
+[00:04:23.22] ••• Commando (Alpha) fires Ninja Rope
+[00:04:24.56] ••• Commando (Alpha) fires Ninja Rope
+[00:04:55.92] ••• Commando (Alpha) fires Homing Missile
+[00:05:00.52] ••• Commando (Alpha) ends turn; time used: 38.00 sec turn, 3.00 sec retreat
+[00:05:06.92] ••• Damage dealt: 90 (1 kill) to algunos (NNNxDario)
+[00:05:06.92] ••• algunos (NNNxDario) starts turn
+[00:05:12.68] ••• algunos (NNNxDario) fires Ninja Rope
+[00:05:13.44] ••• algunos (NNNxDario) fires Ninja Rope
+[00:05:25.00] ••• algunos (NNNxDario) uses Parachute
+[00:05:38.56] ••• algunos (NNNxDario) fires Shotgun
+[00:05:57.76] ••• algunos (NNNxDario) fires Shotgun
+[00:06:01.92] ••• algunos (NNNxDario) ends turn; time used: 42.56 sec turn, 3.00 sec retreat
+[00:06:06.34] ••• Damage dealt: 74 to Commando (Alpha)
+[00:06:06.34] ••• Commando (Alpha) starts turn
+[00:06:16.46] ••• Commando (Alpha) fires Jet Pack
+[00:06:39.48] ••• Commando (Alpha) fires Grenade (5 sec, min bounce)
+[00:06:44.48] ••• Commando (Alpha) used 30 (24) units of Jet Pack fuel
+[00:06:44.50] ••• Commando (Alpha) ends turn; time used: 28.96 sec turn, 5.00 sec retreat
+[00:06:53.86] ••• Damage dealt: 29 (1 kill) to algunos (NNNxDario)
+[00:06:53.86] ••• algunos (NNNxDario) starts turn
+[00:06:56.48] ••• algunos (NNNxDario) fires Select Worm
+[00:07:39.58] ••• algunos (NNNxDario) fires Mine
+[00:07:44.76] ••• algunos (NNNxDario) ends turn; time used: 43.36 sec turn, 5.00 sec retreat
+[00:07:54.24] ••• Damage dealt: 90 (1 kill) to Commando (Alpha)
+[00:07:54.24] ••• Commando (Alpha) starts turn
+[00:08:19.06] ••• Commando (Alpha) fires Ninja Rope
+[00:08:32.04] ••• Commando (Alpha) fires Shotgun
+[00:08:42.28] ••• Commando (Alpha) fires Shotgun
+[00:08:46.44] ••• Commando (Alpha) ends turn; time used: 33.82 sec turn, 3.00 sec retreat
+[00:08:51.66] ••• Damage dealt: 19 (1 kill) to algunos (NNNxDario)
+[00:08:51.66] ••• algunos (NNNxDario) starts turn
+[00:09:02.10] ••• algunos (NNNxDario) fires Jet Pack
+[00:09:15.04] ••• algunos (NNNxDario) fires Holy Hand-Grenade
+[00:09:19.00] ••• algunos (NNNxDario) used 30 (22) units of Jet Pack fuel
+[00:09:20.06] ••• algunos (NNNxDario) ends turn; time used: 21.86 sec turn, 5.00 sec retreat
+[00:09:27.90] ••• Damage dealt: 84 to Commando (Alpha)
+[00:09:27.90] ••• Commando (Alpha) starts turn
+[00:09:37.12] ••• Commando (Alpha) fires Low Gravity
+[00:09:50.64] ••• Commando (Alpha) fires Ninja Rope
+[00:10:09.14] ••• Commando (Alpha) fires Shotgun
+[00:10:17.72] ••• Commando (Alpha) fires Shotgun
+[00:10:21.88] ••• Commando (Alpha) ends turn; time used: 39.72 sec turn, 3.00 sec retreat
+[00:10:30.34] ••• Damage dealt: 38 (1 kill) to algunos (NNNxDario)
+[00:10:30.34] ••• algunos (NNNxDario) starts turn
+[00:11:02.14] ••• algunos (NNNxDario) fires Air Strike
+[00:11:05.62] ••• algunos (NNNxDario) ends turn; time used: 26.80 sec turn, 3.00 sec retreat
+[00:11:09.16] ••• Damage dealt: 53 to Commando (Alpha)
+[00:11:09.16] ••• Commando (Alpha) starts turn
+[00:11:32.68] ••• Commando (Alpha) fires Select Worm
+[00:11:39.68] ••• Commando (Alpha) fires Battle Axe
+[00:11:43.94] ••• Commando (Alpha) ends turn; time used: 27.76 sec turn, 3.00 sec retreat
+[00:11:48.36] ••• Damage dealt: 43 to algunos (NNNxDario)
+[00:11:48.36] ••• algunos (NNNxDario) starts turn
+[00:12:13.78] ••• algunos (NNNxDario) fires Grenade (5 sec, min bounce)
+[00:12:19.60] ••• algunos (NNNxDario) ends turn; time used: 23.56 sec turn, 3.00 sec retreat
+[00:12:24.78] ••• Damage dealt: 35 to Commando (Alpha)
+[00:12:24.78] ••• Commando (Alpha) starts turn
+[00:12:37.14] ••• Commando (Alpha) uses Bungee
+[00:12:52.32] ••• Commando (Alpha) fires Skunk
+[00:12:56.96] ••• Commando (Alpha) ends turn; time used: 22.54 sec turn, 3.00 sec retreat
+[00:13:01.20] ••• algunos (NNNxDario) starts turn
+[00:13:23.32] ••• algunos (NNNxDario) fires Girder
+[00:13:26.40] ••• algunos (NNNxDario) ends turn; time used: 17.12 sec turn, 3.00 sec retreat
+[00:13:28.42] ••• Commando (Alpha) starts turn
+[00:13:53.50] ••• Commando (Alpha) fires Bazooka
+[00:13:57.98] ••• Commando (Alpha) ends turn; time used: 21.30 sec turn, 3.00 sec retreat
+[00:14:02.00] ••• algunos (NNNxDario) starts turn
+[00:14:40.96] ••• algunos (NNNxDario) fires Dynamite
+[00:14:46.00] ••• algunos (NNNxDario) loses turn due to loss of control; time used: 37.22 sec turn, 4.86 sec retreat
+[00:14:51.80] ••• Damage dealt: 11 to algunos (NNNxDario), 70 to Commando (Alpha)
+[00:14:51.80] ••• Commando (Alpha) starts turn
+[00:15:01.96] ••• Commando (Alpha) fires Fire Punch
+[00:15:06.76] ••• Commando (Alpha) ends turn; time used: 7.62 sec turn, 3.00 sec retreat
+[00:15:09.18] ••• algunos (NNNxDario) starts turn
+[00:15:17.50] ••• algunos (NNNxDario) fires Shotgun
+[00:15:32.00] ••• algunos (NNNxDario) fires Shotgun
+[00:15:36.16] ••• algunos (NNNxDario) ends turn; time used: 19.60 sec turn, 3.00 sec retreat
+[00:15:40.58] ••• Damage dealt: 25 to Commando (Alpha)
+[00:15:40.58] ••• Commando (Alpha) starts turn
+[00:16:00.34] ••• Commando (Alpha) fires Ninja Rope
+[00:16:00.86] ••• Commando (Alpha) fires Ninja Rope
+[00:16:01.46] ••• Commando (Alpha) fires Ninja Rope
+[00:16:12.36] ••• Commando (Alpha) fires Mad Cow (herd of 2)
+[00:16:16.78] ••• Commando (Alpha) loses turn due to loss of control; time used: 26.34 sec turn, 3.00 sec retreat
+[00:16:32.06] ••• Damage dealt: 90 (1 kill) to algunos (NNNxDario), 59 (1 kill) to Commando (Alpha)
+[00:16:32.06] ••• algunos (NNNxDario) starts turn
+[00:16:35.04] ••• algunos (NNNxDario) fires Ninja Rope
+[00:17:01.26] ••• algunos (NNNxDario) fires Shotgun
+[00:17:19.74] ••• algunos (NNNxDario) fires Shotgun
+[00:17:23.90] ••• algunos (NNNxDario) ends turn; time used: 36.00 sec turn, 3.00 sec retreat
+[00:17:32.62] ••• Damage dealt: 26 (2 kills) to Commando (Alpha)
+[00:17:32.62] ••• Commando (Alpha) starts turn
+[00:18:10.50] ••• Commando (Alpha) fires Teleport
+[00:18:10.92] ••• resetting Jet Pack fuel use to 0
+[00:18:12.98] ••• Commando (Alpha) ends turn; time used: 32.88 sec turn, 0.02 sec retreat
+[00:18:15.00] ••• algunos (NNNxDario) starts turn
+[00:18:22.52] ••• algunos (NNNxDario) fires Low Gravity
+[00:18:27.32] ••• algunos (NNNxDario) fires Shotgun
+[00:18:54.84] ••• algunos (NNNxDario) fires Shotgun
+[00:18:56.76] [NNNxDario] gg
+[00:18:57.26] ••• algunos (NNNxDario) ends turn; time used: 27.08 sec turn, 1.28 sec retreat
+[00:18:59.32] [Alpha] gg
+[00:19:11.14] ••• Damage dealt: 9 (2 kills) to Commando (Alpha)
+[00:19:11.16] ••• Game Ends - Round Finished
+[00:19:11.16] *** Round Finish acknowledged by NNNxDario
+[00:19:13.70] *** Round Finish acknowledged by Alpha
+
+Team time totals:
+algunos (NNNxDario): Turn: 00:06:22.10, Retreat: 00:00:40.14, Total: 00:07:02.24, Turn count: 12
+Commando (Alpha):    Turn: 00:06:07.22, Retreat: 00:00:37.02, Total: 00:06:44.24, Turn count: 12
+
+End of round 2
+
+Round time: 0:19:11
+Total game time elapsed: Unknown
+
+algunos wins the match!
+
+Worm of the round: alguien (algunos)
+
+Most kills with one shot: 2 - 3 (Commando)
+Most damage with one shot: 194 - 7 (Commando)

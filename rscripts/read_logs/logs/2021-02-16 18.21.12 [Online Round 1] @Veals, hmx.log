@@ -1,0 +1,192 @@
+Game ID: "12336716"
+Game Started at 2021-02-16 18:21:12 GMT
+Game Engine Version: 3.8.1
+File Format Version: 3.7.3.0 - 3.8.1
+Exported with Version: 3.8.1 (Steam)
+
+Red:  "Veals" as "Veals" [Local Player] [Host]
+Blue: "hmx"   as "Rape_rs"
+
+[00:00:00.00] ••• Rape_rs (hmx) starts turn
+[00:00:00.02] [Veals] hf
+[00:00:08.84] ••• Rape_rs (hmx) fires Select Worm
+[00:00:16.52] ••• Rape_rs (hmx) fires Ninja Rope
+[00:00:24.56] ••• Rape_rs (hmx) fires Ninja Rope
+[00:00:47.76] ••• Rape_rs (hmx) fires Dynamite
+[00:00:52.78] ••• Rape_rs (hmx) ends turn; time used: 42.30 sec turn, 5.00 sec retreat
+[00:00:59.24] ••• Damage dealt: 177 to Veals (Veals)
+[00:00:59.24] ••• Veals (Veals) starts turn
+[00:01:13.50] ••• Veals (Veals) fires Ninja Rope
+[00:01:28.20] ••• Veals (Veals) fires Low Gravity
+[00:01:30.66] ••• Veals (Veals) fires Baseball Bat
+[00:01:34.24] ••• Veals (Veals) ends turn; time used: 26.66 sec turn, 3.00 sec retreat
+[00:01:41.10] [hmx] glhf
+[00:01:41.34] ••• Damage dealt: 90 (1 kill) to Rape_rs (hmx)
+[00:01:41.34] ••• Rape_rs (hmx) starts turn
+[00:01:46.40] ••• Rape_rs (hmx) fires Select Worm
+[00:02:01.96] ••• Rape_rs (hmx) fires Longbow
+[00:02:10.30] ••• Rape_rs (hmx) fires Longbow
+[00:02:13.38] ••• Rape_rs (hmx) ends turn; time used: 20.94 sec turn, 3.00 sec retreat
+[00:02:17.80] ••• Damage dealt: 37 to Veals (Veals)
+[00:02:17.80] ••• Veals (Veals) starts turn
+[00:02:26.10] ••• Veals (Veals) uses Bungee
+[00:02:33.30] ••• Veals (Veals) fires Select Worm
+[00:02:40.18] ••• Veals (Veals) fires Ninja Rope
+[00:02:47.16] [hmx] ouch
+[00:03:00.10] ••• Veals (Veals) fires Teleport
+[00:03:02.58] ••• Veals (Veals) ends turn; time used: 39.24 sec turn, 0.02 sec retreat
+[00:03:04.60] ••• Rape_rs (hmx) starts turn
+[00:03:23.10] ••• Rape_rs (hmx) fires Dragon Ball
+[00:03:27.18] ••• Rape_rs (hmx) ends turn; time used: 13.50 sec turn, 3.00 sec retreat
+[00:03:31.04] ••• Damage dealt: 32 to Veals (Veals)
+[00:03:31.04] ••• Veals (Veals) starts turn
+[00:03:51.46] ••• Veals (Veals) fires Select Worm
+[00:04:02.86] ••• Veals (Veals) fires Shotgun
+[00:04:13.72] ••• Veals (Veals) fires Shotgun
+[00:04:14.64] ••• Veals (Veals) loses turn due to loss of control; time used: 31.96 sec turn, 0.00 sec retreat
+[00:04:28.52] ••• Damage dealt: 3 to Veals (Veals), 90 (1 kill) to Rape_rs (hmx)
+[00:04:28.52] ••• Rape_rs (hmx) starts turn
+[00:04:40.56] ••• Rape_rs (hmx) fires Jet Pack
+[00:04:54.82] ••• Rape_rs (hmx) fires Mine
+[00:04:59.82] ••• Rape_rs (hmx) used 30 (28) units of Jet Pack fuel
+[00:04:59.84] ••• Rape_rs (hmx) ends turn; time used: 20.88 sec turn, 5.00 sec retreat
+[00:05:10.18] ••• Damage dealt: 90 (1 kill) to Veals (Veals)
+[00:05:10.18] ••• Veals (Veals) starts turn
+[00:05:12.28] ••• Veals (Veals) fires Jet Pack
+[00:05:21.30] ••• Veals (Veals) used 30 units of Jet Pack fuel
+[00:05:26.78] ••• Veals (Veals) fires Ninja Rope
+[00:05:36.86] ••• Veals (Veals) fires Grenade (5 sec, min bounce)
+[00:05:40.98] ••• Veals (Veals) loses turn due to loss of control; time used: 25.04 sec turn, 4.10 sec retreat
+[00:05:51.34] ••• Damage dealt: 5 to Veals (Veals), 81 to Rape_rs (hmx)
+[00:05:51.34] ••• Rape_rs (hmx) starts turn
+[00:06:09.38] ••• Rape_rs (hmx) fires Bazooka
+[00:06:13.98] ••• Rape_rs (hmx) ends turn; time used: 13.04 sec turn, 3.00 sec retreat
+[00:06:17.54] ••• Damage dealt: 44 to Veals (Veals)
+[00:06:17.54] ••• Veals (Veals) starts turn
+[00:06:23.84] ••• Veals (Veals) fires Shotgun
+[00:06:34.34] ••• Veals (Veals) fires Shotgun
+[00:06:38.50] ••• Veals (Veals) ends turn; time used: 6.38 sec turn, 3.00 sec retreat
+[00:06:42.92] ••• Damage dealt: 50 to Rape_rs (hmx)
+[00:06:42.92] ••• Rape_rs (hmx) starts turn
+[00:06:53.54] ••• Rape_rs (hmx) fires Ninja Rope
+[00:06:54.12] ••• Rape_rs (hmx) fires Ninja Rope
+[00:06:54.62] ••• Rape_rs (hmx) fires Ninja Rope
+[00:07:13.12] ••• Rape_rs (hmx) fires Baseball Bat
+[00:07:16.70] ••• Rape_rs (hmx) ends turn; time used: 25.10 sec turn, 3.00 sec retreat
+[00:07:19.70] ••• Damage dealt: 43 to Veals (Veals)
+[00:07:19.70] ••• Veals (Veals) starts turn
+[00:07:57.34] ••• Veals (Veals) fires Battle Axe
+[00:08:02.24] ••• Veals (Veals) ends turn; time used: 32.64 sec turn, 3.00 sec retreat
+[00:08:06.66] ••• Damage dealt: 45 to Rape_rs (hmx)
+[00:08:06.66] ••• Rape_rs (hmx) starts turn
+[00:08:27.66] ••• Rape_rs (hmx) fires Shotgun
+[00:08:36.48] ••• Rape_rs (hmx) fires Shotgun
+[00:08:40.64] ••• Rape_rs (hmx) ends turn; time used: 18.94 sec turn, 3.00 sec retreat
+[00:08:45.06] ••• Damage dealt: 50 to Veals (Veals)
+[00:08:45.06] ••• Veals (Veals) starts turn
+[00:09:06.58] ••• Veals (Veals) fires Air Strike
+[00:09:10.06] ••• Veals (Veals) ends turn; time used: 21.02 sec turn, 3.00 sec retreat
+[00:09:19.86] ••• Damage dealt: 9 (1 kill) to Rape_rs (hmx)
+[00:09:19.86] ••• Rape_rs (hmx) starts turn
+[00:09:22.16] ••• Rape_rs (hmx) fires Shotgun
+[00:09:27.10] ••• Rape_rs (hmx) fires Shotgun
+[00:09:31.26] ••• Rape_rs (hmx) ends turn; time used: 2.36 sec turn, 3.00 sec retreat
+[00:09:40.62] ••• Damage dealt: 31 (1 kill) to Veals (Veals)
+[00:09:40.62] ••• Veals (Veals) starts turn
+[00:09:45.72] ••• Veals (Veals) fires Ninja Rope
+[00:10:00.46] ••• Veals (Veals) fires Dynamite
+[00:10:05.50] ••• Veals (Veals) loses turn due to loss of control; time used: 18.60 sec turn, 4.86 sec retreat
+[00:10:21.58] ••• Damage dealt: 9 to Veals (Veals), 135 (2 kills) to Rape_rs (hmx)
+[00:10:21.58] ••• Rape_rs (hmx) starts turn
+[00:10:32.08] ••• Rape_rs (hmx) fires Air Strike
+[00:10:35.56] ••• Rape_rs (hmx) ends turn; time used: 5.50 sec turn, 3.00 sec retreat
+[00:10:44.72] ••• Damage dealt: 24 (1 kill) to Veals (Veals)
+[00:10:44.72] ••• Veals (Veals) starts turn
+[00:10:59.38] ••• Veals (Veals) fires Napalm Strike
+[00:11:02.86] ••• Veals (Veals) ends turn; time used: 11.76 sec turn, 3.00 sec retreat
+[00:11:14.94] ••• Damage dealt: 49 to Rape_rs (hmx)
+[00:11:14.94] ••• Rape_rs (hmx) starts turn
+[00:11:52.50] ••• Rape_rs (hmx) fires Parachute
+[00:11:58.86] ••• Rape_rs (hmx) fires Shotgun
+[00:12:04.50] ••• Rape_rs (hmx) fires Shotgun
+[00:12:08.66] ••• Rape_rs (hmx) ends turn; time used: 39.58 sec turn, 3.00 sec retreat
+[00:12:18.66] ••• Damage dealt: 40 (1 kill) to Veals (Veals)
+[00:12:18.66] ••• Veals (Veals) starts turn
+[00:12:46.22] ••• Veals (Veals) fires Select Worm
+[00:13:00.58] ••• Veals (Veals) fires Sheep
+[00:13:01.96] ••• Veals (Veals) loses turn due to loss of control; time used: 36.86 sec turn, 1.20 sec retreat
+[00:13:12.32] ••• Damage dealt: 12 to Veals (Veals), 56 (1 kill) to Rape_rs (hmx)
+[00:13:12.32] ••• Rape_rs (hmx) starts turn
+[00:13:32.36] ••• Rape_rs (hmx) fires Grenade (2 sec, min bounce)
+[00:13:36.02] ••• Rape_rs (hmx) ends turn; time used: 15.64 sec turn, 3.00 sec retreat
+[00:13:39.74] ••• Damage dealt: 17 to Veals (Veals)
+[00:13:39.74] ••• Veals (Veals) starts turn
+[00:13:53.52] ••• Veals (Veals) fires Ninja Rope
+[00:14:11.78] ••• Veals (Veals) fires Grenade (5 sec, min bounce)
+[00:14:17.56] ••• Veals (Veals) ends turn; time used: 26.78 sec turn, 3.00 sec retreat
+[00:14:21.12] ••• Damage dealt: 1 to Veals (Veals)
+[00:14:21.12] ••• Rape_rs (hmx) starts turn
+[00:14:38.42] ••• Rape_rs (hmx) fires Homing Missile
+[00:14:43.02] ••• Rape_rs (hmx) ends turn; time used: 14.58 sec turn, 3.00 sec retreat
+[00:14:49.30] ••• Damage dealt: 39 to Veals (Veals)
+[00:14:49.30] ••• Veals (Veals) starts turn
+[00:15:08.94] ••• Veals (Veals) fires Bazooka
+[00:15:13.54] ••• Veals (Veals) ends turn; time used: 16.96 sec turn, 3.00 sec retreat
+[00:15:21.68] ••• Damage dealt: 27 (1 kill) to Rape_rs (hmx)
+[00:15:21.68] ••• Rape_rs (hmx) starts turn
+[00:15:24.24] ••• Rape_rs (hmx) fires Ninja Rope
+[00:15:41.88] ••• Rape_rs (hmx) fires Shotgun
+[00:15:52.20] ••• Rape_rs (hmx) fires Shotgun
+[00:15:56.36] ••• Rape_rs (hmx) ends turn; time used: 21.84 sec turn, 3.00 sec retreat
+[00:16:05.72] ••• Damage dealt: 31 (2 kills) to Veals (Veals)
+[00:16:05.72] ••• Veals (Veals) starts turn
+[00:16:27.48] ••• Veals (Veals) fires Petrol Bomb
+[00:16:31.78] ••• Veals (Veals) ends turn; time used: 17.74 sec turn, 3.00 sec retreat
+[00:16:36.30] ••• Rape_rs (hmx) starts turn
+[00:16:46.38] ••• Rape_rs (hmx) fires Napalm Strike
+[00:16:49.86] ••• Rape_rs (hmx) ends turn; time used: 5.08 sec turn, 3.00 sec retreat
+[00:17:05.84] ••• Damage dealt: 18 (1 kill) to Veals (Veals)
+[00:17:05.84] ••• Veals (Veals) starts turn
+[00:17:54.74] ••• Veals (Veals) fires Girder
+[00:17:57.82] ••• Veals (Veals) ends turn; time used: 43.90 sec turn, 3.00 sec retreat
+[00:17:59.84] ••• Rape_rs (hmx) starts turn
+[00:18:00.70] ••• Rape_rs (hmx) fires Fire Punch
+[00:18:05.50] ••• Rape_rs (hmx) ends turn; time used: 0.54 sec turn, 3.00 sec retreat
+[00:18:09.52] ••• Veals (Veals) starts turn
+[00:18:45.60] ••• Veals (Veals) fires Homing Missile
+[00:18:50.20] ••• Veals (Veals) ends turn; time used: 31.08 sec turn, 3.00 sec retreat
+[00:18:58.56] ••• Damage dealt: 41 to Rape_rs (hmx)
+[00:18:58.56] ••• Rape_rs (hmx) starts turn
+[00:19:05.58] [Veals] gg
+[00:19:07.20] [hmx] its gg
+[00:19:09.48] ••• Rape_rs (hmx) fires Ninja Rope
+[00:19:10.44] ••• Rape_rs (hmx) fires Ninja Rope
+[00:19:11.04] ••• Rape_rs (hmx) fires Ninja Rope
+[00:19:11.72] ••• Rape_rs (hmx) fires Ninja Rope
+[00:19:23.74] ••• Rape_rs (hmx) fires Kamikaze
+[00:19:24.70] ••• Rape_rs (hmx) loses turn due to loss of control; time used: 23.44 sec turn, 0.00 sec retreat
+[00:19:28.80] [Veals] no kami xd
+[00:19:33.04] [Veals] lol
+[00:19:39.34] [hmx] its only game
+[00:19:39.74] [hmx] ez
+[00:19:42.24] *** Round Finish acknowledged by hmx
+[00:19:42.48] [Veals] ok
+[00:19:44.24] ••• Damage dealt: 17 (1 kill) to Veals (Veals), 47 (1 kill) to Rape_rs (hmx)
+[00:19:44.26] ••• Game Ends - Round Finished
+[00:19:44.26] *** Round Finish acknowledged by Veals
+
+Team time totals:
+Veals (Veals): Turn: 00:06:26.62, Retreat: 00:00:40.18, Total: 00:07:06.80, Turn count: 15
+Rape_rs (hmx): Turn: 00:04:43.26, Retreat: 00:00:49.00, Total: 00:05:32.26, Turn count: 16
+
+Total Jet Pack fuel used: 60
+
+End of round 1
+
+Round time: 0:19:44
+Total game time elapsed: 0:19:44
+
+The round was drawn.
+
+Worm of the round: Dope Deala (Rape_rs)
+Most damage with one shot: 177 - Dope Deala (Rape_rs)

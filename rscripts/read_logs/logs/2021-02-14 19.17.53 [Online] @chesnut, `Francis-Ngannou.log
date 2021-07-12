@@ -1,0 +1,185 @@
+Game ID: "12331225"
+Game Started at 2021-02-14 19:17:53 GMT
+Game Engine Version: 3.8.1
+File Format Version: 3.7.3.0 - 3.8.1
+Exported with Version: 3.8.1 (Steam)
+
+Red:  "chesnut"          as "gusis" [Local Player] [Host]
+Blue: "`Francis-Ngannou" as "`Francis-Ngannou"
+
+[00:00:00.00] ••• `Francis-Ngannou (`Francis-Ngannou) starts turn
+[00:00:13.62] ••• `Francis-Ngannou (`Francis-Ngannou) fires Select Worm
+[00:00:45.18] ••• `Francis-Ngannou (`Francis-Ngannou) fires Shotgun
+[00:00:53.42] ••• `Francis-Ngannou (`Francis-Ngannou) fires Shotgun
+[00:00:57.58] ••• `Francis-Ngannou (`Francis-Ngannou) ends turn; time used: 43.04 sec turn, 3.00 sec retreat
+[00:01:02.00] ••• Damage dealt: 50 to gusis (chesnut)
+[00:01:02.00] ••• gusis (chesnut) starts turn
+[00:01:03.66] ••• gusis (chesnut) fires Low Gravity
+[00:01:20.20] ••• gusis (chesnut) fires Baseball Bat
+[00:01:23.78] ••• gusis (chesnut) ends turn; time used: 17.64 sec turn, 3.00 sec retreat
+[00:01:30.96] ••• Damage dealt: 90 (1 kill) to `Francis-Ngannou (`Francis-Ngannou)
+[00:01:30.96] ••• `Francis-Ngannou (`Francis-Ngannou) starts turn
+[00:01:37.16] ••• `Francis-Ngannou (`Francis-Ngannou) fires Select Worm
+[00:01:45.22] ••• `Francis-Ngannou (`Francis-Ngannou) fires Low Gravity
+[00:02:01.16] ••• `Francis-Ngannou (`Francis-Ngannou) fires Baseball Bat
+[00:02:04.26] ••• `Francis-Ngannou (`Francis-Ngannou) ends turn; time used: 25.08 sec turn, 3.00 sec retreat
+[00:02:11.82] ••• Damage dealt: 90 (1 kill) to gusis (chesnut)
+[00:02:11.82] ••• gusis (chesnut) starts turn
+[00:02:16.86] ••• gusis (chesnut) fires Select Worm
+[00:02:21.88] ••• gusis (chesnut) fires Shotgun
+[00:02:34.08] ••• gusis (chesnut) fires Shotgun
+[00:02:38.24] ••• gusis (chesnut) ends turn; time used: 12.58 sec turn, 3.00 sec retreat
+[00:02:51.56] ••• Damage dealt: 8 to gusis (chesnut), 90 (1 kill) to `Francis-Ngannou (`Francis-Ngannou)
+[00:02:51.56] ••• `Francis-Ngannou (`Francis-Ngannou) starts turn
+[00:03:12.66] ••• `Francis-Ngannou (`Francis-Ngannou) fires Skunk
+[00:03:18.72] ••• `Francis-Ngannou (`Francis-Ngannou) ends turn; time used: 18.54 sec turn, 3.00 sec retreat
+[00:03:25.00] ••• Damage dealt: 5 to gusis (chesnut)
+[00:03:25.00] ••• gusis (chesnut) starts turn
+[00:03:31.12] ••• gusis (chesnut) fires Flame Thrower
+[00:03:38.60] ••• gusis (chesnut) ends turn; time used: 6.10 sec turn, 3.00 sec retreat
+[00:03:49.64] ••• Damage dealt: 90 (1 kill) to `Francis-Ngannou (`Francis-Ngannou)
+[00:03:49.64] ••• `Francis-Ngannou (`Francis-Ngannou) starts turn
+[00:04:05.68] ••• `Francis-Ngannou (`Francis-Ngannou) fires Ninja Rope
+[00:04:25.80] ••• `Francis-Ngannou (`Francis-Ngannou) fires Mad Cow (herd of 2)
+[00:04:29.84] ••• `Francis-Ngannou (`Francis-Ngannou) ends turn; time used: 34.52 sec turn, 3.00 sec retreat
+[00:04:37.80] ••• Damage dealt: 127 (1 kill) to gusis (chesnut)
+[00:04:37.80] ••• gusis (chesnut) starts turn
+[00:04:55.78] ••• gusis (chesnut) fires Ninja Rope
+[00:05:26.36] ••• gusis (chesnut) fires Mine
+[00:05:31.54] ••• gusis (chesnut) ends turn; time used: 43.56 sec turn, 5.00 sec retreat
+[00:05:42.34] ••• Damage dealt: 54 to `Francis-Ngannou (`Francis-Ngannou)
+[00:05:42.34] ••• `Francis-Ngannou (`Francis-Ngannou) starts turn
+[00:06:09.56] ••• `Francis-Ngannou (`Francis-Ngannou) fires Shotgun
+[00:06:19.72] ••• `Francis-Ngannou (`Francis-Ngannou) fires Shotgun
+[00:06:23.88] ••• `Francis-Ngannou (`Francis-Ngannou) ends turn; time used: 31.12 sec turn, 3.00 sec retreat
+[00:06:33.58] ••• Damage dealt: 45 (1 kill) to gusis (chesnut)
+[00:06:33.58] ••• gusis (chesnut) starts turn
+[00:06:50.84] ••• gusis (chesnut) fires Grenade (5 sec, min bounce)
+[00:06:55.94] ••• gusis (chesnut) ends turn; time used: 16.64 sec turn, 3.00 sec retreat
+[00:07:02.64] ••• Damage dealt: 45 to `Francis-Ngannou (`Francis-Ngannou)
+[00:07:02.64] ••• `Francis-Ngannou (`Francis-Ngannou) starts turn
+[00:07:09.50] ••• `Francis-Ngannou (`Francis-Ngannou) fires Ninja Rope
+[00:07:11.56] ••• `Francis-Ngannou (`Francis-Ngannou) fires Ninja Rope
+[00:07:31.52] ••• `Francis-Ngannou (`Francis-Ngannou) fires Shotgun
+[00:07:47.34] ••• `Francis-Ngannou (`Francis-Ngannou) fires Shotgun
+[00:07:51.50] ••• `Francis-Ngannou (`Francis-Ngannou) ends turn; time used: 36.16 sec turn, 3.00 sec retreat
+[00:07:56.12] ••• Damage dealt: 51 to gusis (chesnut)
+[00:07:56.12] ••• gusis (chesnut) starts turn
+[00:08:04.58] ••• gusis (chesnut) fires Parachute
+[00:08:20.96] ••• gusis (chesnut) fires Dynamite
+[00:08:26.14] ••• gusis (chesnut) ends turn; time used: 22.98 sec turn, 5.00 sec retreat
+[00:08:37.46] ••• Damage dealt: 90 (1 kill) to `Francis-Ngannou (`Francis-Ngannou)
+[00:08:37.46] ••• `Francis-Ngannou (`Francis-Ngannou) starts turn
+[00:08:44.30] ••• `Francis-Ngannou (`Francis-Ngannou) fires Air Strike
+[00:08:47.78] ••• `Francis-Ngannou (`Francis-Ngannou) ends turn; time used: 3.16 sec turn, 3.00 sec retreat
+[00:08:58.58] ••• Damage dealt: 50 (1 kill) to gusis (chesnut)
+[00:08:58.58] ••• gusis (chesnut) starts turn
+[00:09:12.54] ••• gusis (chesnut) fires Jet Pack
+[00:09:14.84] ••• gusis (chesnut) fires Sheep
+[00:09:19.84] ••• gusis (chesnut) used 30 (9) units of Jet Pack fuel
+[00:09:21.24] ••• gusis (chesnut) ends turn; time used: 15.32 sec turn, 5.00 sec retreat
+[00:09:27.52] ••• Damage dealt: 74 to `Francis-Ngannou (`Francis-Ngannou)
+[00:09:27.52] ••• `Francis-Ngannou (`Francis-Ngannou) starts turn
+[00:09:37.68] ••• `Francis-Ngannou (`Francis-Ngannou) fires Jet Pack
+[00:09:52.40] ••• `Francis-Ngannou (`Francis-Ngannou) fires Dynamite
+[00:09:57.40] ••• `Francis-Ngannou (`Francis-Ngannou) used 30 (25) units of Jet Pack fuel
+[00:09:57.42] ••• `Francis-Ngannou (`Francis-Ngannou) ends turn; time used: 23.48 sec turn, 5.00 sec retreat
+[00:10:07.68] ••• Damage dealt: 76 to gusis (chesnut)
+[00:10:07.68] ••• gusis (chesnut) starts turn
+[00:10:17.40] ••• gusis (chesnut) fires Ninja Rope
+[00:10:19.84] ••• gusis (chesnut) fires Ninja Rope
+[00:10:39.16] ••• gusis (chesnut) fires Mine
+[00:10:44.18] ••• gusis (chesnut) ends turn; time used: 27.16 sec turn, 5.00 sec retreat
+[00:10:56.64] ••• Damage dealt: 45 (1 kill) to `Francis-Ngannou (`Francis-Ngannou)
+[00:10:56.64] ••• `Francis-Ngannou (`Francis-Ngannou) starts turn
+[00:11:20.90] ••• `Francis-Ngannou (`Francis-Ngannou) fires Napalm Strike
+[00:11:24.38] ••• `Francis-Ngannou (`Francis-Ngannou) ends turn; time used: 19.26 sec turn, 3.00 sec retreat
+[00:11:33.72] ••• Damage dealt: 33 to gusis (chesnut), 1 to `Francis-Ngannou (`Francis-Ngannou)
+[00:11:33.72] ••• gusis (chesnut) starts turn
+[00:11:45.08] ••• gusis (chesnut) fires Select Worm
+[00:11:53.56] ••• gusis (chesnut) fires Ninja Rope
+[00:12:13.02] ••• gusis (chesnut) fires Bazooka
+[00:12:17.62] ••• gusis (chesnut) ends turn; time used: 38.34 sec turn, 3.00 sec retreat
+[00:12:26.98] ••• Damage dealt: 27 (1 kill) to `Francis-Ngannou (`Francis-Ngannou)
+[00:12:26.98] ••• `Francis-Ngannou (`Francis-Ngannou) starts turn
+[00:12:33.38] ••• `Francis-Ngannou (`Francis-Ngannou) fires Select Worm
+[00:12:45.46] ••• `Francis-Ngannou (`Francis-Ngannou) fires Sheep
+[00:12:48.48] ••• `Francis-Ngannou (`Francis-Ngannou) ends turn; time used: 13.42 sec turn, 3.00 sec retreat
+[00:12:55.52] ••• Damage dealt: 59 to gusis (chesnut)
+[00:12:55.52] ••• gusis (chesnut) starts turn
+[00:13:06.62] ••• gusis (chesnut) fires Shotgun
+[00:13:10.74] ••• gusis (chesnut) fires Shotgun
+[00:13:14.90] ••• gusis (chesnut) ends turn; time used: 13.10 sec turn, 3.00 sec retreat
+[00:13:24.60] ••• Damage dealt: 24 (1 kill) to `Francis-Ngannou (`Francis-Ngannou)
+[00:13:24.60] ••• `Francis-Ngannou (`Francis-Ngannou) starts turn
+[00:13:44.06] ••• `Francis-Ngannou (`Francis-Ngannou) fires Blow Torch
+[00:13:48.74] ••• `Francis-Ngannou (`Francis-Ngannou) ends turn; time used: 17.60 sec turn, 3.00 sec retreat
+[00:13:52.76] ••• gusis (chesnut) starts turn
+[00:14:03.08] ••• gusis (chesnut) fires Ninja Rope
+[00:14:15.24] ••• gusis (chesnut) uses Bungee
+[00:14:38.86] ••• resetting Jet Pack fuel use to 0
+[00:14:38.86] ••• gusis (chesnut) fires Teleport
+[00:14:40.90] ••• gusis (chesnut) ends turn; time used: 41.10 sec turn, 0.02 sec retreat
+[00:14:41.54] ••• `Francis-Ngannou (`Francis-Ngannou) starts turn
+[00:15:24.58] ••• `Francis-Ngannou (`Francis-Ngannou) fires Girder
+[00:15:27.66] ••• `Francis-Ngannou (`Francis-Ngannou) ends turn; time used: 41.76 sec turn, 3.00 sec retreat
+[00:15:29.68] ••• gusis (chesnut) starts turn
+[00:15:33.80] ••• gusis (chesnut) fires Blow Torch
+[00:15:41.42] ••• gusis (chesnut) ends turn; time used: 2.70 sec turn, 3.00 sec retreat
+[00:15:44.12] ••• `Francis-Ngannou (`Francis-Ngannou) starts turn
+[00:15:53.52] ••• `Francis-Ngannou (`Francis-Ngannou) fires Girder
+[00:15:56.60] ••• `Francis-Ngannou (`Francis-Ngannou) ends turn; time used: 6.56 sec turn, 3.00 sec retreat
+[00:15:58.62] ••• gusis (chesnut) starts turn
+[00:16:04.86] ••• gusis (chesnut) fires Shotgun
+[00:16:18.20] ••• gusis (chesnut) fires Shotgun
+[00:16:22.36] ••• gusis (chesnut) ends turn; time used: 17.08 sec turn, 3.00 sec retreat
+[00:16:26.38] ••• `Francis-Ngannou (`Francis-Ngannou) starts turn
+[00:16:53.50] ••• `Francis-Ngannou (`Francis-Ngannou) fires Teleport
+[00:16:55.98] ••• `Francis-Ngannou (`Francis-Ngannou) ends turn; time used: 26.78 sec turn, 0.02 sec retreat
+[00:16:56.58] ••• gusis (chesnut) starts turn
+[00:16:57.50] ••• gusis (chesnut) fires Select Worm
+[00:17:15.84] ••• gusis (chesnut) fires Petrol Bomb
+[00:17:20.54] ••• gusis (chesnut) ends turn; time used: 18.52 sec turn, 3.00 sec retreat
+[00:17:24.96] ••• Damage dealt: 30 to `Francis-Ngannou (`Francis-Ngannou)
+[00:17:24.96] ••• `Francis-Ngannou (`Francis-Ngannou) starts turn
+[00:17:47.52] ••• `Francis-Ngannou (`Francis-Ngannou) fires Petrol Bomb
+[00:17:52.18] ••• `Francis-Ngannou (`Francis-Ngannou) ends turn; time used: 17.56 sec turn, 3.00 sec retreat
+[00:17:54.52] ••• gusis (chesnut) starts turn
+[00:18:31.72] ••• gusis (chesnut) fires Homing Missile
+[00:18:36.32] ••• gusis (chesnut) ends turn; time used: 32.20 sec turn, 3.00 sec retreat
+[00:18:40.16] ••• Damage dealt: 25 to `Francis-Ngannou (`Francis-Ngannou)
+[00:18:40.16] ••• `Francis-Ngannou (`Francis-Ngannou) starts turn
+[00:18:47.44] ••• `Francis-Ngannou (`Francis-Ngannou) fires Petrol Bomb
+[00:18:52.12] ••• `Francis-Ngannou (`Francis-Ngannou) ends turn; time used: 6.70 sec turn, 3.00 sec retreat
+[00:19:02.84] ••• Damage dealt: 33 (1 kill) to gusis (chesnut)
+[00:19:02.84] ••• gusis (chesnut) starts turn
+[00:19:47.64] ••• gusis (chesnut) fires Girder
+[00:19:50.72] ••• gusis (chesnut) ends turn; time used: 39.80 sec turn, 3.00 sec retreat
+[00:19:52.74] ••• `Francis-Ngannou (`Francis-Ngannou) starts turn
+[00:20:05.50] ••• `Francis-Ngannou (`Francis-Ngannou) fires Teleport
+[00:20:07.98] ••• `Francis-Ngannou (`Francis-Ngannou) ends turn; time used: 7.76 sec turn, 0.02 sec retreat
+[00:20:08.54] ••• gusis (chesnut) starts turn
+[00:20:21.40] ••• gusis (chesnut) fires Ninja Rope
+[00:20:30.46] ••• gusis (chesnut) uses Parachute
+[00:20:43.38] ••• gusis (chesnut) fires Shotgun
+[00:20:47.46] ••• gusis (chesnut) ends turn; time used: 29.88 sec turn, 0.00 sec retreat
+[00:20:51.26] *** `Francis-Ngannou is quitting
+[00:20:51.66] *** `Francis-Ngannou is disconnecting due to quitting
+[00:20:52.14] *** `Francis-Ngannou disconnected due to quitting
+[00:20:59.12] ••• Damage dealt: 35 (1 kill) to `Francis-Ngannou (`Francis-Ngannou)
+[00:20:59.14] ••• Game Ends - Round Finished
+[00:20:59.14] *** Round Finish acknowledged by chesnut
+
+Team time totals:
+gusis (chesnut):                     Turn: 00:06:34.70, Retreat: 00:00:53.02, Total: 00:07:27.72, Turn count: 17
+`Francis-Ngannou (`Francis-Ngannou): Turn: 00:06:12.50, Retreat: 00:00:47.04, Total: 00:06:59.54, Turn count: 17
+
+End of round 1
+
+Round time: 0:20:59
+Total game time elapsed: 0:20:59
+
+gusis wins the round.
+
+Worm of the round: gusatres (gusis)
+Most damage with one shot: 127 - `FranG~ (`Francis-Ngannou)

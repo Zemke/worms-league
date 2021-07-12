@@ -1,0 +1,120 @@
+Game ID: "12312244"
+Game Started at 2021-02-08 20:12:09 GMT
+Game Engine Version: 3.8.1
+File Format Version: 3.7.3.0 - 3.8.1
+Exported with Version: 3.8.1 (Steam)
+
+Red:  "NNNxDario" as "algunos" [Local Player] [Host]
+Blue: "FFF"       as "Vucicu Pederu!!!"
+
+[00:00:00.00] ••• algunos (NNNxDario) starts turn
+[00:00:02.06] [NNNxDario] hf
+[00:00:08.40] [FFF] gl
+[00:00:27.18] ••• algunos (NNNxDario) fires Select Worm
+[00:00:35.88] ••• algunos (NNNxDario) fires Grenade (3 sec, min bounce)
+[00:00:39.14] ••• algunos (NNNxDario) ends turn; time used: 30.82 sec turn, 3.00 sec retreat
+[00:00:44.16] ••• Damage dealt: 43 to Vucicu Pederu!!! (FFF)
+[00:00:44.16] ••• Vucicu Pederu!!! (FFF) starts turn
+[00:00:49.66] ••• Vucicu Pederu!!! (FFF) fires Select Worm
+[00:01:30.04] ••• Vucicu Pederu!!! (FFF) fires Cluster Bomb (3 sec, min bounce)
+[00:01:33.30] ••• Vucicu Pederu!!! (FFF) ends turn; time used: 41.48 sec turn, 3.00 sec retreat
+[00:01:38.96] ••• Damage dealt: 67 to algunos (NNNxDario)
+[00:01:38.96] ••• algunos (NNNxDario) starts turn
+[00:01:46.62] ••• algunos (NNNxDario) fires Shotgun
+[00:01:54.78] ••• algunos (NNNxDario) fires Shotgun
+[00:01:58.94] ••• algunos (NNNxDario) ends turn; time used: 13.70 sec turn, 3.00 sec retreat
+[00:02:03.70] ••• Damage dealt: 25 to Vucicu Pederu!!! (FFF)
+[00:02:03.70] ••• Vucicu Pederu!!! (FFF) starts turn
+[00:02:18.08] ••• Vucicu Pederu!!! (FFF) fires Ninja Rope
+[00:02:34.78] ••• Vucicu Pederu!!! (FFF) fires Mine
+[00:02:39.96] ••• Vucicu Pederu!!! (FFF) ends turn; time used: 28.70 sec turn, 5.00 sec retreat
+[00:02:46.54] ••• Damage dealt: 46 to algunos (NNNxDario)
+[00:02:46.54] ••• algunos (NNNxDario) starts turn
+[00:02:56.00] ••• algunos (NNNxDario) fires Longbow
+[00:03:13.04] ••• algunos (NNNxDario) fires Longbow
+[00:03:16.12] ••• algunos (NNNxDario) ends turn; time used: 21.06 sec turn, 3.00 sec retreat
+[00:03:20.74] ••• Damage dealt: 137 (2 kills) to Vucicu Pederu!!! (FFF)
+[00:03:20.74] ••• Vucicu Pederu!!! (FFF) starts turn
+[00:03:33.08] ••• Vucicu Pederu!!! (FFF) fires Ninja Rope
+[00:03:47.78] ••• Vucicu Pederu!!! (FFF) fires Shotgun
+[00:03:58.32] ••• Vucicu Pederu!!! (FFF) fires Shotgun
+[00:04:02.48] ••• Vucicu Pederu!!! (FFF) ends turn; time used: 30.16 sec turn, 3.00 sec retreat
+[00:04:06.90] ••• Damage dealt: 50 to algunos (NNNxDario)
+[00:04:06.90] ••• algunos (NNNxDario) starts turn
+[00:04:14.10] ••• algunos (NNNxDario) fires Skunk
+[00:04:17.28] ••• algunos (NNNxDario) ends turn; time used: 2.20 sec turn, 3.00 sec retreat
+[00:04:22.82] ••• Damage dealt: 5 to Vucicu Pederu!!! (FFF)
+[00:04:22.82] ••• Vucicu Pederu!!! (FFF) starts turn
+[00:04:47.74] ••• Vucicu Pederu!!! (FFF) fires Skunk
+[00:04:52.80] ••• Vucicu Pederu!!! (FFF) ends turn; time used: 19.92 sec turn, 3.00 sec retreat
+[00:04:59.00] ••• algunos (NNNxDario) starts turn
+[00:05:20.06] ••• algunos (NNNxDario) fires Homing Pigeon
+[00:05:23.14] ••• algunos (NNNxDario) ends turn; time used: 20.60 sec turn, 3.00 sec retreat
+[00:05:31.30] ••• Damage dealt: 87 to Vucicu Pederu!!! (FFF)
+[00:05:31.30] ••• Vucicu Pederu!!! (FFF) starts turn
+[00:05:53.08] ••• Vucicu Pederu!!! (FFF) fires Sheep
+[00:05:57.06] ••• Vucicu Pederu!!! (FFF) ends turn; time used: 19.60 sec turn, 3.00 sec retreat
+[00:06:04.04] ••• Damage dealt: 81 to algunos (NNNxDario)
+[00:06:04.04] ••• algunos (NNNxDario) starts turn
+[00:06:05.96] ••• algunos (NNNxDario) fires Select Worm
+[00:06:20.10] ••• algunos (NNNxDario) fires Ninja Rope
+[00:06:20.76] ••• algunos (NNNxDario) fires Ninja Rope
+[00:06:21.86] ••• algunos (NNNxDario) fires Ninja Rope
+[00:06:49.86] ••• algunos (NNNxDario) fires Grenade (5 sec, min bounce)
+[00:06:55.12] ••• algunos (NNNxDario) ends turn; time used: 44.68 sec turn, 3.00 sec retreat
+[00:07:01.44] ••• Damage dealt: 46 to Vucicu Pederu!!! (FFF)
+[00:07:01.44] ••• Vucicu Pederu!!! (FFF) starts turn
+[00:07:18.88] ••• Vucicu Pederu!!! (FFF) fires Dynamite
+[00:07:23.92] ••• Vucicu Pederu!!! (FFF) loses turn due to loss of control; time used: 14.26 sec turn, 4.86 sec retreat
+[00:07:31.48] ••• Damage dealt: 73 to algunos (NNNxDario), 22 to Vucicu Pederu!!! (FFF)
+[00:07:31.48] ••• algunos (NNNxDario) starts turn
+[00:07:44.32] ••• algunos (NNNxDario) fires Homing Pigeon
+[00:07:47.40] ••• algunos (NNNxDario) ends turn; time used: 9.82 sec turn, 3.00 sec retreat
+[00:08:07.56] ••• Damage dealt: 16 to algunos (NNNxDario), 93 (2 kills) to Vucicu Pederu!!! (FFF)
+[00:08:07.56] ••• Vucicu Pederu!!! (FFF) starts turn
+[00:08:28.24] ••• Vucicu Pederu!!! (FFF) fires Shotgun
+[00:08:47.02] ••• Vucicu Pederu!!! (FFF) fires Shotgun
+[00:08:51.18] ••• Vucicu Pederu!!! (FFF) ends turn; time used: 29.20 sec turn, 3.00 sec retreat
+[00:09:02.22] ••• Damage dealt: 40 (1 kill) to algunos (NNNxDario)
+[00:09:02.22] ••• algunos (NNNxDario) starts turn
+[00:09:25.92] ••• algunos (NNNxDario) fires Grenade (5 sec, min bounce)
+[00:09:31.00] ••• algunos (NNNxDario) loses turn due to loss of control; time used: 23.68 sec turn, 3.00 sec retreat
+[00:09:50.96] ••• Damage dealt: 23 (1 kill) to algunos (NNNxDario), 65 (1 kill) to Vucicu Pederu!!! (FFF)
+[00:09:50.96] ••• Vucicu Pederu!!! (FFF) starts turn
+[00:10:34.18] ••• Vucicu Pederu!!! (FFF) fires Mad Cow (herd of 2)
+[00:10:35.38] ••• Vucicu Pederu!!! (FFF) loses turn due to loss of control; time used: 38.22 sec turn, 0.16 sec retreat
+[00:10:49.68] ••• Damage dealt: 79 (1 kill) to algunos (NNNxDario), 45 (1 kill) to Vucicu Pederu!!! (FFF)
+[00:10:49.68] ••• algunos (NNNxDario) starts turn
+[00:11:02.14] ••• algunos (NNNxDario) fires Select Worm
+[00:11:22.16] ••• algunos (NNNxDario) fires Shotgun
+[00:11:32.26] ••• algunos (NNNxDario) fires Shotgun
+[00:11:33.16] ••• algunos (NNNxDario) loses turn due to loss of control; time used: 31.90 sec turn, 0.00 sec retreat
+[00:11:48.10] ••• Damage dealt: 17 (1 kill) to algunos (NNNxDario), 68 (1 kill) to Vucicu Pederu!!! (FFF)
+[00:11:48.10] ••• Vucicu Pederu!!! (FFF) starts turn
+[00:11:58.70] ••• Vucicu Pederu!!! (FFF) fires Ninja Rope
+[00:12:10.92] ••• Vucicu Pederu!!! (FFF) fires Ninja Rope
+[00:12:32.40] ••• Vucicu Pederu!!! (FFF) fires Mine
+[00:12:37.58] ••• Vucicu Pederu!!! (FFF) ends turn; time used: 42.32 sec turn, 5.00 sec retreat
+[00:12:44.96] ••• Damage dealt: 35 to algunos (NNNxDario)
+[00:12:44.96] ••• algunos (NNNxDario) starts turn
+[00:12:46.08] ••• algunos (NNNxDario) fires Dynamite
+[00:12:51.12] ••• algunos (NNNxDario) loses turn due to loss of control; time used: 0.72 sec turn, 4.86 sec retreat
+[00:12:53.74] [NNNxDario] gg
+[00:13:06.54] ••• Damage dealt: 1 to algunos (NNNxDario), 44 (1 kill) to Vucicu Pederu!!! (FFF)
+[00:13:06.56] ••• Game Ends - Round Finished
+[00:13:06.56] *** Round Finish acknowledged by NNNxDario
+[00:13:09.08] *** Round Finish acknowledged by FFF
+
+Team time totals:
+algunos (NNNxDario):    Turn: 00:03:19.18, Retreat: 00:00:28.86, Total: 00:03:48.04, Turn count: 10
+Vucicu Pederu!!! (FFF): Turn: 00:04:23.86, Retreat: 00:00:30.02, Total: 00:04:53.88, Turn count: 9
+
+End of round 1
+
+Round time: 0:13:06
+Total game time elapsed: 0:13:06
+
+algunos wins the round.
+
+Worm of the round: nunca (algunos)
+Most damage with one shot: 124 - Dobbin (Vucicu Pederu!!!)
