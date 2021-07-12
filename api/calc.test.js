@@ -10,7 +10,7 @@ test('formatStats', () => {
     const expected = {
       gameId: '765',
       home: 'Monster`tit4',
-      homeWon: true,
+      winner: 'HOME',
       away: "NNN`Tade",
       date: '2020-12-20',
       time: '18:23:39',
@@ -20,7 +20,7 @@ test('formatStats', () => {
     const expected = {
       gameId: '765',
       home: 'Monster`tit4',
-      homeWon: false,
+      winner: "AWAY",
       away: "NNN`Tade",
       date: '2020-12-20',
       time: '18:23:39',

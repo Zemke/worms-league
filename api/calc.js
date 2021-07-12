@@ -26,10 +26,11 @@ function formatStats(stats) {
       .map(t => t.user)
       .filter((val, idx, arr) => arr.indexOf(val) === idx)
   if (users.length !== 2) throw Error(`There should be two users but found: ${users}`);
+  const homeWon = new Boolean(Math.ceil(Math.random()*2-1)); // TODO find game winner
   return {
     gameId: stats.gameId,
     home: users[0],
-    homeWon: new Boolean(Math.ceil(Math.random()*2-1)), // TODO find game winner
+    winner: homeWon ? 'HOME' : 'AWAY', // TODO Could also be DRAW
     away: users[1],
     date: '2020-12-20',
     time: '18:23:39',
