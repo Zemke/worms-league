@@ -22,9 +22,7 @@
 const firstRow = "\"filename\",\"p1\",\"p1w\",\"p2w\",\"p2\",\"date\",\"time\"";
 
 function formatStats(stats) {
-  const users = stats.turns
-      .map(t => t.user)
-      .filter((val, idx, arr) => arr.indexOf(val) === idx)
+  const users = assertUsers(stats.turns)
   if (users.length !== 2) throw Error(`There should be two users but found: ${users}`);
   const homeWon = new Boolean(Math.ceil(Math.random()*2-1)); // TODO find game winner
   return {
@@ -37,6 +35,32 @@ function formatStats(stats) {
   }
 }
 
+function reduceStats(statsArr) {
+  const users = statsArr.reduce((acc, s) => {
+    if (!acc.includes(s.home)) acc.push(s.home);
+    if (!acc.includes(s.away)) acc.push(s.away);
+    return acc;
+  }, []);
+  const scores = {
+    [users[0]]: 0,
+    [users[1]]: 0,
+  }
+  statsArr.reduce((acc, stats1) => {
+    if (stats1.winner === 'HOME') {
+      scores[stats1.home] += 1;
+    } else if (stats1.winner === 'AWAY') {
+      scores[stats1.away] += 1;
+    }
+    return acc;
+  }, {});
+  return {
+    home: users[0],
+    homeScore: scores[users[0]],
+    away: users[1],
+    awayScore: scores[users[1]],
+  }
+}
+
 function toCsv(stats) {
   let builder = firstRow;
   for (const stat in stats) {
@@ -45,5 +69,13 @@ function toCsv(stats) {
   return builder;
 }
 
-module.exports = { toCsv, formatStats };
+function assertUsers(turns) {
+  const users = turns
+      .map(t => t.user)
+      .filter((val, idx, arr) => arr.indexOf(val) === idx)
+  if (users.length !== 2) throw Error(`There should be two users but found: ${users}`);
+  return users;
+}
+
+module.exports = { toCsv, formatStats, reduceStats };
 

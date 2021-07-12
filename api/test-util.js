@@ -17,5 +17,9 @@ function test(title, fn) {
   }
 }
 
-module.exports = { assert, test };
+function assertTrue(condition) {
+  if (condition !== true) throw Error('assertion failed');
+}
+
+module.exports = { assert, assertTrue, test };
 
