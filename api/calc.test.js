@@ -1,6 +1,7 @@
 const calc = require('./calc');
 const fs = require('fs');
 const path = require('path');
+const { assert } = require('./test-util.js');
 
 const stats = JSON.parse(fs.readFileSync(path.join(__dirname, '../resources/stats.json')));
 
@@ -15,7 +16,7 @@ try {
     date: '2020-12-20',
     time: '18:23:39',
   };
-  console.assert(JSON.stringify(actual) === JSON.stringify(expected), JSON.stringify({ actual, expected }, null, 2));
+  assert(actual, expected);
 } catch {
   const expected = {
     gameId: '765',
@@ -25,8 +26,6 @@ try {
     date: '2020-12-20',
     time: '18:23:39',
   };
-  console.assert(JSON.stringify(actual) === JSON.stringify(expected), JSON.stringify({ actual, expected }, null, 2));
+  assert(actual, expected);
 }
-
-console.info('actual', actual);
 
