@@ -20,7 +20,7 @@ create table replay (
   content bytea not null,
   created timestamp not null default now(),
   modified timestamp not null default now()
-  constraint fk_replay_game_id foreign key (game_id) regerences game (id)
+  constraint fk_replay_game_id foreign key (game_id) references game (id)
 );
 
 create index uidx_replay_game_id on replay (game_id);
