@@ -19,7 +19,7 @@ create table replay (
   game_id bigint not null,
   content bytea not null,
   created timestamp not null default now(),
-  modified timestamp not null default now()
+  modified timestamp not null default now(),
   constraint fk_replay_game_id foreign key (game_id) references game (id)
 );
 
