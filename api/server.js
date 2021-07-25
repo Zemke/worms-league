@@ -6,6 +6,7 @@ const hash = require('./hash.js');
 const validate = require('./validate.js');
 const waaas = require('./waaas.js');
 const formidable = require('formidable');
+const { tx } = require('./tx.js');
 
 const pool = new Pool({ user: 'postgres', password: 'postgres' }) // TODO env vars
 
@@ -135,7 +136,7 @@ async function onApi(req, res) {
     const game = calc.reduceStats(statsArr.map(s => calc.formatStats(s)));
     // TODO Find players in DB or create
 
-    await tx(async client => {
+    await tx(pool, async client => {
       for (const stats of statsArr) {
         const result = await client.query(
             `insert into game (home_id, away_id, score_home, score_away)
@@ -208,20 +209,6 @@ async function readBody(req, json = true) {
       }
     });
   });
-}
-
-async function tx(fn) {
-  const client = await pool.connect();
-  try {
-    await client.query('BEGIN')
-    await fn(client);
-    await client.query('COMMIT')
-  } catch (e) {
-    await client.query('ROLLBACK')
-    throw e
-  } finally {
-    client.release()
-  }
 }
 
 function tearDown(msg, reason) {
