@@ -10,11 +10,11 @@ function updateTopBar() {
     const signOutElem = document.getElementById("sign-out");
     if (signOutElem) signOutElem.style.display = 'none';
   } else {
-    const username = auth.username;
+    const accountName = auth.accountName;
     const signInElem = document.getElementById('sign-in');
     if (signInElem) signInElem.style.display = 'none';
     const accountElem = document.getElementById('account');
-    accountElem.innerHTML = `<a href="/account">${username}</a>`;
+    accountElem.innerHTML = `<a href="/account">${accountName}</a>`;
     const signOutElem = document.getElementById("sign-out");
     if (signOutElem) signOutElem.style.display = 'inline';
   }

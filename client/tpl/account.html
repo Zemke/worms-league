@@ -1,12 +1,12 @@
 <div class="head">
-  <span id="username"></span>
+  <span id="accountName"></span>
 </div>
 
 Here goes account and profile settings.
 
 <script>
 (() => {
-  const {username} = api.userFromToken();
-  document.getElementById('username').innerHTML = username;
+  const {accountName} = api.userFromToken();
+  document.getElementById('accountName').innerHTML = accountName;
 })();
 </script>

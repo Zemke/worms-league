@@ -39,48 +39,48 @@ const server = http.createServer(async (req, res) => {
 
 async function onApi(req, res) {
   if (req.url === '/api/sign-up' && req.method === 'POST') {
-    const {username, email, password, spamcheck} = await readBody(req);
+    const {accountName, email, password, spamcheck} = await readBody(req);
     const spamcheckValids = ['testing']; // TODO Externalize configuration.
     let err;
-    if (!validate.req(username)) {
-      err = 'validation.required.username';
+    if (!validate.req(accountName)) {
+      err = 'validation.required.accountName';
     } else if (!validate.req(password)) {
       err = 'validation.required.password';
     } else if (!validate.req(email)) {
       err = 'validation.email.required';
     } else if (!validate.email(email)) {
       err = 'validation.email.invalid';
-    } else if (!validate.minLen(username, 3)) {
-      err = 'validation.username.tooShort';
-    } else if (!validate.maxLen(username, 16)) {
-      err = 'validation.username.tooLong';
-    } else if (!validate.regex(username, /^[a-z0-9-]+$/i)) {
-      err = 'validation.username.invalid';
+    } else if (!validate.minLen(accountName, 3)) {
+      err = 'validation.accountName.tooShort';
+    } else if (!validate.maxLen(accountName, 16)) {
+      err = 'validation.accountName.tooLong';
+    } else if (!validate.regex(accountName, /^[a-z0-9-]+$/i)) {
+      err = 'validation.accountName.invalid';
     } else if (!spamcheckValids?.includes(spamcheck)) {
       err = 'validation.spamcheck';
     }
     if (err) return end(res, {err}, 400);
     const result = await pool.query(
-          'select * from "user" where lower(username) = lower($1)',
-          [username]);
+          'select * from "user" where lower(account_name) = lower($1)',
+          [accountName]);
     if (result.rows.length > 0) {
-      return end(res, {err: 'validation.username.exists'}, 400);
+      return end(res, {err: 'validation.accountName.exists'}, 400);
     }
     const hashed = await hash.hash(password);
     await pool.query(
-          `insert into "user" (username, email, password)
+          `insert into "user" (account_name, email, password)
            values ($1, $2, $3)`,
-          [username, email, hashed]);
-    const token = await jwt.jwtSign({username, email});
-    return end(res, {username, email, token});
+          [accountName, email, hashed]);
+    const token = await jwt.jwtSign({accountName, email});
+    return end(res, {accountName, email, token});
   } else if (req.url === '/api/sign-in' && req.method === 'POST') {
     const body = await readBody(req);
-    if (!body?.username || !body?.password) {
-      return end(res, {err: 'username and/or password missing'}, 400);
+    if (!body?.accountName || !body?.password) {
+      return end(res, {err: 'accountName and/or password missing'}, 400);
     }
     const {rows} = await pool.query(
-      'select username, password from "user" where username = $1',
-      [body.username]);
+      'select account_name, password from "user" where account_name = $1',
+      [body.accountName]);
     if (rows?.length !== 1) {
       console.info('rows:', rows);
       return end(res, {err: 'wrong credentials'}, 400);
@@ -89,7 +89,7 @@ async function onApi(req, res) {
       return end(res, {err: 'wrong credentials'}, 400);
     }
     const token = await jwt.jwtSign({
-        username: body.username,
+        accountName: body.accountName,
         email: body.email
       });
     return end(res, {token});
@@ -165,7 +165,7 @@ async function onApi(req, res) {
     console.log('from db', result.rows[0].message);; // Hello world!
     return end(res, {response: result.rows[0].message});
   } else if (req.url === '/api/users' && req.method === 'GET') {
-    const result = await pool.query('select id, username from "user"');
+    const result = await pool.query('select id, account_name from "user"');
     //const users = result.rows.map(r => ({id: r.id, username: r.username}));
     return end(res, result.rows);
   }
