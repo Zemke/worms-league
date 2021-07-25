@@ -1,5 +1,10 @@
 # Worms League
 
+Just post all your replays.<sup>1</sup>
+
+<sup>1</sup> There should be a Windows in the background running process to
+automatically submit all replays to Worms League.
+
 ## Reporting
 
 1. Drop replay on the site
@@ -20,4 +25,7 @@ CSV to generate and pass to the R script:
 ```
 
 Drawn rounds can be computed as 0.5-0.5 result instead of 1-0 or 0-1
+
+**Remember:** For the R scripts there's no such thing as a game with multiple rounds.
+It's always just best of one games all the way.
 
