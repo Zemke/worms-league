@@ -134,23 +134,20 @@ async function onApi(req, res) {
 
     const statsArr = await waaas.waaas(form.files);
     const game = calc.reduceStats(statsArr.map(s => calc.formatStats(s)));
-    // TODO Find players in DB or create
+    const home = await user.findOrCreateByUsername(game.home);
+    const away = await user.findOrCreateByUsername(game.away);
 
     await tx(pool, async client => {
       for (const stats of statsArr) {
         const result = await client.query(
             `insert into game (home_id, away_id, score_home, score_away)
              values ($1, $2, $3, $4)`,
-            [ game.homeScore, game.awayScore ]);
+            [ home.id, away.id, game.homeScore, game.awayScore ]);
       }
     });
 
     return end(res, {hello: 'world'});
 
-    //const result = await pool.query(
-    //    `insert into game (home_id, away_id, score_home, score_away)
-    //     values ($1, $2, $3, $4)`,
-    //    ['']);
     // TODO game reporting as form data with replay files
     const body = await readBody(req, false);
     // TODO Persist game
