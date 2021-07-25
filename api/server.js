@@ -141,7 +141,7 @@ async function onApi(req, res) {
     await tx(pool, async client => {
       for (const stats of statsArr) {
         const result = await client.query(
-            `insert into game (home_id, away_id, score_home, score_away)
+            `insert into game (home_id, away_id, home_score, away_score)
              values ($1, $2, $3, $4)`,
             [ home.id, away.id, game.homeScore, game.awayScore ]);
       }
