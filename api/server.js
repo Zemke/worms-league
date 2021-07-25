@@ -6,7 +6,9 @@ const hash = require('./hash.js');
 const validate = require('./validate.js');
 const waaas = require('./waaas.js');
 const formidable = require('formidable');
-const { tx } = require('./tx.js');
+const calc = require('./calc');
+const { findOrCreateByUsername } = require('./user');
+const { tx } = require('./tx');
 
 const pool = new Pool({ user: 'postgres', password: 'postgres' }) // TODO env vars
 
@@ -120,22 +122,21 @@ async function onApi(req, res) {
     //    ...
     //  }
     //}
-    console.log('form', form);
 
     for (const file in form.files) {
-      if (!file.name.toLowerCase().endsWith('.wagame')) {
+      if (!form.files[file].name.toLowerCase().endsWith('.wagame')) {
         return end(res, {[file]: 'no WAgame file'}, 400);
-      } else if (file.size > 150000) {
+      } else if (form.files[file].size > 500000) {
         return end(res, {[file]: 'too large'}, 400);
-      } else if (file.size < 10) {
+      } else if (form.files[file].size < 10) {
         return end(res, {[file]: 'too small'}, 400);
       }
     }
 
     const statsArr = await waaas.waaas(form.files);
     const game = calc.reduceStats(statsArr.map(s => calc.formatStats(s)));
-    const home = await user.findOrCreateByUsername(game.home);
-    const away = await user.findOrCreateByUsername(game.away);
+    const home = await findOrCreateByUsername(pool, game.home);
+    const away = await findOrCreateByUsername(pool, game.away);
 
     await tx(pool, async client => {
       for (const stats of statsArr) {
