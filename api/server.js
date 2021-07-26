@@ -133,6 +133,15 @@ async function onApi(req, res) {
       }
     }
 
+    /* TODO The whole process should be event-driven.
+     * Replays are sent to WAaaS and are being processed further as a reponse
+     * is emitted.
+     * Not waiting for all replays to be processed to only then proceed.
+     * this should still remain transactional, though. No one replay should
+     * influence the standings when any of the other uploaded replays cannot
+     * be processed.
+     */
+
     // return that game is being processed, upcoming processes take longer
     end(res);
 
