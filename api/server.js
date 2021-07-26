@@ -133,6 +133,9 @@ async function onApi(req, res) {
       }
     }
 
+    // return that game is being processed, upcoming processes take longer
+    end(res);
+
     const statsArr = await waaas.waaas(form.files);
     const game = calc.reduceStats(statsArr.map(s => calc.formatStats(s)));
     const home = await findOrCreateByUsername(pool, game.home);
@@ -147,13 +150,6 @@ async function onApi(req, res) {
       }
     });
 
-    return end(res, {hello: 'world'});
-
-    // TODO game reporting as form data with replay files
-    const body = await readBody(req, false);
-    // TODO Persist game
-    // TODO Respond to user that game is being processed
-    // TODO Send to WAaaS to extract logs
     // TODO R script
     // TODO Persist ranking
     // TODO If anything after game persistence fails the game is pending
