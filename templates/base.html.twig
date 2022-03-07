@@ -1,19 +1,68 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Welcome!{% endblock %}</title>
+  <title>Worms League</title>
+  <script src="/js/api.js"></script>
+  <script src="/js/nav.js"></script>
+  <script src="/js/app.js"></script>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/styles/index.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="/img/icons/apple-touch-icon.png"/>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="container">
+      <div>
+        <span id="account">
+        </span>
+        <button type="button" id="sign-out" onclick="signOut()">
+          Sign out
+        </button>
+      </div>
+      <div class="sign-in">
+        <form id="sign-in" onsubmit="return signIn(this)">
+          <input type="text"
+                 name="accountName" placeholder="Username"
+                 required>
+          <input type="password"
+                 name="password" placeholder="Password"
+                 required>
+          <input type="submit" value="Sign in">
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="container content">
+    <div class="uber">
+      <h1>
+        <a href="/">
+          <span class="worms"><span class="first-letter">W</span>orms</span>
+          <span class="league"><span class="first-letter">L</span>eague</span>
+          <img class="worm" src="/img/worm.png">
+        </a>
+      </h1>
+    </div>
+    <nav class="nav">
+      <a class="nav-item" href="/ladder">
+        Ladder
+      </a>
+      <a class="nav-item" href="/competitions">
+        Competitions
+      </a>
+      <a class="nav-item" href="/community">
+        Community
+      </a>
+      <a class="nav-item" href="/information">
+        Information
+      </a>
+    </nav>
+    <div class="page">
+    {% block body %}{% endblock %}
+    </div>
+  </div>
+</body>
 </html>
+
