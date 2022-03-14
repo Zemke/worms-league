@@ -10,6 +10,7 @@ use Symfony\Component\Security\Http\Authenticator\AbstractLoginFormAuthenticator
 use Symfony\Component\Security\Http\HttpUtils;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 
 class UsernameOrEmailAuthenticator extends AbstractLoginFormAuthenticator
 {
@@ -34,9 +35,6 @@ class UsernameOrEmailAuthenticator extends AbstractLoginFormAuthenticator
         ] = $request->request->all('login_form');
         // TODO forbid @ signs in usernames
         $isUsername = strpos($usernameOrEmail, '@') === false;
-        dump($isUsername);
-        dump($usernameOrEmail);
-        dump($password);
         if ($isUsername) {
             $username = $usernameOrEmail;
         } else {
@@ -44,7 +42,11 @@ class UsernameOrEmailAuthenticator extends AbstractLoginFormAuthenticator
         }
         return new Passport(
             new UserBadge($username, function($userIdentifier) {
-                return $this->userRepository->findOneBy(['username' => $userIdentifier]);
+                $user = $this->userRepository->findOneBy(['username' => $userIdentifier]);
+                if (!isset($user)) {
+                    throw new CustomUserMessageAuthenticationException('Invalid credentials');
+                }
+                return $user;
             }),
             new PasswordCredentials($password)
         );
@@ -63,3 +65,4 @@ class UsernameOrEmailAuthenticator extends AbstractLoginFormAuthenticator
             && 'form' === $request->getContentType();
     }
 }
+
