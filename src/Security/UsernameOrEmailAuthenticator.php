@@ -41,13 +41,7 @@ class UsernameOrEmailAuthenticator extends AbstractLoginFormAuthenticator
             $username = $this->userRepository->findOneBy(['email' => $usernameOrEmail])->getUsername(); // TODO case-insensitive
         }
         return new Passport(
-            new UserBadge($username, function($userIdentifier) {
-                $user = $this->userRepository->findOneBy(['username' => $userIdentifier]);
-                if (!isset($user)) {
-                    throw new CustomUserMessageAuthenticationException('Invalid credentials');
-                }
-                return $user;
-            }),
+            new UserBadge($username),
             new PasswordCredentials($password)
         );
         // TODO CSRF, RememberMe
