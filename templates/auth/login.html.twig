@@ -1,14 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LoginController!{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block body %}
 
 {% if error %}
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
-
-Login <!-- TODO Sub-title bar -->
 
 <form action="{{ path('app_login') }}" method="POST">
     <input type="text" name="usernameOrEmail" id="usernameOrEmail" placeholder="Username or email" required>
