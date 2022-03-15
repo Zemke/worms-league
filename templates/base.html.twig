@@ -20,14 +20,11 @@
           </button>
         {% else %}
           <div class="sign-in">
-            <form id="sign-in" onsubmit="return signIn(this)">
-              <input type="text"
-                     name="accountName" placeholder="Username or email"
-                     required>
-              <input type="password"
-                     name="password" placeholder="Password"
-                     required>
-              <input type="submit" value="Sign in">
+            <form action="{{ path('app_login') }}" method="POST">
+                <input type="text" name="usernameOrEmail" id="usernameOrEmail" placeholder="Username or Email" required>
+                <input type="password" name="password" id="password" placeholder="Password" required>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <button type="submit">Log in</button>
             </form>
           </div>
         {% endif %}
