@@ -14,20 +14,23 @@
       <div>
         <span id="account">
         </span>
-        <button type="button" id="sign-out" onclick="signOut()">
-          Sign out
-        </button>
-      </div>
-      <div class="sign-in">
-        <form id="sign-in" onsubmit="return signIn(this)">
-          <input type="text"
-                 name="accountName" placeholder="Username"
-                 required>
-          <input type="password"
-                 name="password" placeholder="Password"
-                 required>
-          <input type="submit" value="Sign in">
-        </form>
+        {% if app.user %}
+          <button type="button" id="sign-out" onclick="location.href='/logout'">
+            Sign out
+          </button>
+        {% else %}
+          <div class="sign-in">
+            <form id="sign-in" onsubmit="return signIn(this)">
+              <input type="text"
+                     name="accountName" placeholder="Username or email"
+                     required>
+              <input type="password"
+                     name="password" placeholder="Password"
+                     required>
+              <input type="submit" value="Sign in">
+            </form>
+          </div>
+        {% endif %}
       </div>
     </div>
   </div>

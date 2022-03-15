@@ -22,6 +22,8 @@ security:
             provider: app_user_provider
             custom_authenticators:
                 - App\Security\UsernameOrEmailAuthenticator
+            logout:
+                path: app_logout
             #form_login:
             #    login_path: login
             #    check_path: login
