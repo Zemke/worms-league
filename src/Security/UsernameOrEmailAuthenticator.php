@@ -13,7 +13,6 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordC
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
-
 class UsernameOrEmailAuthenticator extends AbstractLoginFormAuthenticator
 {
     public function __construct(private UserRepository $userRepository, private HttpUtils $httpUtils)
@@ -30,12 +29,12 @@ class UsernameOrEmailAuthenticator extends AbstractLoginFormAuthenticator
 
     public function authenticate(Request $request): Passport
     {
-        dump($request->request->all('login_form'));
+        dump($request->request->all());
         [
             'usernameOrEmail' => $usernameOrEmail,
             'password' => $password,
-            '_token' => $token,
-        ] = $request->request->all('login_form');
+            '_csrf_token' => $csrfToken,
+        ] = $request->request->all();
         // TODO forbid @ signs in usernames
         $isUsername = strpos($usernameOrEmail, '@') === false;
         if ($isUsername) {
@@ -46,9 +45,8 @@ class UsernameOrEmailAuthenticator extends AbstractLoginFormAuthenticator
         return new Passport(
             new UserBadge($username),
             new PasswordCredentials($password),
-            [/*new CsrfTokenBadge('login', $token),*/ new RememberMeBadge(),],
+            [new CsrfTokenBadge('authenticate', $csrfToken), new RememberMeBadge(),],
         );
-        // TODO CSRF always fails "Invalid CSRF token."
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response

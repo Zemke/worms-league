@@ -12,17 +12,4 @@ use App\Form\LoginFormType;
 
 class LoginController extends AbstractController
 {
-    #[Route('/login', name: 'app_login')]
-    public function index(Request $request, AuthenticationUtils $authenticationUtils): Response
-    {
-        $form = $this->createForm(LoginFormType::class, new User());
-        $error = $authenticationUtils->getLastAuthenticationError();
-        dump($error);
-        return $this->renderForm('login/index.html.twig', [
-            'controller_name' => 'LoginController',
-            'form' => $form,
-            'last_username' => $authenticationUtils->getLastUsername(),
-            'error' => $error,
-        ]);
-    }
 }
