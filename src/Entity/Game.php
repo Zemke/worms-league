@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\GameRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: GameRepository::class)]
@@ -171,5 +172,11 @@ class Game
         $this->voided = $voided;
 
         return $this;
+    }
+
+    #[Assert\IsTrue(message: "One must not play against oneself.")]
+    public function isOpponentDifferent()
+    {
+        return $this->home->getId() !== $this->away->getId();
     }
 }
