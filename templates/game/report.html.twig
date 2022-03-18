@@ -10,6 +10,12 @@
 
 <div {{ stimulus_controller('report') }}>
     <form action="{{ path('app_report') }}" method="POST">
+        <select>
+            <option value="" selected disabled>Opponent</option>
+            {% for opponent in opponents %}
+                <option value="{{ opponent.id }}">{{ opponent.username }}</option>
+            {% endfor %}
+        </select>
         <input type="file"
                data-report-target="fileInput"
                {{ stimulus_action('report', 'listFiles', 'change') }}
