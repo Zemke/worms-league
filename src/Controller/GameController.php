@@ -16,7 +16,7 @@ class GameController extends AbstractController
         ]);
     }
 
-    #[Route('/report', name: 'app_game')]
+    #[Route('/report', name: 'app_report')]
     public function report(): Response
     {
         return $this->render('game/report.html.twig', [
