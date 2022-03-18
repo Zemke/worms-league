@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\GameRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: GameRepository::class)]
 class Game
 {
@@ -44,8 +45,19 @@ class Game
     #[ORM\Column(type: 'boolean', options: ["default" => false])]
     private $voided;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->voided = false;
+        $this->created = new \DateTime();
+        $this->modified = $this->created;
+    }
+
+
+    #[@ORM\PrePersist]
+    #[@ORM\PreUpdate]
+    public function updateModified()
+    {
+        $this->modified = new \DateTime();
     }
 
     public function get(): ?int
