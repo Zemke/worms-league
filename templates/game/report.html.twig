@@ -3,6 +3,27 @@
 {% block title %}Report{% endblock %}
 
 {% block body %}
-Report games here.
+<div class="alert danger">
+    Only upload replays that account to the end result of the game
+    as it is automatically derived from them.
+</div>
+
+<div {{ stimulus_controller('report') }}>
+    <button data-action="click->report#greet">
+        Greet raw
+    </button>
+    <button {{ stimulus_action('report', 'greet') }}>
+        Greet
+    </button>
+
+    <form action="{{ path('app_report') }}" method="POST">
+        <input type="file" {{ stimulus_action('report', 'onFileChange', 'change') }} multiple>
+        <button type="submit">
+            Report
+        </button>
+    </form>
+    <ul data-report-target="files">
+    </ul>
+</div>
 {% endblock %}
 
