@@ -3,7 +3,7 @@
 {% block title %}Report{% endblock %}
 
 {% block body %}
-<div class="alert danger">
+<div class="alert warn">
     Only upload replays that account to the end result of the game
     as it is automatically derived from them.
 </div>
@@ -18,7 +18,7 @@
             Report
         </button>
     </form>
-    <ul data-report-target="files">
+    <ul data-report-target="files" class="small monospace">
     </ul>
 </div>
 {% endblock %}

@@ -1,3 +1,11 @@
+:root {
+  --primary: #60b6c7; --secondary: #086071;
+  --tertiary: #1f3f5e;
+  --dark: #2e2e2e;
+  --light: #ececec;
+  --warn: #7d5f1e;
+}
+
 body, html {
   background: url('/public/img/checker_dark.png') repeat;
   font-family: Arial, sans-serif;
@@ -9,7 +17,7 @@ body, html {
 }
 
 .top-bar {
-  background-color: #2e2e2e;
+  background-color: var(--dark);
   padding: .2rem 0;
 }
 
@@ -81,10 +89,10 @@ div.uber h1 .worms .first-letter,
 div.uber h1 .league .first-letter {
   font-size: 7rem;
   text-shadow:
-      -.3rem -.3rem .25rem #60b6c7,
-      -.3rem .3rem .25rem #60b6c7,
-      .3rem -.3rem .25rem #60b6c7,
-      .3rem .3rem .25rem #60b6c7;
+      -.3rem -.3rem .25rem var(--primary),
+      -.3rem .3rem .25rem var(--primary),
+      .3rem -.3rem .25rem var(--primary),
+      .3rem .3rem .25rem var(--primary);
 }
 
 .container {
@@ -132,7 +140,7 @@ nav.nav .nav-item.active {
 .head {
   border: 1px solid #000;
   border-top: 2px solid #316396;
-  background-color: #1f3f5e;
+  background-color: var(--tertiary);
   color: #fff;
   text-align: center;
   font-weight: bold;
@@ -152,9 +160,9 @@ nav.nav .nav-item.active {
 button,
 input[type=submit],
 input[type=button] {
-  background-color: #086071;
+  background-color: var(--secondary);
   border-style: outset;
-  border-color: #086071;
+  border-color: var(--secondary);
   border-width: .3rem;
   cursor: pointer;
   font-size: 1rem;
@@ -180,12 +188,12 @@ button:focus,
 input:focus,
 textarea:focus {
   outline: none;
-  box-shadow: 0rem 0rem .2rem .1rem #60b6c7;
+  box-shadow: 0rem 0rem .2rem .1rem var(--primary);
 }
 
 a {
   text-decoration: none;
-  color: #086071;
+  color: var(--secondary);
   font-weight: bold;
 }
 
@@ -203,11 +211,11 @@ form .control {
 
 form .control label {
   display: block;
-  color: #1f3f5e;
+  color: var(--tertiary);
 }
 
 p.lead {
-  color: #1f3f5e;
+  color: var(--tertiary);
   padding: 1rem 0;
   font-size: 1.2rem;
 }
@@ -223,5 +231,41 @@ p.lead {
 
 .popup.show {
   display: block;
+}
+
+ul {
+  list-style: none;
+  margin: 1rem 1rem;
+}
+
+ul li {
+  padding: .1rem;
+}
+
+ul li::before {
+  content: "\25a0";
+  color: var(--tertiary);
+  font-weight: bold;
+  display: inline-block;
+  width: 1.3em;
+}
+
+.monospace {
+  font-family: monospace;
+}
+
+.small {
+  font-size: .6rem;
+}
+
+.alert {
+  border: .2rem solid var(--light);
+  padding: .8rem;
+  margin: 1rem 0;
+  color: var(--light);
+}
+
+.alert.warn {
+  background-color: var(--warn);
 }
 
