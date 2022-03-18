@@ -1,9 +1,10 @@
 library(openxlsx)
-setwd("D:/Gdrive dagasst/2v2 mini league")
+#setwd("D:/Gdrive dagasst/2v2 mini league")
 source("rank_calc_v4_functions.R")
 
 #A)LOAD----
-a.reports<- read.xlsx("reports.xlsx")
+#a.reports<- read.xlsx("reports.xlsx")
+a.reports<- read.csv("reports.csv")
 a.reports$date<- as.Date(a.reports$date, origin = "1899/12/30")
 
 #make new object to modify
