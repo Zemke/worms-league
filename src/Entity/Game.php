@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\GameRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\User;
+use App\Entity\Season;
 
 #[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: GameRepository::class)]
@@ -57,8 +59,8 @@ class Game
     }
 
 
-    #[@ORM\PrePersist]
-    #[@ORM\PreUpdate]
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
     public function updateModified()
     {
         $this->modified = new \DateTime();
@@ -74,7 +76,7 @@ class Game
         return $this->home;
     }
 
-    public function setHome(int $home): self
+    public function setHome(User $home): self
     {
         $this->home = $home;
 
@@ -86,14 +88,14 @@ class Game
         return $this->away;
     }
 
-    public function setAway(int $away): self
+    public function setAway(User $away): self
     {
         $this->away = $away;
 
         return $this;
     }
 
-    public function getScoreHome(): ?int
+    public function getScoreHome(): ?User
     {
         return $this->scoreHome;
     }
@@ -105,7 +107,7 @@ class Game
         return $this;
     }
 
-    public function getScoreAway(): ?int
+    public function getScoreAway(): ?User
     {
         return $this->scoreAway;
     }
@@ -141,24 +143,24 @@ class Game
         return $this;
     }
 
-    public function getReporter(): ?int
+    public function getReporter(): ?User
     {
         return $this->reporter;
     }
 
-    public function setReporter(int $reporter): self
+    public function setReporter(User $reporter): self
     {
         $this->reporter = $reporter;
 
         return $this;
     }
 
-    public function getSeason(): ?int
+    public function getSeason(): ?Season
     {
         return $this->season;
     }
 
-    public function setSeason(int $season): self
+    public function setSeason(Season $season): self
     {
         $this->season = $season;
 
