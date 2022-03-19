@@ -15,10 +15,12 @@ class Game
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    #[Assert\NotNull]
     #[ORM\JoinColumn]
     #[ORM\ManyToOne(targetEntity: "User")]
     private $home;
 
+    #[Assert\NotNull]
     #[ORM\JoinColumn]
     #[ORM\ManyToOne(targetEntity: "User")]
     private $away;
@@ -39,6 +41,7 @@ class Game
     #[ORM\ManyToOne(targetEntity: "User")]
     private $reporter;
 
+    #[Assert\NotNull]
     #[ORM\JoinColumn]
     #[ORM\ManyToOne(targetEntity: "Season")]
     private $season;
