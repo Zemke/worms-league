@@ -4,6 +4,7 @@
   --dark: #2e2e2e;
   --light: #ececec;
   --warn: #7d5f1e;
+  --error: #5b2f3f;
 }
 
 body, html {
@@ -267,5 +268,9 @@ ul li::before {
 
 .alert.warn {
   background-color: var(--warn);
+}
+
+.alert.error {
+  background-color: var(--error);
 }
 
