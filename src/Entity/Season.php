@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
 
 #[ORM\Entity(repositoryClass: SeasonRepository::class)]
 #[UniqueConstraint( // only one season can be active at a time
-    name: 'season_active_uidx', columns: ['active'], options: ['where' => 'active=true'])]
+    name: 'season_active_uidx', columns: ['active'], options: ['where' => 'active = true'])]
 class Season
 {
     #[ORM\Id]
