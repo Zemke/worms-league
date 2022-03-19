@@ -19,12 +19,12 @@ class Game
 
     #[Assert\NotNull]
     #[ORM\JoinColumn]
-    #[ORM\ManyToOne(targetEntity: "User")]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     private $home;
 
     #[Assert\NotNull]
     #[ORM\JoinColumn]
-    #[ORM\ManyToOne(targetEntity: "User")]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     private $away;
 
     #[ORM\Column(type: 'integer', nullable: true)]
@@ -41,7 +41,7 @@ class Game
 
     #[Assert\NotNull]
     #[ORM\JoinColumn]
-    #[ORM\ManyToOne(targetEntity: "User")]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     private $reporter;
 
     #[Assert\NotNull]
