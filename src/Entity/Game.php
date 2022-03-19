@@ -39,6 +39,7 @@ class Game
     #[ORM\Column(type: 'datetime')]
     private $modified;
 
+    #[Assert\NotNull]
     #[ORM\JoinColumn]
     #[ORM\ManyToOne(targetEntity: "User")]
     private $reporter;
@@ -182,6 +183,6 @@ class Game
     #[Assert\IsTrue(message: "One must not play against oneself.")]
     public function isOpponentDifferent()
     {
-        return $this->home->getId() !== $this->away->getId();
+        return $this->home?->getId() !== $this->away?->getId();
     }
 }

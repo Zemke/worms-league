@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
 use App\Repository\UserRepository;
+use App\Repository\SeasonRepository;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Entity\Game;
 
@@ -25,21 +26,29 @@ class GameController extends AbstractController
     #[Route('/report', name: 'app_report', methods: ['GET', 'POST'])]
     public function report(Request $request,
                            UserRepository $users,
+                           SeasonRepository $seasons,
                            EntityManagerInterface $em,
                            Security $security,
                            ValidatorInterface $validator): Response
     {
 
-        if ($request->getMethod() === 'POST') {
-            dump($request);
-            dump($users->find($request->request->all()['opponent']));
+        $var = [ 'controller_name' => 'GameController', ];
+        $season = $seasons->findOneBy(['active' => true]);
+        if (!isset($season)) {
+            $this->addFlash('error', 'There\'s currently no season.');
+        } else if ($request->getMethod() === 'POST') {
             $game = (new Game())
                 ->setReporter($security->getUser())
                 ->setHome($security->getUser())
-                ->setAway($users->find($request->request->all()['opponent']));
-            $validator->validate($game);
+                ->setAway($users->find($request->request->all()['opponent']))
+                ->setSeason($season);
+            if (count($validator->validate($game)) > 0) {
+                $this->addFlash('error', 'The game is invalid.');
+            } else {
+                // TODO persist, redirect etc.
+            }
         } else {
-            $opponents = $em->createQueryBuilder()
+            $var['opponents'] = $em->createQueryBuilder()
                 ->select('u')
                 ->from('App:User', 'u')
                 ->where('u.id <> :authUserId')
@@ -47,11 +56,10 @@ class GameController extends AbstractController
                 ->getQuery()
                 ->setParameter('authUserId', $security->getUser()->getId())
                 ->getResult();
-            dump($opponents);
-            return $this->render('game/report.html.twig', [
-                'controller_name' => 'GameController',
-                'opponents' => $opponents,
-            ]);
+            if (empty($var['opponents'])) {
+                $this->addFlash('info', 'There are no opponents.');
+            }
         }
+        return $this->render('game/report.html.twig', $var);
     }
 }
