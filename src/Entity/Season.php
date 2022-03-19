@@ -4,8 +4,11 @@ namespace App\Entity;
 
 use App\Repository\SeasonRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 
 #[ORM\Entity(repositoryClass: SeasonRepository::class)]
+#[UniqueConstraint( // only one season can be active at a time
+    name: 'season_active_uidx', columns: ['active'], options: ['where' => 'active=true'])]
 class Season
 {
     #[ORM\Id]
@@ -27,6 +30,14 @@ class Season
 
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
+
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private $active;
+
+    public function __construct()
+    {
+        $this->active = false;
+    }
 
     public function getId(): ?int
     {
@@ -89,6 +100,18 @@ class Season
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }

@@ -29,6 +29,7 @@ class GameController extends AbstractController
                            Security $security,
                            ValidatorInterface $validator): Response
     {
+
         if ($request->getMethod() === 'POST') {
             dump($request);
             dump($users->find($request->request->all()['opponent']));
