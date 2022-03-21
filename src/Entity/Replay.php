@@ -40,7 +40,7 @@ class Replay
     #[ORM\Column(type: 'string', length: 255)]
     private $originalName;
 
-    #[ORM\ManyToOne(targetEntity: Game::class)]
+    #[ORM\ManyToOne(targetEntity: Game::class, inversedBy: 'replays')]
     #[ORM\JoinColumn(nullable: false)]
     private $game;
 

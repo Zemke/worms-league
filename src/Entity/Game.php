@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\GameRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\User;
@@ -52,11 +54,15 @@ class Game
     #[ORM\Column(type: 'boolean', options: ["default" => false])]
     private $voided;
 
+    #[ORM\OneToMany(mappedBy: 'game', targetEntity: Replay::class, orphanRemoval: true)]
+    private $replays;
+
     public function __construct()
     {
         $this->voided = false;
         $this->created = new \DateTime();
         $this->modified = $this->created;
+        $this->replays = new ArrayCollection();
     }
 
 
@@ -184,5 +190,35 @@ class Game
     public function isOpponentDifferent()
     {
         return $this->home?->getId() !== $this->away?->getId();
+    }
+
+    /**
+     * @return Collection<int, Replay>
+     */
+    public function getReplays(): Collection
+    {
+        return $this->replays;
+    }
+
+    public function addReplay(Replay $replay): self
+    {
+        if (!$this->replays->contains($replay)) {
+            $this->replays[] = $replay;
+            $replay->setGame($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReplay(Replay $replay): self
+    {
+        if ($this->replays->removeElement($replay)) {
+            // set the owning side to null (unless already changed)
+            if ($replay->getGame() === $this) {
+                $replay->setGame(null);
+            }
+        }
+
+        return $this;
     }
 }
