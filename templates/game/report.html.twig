@@ -10,7 +10,7 @@
         as it is automatically derived from them.
     </div>
     <div {{ stimulus_controller('report') }}>
-        <form action="{{ path('app_report') }}" method="POST">
+        <form action="{{ path('app_report') }}" method="POST" enctype="multipart/form-data">
             <select name="opponent" required>
                 <option value="" selected disabled>Opponent</option>
                 {% for opponent in opponents %}
@@ -18,7 +18,7 @@
                 {% endfor %}
             </select>
             <input type="file"
-                   name="replays"
+                   name="replays[]"
                    required
                    data-report-target="fileInput"
                    {{ stimulus_action('report', 'listFiles', 'change') }}

@@ -8,6 +8,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use App\Entity\Game;
 use Symfony\Component\HttpFoundation\File\File;
 
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: ReplayRepository::class)]
 #[Vich\Uploadable]
 class Replay
@@ -46,6 +47,19 @@ class Replay
 
     #[ORM\Column(type: 'datetime')]
     private $modified;
+
+    public function __construct()
+    {
+        $this->created = new \DateTime();
+        $this->modified = $this->created;
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function updateModified()
+    {
+        $this->modified = new \DateTime();
+    }
 
     public function getId(): ?int
     {

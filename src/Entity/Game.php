@@ -69,7 +69,6 @@ class Game
         $this->replays = new ArrayCollection();
     }
 
-
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
     public function updateModified()

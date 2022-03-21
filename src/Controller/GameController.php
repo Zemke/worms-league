@@ -12,6 +12,8 @@ use App\Repository\UserRepository;
 use App\Repository\SeasonRepository;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Entity\Game;
+use App\Entity\Replay;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class GameController extends AbstractController
 {
@@ -42,10 +44,15 @@ class GameController extends AbstractController
                 ->setHome($security->getUser())
                 ->setAway($users->find($request->request->all()['opponent']))
                 ->setSeason($season);
+            foreach ($request->files->all('replays') as $file) {
+                $game->addReplay((new Replay())->setFile($file));
+            }
             if (count($validator->validate($game)) > 0) {
                 $this->addFlash('error', 'The game is invalid.');
             } else {
                 // TODO persist, redirect etc.
+                $em->persist($game);
+                $em->flush();
             }
         } else {
             $var['opponents'] = $em->createQueryBuilder()
