@@ -54,7 +54,11 @@ class Game
     #[ORM\Column(type: 'boolean', options: ["default" => false])]
     private $voided;
 
-    #[ORM\OneToMany(mappedBy: 'game', targetEntity: Replay::class, orphanRemoval: true)]
+    #[ORM\OneToMany(
+        mappedBy: 'game',
+        targetEntity: Replay::class,
+        orphanRemoval: true,
+        cascade: ['persist', 'remove'])]
     private $replays;
 
     public function __construct()
