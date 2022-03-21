@@ -6,6 +6,7 @@ use App\Repository\ReplayRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use App\Entity\Game;
+use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: ReplayRepository::class)]
 #[Vich\Uploadable]
@@ -61,6 +62,23 @@ class Replay
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * @param File|UploadedFile|null $file
+     */
+    public function setFile(?File $file = null)
+    {
+        $this->file = $file;
+        if (null !== $file) {
+            $this->modified = new \DateTime();
+        }
+        return $this;
+    }
+
+    public function getFile(): ?File
+    {
+        return $this->file;
     }
 
     public function getSize(): ?int
