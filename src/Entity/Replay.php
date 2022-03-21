@@ -43,6 +43,9 @@ class Replay
     #[ORM\JoinColumn(nullable: false)]
     private $game;
 
+    #[ORM\Column(type: 'datetime')]
+    private $modified;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -116,6 +119,18 @@ class Replay
     public function setGame(?Game $game): self
     {
         $this->game = $game;
+
+        return $this;
+    }
+
+    public function getModified(): ?\DateTimeInterface
+    {
+        return $this->modified;
+    }
+
+    public function setModified(\DateTimeInterface $modified): self
+    {
+        $this->modified = $modified;
 
         return $this;
     }
