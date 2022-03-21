@@ -1,6 +1,5 @@
 vich_uploader:
     db_driver: orm
-
     mappings:
         replay:
             uri_prefix: /replays
@@ -9,3 +8,6 @@ vich_uploader:
             inject_on_load: false
             delete_on_update: true
             delete_on_remove: true
+    metadata:
+        type: attribute
+
