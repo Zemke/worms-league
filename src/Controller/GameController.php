@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Entity\Game;
 use App\Entity\Replay;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Service\RankingService;
 
 class GameController extends AbstractController
 {
@@ -31,7 +32,8 @@ class GameController extends AbstractController
                            SeasonRepository $seasons,
                            EntityManagerInterface $em,
                            Security $security,
-                           ValidatorInterface $validator): Response
+                           ValidatorInterface $validator,
+                           RankingService: $rankingService): Response
     {
 
         $var = [ 'controller_name' => 'GameController', ];
@@ -50,9 +52,7 @@ class GameController extends AbstractController
             if (count($validator->validate($game)) > 0) {
                 $this->addFlash('error', 'The game is invalid.');
             } else {
-                // TODO persist, redirect etc.
-                $em->persist($game);
-                $em->flush();
+                $rankingService->report($game);
             }
         } else {
             $var['opponents'] = $em->createQueryBuilder()
