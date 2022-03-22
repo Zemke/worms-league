@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -30,6 +32,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $email;
+
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Ranking::class)]
+    private $rankings;
+
+    public function __construct()
+    {
+        $this->rankings = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -109,6 +119,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Ranking>
+     */
+    public function getRankings(): Collection
+    {
+        return $this->rankings;
+    }
+
+    public function addRanking(Ranking $ranking): self
+    {
+        if (!$this->rankings->contains($ranking)) {
+            $this->rankings[] = $ranking;
+            $ranking->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRanking(Ranking $ranking): self
+    {
+        if ($this->rankings->removeElement($ranking)) {
+            // set the owning side to null (unless already changed)
+            if ($ranking->getOwner() === $this) {
+                $ranking->setOwner(null);
+            }
+        }
 
         return $this;
     }
