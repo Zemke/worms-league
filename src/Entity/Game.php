@@ -69,6 +69,34 @@ class Game
         $this->replays = new ArrayCollection();
     }
 
+    public function played(): bool
+    {
+        return $this->reporter != null && $this->scoreHome != null && $this->scoreAway != null;
+    }
+
+    public function draw(): bool
+    {
+        return $this->played() && $this->scoreHome === $this->scoreAway;
+    }
+
+    public function winner(): ?User
+    {
+        if (!$this->played() || $this->draw()) {
+            return null;
+        }
+        return $this->scoreHome > $this->scoreAway ? $this->homeUser : $this->awayUser;
+    }
+
+    public function loser(): ?User
+    {
+        $winner = $this->winner();
+        if (is_null($winner)) {
+            return null;
+        }
+        return $winner->getId() === $this->homeUser->getId()
+            ? $this->awayUser : $this->homeUser;
+    }
+
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
     public function updateModified()
