@@ -76,7 +76,7 @@ class Game
         $this->modified = new \DateTime();
     }
 
-    public function get(): ?int
+    public function getId(): ?int
     {
         return $this->id;
     }
