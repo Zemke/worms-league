@@ -109,7 +109,7 @@ class Game
         return $this->id;
     }
 
-    public function getHome(): ?int
+    public function getHome(): ?User
     {
         return $this->home;
     }
@@ -121,7 +121,7 @@ class Game
         return $this;
     }
 
-    public function getAway(): ?int
+    public function getAway(): ?User
     {
         return $this->away;
     }
@@ -133,7 +133,7 @@ class Game
         return $this;
     }
 
-    public function getScoreHome(): ?User
+    public function getScoreHome(): ?int
     {
         return $this->scoreHome;
     }
@@ -145,7 +145,7 @@ class Game
         return $this;
     }
 
-    public function getScoreAway(): ?User
+    public function getScoreAway(): ?int
     {
         return $this->scoreAway;
     }
