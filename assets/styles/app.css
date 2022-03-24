@@ -274,3 +274,43 @@ ul li::before {
   background-color: var(--error);
 }
 
+table thead tr {
+  background-color: var(--tertiary);
+  border-top: .18rem solid #2e5e8f;
+  color: var(--light);
+  font-weight: bold;
+}
+
+table tbody tr:nth-child(odd) {
+  background-color: #d1d1d1;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #a9a9a9;
+}
+
+table {
+  border-collapse: collapse;
+  border: 1px solid black;
+  padding: 4rem;
+}
+
+table tr {
+  border: 1px solid black;
+}
+
+table, tr, td, th {
+  padding: .2rem .6rem;
+  text-align: center;
+}
+
+table, tr, th {
+  padding: .5rem .4rem;
+}
+
+.whitepad {
+  display: inline-block;
+  padding: .3rem;
+  background-color: var(--light);
+}
+

@@ -3,24 +3,31 @@
 {% block title %}Ladder{% endblock %}
 
 {% block body %}
-{{ dump(season) }}
 
-<table>
-    <thead>
-    <tr>
-        <th>#</th>
-        <th>Player</th>
-        <th>Points</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for ranking in season.rankings|sort((a,b) => b.points - a.points) %}
-    <tr>
-        <td><pre>{{ ranking }}</pre></td>
-        <td></td>
-        <td></td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+<div class="whitepad">
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Player</th>
+            <th>Points</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ranking in season.rankings|sort((a,b) => b.points - a.points) %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>
+                <a href="todo">
+                    {{ ranking.owner.username }}
+                </a>
+            </td>
+            <td>{{ ranking.points }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
 {% endblock %}
+
