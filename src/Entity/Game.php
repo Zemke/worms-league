@@ -97,7 +97,7 @@ class Game
             ? $this->awayUser : $this->homeUser;
     }
 
-    public function plusPoints($points: int): Game
+    public function plusPoints(int $points): Game
     {
         $this->points += $points;
         return $this;
