@@ -20,6 +20,10 @@ class Ranking
     #[ORM\Column(type: 'integer', options: ["default" => 0])]
     private $points;
 
+    #[ORM\ManyToOne(targetEntity: Season::class, inversedBy: 'rankings')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $season;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +49,18 @@ class Ranking
     public function setPoints(int $points): self
     {
         $this->points = $points;
+
+        return $this;
+    }
+
+    public function getSeason(): ?Season
+    {
+        return $this->season;
+    }
+
+    public function setSeason(?Season $season): self
+    {
+        $this->season = $season;
 
         return $this;
     }

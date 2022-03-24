@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SeasonRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 
@@ -34,9 +36,13 @@ class Season
     #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private $active;
 
+    #[ORM\OneToMany(mappedBy: 'season', targetEntity: Ranking::class, orphanRemoval: true)]
+    private $rankings;
+
     public function __construct()
     {
         $this->active = false;
+        $this->rankings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,6 +118,36 @@ class Season
     public function setActive(bool $active): self
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Ranking>
+     */
+    public function getRankings(): Collection
+    {
+        return $this->rankings;
+    }
+
+    public function addRanking(Ranking $ranking): self
+    {
+        if (!$this->rankings->contains($ranking)) {
+            $this->rankings[] = $ranking;
+            $ranking->setSeason($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRanking(Ranking $ranking): self
+    {
+        if ($this->rankings->removeElement($ranking)) {
+            // set the owning side to null (unless already changed)
+            if ($ranking->getSeason() === $this) {
+                $ranking->setSeason(null);
+            }
+        }
 
         return $this;
     }
