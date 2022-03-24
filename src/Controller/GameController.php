@@ -33,7 +33,7 @@ class GameController extends AbstractController
                            EntityManagerInterface $em,
                            Security $security,
                            ValidatorInterface $validator,
-                           RankingService: $rankingService): Response
+                           RankingService $rankingService): Response
     {
 
         $var = [ 'controller_name' => 'GameController', ];
