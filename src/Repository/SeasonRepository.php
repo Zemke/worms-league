@@ -45,6 +45,11 @@ class SeasonRepository extends ServiceEntityRepository
         }
     }
 
+    public function findActive(): ?Season
+    {
+        return $this->findOneBy(['active' => true]);
+    }
+
     // /**
     //  * @return Season[] Returns an array of Season objects
     //  */
