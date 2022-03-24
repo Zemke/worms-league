@@ -15,8 +15,8 @@ class RankingService
 
     public function report(Game $game): Game
     {
-        $winner = $this->rankingRepo->findOneBy(['owner' => $game->winner()]);
-        $loser = $this->rankingRepo->findOneBy(['owner' => $game->loser()]);
+        $winner = $this->rankingRepo->findOneOrCreate($game->winner(), $game->getSeason());
+        $loser = $this->rankingRepo->findOneOrCreate($game->loser(), $game->getSeason());
         if ($game->draw()) {
             $winner->plusPoints(1);
             $loser->plusPoints(1);

@@ -8,6 +8,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Season;
+use App\Entity\User;
 
 /**
  * @method Ranking|null find($id, $lockMode = null, $lockVersion = null)
@@ -44,6 +45,18 @@ class RankingRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    public function findOneOrCreate(User $owner, Season $season): Ranking
+    {
+        $ranking = $this->findOneByOwner($owner);
+        if (is_null($ranking)) {
+            $ranking = (new Ranking())
+                ->setOwner($owner)
+                ->setSeason($season);
+            $this->_em->persist($ranking);
+        }
+        return $ranking;
     }
 
     // /**
