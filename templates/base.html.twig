@@ -47,16 +47,20 @@
       </h1>
     </div>
     <nav class="nav">
-      <a class="nav-item" href="/ladder">
+      <a class="nav-item {{ app.request.pathinfo starts with '/ladder' ? 'active' : '' }}"
+         href="/ladder">
         Ladder
       </a>
-      <a class="nav-item" href="/matches">
+      <a class="nav-item {{ app.request.pathinfo starts with '/matches' ? 'active' : '' }}"
+         href="/matches">
         Matches
       </a>
-      <a class="nav-item" href="/archive">
+      <a class="nav-item {{ app.request.pathinfo starts with '/archive' ? 'active' : '' }}"
+         href="/archive">
         Archive
       </a>
-      <a class="nav-item" href="/help">
+      <a class="nav-item {{ app.request.pathinfo starts with '/help' ? 'active' : '' }}"
+         href="/help">
         Help
       </a>
     </nav>
