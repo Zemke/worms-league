@@ -17,7 +17,7 @@ class Ranking
     #[ORM\JoinColumn(nullable: false)]
     private $owner;
 
-    #[ORM\Column(type: 'integer', options: ["default" => false])]
+    #[ORM\Column(type: 'integer', options: ["default" => 0])]
     private $points;
 
     public function getId(): ?int
