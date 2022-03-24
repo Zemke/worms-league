@@ -1,20 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MatchController!{% endblock %}
+{% block title %}Matches{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/lair/fun/worms-league/src/Controller/MatchController.php'|file_link(0) }}">src/Controller/MatchController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/lair/fun/worms-league/templates/match/index.html.twig'|file_link(0) }}">templates/match/index.html.twig</a></code></li>
-    </ul>
-</div>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th colspan="3">Score</th>
+            <th>Time</th>
+            <th>
+                <!--<i class="comment"></i>-->
+                <img src="/img/speech.png" alt="Comments">
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for game in games %}
+        <tr>
+            <td>
+                {{ game.id }}
+            </td>
+            <td>
+                {{ game.home.username }}
+            </td>
+            <td>
+                {{ game.scoreHome }}–{{ game.scoreAway }}
+            </td>
+            <td>
+                {{ game.away.username }}
+            </td>
+            <td>
+                {{ game.created | date('Y-m-d H:i') }}
+            </td>
+            <td>
+                <a href="/todo">4</a>
+            </td>
+            <td>
+                <img src="/img/replay.png" alt="Replay">
+                <!--<i class="replay"></i>-->
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

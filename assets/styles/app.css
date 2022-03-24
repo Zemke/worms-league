@@ -308,9 +308,54 @@ table, tr, th {
   padding: .5rem .4rem;
 }
 
+table th img,
+table td img {
+  height: 1rem;
+}
+
 .whitepad {
   display: inline-block;
   padding: .3rem;
   background-color: var(--light);
+}
+
+i.replay {
+  font-style: normal;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+i.replay:before {
+  content: "\2622";
+}
+
+i.comment {
+  font-style: normal;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+i.comment:before {
+  content: "";
+  display: block;
+  position: relative;
+  height: .7rem;
+  width: .9rem;
+  border: .1rem solid white;
+  border-radius: .7rem;
+}
+
+i.comment:after {
+  content: "";
+  display: block;
+  position: relative;
+  border: .1rem solid white;
+  width: .02rem;
+  height: .02rem;
+  background-color: var(--light);
+  left: .3rem;
+  top: -.01rem;
+  border-bottom-right-radius: .7rem;
+  border-bottom-left-radius: .1rem;
 }
 
