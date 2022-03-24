@@ -84,7 +84,7 @@ class Game
         if (!$this->played() || $this->draw()) {
             return null;
         }
-        return $this->scoreHome > $this->scoreAway ? $this->homeUser : $this->awayUser;
+        return $this->scoreHome > $this->scoreAway ? $this->home: $this->away;
     }
 
     public function loser(): ?User
@@ -93,14 +93,8 @@ class Game
         if (is_null($winner)) {
             return null;
         }
-        return $winner->getId() === $this->homeUser->getId()
-            ? $this->awayUser : $this->homeUser;
-    }
-
-    public function plusPoints(int $points): Game
-    {
-        $this->points += $points;
-        return $this;
+        return $winner->getId() === $this->home->getId()
+            ? $this->away: $this->home;
     }
 
     #[ORM\PrePersist]

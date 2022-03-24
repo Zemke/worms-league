@@ -24,6 +24,17 @@ class Ranking
     #[ORM\JoinColumn(nullable: false)]
     private $season;
 
+    public function __construct()
+    {
+        $this->points = 0;
+    }
+
+    public function plusPoints(int $points): Ranking
+    {
+        $this->points += $points;
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
