@@ -366,6 +366,12 @@ i.comment:after {
 
 .gear-wrapper {
   position: relative;
+  height: .97rem;
+  transition: transform 1s;
+}
+
+.gear-wrapper:hover {
+  transform: rotate(360deg);
 }
 
 .gear-wrapper::after {
