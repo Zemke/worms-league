@@ -366,8 +366,10 @@ i.comment:after {
 
 .gear-wrapper {
   position: relative;
-  height: .97rem;
+  height: 1rem;
+  width: 1rem;
   transition: transform 1s;
+  border-radius: 50%;
 }
 
 .gear-wrapper:hover {
@@ -385,6 +387,12 @@ i.comment:after {
   box-sizing: border-box;
   border-radius: 50%;
   margin: 0 .2rem;
+  left: -0.13rem;
+}
+
+i.icon.gear {
+  position: absolute;
+  left: -0.15rem;
 }
 
 i.icon.gear::before,
