@@ -20,9 +20,14 @@
         <span id="account">
         </span>
         {% if app.user %}
+          <div class="gear-wrapper">
+              <i class="icon gear text-primary"></i>
+          </div>
+          <!--
           <button type="button" id="sign-out" onclick="location.href='/logout'">
             Sign out
           </button>
+          -->
         {% else %}
           <div class="sign-in">
             <form action="{{ path('app_login') }}" method="POST">

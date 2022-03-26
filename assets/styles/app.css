@@ -7,6 +7,10 @@
   --error: #5b2f3f;
 }
 
+.text-primary {
+  color: var(--primary);
+}
+
 body, html {
   background: url('/public/img/checker_dark.png') repeat;
   font-family: Arial, sans-serif;
@@ -319,8 +323,11 @@ table td img {
   background-color: var(--light);
 }
 
-i.replay {
+i.icon {
   font-style: normal;
+}
+
+i.replay {
   font-size: 1.2rem;
   font-weight: bold;
 }
@@ -330,9 +337,7 @@ i.replay:before {
 }
 
 i.comment {
-  font-style: normal;
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-size: 1.2rem; font-weight: bold;
 }
 
 i.comment:before {
@@ -357,5 +362,36 @@ i.comment:after {
   top: -.01rem;
   border-bottom-right-radius: .7rem;
   border-bottom-left-radius: .1rem;
+}
+
+.gear-wrapper {
+  position: relative;
+}
+
+.gear-wrapper::after {
+  content: "";
+  display: inline-block;
+  position: relative;
+  height: .9rem;
+  width: .9rem;
+  background-color: var(--dark);
+  border: .2rem solid var(--primary);
+  box-sizing: border-box;
+  border-radius: 50%;
+  margin: 0 .2rem;
+}
+
+i.icon.gear::before,
+i.icon.gear::after {
+  content: "+";
+  display: inline-block;
+  position: absolute;
+  font-size: 2.4rem;
+  left: -.05rem;
+  top: -.9rem;
+}
+
+i.icon.gear::after {
+  transform: rotate(45deg);
 }
 
