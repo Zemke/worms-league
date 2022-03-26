@@ -20,14 +20,22 @@
         <span id="account">
         </span>
         {% if app.user %}
-          <div class="gear-wrapper">
-              <i class="icon gear text-primary"></i>
+          <div class="dropdown-wrapper">
+              <button class="void gear-wrapper" data-dropdown-action>
+                  <i class="icon gear text-primary"></i>
+              </button>
+              <div class="dropdown" data-dropdown-target>
+                <a href="/logout">
+                  Log out
+                </a>
+                <a href="/report">
+                  Report
+                </a>
+                <a href="/settings">
+                  Settings
+                </a>
+              </div>
           </div>
-          <!--
-          <button type="button" id="sign-out" onclick="location.href='/logout'">
-            Sign out
-          </button>
-          -->
         {% else %}
           <div class="sign-in">
             <form action="{{ path('app_login') }}" method="POST">

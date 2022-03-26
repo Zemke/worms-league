@@ -49,10 +49,6 @@ body, html {
   padding: .05rem .2rem;
 }
 
-.top-bar a {
-  color: #528FA1;
-}
-
 .uber {
   margin: 0 auto;
   margin-left: 25%;
@@ -350,6 +346,15 @@ i.comment:before {
   border-radius: .7rem;
 }
 
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
 i.comment:after {
   content: "";
   display: block;
@@ -368,12 +373,14 @@ i.comment:after {
   position: relative;
   height: 1rem;
   width: 1rem;
-  transition: transform 1s;
   border-radius: 50%;
 }
 
-.gear-wrapper:hover {
-  transform: rotate(360deg);
+.gear-wrapper:hover,
+.gear-wrapper:focus,
+button.gear-wrapper:focus {
+  animation: rotation 1.5s infinite linear;
+  box-shadow: none;
 }
 
 .gear-wrapper::after {
@@ -407,5 +414,59 @@ i.icon.gear::after {
 
 i.icon.gear::after {
   transform: rotate(45deg);
+}
+
+button.void {
+  background: transparent;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+.dropdown-wrapper {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  background: #fff;
+  top: 1.6rem;
+  right: 0;
+  display: none;
+  text-align: center;
+  border: 1px solid #000;
+  box-shadow: 0.5rem 0.5rem 2rem var(--dark);
+}
+
+.dropdown::before {
+  content: "";
+  position: absolute;
+  display: block;
+  border: .5rem transparent solid;
+  border-bottom-color: white;
+  top: -1rem;
+  right: 0rem;
+  height: 0;
+  width: 0;
+}
+
+.dropdown a {
+  display: block;
+  border-bottom: 1px solid var(--light);
+  padding: .5rem 1.5rem;
+}
+
+.dropdown a:hover {
+  background-color: var(--secondary);
+  color: var(--light);
+  text-decoration: none;
+  border-bottom-color: var(--secondary);
+}
+
+.dropdown.active {
+  display: block;
 }
 
