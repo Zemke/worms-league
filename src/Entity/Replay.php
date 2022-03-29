@@ -57,6 +57,11 @@ class Replay
         $this->modified = $this->created;
     }
 
+    public function processed(): bool
+    {
+        return !is_null($this->getReplayData()) && !empty($this->getReplayData()->getData());
+    }
+
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
     public function updateModified()

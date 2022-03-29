@@ -99,9 +99,9 @@ class Game
 
     public function fullyProcessed(): bool
     {
-        $replays = $this->getReplays();
-        return count($replays) === array_reduce($replays->getValues(), function($acc, $replay) {
-            return $acc + (!is_null($replay->getReplayData()) && !empty($replay->getReplayData()->getData()));
+        $replays = $this->getReplays()->getValues();
+        return count($replays) === array_reduce($replays, function($acc, $replay) {
+            return $acc + $replay->processed();
         }, 0);
     }
 
