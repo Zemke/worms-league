@@ -6,28 +6,41 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\Mime\Part\DataPart;
 use Symfony\Component\Mime\Part\Multipart\FormDataPart;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Contracts\HttpClient\Exception\ExceptionInterface as HttpClientException;
+use App\Entity\ReplayData;
+use App\Entity\Replay;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerAwareInterface;
 
-class WaaasService
+class WaaasService implements \Psr\Log\LoggerAwareInterface
 {
+    use LoggerAwareTrait;
 
     public function __construct(private HttpClientInterface $client,
                                 private string $waaas)
     {}
 
-    public function send(File $file): array
+    /**
+     * Send the replay file to WAaaS for further processing and construct
+     * ReplayData from the response.
+     *
+     * @return ReplayData Instantiated with the data from the response.
+     * @throws \RuntimeException When the HTTP request itself has errored.
+     */
+    public function send(Replay $replay): ReplayData
     {
-        //$url = $this->params->get('waaas');
-        $url = $this->waaas;
-        dump($url);
-        $form = ['replay' => DataPart::fromPath($file->getPathname())];
-        $dataPart = new FormDataPart($form);
-        $res = $this->client->request('POST', $url, [
+        $dataPart = new FormDataPart([
+            'replay' => DataPart::fromPath($replay->getFile()->getPathname())
+        ]);
+        $res = $this->client->request('POST', $this->waaas, [
             'headers' => $dataPart->getPreparedHeaders()->toArray(),
             'body' => $dataPart->bodyToIterable(),
         ]);
-        dump($res->toArray());
-        return $res->toArray();
+        try {
+            return (new ReplayData())->setData($res->toArray());
+        } catch (HttpClientException $e) {
+            $this->logger->error($e->getMessage(), ['exception' => $e]); throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 }
-
 

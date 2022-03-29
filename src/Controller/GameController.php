@@ -47,8 +47,6 @@ class GameController extends AbstractController
                 ->setReporter($security->getUser())
                 ->setHome($security->getUser())
                 ->setAway($users->find($request->request->all()['opponent']))
-                ->setScoreHome(3) // TODO test data
-                ->setScoreAway(2)
                 ->setSeason($season);
             foreach ($request->files->all('replays') as $file) {
                 $game->addReplay((new Replay())->setFile($file));
@@ -56,7 +54,9 @@ class GameController extends AbstractController
             if (count($validator->validate($game)) > 0) {
                 $this->addFlash('error', 'The game is invalid.');
             } else {
-                $rankingService->report($game);
+                $em->persist($game);
+                // TODO in another thread per replay process all replays and the do ranking calc
+                $waaasService->send($game->getReplays()[0]);
             }
         } else {
             $var['opponents'] = $em->createQueryBuilder()
