@@ -11,12 +11,15 @@ use App\Entity\ReplayData;
 use App\Entity\Replay;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerAwareInterface;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
+use Vich\UploaderBundle\Storage\StorageInterface;
 
 class WaaasService implements \Psr\Log\LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
     public function __construct(private HttpClientInterface $client,
+                                private StorageInterface $storage,
                                 private string $waaas)
     {}
 
@@ -30,16 +33,17 @@ class WaaasService implements \Psr\Log\LoggerAwareInterface
     public function send(Replay $replay): ReplayData
     {
         $dataPart = new FormDataPart([
-            'replay' => DataPart::fromPath($replay->getFile()->getPathname())
+            'replay' => DataPart::fromPath($this->storage->resolvePath($replay, 'file'))
         ]);
         $res = $this->client->request('POST', $this->waaas, [
             'headers' => $dataPart->getPreparedHeaders()->toArray(),
             'body' => $dataPart->bodyToIterable(),
         ]);
         try {
-            return (new ReplayData())->setData($res->toArray());
+            return (new ReplayData())->setReplay($replay)->setData($res->toArray());
         } catch (HttpClientException $e) {
-            $this->logger->error($e->getMessage(), ['exception' => $e]); throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
+            $this->logger->error($e->getMessage(), ['exception' => $e]);
+            throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
     }
 }
