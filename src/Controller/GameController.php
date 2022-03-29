@@ -15,6 +15,7 @@ use App\Entity\Game;
 use App\Entity\Replay;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Service\RankingService;
+use App\Service\WaaasService;
 
 class GameController extends AbstractController
 {
@@ -33,7 +34,8 @@ class GameController extends AbstractController
                            EntityManagerInterface $em,
                            Security $security,
                            ValidatorInterface $validator,
-                           RankingService $rankingService): Response
+                           RankingService $rankingService,
+                           WaaasService $waaasService): Response
     {
 
         $var = [ 'controller_name' => 'GameController', ];
