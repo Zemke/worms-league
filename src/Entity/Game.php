@@ -97,6 +97,14 @@ class Game
             ? $this->away: $this->home;
     }
 
+    public function fullyProcessed(): bool
+    {
+        $replays = $this->getReplays();
+        return count($replays) === array_reduce($replays->getValues(), function($acc, $replay) {
+            return $acc + (!is_null($replay->getReplayData()) && !empty($replay->getReplayData()->getData()));
+        }, 0);
+    }
+
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
     public function updateModified()
