@@ -61,9 +61,16 @@ class Game
         cascade: ['persist', 'remove'])]
     private $replays;
 
+    /**
+     * Whether or not the game had already been included when last calculating the ranking.
+     */
+    #[ORM\Column(type: 'boolean', options: ["default" => false])]
+    private $ranked;
+
     public function __construct()
     {
         $this->voided = false;
+        $this->ranked = false;
         $this->created = new \DateTime();
         $this->modified = $this->created;
         $this->replays = new ArrayCollection();
@@ -257,6 +264,18 @@ class Game
                 $replay->setGame(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRanked(): ?bool
+    {
+        return $this->ranked;
+    }
+
+    public function setRanked(bool $ranked): self
+    {
+        $this->ranked = $ranked;
 
         return $this;
     }
