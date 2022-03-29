@@ -2,20 +2,22 @@
 
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserRepository;
 use App\Repository\SeasonRepository;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Entity\Game;
 use App\Entity\Replay;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Service\RankingService;
 use App\Service\WaaasService;
+use App\Message\SendReplayMessage;
 
 class GameController extends AbstractController
 {
@@ -34,8 +36,7 @@ class GameController extends AbstractController
                            EntityManagerInterface $em,
                            Security $security,
                            ValidatorInterface $validator,
-                           RankingService $rankingService,
-                           WaaasService $waaasService): Response
+                           MessageBusInterface $bus,): Response
     {
 
         $var = [ 'controller_name' => 'GameController', ];
@@ -55,8 +56,10 @@ class GameController extends AbstractController
                 $this->addFlash('error', 'The game is invalid.');
             } else {
                 $em->persist($game);
-                // TODO in another thread per replay process all replays and the do ranking calc
-                $waaasService->send($game->getReplays()[0]);
+                $em->flush();
+                foreach ($game->getReplays() as $replay) {
+                    $bus->dispatch(new SendReplayMessage($replay->getId()));
+                }
             }
         } else {
             $var['opponents'] = $em->createQueryBuilder()
