@@ -28,7 +28,7 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
         $this->replayDataRepo->add($replayData, true);
         $this->logger->info('after', ['fp' => $replay->getGame()->fullyProcessed()]);
         if ($replay->getGame()->fullyProcessed()) {
-            // TODO dispatch ranking calc using $bus
+            $bus->dispatch(new RankingCalcMessage($replay->getGame()->getId()));
         }
     }
 }
