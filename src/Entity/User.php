@@ -41,6 +41,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->rankings = new ArrayCollection();
     }
 
+    public function similarUsername(string $username): float
+    {
+        similar_text($this->getUsername(), $username, $perc);
+        return $perc;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

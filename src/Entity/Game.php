@@ -101,7 +101,42 @@ class Game
             return null;
         }
         return $winner->getId() === $this->home->getId()
-            ? $this->away: $this->home;
+            ? $this->away : $this->home;
+    }
+
+    /**
+     * Set the score based on replay data.
+     */
+    public function score(): self
+    {
+        if (!$this->fullyProcessed()) {
+            throw new \RuntimeException("Game {$this->getId()} is not fully processed");
+        }
+        $scores = array_reduce($this->replayData(), function ($acc, $d) {
+            $winner = $d->winner();
+            if (is_null($winner)) {
+                return $acc;
+            }
+            $match = $d->matchUsers($this->home, $this->away);
+            $acc[+!($this->home->getId() === $match[$winner]->getId())]++;
+            return $acc;
+        }, [0, 0]);
+        $this->setScoreHome($scores[0]);
+        $this->setScoreAway($scores[1]);
+        return $this;
+    }
+
+    /**
+     * Convenience for getting every replay's data.
+     *
+     * @return ReplayData[]
+     */
+    public function replayData(): array
+    {
+        return array_reduce($this->getReplays()->getValues(), function($acc, $v) {
+            $acc[] = $v->getReplayData();
+            return $acc;
+        }, []);
     }
 
     public function fullyProcessed(): bool

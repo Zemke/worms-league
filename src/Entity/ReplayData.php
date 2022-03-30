@@ -33,6 +33,72 @@ class ReplayData
         $this->modified = $this->created;
     }
 
+    /**
+     * The in-game users' names.
+     *
+     * @return string[]
+     */
+    public function names(): array
+    {
+        $names = array_map(fn($v) => $v['user'], $this->data['teams']);
+        $c = count($names);
+        if ($c !== 2) { // TODO make this entity validation prepersist
+            throw new \RuntimeException("Therea are {$c} teams");
+        }
+        return $names;
+    }
+
+    /**
+     * Find the winner by accumulating kills. The winner is the one with fewer victims.
+     *
+     * @return string Wining in-game user's name or null if drawn.
+     */
+    public function winner(): ?string
+    {
+        $names = $this->names();
+        $victims = array_reduce($this->data['turns'], function($acc, $turn) use ($names) {
+            foreach ($turn['damages'] as $dmg) {
+                if (!in_array($dmg['victim'], $names)) {
+                    throw new \RuntimeException(sprintf(
+                        '%s is not in names %s',
+                        $dmg['victim'], json_encode($names)));
+                }
+                $acc[$dmg['victim']] += $dmg['kills'];
+            }
+            return $acc;
+        }, [$names[0] => 0, $names[1] => 0]);
+        $c = array_values($victims)[0] - array_values($victims)[1];
+        $winner = null;
+        if ($c === 0) {
+            return null;
+        } else {
+            return $c > 0 ? array_keys($victims)[1] : array_keys($victims)[0];
+        }
+    }
+
+    /**
+     * Match user to in-game users' names.
+     *
+     * @return array Association of in game user's name to User object.
+     */
+    public function matchUsers($ua, $ub): array
+    {
+        [$n1, $n2] = $this->names();
+        $mxmatch = array_reduce([$ua, $ub], function ($mx, $u) use ($n1, $n2) {
+            // TODO Maybe there should be a lower boundary for a match?
+            $sm = [$u->similarUsername($n1), $u->similarUsername($n2)];
+            $mxp = max($sm);
+            if (is_null($mx) || $mxp > $mx[1]) {
+                $mxu = $sm[0] > $sm[1] ? [$u, $n1] : [$u, $n2];
+                return [$mxu, $mxp];
+            }
+            return $mx;
+        }, null);
+        $res = [$mxmatch[0][1] => $mxmatch[0][0]];
+        $res[$mxmatch[0][1] === $n1 ? $n2 : $n1] = $mxmatch[0][0]->getId() === $ua->getId() ? $ub : $ua;
+        return $res;
+    }
+
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
     public function updateModified()

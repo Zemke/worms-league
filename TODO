@@ -2,11 +2,4 @@
 * Styles and looks
 * Mobile-friendliness (maybe post-release)
 * EasyAdmin
-* Ranking formular with these factors
-  * quality per opponent
-  * reward activity but don't reward noob bashing
-    * general activity
-    * activity against specific opponent
-  * entropy (older matches value less)
-
 
