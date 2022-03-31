@@ -78,7 +78,7 @@ class Game
 
     public function played(): bool
     {
-        return $this->reporter != null && $this->scoreHome != null && $this->scoreAway != null;
+        return !is_null($this->reporter) && !is_null($this->scoreHome) && !is_null($this->scoreAway);
     }
 
     public function draw(): bool

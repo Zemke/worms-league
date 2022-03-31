@@ -17,7 +17,6 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
     public function __construct(private LoggerInterface $logger,
                                 private WaaasService $waaasService,
                                 private ReplayRepository $replayRepo,
-                                private ReplayDataRepository $replayDataRepo,
                                 private GameRepository $gameRepo,
                                 private MessageBusInterface $bus,)
     {}
@@ -25,14 +24,16 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
     public function __invoke(SendReplayMessage $message)
     {
         $replay = $this->replayRepo->find($message->getReplayId());
+        if (!empty($replay->getReplayData())) {
+            throw new \RuntimeException(
+                "Replay data for replay {$replay->getId()} is already available");
+        }
         $replayData = $this->waaasService->send($replay);
-        $this->logger->info('before', ['fp' => $replay->getGame()->fullyProcessed()]);
         $replay->setReplayData($replayData);
-        $this->replayDataRepo->add($replayData, true);
-        $this->logger->info('after', ['fp' => $replay->getGame()->fullyProcessed()]);
+        $this->replayRepo->add($replay, true);
         if ($replay->getGame()->fullyProcessed()) {
-            $gameRepo->add($game->score(), true);
-            $bus->dispatch(new RankingCalcMessage($replay->getGame()->getId()));
+            $this->gameRepo->add($replay->getGame()->score(), true);
+            $this->bus->dispatch(new RankingCalcMessage($replay->getGame()->getId()));
         }
     }
 }

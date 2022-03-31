@@ -29,13 +29,13 @@ class RankingService
             throw new \RuntimeException(
                 "Won't re-calc as game {$game->getId()} is already ranked");
         }
-        $season = $seasonRepo->findActive();
+        $season = $this->seasonRepo->findActive();
         if ($game->getSeason()->getId() !== $season?->getId()) {
             throw new \RuntimeException(sprintf(
                 "game season is %s but active season is %s",
                 $game->getSeason()->getId(), $season?->getId()));
         }
-        $games = $gameRepo->findAllBySeason($season);
+        $games = $this->gameRepo->findBySeason($season);
         $this->reCalc($games);
         $game->setRanked(true);
     }
@@ -56,15 +56,22 @@ class RankingService
          *   - entropy (older matches value less)
          */
 
+        // TODO it's full re-calc, reset ranking before
+
         foreach ($games as $game) {
-            $winner = $this->rankingRepo->findOneOrCreate($game->winner(), $game->getSeason());
-            $loser = $this->rankingRepo->findOneOrCreate($game->loser(), $game->getSeason());
+            if (!$game->played()) {
+                continue;
+            }
             if ($game->draw()) {
-                $winner->plusPoints(1);
-                $loser->plusPoints(1);
-                $this->em->persist($winner);
-                $this->em->persist($loser);
+                $home = $this->rankingRepo->findOneOrCreate($game->getHome(), $game->getSeason());
+                $away = $this->rankingRepo->findOneOrCreate($game->getAway(), $game->getSeason());
+                $home->plusPoints(1);
+                $away->plusPoints(1);
+                $this->em->persist($home);
+                $this->em->persist($away);
             } else {
+                $winner = $this->rankingRepo->findOneOrCreate($game->winner(), $game->getSeason());
+                $loser = $this->rankingRepo->findOneOrCreate($game->loser(), $game->getSeason());
                 $winner->plusPoints(3);
                 $this->em->persist($winner);
             }
