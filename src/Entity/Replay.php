@@ -8,6 +8,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use App\Entity\Game;
 use Symfony\Component\HttpFoundation\File\File;
 
+// TODO unique checksum validation
+
 #[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: ReplayRepository::class)]
 #[Vich\Uploadable]
