@@ -33,14 +33,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $email;
 
-    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Ranking::class)]
-    private $rankings;
-
-    public function __construct()
-    {
-        $this->rankings = new ArrayCollection();
-    }
-
     public function similarUsername(string $username): float
     {
         similar_text($this->getUsername(), $username, $perc);
@@ -125,36 +117,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Ranking>
-     */
-    public function getRankings(): Collection
-    {
-        return $this->rankings;
-    }
-
-    public function addRanking(Ranking $ranking): self
-    {
-        if (!$this->rankings->contains($ranking)) {
-            $this->rankings[] = $ranking;
-            $ranking->setOwner($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRanking(Ranking $ranking): self
-    {
-        if ($this->rankings->removeElement($ranking)) {
-            // set the owning side to null (unless already changed)
-            if ($ranking->getOwner() === $this) {
-                $ranking->setOwner(null);
-            }
-        }
 
         return $this;
     }
