@@ -50,7 +50,10 @@ class Replay
     #[ORM\Column(type: 'datetime')]
     private $modified;
 
-    #[ORM\OneToOne(mappedBy: 'replay', targetEntity: ReplayData::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(
+        targetEntity: ReplayData::class,
+        orphanRemoval: true,
+        cascade: ['persist', 'remove'])]
     private $replayData;
 
     public function __construct()
@@ -184,13 +187,9 @@ class Replay
 
     public function setReplayData(ReplayData $replayData): self
     {
-        // set the owning side of the relation if necessary
-        if ($replayData->getReplay() !== $this) {
-            $replayData->setReplay($this);
-        }
-
         $this->replayData = $replayData;
 
         return $this;
     }
 }
+

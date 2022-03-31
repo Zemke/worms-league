@@ -17,10 +17,6 @@ class ReplayData
     #[ORM\Column(type: 'json')]
     private $data = [];
 
-    #[ORM\OneToOne(inversedBy: 'replayData', targetEntity: Replay::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private $replay;
-
     #[ORM\Column(type: 'datetime')]
     private $created;
 
@@ -119,18 +115,6 @@ class ReplayData
     public function setData(array $data): self
     {
         $this->data = $data;
-
-        return $this;
-    }
-
-    public function getReplay(): ?Replay
-    {
-        return $this->replay;
-    }
-
-    public function setReplay(Replay $replay): self
-    {
-        $this->replay = $replay;
 
         return $this;
     }

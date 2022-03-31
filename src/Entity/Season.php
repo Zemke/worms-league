@@ -134,7 +134,6 @@ class Season
     {
         if (!$this->rankings->contains($ranking)) {
             $this->rankings[] = $ranking;
-            $ranking->setSeason($this);
         }
 
         return $this;
@@ -142,12 +141,7 @@ class Season
 
     public function removeRanking(Ranking $ranking): self
     {
-        if ($this->rankings->removeElement($ranking)) {
-            // set the owning side to null (unless already changed)
-            if ($ranking->getSeason() === $this) {
-                $ranking->setSeason(null);
-            }
-        }
+        $this->rankings->removeElement($ranking);
 
         return $this;
     }

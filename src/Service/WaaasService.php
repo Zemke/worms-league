@@ -40,7 +40,7 @@ class WaaasService implements \Psr\Log\LoggerAwareInterface
             'body' => $dataPart->bodyToIterable(),
         ]);
         try {
-            return (new ReplayData())->setReplay($replay)->setData($res->toArray());
+            return (new ReplayData())->setData($res->toArray());
         } catch (HttpClientException $e) {
             $this->logger->error($e->getMessage(), ['exception' => $e]);
             throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
