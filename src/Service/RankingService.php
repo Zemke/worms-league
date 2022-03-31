@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Game;
+use App\Entity\Season;
 use App\Repository\RankingRepository;
 use App\Repository\GameRepository;
 use App\Repository\SeasonRepository;
@@ -35,8 +36,7 @@ class RankingService
                 "game season is %s but active season is %s",
                 $game->getSeason()->getId(), $season?->getId()));
         }
-        $games = $this->gameRepo->findBySeason($season);
-        $this->reCalc($games);
+        $this->reCalc($season);
         $game->setRanked(true);
     }
 
@@ -45,8 +45,9 @@ class RankingService
      *
      * @param Game[] games to take into account for re-calc
      */
-    public function reCalc(array $games): void
+    public function reCalc(Season $season): void
     {
+        $games = $this->gameRepo->findBySeason($season);
         /* TODO sophisticated ranking calc
          * - Ranking formular with these factors
          *   - quality per opponent
