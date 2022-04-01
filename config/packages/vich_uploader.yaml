@@ -12,6 +12,13 @@ vich_uploader:
             inject_on_load: false
             delete_on_update: true
             delete_on_remove: true
+        map:
+            uri_prefix: /maps
+            upload_destination: '%kernel.project_dir%/public/maps'
+            namer: Vich\UploaderBundle\Naming\HashNamer
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
     metadata:
         type: attribute
 

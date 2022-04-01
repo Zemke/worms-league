@@ -18,6 +18,8 @@ yarn-error.log
 
 /public/replays/*
 !/public/replays/.gitkeep
+/public/maps/*
+!/public/maps/.gitkeep
 
 
 ###> symfony/phpunit-bridge ###

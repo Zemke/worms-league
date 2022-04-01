@@ -17,7 +17,7 @@ class ReplayMap
     private $id;
 
     #[Vich\UploadableField(
-        mapping: 'replay',
+        mapping: 'map',
         fileNameProperty: 'name',
         size: 'size',
         mimeType: 'mimeType',
