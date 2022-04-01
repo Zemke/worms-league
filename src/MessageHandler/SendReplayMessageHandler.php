@@ -29,6 +29,7 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
                 "Replay data for replay {$replay->getId()} is already available");
         }
         $replayData = $this->waaasService->send($replay);
+        $map = $this->waaasService->map($replayData['map']);
         $replay->setReplayData($replayData);
         $this->replayRepo->add($replay, true);
         if ($replay->getGame()->fullyProcessed()) {

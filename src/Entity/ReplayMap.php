@@ -2,18 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\ReplayRepository;
-use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ReplayMapRepository;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use App\Entity\Game;
-use Symfony\Component\HttpFoundation\File\File;
-
-// TODO unique checksum validation
+use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\HasLifecycleCallbacks]
-#[ORM\Entity(repositoryClass: ReplayRepository::class)]
+#[ORM\Entity(repositoryClass: ReplayMapRepository::class)]
 #[Vich\Uploadable]
-class Replay
+class ReplayMap
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -34,43 +30,22 @@ class Replay
     #[ORM\Column(type: 'integer')]
     private $size;
 
-    #[ORM\Column(type: 'datetime')]
-    private $created;
-
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $mimeType;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $originalName;
 
-    #[ORM\ManyToOne(targetEntity: Game::class, inversedBy: 'replays')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $game;
+    #[ORM\Column(type: 'datetime')]
+    private $created;
 
     #[ORM\Column(type: 'datetime')]
     private $modified;
-
-    #[ORM\OneToOne(
-        targetEntity: ReplayData::class,
-        orphanRemoval: true,
-        cascade: ['persist', 'remove'])]
-    private $replayData;
-
-    #[ORM\OneToOne(
-        targetEntity: ReplayMap::class,
-        orphanRemoval: true,
-        cascade: ['persist', 'remove'])]
-    private $replayMap;
 
     public function __construct()
     {
         $this->created = new \DateTime();
         $this->modified = $this->created;
-    }
-
-    public function processed(): bool
-    {
-        return !is_null($this->getReplayData()) && !empty($this->getReplayData()->getData());
     }
 
     #[ORM\PrePersist]
@@ -83,18 +58,6 @@ class Replay
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     /**
@@ -114,6 +77,18 @@ class Replay
         return $this->file;
     }
 
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
     public function getSize(): ?int
     {
         return $this->size;
@@ -122,18 +97,6 @@ class Replay
     public function setSize(int $size): self
     {
         $this->size = $size;
-
-        return $this;
-    }
-
-    public function getCreated(): ?\DateTimeInterface
-    {
-        return $this->created;
-    }
-
-    public function setCreated(\DateTimeInterface $created): self
-    {
-        $this->created = $created;
 
         return $this;
     }
@@ -162,14 +125,14 @@ class Replay
         return $this;
     }
 
-    public function getGame(): ?Game
+    public function getCreated(): ?\DateTimeInterface
     {
-        return $this->game;
+        return $this->created;
     }
 
-    public function setGame(?Game $game): self
+    public function setCreated(\DateTimeInterface $created): self
     {
-        $this->game = $game;
+        $this->created = $created;
 
         return $this;
     }
@@ -185,29 +148,4 @@ class Replay
 
         return $this;
     }
-
-    public function getReplayData(): ?ReplayData
-    {
-        return $this->replayData;
-    }
-
-    public function setReplayData(ReplayData $replayData): self
-    {
-        $this->replayData = $replayData;
-
-        return $this;
-    }
-
-    public function getReplayMap(): ?ReplayMap
-    {
-        return $this->replayMap;
-    }
-
-    public function setReplayMap(?ReplayMap $replayMap): self
-    {
-        $this->replayMap = $replayMap;
-
-        return $this;
-    }
 }
-

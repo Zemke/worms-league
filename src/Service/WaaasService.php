@@ -46,5 +46,10 @@ class WaaasService implements \Psr\Log\LoggerAwareInterface
             throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
     }
+
+    public function map(string $mapUrl): void
+    {
+        $res = $this->client->request($mapUrl);
+    }
 }
 
