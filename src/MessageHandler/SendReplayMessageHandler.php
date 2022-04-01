@@ -10,6 +10,7 @@ use App\Entity\ReplayMap;
 use App\Message\SendReplayMessage;
 use App\Message\RankingCalcMessage;
 use App\Repository\GameRepository;
+use App\Repository\ReplayRepository;
 use App\Service\WaaasService;
 
 final class SendReplayMessageHandler implements MessageHandlerInterface
@@ -17,6 +18,7 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
     public function __construct(private LoggerInterface $logger,
                                 private WaaasService $waaasService,
                                 private GameRepository $gameRepo,
+                                private ReplayRepository $replayRepo,
                                 private MessageBusInterface $bus,)
     {}
 
@@ -36,11 +38,17 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
             $this->logger->warn("ReplayData {$replayData->getId()} has no map apparently");
         } else {
             $tmpfile = $this->waaasService->map($mapUrl);
-            $uri = stream_get_meta_data($tmpfile)['uri'];
-            $file = new UploadedFile($uri, basename($uri), null, null, true);
-            $replayMap = new ReplayMap($replay->getGame()->getId(), $replay->getName());
-            $replay->setReplayMap($replayMap->setFile($file));
-            $this->replayRepo->add($replay, true);
+            try {
+                $uri = stream_get_meta_data($tmpfile)['uri'];
+                $file = new UploadedFile($uri, basename($uri), null, null, true);
+                $replayMap = new ReplayMap($replay->getGame()->getId(), $replay->getName());
+                $replay->setReplayMap($replayMap->setFile($file));
+                $this->replayRepo->add($replay, true);
+            } catch (\Throwable $e) {
+                $this->logger->error('Couldn\'t get map', ['e' => $e]);
+            } finally {
+                fclose($tmpfile);
+            }
         }
         if ($replay->getGame()->fullyProcessed()) {
             $this->gameRepo->add($replay->getGame()->score(), true);
