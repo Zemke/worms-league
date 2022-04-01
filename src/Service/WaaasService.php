@@ -5,10 +5,9 @@ namespace App\Service;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\Mime\Part\DataPart;
 use Symfony\Component\Mime\Part\Multipart\FormDataPart;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface as HttpClientException;
-use App\Entity\ReplayData;
 use App\Entity\Replay;
+use App\Entity\ReplayData;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerAwareInterface;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
@@ -47,9 +46,15 @@ class WaaasService implements \Psr\Log\LoggerAwareInterface
         }
     }
 
-    public function map(string $mapUrl): void
+    public function map(string $mapUrl): mixed
     {
-        $res = $this->client->request($mapUrl);
+        $res = $this->client->request('GET', $this->waaas . $mapUrl);
+        $tmp = tmpfile();
+        foreach ($this->client->stream($res) as $chunk) {
+            fwrite($tmp, $chunk->getContent());
+        }
+        fseek($tmp, 0);
+        return $tmp;
     }
 }
 
