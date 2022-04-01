@@ -34,7 +34,9 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
         $this->replayRepo->add($replay, true);
         if ($replay->getGame()->fullyProcessed()) {
             $this->gameRepo->add($replay->getGame()->score(), true);
-            $this->bus->dispatch(new RankingCalcMessage($replay->getGame()->getId()));
+            if (!$replay->getGame()->getRanked()) {
+                $this->bus->dispatch(new RankingCalcMessage($replay->getGame()->getId()));
+            }
         }
     }
 }
