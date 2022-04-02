@@ -1,95 +1,95 @@
 :root {
-  --primary: #60b6c7; --secondary: #086071;
-  --tertiary: #1f3f5e;
-  --dark: #2e2e2e;
-  --light: #ececec;
-  --warn: #7d5f1e;
-  --error: #5b2f3f;
+    --primary: #60b6c7; --secondary: #086071;
+    --tertiary: #1f3f5e;
+    --dark: #2e2e2e;
+    --light: #ececec;
+    --warn: #7d5f1e;
+    --error: #5b2f3f;
 }
 
 .text-primary {
-  color: var(--primary);
+    color: var(--primary);
 }
 
 body, html {
-  background: url('/public/img/checker_dark.png') repeat;
-  font-family: Arial, sans-serif;
+    background: url('/public/img/checker_dark.png') repeat;
+    font-family: Arial, sans-serif;
 }
 
 * {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 .top-bar {
-  background-color: var(--dark);
-  padding: .2rem 0;
+    background-color: var(--dark);
+    padding: .2rem 0;
 }
 
 .top-bar .container {
-  display: flex;
-  justify-content: flex-end;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .top-bar input,
 .top-bar button,
 .top-bar input[type=submit],
 .top-bar input[type=button] {
-  text-align: center;
-  font-size: .8rem;
+    text-align: center;
+    font-size: .8rem;
 }
 
 .top-bar input {
-  padding: .2rem;
+    padding: .2rem;
 }
 
 .top-bar button,
 .top-bar input[type=submit],
 .top-bar input[type=button] {
-  padding: .05rem .2rem;
+    padding: .05rem .2rem;
 }
 
 .uber {
-  margin: 0 auto;
-  margin-left: 25%;
-  height: 12rem;
+    margin: 0 auto;
+    margin-left: 25%;
+    height: 12rem;
 }
 
 .uber h1 {
-  position: relative;
-  color: #000;
-  font-size: 5rem;
-  letter-spacing: .2rem;
+    position: relative;
+    color: #000;
+    font-size: 5rem;
+    letter-spacing: .2rem;
 }
 
 .uber h1 a {
-  color: inherit;
+    color: inherit;
 }
 
 .uber h1 a:active {
-  color: inherit;
+    color: inherit;
 }
 
 div.uber h1 .worm,
 div.uber h1 .worms,
 div.uber h1 .league {
-  position: absolute;
+    position: absolute;
 }
 
 div.uber h1 .worm {
-  top: 6rem;
-  left: 23.1rem;
+    top: 6rem;
+    left: 23.1rem;
 }
 
 div.uber h1 .league {
-  top: 3.5rem;
-  left: 5rem;
+    top: 3.5rem;
+    left: 5rem;
 }
 
 div.uber h1 .worms .first-letter,
 div.uber h1 .league .first-letter {
-  font-size: 7rem;
-  text-shadow:
+    font-size: 7rem;
+    text-shadow:
       -.3rem -.3rem .25rem var(--primary),
       -.3rem .3rem .25rem var(--primary),
       .3rem -.3rem .25rem var(--primary),
@@ -97,376 +97,376 @@ div.uber h1 .league .first-letter {
 }
 
 .container {
-  width: 1000px;
-  margin: 0 auto;
+    width: 1000px;
+    margin: 0 auto;
 }
 
 .content {
-  margin-top: -2.3rem;
+    margin-top: -2.3rem;
 }
 
 nav.nav {
-  display: flex;
-  border-top: 1px solid #000;
-  border-left: 1px solid #000;
+    display: flex;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
 }
 
 nav.nav .nav-item {
-  flex-grow: 1;
-  text-align: center;
-  background: linear-gradient(#153940 30%, #348b9d);
-  padding: .5rem;
-  font-weight: bold;
-  font-size: 1rem;
-  border: 1px solid #000;
-  border-left: none;
-  color: #fff;
-  text-decoration: none;
+    flex-grow: 1;
+    text-align: center;
+    background: linear-gradient(#153940 30%, #348b9d);
+    padding: .5rem;
+    font-weight: bold;
+    font-size: 1rem;
+    border: 1px solid #000;
+    border-left: none;
+    color: #fff;
+    text-decoration: none;
 }
 
 nav.nav .nav-item:first-child {
-  border-left: 1px solid #000;
+    border-left: 1px solid #000;
 }
 
 nav.nav .nav-item:hover {
-  background: linear-gradient(#fff, #46acc1);
-  color: #1f3f5e;
+    background: linear-gradient(#fff, #46acc1);
+    color: #1f3f5e;
 }
 
 nav.nav .nav-item:active,
 nav.nav .nav-item.active {
-  box-shadow: inset 0.1rem 0.1rem 0.5rem 0rem #000;
+    box-shadow: inset 0.1rem 0.1rem 0.5rem 0rem #000;
 }
 
 .head {
-  border: 1px solid #000;
-  border-top: 2px solid #316396;
-  background-color: var(--tertiary);
-  color: #fff;
-  text-align: center;
-  font-weight: bold;
-  padding: .5rem 0;
-  font-size: 1.2rem;
-  margin: -1.2rem;
-  margin-bottom: 1.2rem;
+    border: 1px solid #000;
+    border-top: 2px solid #316396;
+    background-color: var(--tertiary);
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    padding: .5rem 0;
+    font-size: 1.2rem;
+    margin: -1.2rem;
+    margin-bottom: 1.2rem;
 }
 
 .page {
-  border: 1px solid #000;
-  background: rgba(220, 220, 220, .85);
-  padding: 1.2rem;
-  margin-bottom: 2.5rem;
+    border: 1px solid #000;
+    background: rgba(220, 220, 220, .85);
+    padding: 1.2rem;
+    margin-bottom: 2.5rem;
 }
 
 button,
 input[type=submit],
 input[type=button] {
-  background-color: var(--secondary);
-  border-style: outset;
-  border-color: var(--secondary);
-  border-width: .3rem;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: bold;
-  color: #fff;
-  padding: .2rem .5rem;
+    background-color: var(--secondary);
+    border-style: outset;
+    border-color: var(--secondary);
+    border-width: .3rem;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    padding: .2rem .5rem;
 }
 
 button:active,
 input[type=submit]:active,
 input[type=button]:active {
-  border-style: inset;
+    border-style: inset;
 }
 
 select, input, textarea {
-  background-color: #ececec;
-  border: 1px #ececec inset;
-  font-size: 1rem;
-  padding: .3rem;
+    background-color: #ececec;
+    border: 1px #ececec inset;
+    font-size: 1rem;
+    padding: .3rem;
 }
 
 button:focus,
 input:focus,
 textarea:focus {
-  outline: none;
-  box-shadow: 0rem 0rem .2rem .1rem var(--primary);
+    outline: none;
+    box-shadow: 0rem 0rem .2rem .1rem var(--primary);
 }
 
 a {
-  text-decoration: none;
-  color: var(--secondary);
-  font-weight: bold;
+    text-decoration: none;
+    color: var(--secondary);
+    font-weight: bold;
 }
 
 a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 a:active {
-  color: #05404b;
+    color: #05404b;
 }
 
 form .control {
-  padding: .4rem 0;
+    padding: .4rem 0;
 }
 
 form .control label {
-  display: block;
-  color: var(--tertiary);
+    display: block;
+    color: var(--tertiary);
 }
 
 p.lead {
-  color: var(--tertiary);
-  padding: 1rem 0;
-  font-size: 1.2rem;
+    color: var(--tertiary);
+    padding: 1rem 0;
+    font-size: 1.2rem;
 }
 
 .text-center {
-  text-align: center;
+    text-align: center;
 }
 
 .popup {
-  display: none;
-  position: absolute;
+    display: none;
+    position: absolute;
 }
 
 .popup.show {
-  display: block;
+    display: block;
 }
 
 ul {
-  list-style: none;
-  margin: 1rem 1rem;
+    list-style: none;
+    margin: 1rem 1rem;
 }
 
 ul li {
-  padding: .1rem;
+    padding: .1rem;
 }
 
 ul li::before {
-  content: "\25a0";
-  color: var(--tertiary);
-  font-weight: bold;
-  display: inline-block;
-  width: 1.3em;
+    content: "\25a0";
+    color: var(--tertiary);
+    font-weight: bold;
+    display: inline-block;
+    width: 1.3em;
 }
 
 .monospace {
-  font-family: monospace;
+    font-family: monospace;
 }
 
 .small {
-  font-size: .6rem;
+    font-size: .6rem;
 }
 
 .alert {
-  border: .2rem solid var(--light);
-  padding: .8rem;
-  margin: 1rem 0;
-  color: var(--light);
+    border: .2rem solid var(--light);
+    padding: .8rem;
+    margin: 1rem 0;
+    color: var(--light);
 }
 
 .alert.warn {
-  background-color: var(--warn);
+    background-color: var(--warn);
 }
 
 .alert.error {
-  background-color: var(--error);
+    background-color: var(--error);
 }
 
 table thead tr {
-  background-color: var(--tertiary);
-  border-top: .18rem solid #2e5e8f;
-  color: var(--light);
-  font-weight: bold;
+    background-color: var(--tertiary);
+    border-top: .18rem solid #2e5e8f;
+    color: var(--light);
+    font-weight: bold;
 }
 
 table tbody tr:nth-child(odd) {
-  background-color: #d1d1d1;
+    background-color: #d1d1d1;
 }
 
 table tbody tr:nth-child(even) {
-  background-color: #a9a9a9;
+    background-color: #a9a9a9;
 }
 
 table {
-  border-collapse: collapse;
-  border: 1px solid black;
-  padding: 4rem;
+    border-collapse: collapse;
+    border: 1px solid black;
+    padding: 4rem;
 }
 
 table tr {
-  border: 1px solid black;
+    border: 1px solid black;
 }
 
 table, tr, td, th {
-  padding: .2rem .6rem;
-  text-align: center;
+    padding: .2rem .6rem;
+    text-align: center;
 }
 
 table, tr, th {
-  padding: .5rem .4rem;
+    padding: .5rem .4rem;
 }
 
 table th img,
 table td img {
-  height: 1rem;
+    height: 1rem;
 }
 
 .whitepad {
-  display: inline-block;
-  padding: .3rem;
-  background-color: var(--light);
+    display: inline-block;
+    padding: .3rem;
+    background-color: var(--light);
 }
 
 i.icon {
-  font-style: normal;
+    font-style: normal;
 }
 
 i.replay {
-  font-size: 1.2rem;
-  font-weight: bold;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
 i.replay:before {
-  content: "\2622";
+    content: "\2622";
 }
 
 i.comment {
-  font-size: 1.2rem; font-weight: bold;
+    font-size: 1.2rem; font-weight: bold;
 }
 
 i.comment:before {
-  content: "";
-  display: block;
-  position: relative;
-  height: .7rem;
-  width: .9rem;
-  border: .1rem solid white;
-  border-radius: .7rem;
+    content: "";
+    display: block;
+    position: relative;
+    height: .7rem;
+    width: .9rem;
+    border: .1rem solid white;
+    border-radius: .7rem;
 }
 
 @keyframes rotation {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(359deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
 }
 
 i.comment:after {
-  content: "";
-  display: block;
-  position: relative;
-  border: .1rem solid white;
-  width: .02rem;
-  height: .02rem;
-  background-color: var(--light);
-  left: .3rem;
-  top: -.01rem;
-  border-bottom-right-radius: .7rem;
-  border-bottom-left-radius: .1rem;
+    content: "";
+    display: block;
+    position: relative;
+    border: .1rem solid white;
+    width: .02rem;
+    height: .02rem;
+    background-color: var(--light);
+    left: .3rem;
+    top: -.01rem;
+    border-bottom-right-radius: .7rem;
+    border-bottom-left-radius: .1rem;
 }
 
 .gear-wrapper {
-  position: relative;
-  height: 1rem;
-  width: 1rem;
-  border-radius: 50%;
+    position: relative;
+    height: 1rem;
+    width: 1rem;
+    border-radius: 50%;
 }
 
 .gear-wrapper:hover,
 .gear-wrapper:focus,
 button.gear-wrapper:focus {
-  animation: rotation 1.5s infinite linear;
-  box-shadow: none;
+    animation: rotation 1.5s infinite linear;
+    box-shadow: none;
 }
 
 .gear-wrapper::after {
-  content: "";
-  display: inline-block;
-  position: relative;
-  height: .9rem;
-  width: .9rem;
-  background-color: var(--dark);
-  border: .2rem solid var(--primary);
-  box-sizing: border-box;
-  border-radius: 50%;
-  margin: 0 .2rem;
-  left: -0.13rem;
+    content: "";
+    display: inline-block;
+    position: relative;
+    height: .9rem;
+    width: .9rem;
+    background-color: var(--dark);
+    border: .2rem solid var(--primary);
+    box-sizing: border-box;
+    border-radius: 50%;
+    margin: 0 .2rem;
+    left: -0.13rem;
 }
 
 i.icon.gear {
-  position: absolute;
-  left: -0.15rem;
+    position: absolute;
+    left: -0.15rem;
 }
 
 i.icon.gear::before,
 i.icon.gear::after {
-  content: "+";
-  display: inline-block;
-  position: absolute;
-  font-size: 2.4rem;
-  left: -.05rem;
-  top: -.9rem;
+    content: "+";
+    display: inline-block;
+    position: absolute;
+    font-size: 2.4rem;
+    left: -.05rem;
+    top: -.9rem;
 }
 
 i.icon.gear::after {
-  transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 
 button.void {
-  background: transparent;
-  color: inherit;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
+    background: transparent;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
 }
 
 .dropdown-wrapper {
-  position: relative;
+    position: relative;
 }
 
 .dropdown {
-  position: absolute;
-  background: #fff;
-  top: 1.6rem;
-  right: 0;
-  display: none;
-  text-align: center;
-  border: 1px solid #000;
-  box-shadow: 0.5rem 0.5rem 2rem var(--dark);
+    position: absolute;
+    background: #fff;
+    top: 1.6rem;
+    right: 0;
+    display: none;
+    text-align: center;
+    border: 1px solid #000;
+    box-shadow: 0.5rem 0.5rem 2rem var(--dark);
 }
 
 .dropdown::before {
-  content: "";
-  position: absolute;
-  display: block;
-  border: .5rem transparent solid;
-  border-bottom-color: white;
-  top: -1rem;
-  right: 0rem;
-  height: 0;
-  width: 0;
+    content: "";
+    position: absolute;
+    display: block;
+    border: .5rem transparent solid;
+    border-bottom-color: white;
+    top: -1rem;
+    right: 0rem;
+    height: 0;
+    width: 0;
 }
 
 .dropdown a {
-  display: block;
-  border-bottom: 1px solid var(--light);
-  padding: .5rem 1.5rem;
+    display: block;
+    border-bottom: 1px solid var(--light);
+    padding: .5rem 1.5rem;
 }
 
 .dropdown a:hover {
-  background-color: var(--secondary);
-  color: var(--light);
-  text-decoration: none;
-  border-bottom-color: var(--secondary);
+    background-color: var(--secondary);
+    color: var(--light);
+    text-decoration: none;
+    border-bottom-color: var(--secondary);
 }
 
 .dropdown.active {
-  display: block;
+    display: block;
 }
 
