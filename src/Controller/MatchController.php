@@ -17,6 +17,7 @@ class MatchController extends AbstractController
         $season = $seasonRepo->findActive();
         $var = [ 'controller_name' => 'MatchController', ];
         $var['games'] = $gameRepo->findBySeason($season);
+        dump($var);
         return $this->render('match/index.html.twig', $var);
     }
 }

@@ -73,6 +73,49 @@ class Replay
         return !is_null($this->getReplayData()) && !empty($this->getReplayData()->getData());
     }
 
+    public function homeColor(): ?string
+    {
+        return $this->color($this->game->getHome());
+    }
+
+    public function awayColor(): ?string
+    {
+        return $this->color($this->game->getAway());
+    }
+
+    // TODO This gets the winner color of the winner of the whole game. Should be per round, though.
+    // TODO Maybe this should just be persisted when doing the determining logic.
+    // TODO Then mind that the score information in Game entity would be redundant.
+    public function winnerColor(): ?string
+    {
+        $winner = $this->game->winner();
+        if (is_null($winner)) {
+            return null;
+        } else if ($winner->getId() === $this->game->getHome()->getId()) {
+            return $this->homeColor();
+        } else {
+            return $this->awayColor();
+        }
+    }
+
+    private function color(User $user): ?string
+    {
+        if (!$this->processed()) {
+            return null;
+        }
+        $m = $this->replayData->matchUsers($this->game->getHome(), $this->game->getAway());
+        foreach ($m as $n => $u) {
+            if ($u->getId() === $user->getId()) {
+                if ($this->replayData->getData()['teams'][0]['user'] === $n) {
+                    return $this->replayData->getData()['teams'][0]['color'];
+                } else {
+                    return $this->replayData->getData()['teams'][1]['color'];
+                }
+            }
+        }
+        return null;
+    }
+
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
     public function updateModified()

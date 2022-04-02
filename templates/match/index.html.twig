@@ -3,44 +3,68 @@
 {% block title %}Matches{% endblock %}
 
 {% block body %}
-<table>
+<table class="matches w100">
     <thead>
         <tr>
             <th>ID</th>
-            <th colspan="3">Score</th>
             <th>Time</th>
+            <th colspan="3">Score</th>
             <th>
                 <!--<i class="comment"></i>-->
                 <img src="/img/speech.png" alt="Comments">
             </th>
-            <th></th>
+            <th colspan="7"></th>
         </tr>
     </thead>
     <tbody>
-        {% for game in games %}
+        {% for game in games | sort((a,b) => b.created < a.created ? -1 : 1) %}
         <tr>
             <td>
-                {{ game.id }}
+                <a href="/match/{{ game.id }}">
+                    {{ game.id }}
+                </a>
+            </td>
+            <td class="letter-spacing-compressed">
+                {{ game.created | date('M. j, H:i') }}
             </td>
             <td>
-                {{ game.home.username }}
+                <a href="/user/{{ game.home.id }}">
+                    {{ game.home.username }}
+                </a>
             </td>
-            <td>
+            <td class="text-bold">
                 {{ game.scoreHome }}–{{ game.scoreAway }}
             </td>
             <td>
-                {{ game.away.username }}
-            </td>
-            <td>
-                {{ game.created | date('Y-m-d H:i') }}
+                <a href="/user/{{ game.away.id }}">
+                    {{ game.away.username }}
+                </a>
             </td>
             <td>
                 <a href="/todo">4</a>
             </td>
+            {% for replay in game.replays | sort((a,b) =>
+                (a.replayData is null or b.replayData is null)
+                    ? 0 : ((a.replayData.data.startedAt|date("U")) - (b.replayData.data.startedAt|date("U")) ? 1 : -1)) %}
             <td>
-                <img src="/img/replay.png" alt="Replay">
-                <!--<i class="replay"></i>-->
+<!-- TODO There should be placeholders for when information isn't available -->
+<!-- TODO There should be indicaton that the game has yet to be processed or is currently being processed -->
+                <a href="/replays/{{ game.id }}/{{ replay.name }}">
+                    <img src="/img/replay.png" alt="Replay">
+                </a>
+                {% if replay.replayData %}
+                    <a href="/texture/{{ replay.replayData.texture().value }}" class="texture">
+                        <img src="img/terrains/{{ replay.replayData.texture().value }}.gif"
+                             alt="{{ replay.replayData.texture().local() }}">
+                    </a>
+                {% endif %}
+                <div class="color-batch {{ replay.winnerColor() | lower }}">
+                </div>
             </td>
+            {% endfor %}
+            {% for _ in range(1, 7-(game.replays|length)) %}
+                <td></td>
+            {% endfor %}
         </tr>
         {% endfor %}
     </tbody>

@@ -199,7 +199,7 @@ a {
 }
 
 a:hover {
-    text-decoration: underline;
+    color: var(--tertiary);
 }
 
 a:active {
@@ -300,7 +300,7 @@ table tr {
 }
 
 table, tr, td, th {
-    padding: .2rem .6rem;
+    padding: .2rem .4rem;
     text-align: center;
 }
 
@@ -468,5 +468,70 @@ button.void {
 
 .dropdown.active {
     display: block;
+}
+
+a.texture {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    border-radius: .5rem;
+}
+
+a.texture > img {
+    vertical-align: middle;
+    transform: scale(1.1);
+}
+
+table.matches td {
+    white-space: nowrap;
+}
+
+table.matches img {
+    height: 2rem;
+}
+
+.letter-spacing-compressed {
+    letter-spacing: -.05rem;
+}
+
+div.color-batch {
+    display: inline-block;
+    height: 2rem;
+    width: 1.2rem;
+    vertical-align: top;
+    border-radius: 0.2rem;
+    border: 1px solid gray;
+}
+
+div.color-batch.green {
+    background-color: #80FF80;
+}
+
+div.color-batch.blue {
+    background-color: #9D9FFF;
+}
+
+div.color-batch.red {
+    background-color: #FF7F7F;
+}
+
+div.color-batch.yellow {
+    background-color: #FFFF80;
+}
+
+div.color-batch.cyan {
+    background-color: #80FFFF;
+}
+
+div.color-batch.magenta {
+    background-color: #FF82FF;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.w100 {
+    width: 100%;
 }
 
