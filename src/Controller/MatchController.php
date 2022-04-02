@@ -20,3 +20,4 @@ class MatchController extends AbstractController
         return $this->render('match/index.html.twig', $var);
     }
 }
+

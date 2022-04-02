@@ -30,6 +30,20 @@ class ReplayData
     }
 
     /**
+     * Terrain texture object based on the data of the replay.
+     *
+     * @return Texture can be null when the data is not available
+     * @throws UnhandledMatchError when the data is not availabe but cannot be matched
+     */
+    public function texture(): ?Texture
+    {
+        if (is_null($this->data) || is_null($this->data['texture'])) {
+            return null;
+        }
+        return Texture::parse($this->data['texture']);
+    }
+
+    /**
      * The in-game users' names.
      *
      * @return string[]
