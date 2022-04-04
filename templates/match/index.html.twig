@@ -52,14 +52,16 @@
                 <a href="/replays/{{ game.id }}/{{ replay.name }}">
                     <img src="/img/replay.png" alt="Replay">
                 </a>
-                {% if replay.replayData %}
+                {% if replay.processed() %}
                     <a href="/texture/{{ replay.replayData.texture().value }}" class="texture">
                         <img src="img/terrains/{{ replay.replayData.texture().value }}.gif"
                              alt="{{ replay.replayData.texture().local() }}">
                     </a>
+                    <div class="color-batch {{ replay.winnerColor() | lower }}">
+                    </div>
+                {% else %}
+                    n/a
                 {% endif %}
-                <div class="color-batch {{ replay.winnerColor() | lower }}">
-                </div>
             </td>
             {% endfor %}
             {% for _ in range(1, 7-(game.replays|length)) %}

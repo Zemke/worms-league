@@ -68,6 +68,20 @@ class Replay
         $this->modified = $this->created;
     }
 
+    public function winner(): ?User
+    {
+        if (!$this->processed()) {
+            throw new \RuntimeException("Replay {$this->id} is not processed");
+        }
+        $winner = $this->replayData->winner();
+        if (is_null($winner)) {
+            return null;
+        }
+        $match = $this->replayData->matchUsers($this->game->getHome(), $this->game->getAway());
+        return $this->game->getHome()->getId() === $match[$winner]->getId()
+            ? $this->game->getHome() : $this->game->getAway();
+    }
+
     public function processed(): bool
     {
         return !is_null($this->getReplayData()) && !empty($this->getReplayData()->getData());
@@ -83,12 +97,9 @@ class Replay
         return $this->color($this->game->getAway());
     }
 
-    // TODO This gets the winner color of the winner of the whole game. Should be per round, though.
-    // TODO Maybe this should just be persisted when doing the determining logic.
-    // TODO Then mind that the score information in Game entity would be redundant.
     public function winnerColor(): ?string
     {
-        $winner = $this->game->winner();
+        $winner = $this->winner();
         if (is_null($winner)) {
             return null;
         } else if ($winner->getId() === $this->game->getHome()->getId()) {

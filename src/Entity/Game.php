@@ -112,13 +112,12 @@ class Game
         if (!$this->fullyProcessed()) {
             throw new \RuntimeException("Game {$this->getId()} is not fully processed");
         }
-        $scores = array_reduce($this->replayData(), function ($acc, $d) {
-            $winner = $d->winner();
+        $scores = array_reduce($this->replays->getValues(), function ($acc, $r) {
+            $winner = $r->winner();
             if (is_null($winner)) {
                 return $acc;
             }
-            $match = $d->matchUsers($this->home, $this->away);
-            $acc[+!($this->home->getId() === $match[$winner]->getId())]++;
+            $acc[+!($this->home->getId() === $winner->getId())]++;
             return $acc;
         }, [0, 0]);
         $this->setScoreHome($scores[0]);
