@@ -43,36 +43,27 @@
             <td>
                 <a href="/todo">4</a>
             </td>
-            {% if game.fullyProcessed() %}
-                {% for replay in game.replays | sort((a,b) =>
-                    (a.replayData is null or b.replayData is null)
-                        ? 0 : ((a.replayData.data.startedAt|date("U")) - (b.replayData.data.startedAt|date("U")) ? 1 : -1)) %}
-                    <td>
-                        <a href="/replays/{{ game.id }}/{{ replay.name }}">
-                            <img src="/img/replay.png" alt="Replay">
-                        </a>
+            {% for replay in game.replays | sort((a,b) =>
+                (a.replayData is null or b.replayData is null)
+                    ? 0 : ((a.replayData.data.startedAt|date("U")) - (b.replayData.data.startedAt|date("U")) ? 1 : -1)) %}
+                <td>
+                    <a href="/replays/{{ game.id }}/{{ replay.name }}">
+                        <img src="/img/replay.png" alt="Replay">
+                    </a>
+                    {% if replay.processed() %}
                         <a href="/texture/{{ replay.replayData.texture().value }}" class="texture">
                             <img src="img/terrains/{{ replay.replayData.texture().value }}.gif"
                                  alt="{{ replay.replayData.texture().local() }}">
                         </a>
                         <div class="color-batch {{ replay.winnerColor() | lower }}">
                         </div>
-                    </td>
-                {% endfor %}
-                {% if 5-(game.replays|length) > 0 %}
-                    <td colspan="{{ 5-(game.replays|length) }}"></td>
-                {% endif %}
-            {% else %}
-                <td colspan="5" class="text-left">
-                    {% for replay in game.replays | sort((a,b) =>
-                        (a.replayData is null or b.replayData is null)
-                            ? 0 : ((a.replayData.data.startedAt|date("U")) - (b.replayData.data.startedAt|date("U")) ? 1 : -1)) %}
-                        <a href="/replays/{{ game.id }}/{{ replay.name }}">
-                            <img src="/img/replay.png" alt="Replay">
-                        </a>
-                    {% endfor %}
-                    <i>Game has not been processed yet.</i>
+                    {% else %}
+                        <div class="spacer"></div>
+                    {% endif %}
                 </td>
+            {% endfor %}
+            {% if 5-(game.replays|length) > 0 %}
+                <td colspan="{{ 5-(game.replays|length) }}"></td>
             {% endif %}
         </tr>
         {% endfor %}

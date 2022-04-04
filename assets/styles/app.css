@@ -490,6 +490,16 @@ table.matches img {
     height: 2rem;
 }
 
+table.matches div.spacer {
+    display: inline-block;
+    background-color: black;
+    border-radius: .2rem;
+    border: 1px solid gray;
+    height: 1.9rem;
+    width: 3.5rem;
+    background-color: rgba(0, 0, 0, .1);
+}
+
 .letter-spacing-compressed {
     letter-spacing: -.05rem;
 }
@@ -541,15 +551,5 @@ div.color-batch {
 
 .w100 {
     width: 100%;
-}
-
-table.matches div.spacer {
-    display: inline-block;
-    background-color: black;
-    border-radius: .2rem;
-    border: 1px solid gray;
-    height: 1.9rem;
-    width: 3.5rem;
-    background-color: rgba(0, 0, 0, .2);
 }
 
