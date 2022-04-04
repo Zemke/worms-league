@@ -535,7 +535,21 @@ div.color-batch {
     font-weight: bold;
 }
 
+.text-left {
+    text-align: left;
+}
+
 .w100 {
     width: 100%;
+}
+
+table.matches div.spacer {
+    display: inline-block;
+    background-color: black;
+    border-radius: .2rem;
+    border: 1px solid gray;
+    height: 1.9rem;
+    width: 3.5rem;
+    background-color: rgba(0, 0, 0, .2);
 }
 
