@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\RankingRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\Repository\RankingRepository;
 use App\Entity\Game;
 use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: RankingRepository::class)]
+#[ORM\UniqueConstraint(name: 'owner_season_uidx', columns: ['owner_id', 'season_id'])]
 class Ranking
 {
     /** @var int num of days to look backwards in time to determine activity */
@@ -47,7 +49,7 @@ class Ranking
     #[ORM\Column(type: 'integer', options: ['default' => 0])]
     private $gamesPlayed;
 
-    #[ORM\Column(type: 'decimal', precision: 5, scale: 2)]
+    #[ORM\Column(type: 'decimal', precision: 5, scale: 2, options: ['default' => 0.00])]
     private $gamesPlayedRatio;
 
     #[ORM\Column(type: 'integer', options: ['default' => 0])]
