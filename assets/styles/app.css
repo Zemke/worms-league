@@ -553,3 +553,66 @@ div.color-batch {
     width: 100%;
 }
 
+.recent {
+    display: inline-block;
+    height: .8rem;
+    width: .8rem;
+    border-radius: 50%;
+    background-color: black;
+}
+
+.recent.lost {
+    background-color: red;
+}
+
+.recent.won {
+    background-color: green;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+table.ladder th {
+    font-size: .8rem;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+table.ladder td {
+    white-space: nowrap;
+    font-family: monospace;
+}
+
+table.ladder td:nth-child(2),
+table.ladder td:last-child {
+    font-family: inherit;
+}
+
+table.ladder td:last-child {
+    letter-spacing: -.2rem;
+}
+
+table.ladder td,
+table.ladder th {
+    padding-left: .2rem;
+    padding-right: .2rem;
+}
+
+table.ladder td:first-child,
+table.ladder td:last-child,
+table.ladder td:nth-child(2),
+table.ladder th:first-child,
+table.ladder th:last-child,
+table.ladder th:nth-child(2) {
+    padding: inherit;
+}
+
+.text-red {
+    color: red;
+}
+
+.text-green {
+    color: green;
+}
+
