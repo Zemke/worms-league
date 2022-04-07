@@ -82,6 +82,11 @@ class Ranking
 
     public function __construct()
     {
+        $this->reset();
+    }
+
+    public function reset(): self
+    {
         $this->points = 0;
         $this->roundsPlayed = 0;
         $this->roundsWon = 0;
@@ -95,6 +100,7 @@ class Ranking
         $this->streakBest = 0;
         $this->recent = '';
         $this->activity = 0.00;
+        return $this;
     }
 
     /**
@@ -111,7 +117,7 @@ class Ranking
         }, 0);
         $myRounds = array_reduce($myGames, function ($acc, $g) {
             $c = 0;
-            if ($this->isOwner($g->getHome()) || $this->isOwner($g->getAway())) {
+            if ($this->ownedBy($g->getHome()) || $this->ownedBy($g->getAway())) {
                 return count($g->getReplays()) + $acc;
             }
             return $acc;
@@ -137,11 +143,11 @@ class Ranking
                 "game {$game->getId()}'s season is {$game->getSeason()?->getId()} "
                 . "whereas ranking {$this->id} season is {$this->season->getId()}");
         }
-        if ($this->isOwner($game->getHome())) {
+        if ($this->ownedBy($game->getHome())) {
             $roundsWon = $game->getScoreHome();
             $roundsLost = $game->getScoreAway();
             $roundsDrawn = count($game->getReplays()) - ($roundsWon + $roundsLost);
-        } else if ($this->isOwner($game->getAway())) {
+        } else if ($this->ownedBy($game->getAway())) {
             $roundsWon = $game->getScoreAway();
             $roundsLost = $game->getScoreHome();
         } else {
@@ -177,7 +183,7 @@ class Ranking
         return $this;
     }
 
-    private function isOwner(User $other): bool
+    public function ownedBy(User $other): bool
     {
         return $this->owner->getId() === $other->getId();
     }
