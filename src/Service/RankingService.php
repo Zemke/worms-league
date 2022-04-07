@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Game;
 use App\Entity\Season;
+use App\Entity\User;
 use App\Repository\RankingRepository;
 use App\Repository\GameRepository;
 use App\Repository\SeasonRepository;
@@ -57,22 +58,23 @@ class RankingService
          *   - entropy (older matches value less)
          */
 
-        // TODO it's full re-calc, reset ranking before
-
+        $rankings = $this->rankingRepo->findBySeason($season);
+        foreach ($rankings as &$ranking) {
+            $ranking->reset();
+            $ranking->updateByAllGames($games);
+        }
+        $findOrCreate = function (User $user) use ($rankings) {
+            $r = current(array_filter($rankings, fn($r) => $r->ownedBy($user)));
+            return $r === false ? (new Ranking())->setOwner($user) : $r;
+        };
         foreach ($games as $game) {
             if (!$game->played()) {
                 continue;
             }
-            if ($game->draw()) {
-                $home = $this->rankingRepo->findOneOrCreate($game->getHome(), $game->getSeason());
-                $away = $this->rankingRepo->findOneOrCreate($game->getAway(), $game->getSeason());
-                $this->em->persist($home);
-                $this->em->persist($away);
-            } else {
-                $winner = $this->rankingRepo->findOneOrCreate($game->winner(), $game->getSeason());
-                $loser = $this->rankingRepo->findOneOrCreate($game->loser(), $game->getSeason());
-                $this->em->persist($winner);
-            }
+            $homeRanking = $findOrCreate($game->getHome())->updateByGame($game);
+            $awayRanking = $findOrCreate($game->getAway())->updateByGame($game);
+            $this->em->persist($homeRanking);
+            $this->em->persist($awayRanking);
         }
         $this->em->flush();
     }
