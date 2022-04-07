@@ -6,10 +6,9 @@ use App\Repository\SeasonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\UniqueConstraint;
 
 #[ORM\Entity(repositoryClass: SeasonRepository::class)]
-#[UniqueConstraint( // only one season can be active at a time
+#[ORM\UniqueConstraint( // only one season can be active at a time
     name: 'season_active_uidx', columns: ['active'], options: ['where' => 'active = true'])]
 class Season
 {
