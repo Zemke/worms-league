@@ -15,6 +15,9 @@ class Ranking
     /** @var int num of days to look backwards in time to determine activity */
     private const ACTIVITY_LOOKBACK = 7;
 
+    /** @var int num of recent games to list */
+    private const RECENT_TRACK = 5;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -179,7 +182,10 @@ class Ranking
         } else {
             $this->points += 1; // TODO also more creative here
         }
-        $this->recent = ($won ? 'W' : ($draw ? 'D' : 'L')) . substr($this->recent, 0, -1);
+        if (strlen($this->recent) === Ranking::RECENT_TRACK) {
+            $this->recent = substr($this->recent, 0, -1);
+        }
+        $this->recent = ($won ? 'W' : ($draw ? 'D' : 'L')) . $this->recent;
         return $this;
     }
 
