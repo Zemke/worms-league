@@ -4,10 +4,15 @@ namespace App\Entity;
 
 use App\Repository\RankingRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Game;
+use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: RankingRepository::class)]
 class Ranking
 {
+    /** @var int num of days to look backwards in time to determine activity */
+    private const ACTIVITY_LOOKBACK = 7;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -17,25 +22,166 @@ class Ranking
     #[ORM\JoinColumn(nullable: false)]
     private $owner;
 
-    #[ORM\Column(type: 'integer', options: ["default" => 0])]
+    #[ORM\Column(type: 'integer', options: ['default' => 0])]
     private $points;
 
     #[ORM\ManyToOne(targetEntity: Season::class, inversedBy: 'rankings')]
     #[ORM\JoinColumn(nullable: false)]
     private $season;
 
+    #[ORM\Column(type: 'integer', options: ['default' => 0])]
+    private $roundsPlayed;
+
+    #[ORM\Column(type: 'decimal', precision: 5, scale: 2, options: ['default' => 0.00])]
+    private $roundsPlayedRatio;
+
+    #[ORM\Column(type: 'integer', options: ['default' => 0])]
+    private $roundsWon;
+
+    #[ORM\Column(type: 'decimal', precision: 5, scale: 2, options: ['default' => 0.00])]
+    private $roundsWonRatio;
+
+    #[ORM\Column(type: 'integer', options: ['default' => 0])]
+    private $roundsLost;
+
+    #[ORM\Column(type: 'integer', options: ['default' => 0])]
+    private $gamesPlayed;
+
+    #[ORM\Column(type: 'decimal', precision: 5, scale: 2)]
+    private $gamesPlayedRatio;
+
+    #[ORM\Column(type: 'integer', options: ['default' => 0])]
+    private $gamesWon;
+
+    #[ORM\Column(type: 'decimal', precision: 5, scale: 2, options: ['default' => 0.00])]
+    private $gamesWonRatio;
+
+    #[ORM\Column(type: 'integer', options: ['default' => 0])]
+    private $gamesLost;
+
+    #[ORM\Column(type: 'integer', options: ['default' => 0])]
+    private $streak;
+
+    /**
+     * N (W for won, L for lost, D for draw)  chars representing
+     * last N games chronologically ascendingly (from left to right).
+     */
+    #[ORM\Column(type: 'string', length: 5, options: ['default' => ''])]
+    private $recent;
+
+    #[ORM\Column(type: 'integer', options: ['default' => 0])]
+    private $streakBest;
+
+    /**
+     * Games per day during the last seven days incl. today.
+     */
+    #[ORM\Column(type: 'decimal', precision: 5, scale: 2, options: ['default' => 0.00])]
+    private $activity;
+
     public function __construct()
     {
         $this->points = 0;
+        $this->roundsPlayed = 0;
+        $this->roundsWon = 0;
+        $this->roundsLost = 0;
+        $this->roundsPlayedRatio = 0.00;
+        $this->gamesPlayed = 0;
+        $this->gamesWon = 0;
+        $this->gamesLost = 0;
+        $this->gamesPlayedRatio = 0.00;
+        $this->streak = 0;
+        $this->streakBest = 0;
+        $this->recent = '';
+        $this->activity = 0.00;
     }
 
-    public function plusPoints(int $points): Ranking
+    /**
+     * Update ranking fields which rely on all games..
+     *
+     * @param Game[] games of this season relevant for this ranking.
+     */
+    public function updateByAllGames(array $games): self
     {
-        $this->points += $points;
+        $today = new \DateTime('today');
+        $myGames = array_filter($games, fn($g) => $g->isHomeOrAway($this->owner));
+        $totalRounds = array_reduce($games, function ($acc, $g) {
+            return $acc + $g->getScoreHome() + $g->getScoreAway();
+        }, 0);
+        $myRounds = array_reduce($myGames, function ($acc, $g) {
+            $c = 0;
+            if ($this->isOwner($g->getHome()) || $this->isOwner($g->getAway())) {
+                return count($g->getReplays()) + $acc;
+            }
+            return $acc;
+        }, 0);
+        $this->roundsPlayedRatio = $myRounds / $totalRounds;
+        $this->gamesPlayedRatio = count($myGames) / count($games);
+        $recentGames = array_filter(
+            $myGames, fn($g) => $g->getCreated()->modify('+7 days') >= $today);
+        $this->activity = count($recentGames) / Ranking::ACTIVITY_LOOKBACK;
         return $this;
     }
 
+    /**
+     * Update ranking.
+     *
+     * @param game Games based on which the update is to occur.
+     * @param user User whose ranking is to update.
+     */
+    public function updateByGame(Game $game): self
+    {
+        if ($game->getSeason()->getId() !== $this->season->getId()) {
+            throw new \RuntimeException(
+                "game {$game->getId()}'s season is {$game->getSeason()?->getId()} "
+                . "whereas ranking {$this->id} season is {$this->season->getId()}");
+        }
+        if ($this->isOwner($game->getHome())) {
+            $roundsWon = $game->getScoreHome();
+            $roundsLost = $game->getScoreAway();
+            $roundsDrawn = count($game->getReplays()) - ($roundsWon + $roundsLost);
+        } else if ($this->isOwner($game->getAway())) {
+            $roundsWon = $game->getScoreAway();
+            $roundsLost = $game->getScoreHome();
+        } else {
+            throw new \RuntimeException(
+                "neither {$game->getHome()->getId()} nor {$game->getAway()->getId()} "
+                . "own ranking {$this->id} owned by {$this->owner->getId()}");
+        }
+        $roundsDrawn = count($game->drawnRounds());
+        $this->roundsPlayed += $roundsWon + $roundsLost + $roundsDrawn;
+        $this->roundsWon += $roundsWon;
+        $this->roundsWonRatio = $this->roundsWon / $this->roundsPlayed;
+        $this->roundsLost = $roundsLost;
+        $this->gamesPlayed += 1;
+        $draw = $game->draw();
+        $won = !$draw && $game->winner()->getId() === $this->owner->getId();
+        $this->gamesWon = +($won);
+        $this->gamesWonRatio = $this->gamesWon / $this->gamesPlayed;
+        $this->gamesLost = +(!$won);
+        if (!$draw) {
+            if ($won) {
+                $this->streak = $this->streak > 0 ? ($this->streak + 1) : 1;
+                if ($this->streakBest < $this->streak) {
+                    $this->streakBest = $this->streak;
+                }
+                $this->points += 3; // TODO get more creative here
+            } else {
+                $this->streak = $this->streak < 0 ? ($this->streak - 1) : -1;
+            }
+        } else {
+            $this->points += 1; // TODO also more creative here
+        }
+        $this->recent = ($won ? 'W' : ($draw ? 'D' : 'L')) . substr($this->recent, 0, -1);
+        return $this;
+    }
+
+    private function isOwner(User $other): bool
+    {
+        return $this->owner->getId() === $other->getId();
+    }
+
     public function getId(): ?int
+
     {
         return $this->id;
     }
@@ -72,6 +218,174 @@ class Ranking
     public function setSeason(?Season $season): self
     {
         $this->season = $season;
+
+        return $this;
+    }
+
+    public function getRoundsPlayed(): ?int
+    {
+        return $this->roundsPlayed;
+    }
+
+    public function setRoundsPlayed(int $roundsPlayed): self
+    {
+        $this->roundsPlayed = $roundsPlayed;
+
+        return $this;
+    }
+
+    public function getRoundsPlayedRatio(): ?string
+    {
+        return $this->roundsPlayedRatio;
+    }
+
+    public function setRoundsPlayedRatio(string $roundsPlayedRatio): self
+    {
+        $this->roundsPlayedRatio = $roundsPlayedRatio;
+
+        return $this;
+    }
+
+    public function getRoundsWon(): ?int
+    {
+        return $this->roundsWon;
+    }
+
+    public function setRoundsWon(int $roundsWon): self
+    {
+        $this->roundsWon = $roundsWon;
+
+        return $this;
+    }
+
+    public function getRoundsWonRatio(): ?string
+    {
+        return $this->roundsWonRatio;
+    }
+
+    public function setRoundsWonRatio(string $roundsWonRatio): self
+    {
+        $this->roundsWonRatio = $roundsWonRatio;
+
+        return $this;
+    }
+
+    public function getRoundsLost(): ?int
+    {
+        return $this->roundsLost;
+    }
+
+    public function setRoundsLost(int $roundsLost): self
+    {
+        $this->roundsLost = $roundsLost;
+
+        return $this;
+    }
+
+    public function getGamesPlayed(): ?int
+    {
+        return $this->gamesPlayed;
+    }
+
+    public function setGamesPlayed(int $gamesPlayed): self
+    {
+        $this->gamesPlayed = $gamesPlayed;
+
+        return $this;
+    }
+
+    public function getGamesPlayedRatio(): ?string
+    {
+        return $this->gamesPlayedRatio;
+    }
+
+    public function setGamesPlayedRatio(string $gamesPlayedRatio): self
+    {
+        $this->gamesPlayedRatio = $gamesPlayedRatio;
+
+        return $this;
+    }
+
+    public function getGamesWon(): ?int
+    {
+        return $this->gamesWon;
+    }
+
+    public function setGamesWon(int $gamesWon): self
+    {
+        $this->gamesWon = $gamesWon;
+
+        return $this;
+    }
+
+    public function getGamesWonRatio(): ?string
+    {
+        return $this->gamesWonRatio;
+    }
+
+    public function setGamesWonRatio(string $gamesWonRatio): self
+    {
+        $this->gamesWonRatio = $gamesWonRatio;
+
+        return $this;
+    }
+
+    public function getGamesLost(): ?int
+    {
+        return $this->gamesLost;
+    }
+
+    public function setGamesLost(int $gamesLost): self
+    {
+        $this->gamesLost = $gamesLost;
+
+        return $this;
+    }
+
+    public function getStreak(): ?int
+    {
+        return $this->streak;
+    }
+
+    public function setStreak(int $streak): self
+    {
+        $this->streak = $streak;
+
+        return $this;
+    }
+
+    public function getRecent(): ?string
+    {
+        return $this->recent;
+    }
+
+    public function setRecent(string $recent): self
+    {
+        $this->recent = $recent;
+
+        return $this;
+    }
+
+    public function getStreakBest(): ?int
+    {
+        return $this->streakBest;
+    }
+
+    public function setStreakBest(int $streakBest): self
+    {
+        $this->streakBest = $streakBest;
+
+        return $this;
+    }
+
+    public function getActivity(): ?string
+    {
+        return $this->activity;
+    }
+
+    public function setActivity(string $activity): self
+    {
+        $this->activity = $activity;
 
         return $this;
     }

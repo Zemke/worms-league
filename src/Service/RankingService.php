@@ -66,14 +66,11 @@ class RankingService
             if ($game->draw()) {
                 $home = $this->rankingRepo->findOneOrCreate($game->getHome(), $game->getSeason());
                 $away = $this->rankingRepo->findOneOrCreate($game->getAway(), $game->getSeason());
-                $home->plusPoints(1);
-                $away->plusPoints(1);
                 $this->em->persist($home);
                 $this->em->persist($away);
             } else {
                 $winner = $this->rankingRepo->findOneOrCreate($game->winner(), $game->getSeason());
                 $loser = $this->rankingRepo->findOneOrCreate($game->loser(), $game->getSeason());
-                $winner->plusPoints(3);
                 $this->em->persist($winner);
             }
         }

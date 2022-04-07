@@ -146,6 +146,34 @@ class Game
         }, 0);
     }
 
+    public function isHome(User $user): bool
+    {
+        return $this->home->getId() === $user->getId();
+    }
+
+    public function isAway(User $user): bool
+    {
+        return $this->away->getId() === $user->getId();
+    }
+
+    public function isHomeOrAway(User $user): bool
+    {
+        return $this->isHome($user) || $this->isAway($user);
+    }
+
+    /**
+     * Get drawn replays.
+     *
+     * @return Replay[]
+     */
+    public function drawnRounds(): array
+    {
+        if (is_null($this->replays)) {
+            return [];
+        }
+        return array_filter($this->replays->getValues(), fn($r) => is_null($r->winner()));
+    }
+
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
     public function updateModified()
