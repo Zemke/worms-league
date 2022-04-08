@@ -49,6 +49,7 @@ class RankingService
     public function reCalc(Season $season): void
     {
         $games = $this->gameRepo->findBySeason($season);
+        usort($games, fn($a, $b) => $a->playedAt()->diff($b->playedAt())->f);
         /* TODO sophisticated ranking calc
          * - Ranking formular with these factors
          *   - quality per opponent
@@ -68,7 +69,7 @@ class RankingService
             return $r === false ? (new Ranking())->setOwner($user) : $r;
         };
         foreach ($games as $game) {
-            if (!$game->played()) {
+            if (!$game->played() || !$game->fullyProcessed()) {
                 continue;
             }
             $homeRanking = $findOrCreate($game->getHome())->updateByGame($game);

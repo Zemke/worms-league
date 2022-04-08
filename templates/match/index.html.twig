@@ -25,7 +25,7 @@
                 </a>
             </td>
             <td class="letter-spacing-compressed">
-                {{ game.created | date('M. j, H:i') }}
+                {{ game.playedAt | date('M. j, H:i') }}
             </td>
             <td>
                 <a href="/user/{{ game.home.id }}">

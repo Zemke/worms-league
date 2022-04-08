@@ -109,9 +109,7 @@ class Game
      */
     public function score(): self
     {
-        if (!$this->fullyProcessed()) {
-            throw new \RuntimeException("Game {$this->getId()} is not fully processed");
-        }
+        $this->assertFullyProcessed();
         $scores = array_reduce($this->replays->getValues(), function ($acc, $r) {
             $winner = $r->winner();
             if (is_null($winner)) {
@@ -126,16 +124,32 @@ class Game
     }
 
     /**
+     * @throws \RuntimeException when the game has not fully processed.
+     */
+    private function assertFullyProcessed(): void
+    {
+        if (!$this->fullyProcessed()) {
+            throw new \RuntimeException("Game {$this->getId()} is not fully processed");
+        }
+    }
+
+    /**
      * Convenience for getting every replay's data.
      *
      * @return ReplayData[]
      */
     public function replayData(): array
     {
-        return array_reduce($this->getReplays()->getValues(), function($acc, $v) {
+        $this->assertFullyProcessed();
+        $rr =  array_reduce($this->getReplays()->getValues(), function($acc, $v) {
             $acc[] = $v->getReplayData();
             return $acc;
         }, []);
+        usort(
+            $rr,
+            fn($a, $b) => (new \DateTime($a->getData()['startedAt']))
+                ->diff(new \DateTime($b->getData()['startedAt']))->f);
+        return $rr;
     }
 
     public function fullyProcessed(): bool
@@ -172,6 +186,17 @@ class Game
             return [];
         }
         return array_filter($this->replays->getValues(), fn($r) => is_null($r->winner()));
+    }
+
+    // TODO validate during report playedAt is not before season has started
+    /**
+     * When the game was actually played.
+     * That's the most recent replay's startedAt data property.
+     */
+    public function playedAt(): \DateTime
+    {
+        $this->assertFullyProcessed();
+        return new \DateTime($this->replayData()[0]->getData()['startedAt']);
     }
 
     #[ORM\PrePersist]
