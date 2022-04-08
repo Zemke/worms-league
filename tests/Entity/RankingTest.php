@@ -16,10 +16,16 @@ class RankingTest extends TestCase
         $homeUser = $this->createUser(1);
         $awayUser = $this->createUser(2);
         $thirdUser = $this->createUser(3);
+        $drawnGame = $this->createGame($homeUser, $thirdUser);
+        $drawnGame->addReplay($this->createReplay($awayUser));
+        $drawnGame->setScoreHome(3);
+        $drawnGame->setScoreAway(3);
+        $this->assertNull($drawnGame->winner());
         $games = [
             $this->createGame($homeUser, $awayUser),
             $this->createGame($awayUser, $homeUser),
             $this->createGame($homeUser, $thirdUser),
+            $drawnGame,
         ];
         $r = (new Ranking())
             ->setSeason($this->createSeason())
@@ -27,18 +33,18 @@ class RankingTest extends TestCase
         foreach ($games as $game) {
             $r->updateByGame($game);
         }
-        $this->assertEquals($r->getPoints(), 6);
-        $this->assertEquals($r->getRoundsPlayed(), 15);
-        $this->assertEquals($r->getRoundsWon(), 8);
-        $this->assertEquals($r->getRoundsLost(), 7);
-        $this->assertEquals($r->getGamesPlayed(), 3);
+        $this->assertEquals($r->getPoints(), 7);
+        $this->assertEquals($r->getRoundsPlayed(), 21);
+        $this->assertEquals($r->getRoundsWon(), 11);
+        $this->assertEquals($r->getRoundsLost(), 10);
+        $this->assertEquals($r->getGamesPlayed(), 4);
         $this->assertEquals($r->getGamesWon(), 2);
         $this->assertEquals($r->getGamesLost(), 1);
         $this->assertEquals($r->getStreak(), 1);
-        $this->assertEquals($r->getRecent(), 'WLW');
+        $this->assertEquals($r->getRecent(), 'DWLW');
         $this->assertEquals($r->getStreakBest(), 1);
-        $this->assertEquals($r->getRoundsWonRatio(), 8 / 15);
-        $this->assertEquals($r->getGamesWonRatio(), 2 / 3);
+        $this->assertEquals($r->getRoundsWonRatio(), 11 / 21);
+        $this->assertEquals($r->getGamesWonRatio(), 2 / 4);
     }
 
     public function testUpdateByAllGames(): void

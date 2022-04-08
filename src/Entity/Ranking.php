@@ -168,7 +168,7 @@ class Ranking
         $won = !$draw && $game->winner()->getId() === $this->owner->getId();
         $this->gamesWon += +($won);
         $this->gamesWonRatio = $this->gamesWon / $this->gamesPlayed;
-        $this->gamesLost += +(!$won);
+        $this->gamesLost += +(!$draw && !$won);
         if (!$draw) {
             if ($won) {
                 $this->streak = $this->streak > 0 ? ($this->streak + 1) : 1;
