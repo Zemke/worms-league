@@ -162,13 +162,13 @@ class Ranking
         $this->roundsPlayed += $roundsWon + $roundsLost + $roundsDrawn;
         $this->roundsWon += $roundsWon;
         $this->roundsWonRatio = $this->roundsWon / $this->roundsPlayed;
-        $this->roundsLost = $roundsLost;
+        $this->roundsLost += $roundsLost;
         $this->gamesPlayed += 1;
         $draw = $game->draw();
         $won = !$draw && $game->winner()->getId() === $this->owner->getId();
-        $this->gamesWon = +($won);
+        $this->gamesWon += +($won);
         $this->gamesWonRatio = $this->gamesWon / $this->gamesPlayed;
-        $this->gamesLost = +(!$won);
+        $this->gamesLost += +(!$won);
         if (!$draw) {
             if ($won) {
                 $this->streak = $this->streak > 0 ? ($this->streak + 1) : 1;
