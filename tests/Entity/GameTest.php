@@ -65,6 +65,36 @@ class GameTest extends TestCase
         $this->assertEquals($game->getScoreAway(), 1);
     }
 
+    public function testReplayData(): void
+    {
+        $inOrder = [
+            '2022-01-02 20:48:59 GMT',
+            '2022-01-03 21:48:59 GMT',
+            '2022-01-04 21:48:59 GMT',
+        ];
+        $shuffled = $inOrder;
+        $shuffled[] = $inOrder[0];
+        unset($shuffled[0]);
+        $g = new Game();
+        foreach ($shuffled as $dt) {
+            $g->addReplay((new Replay())->setReplayData((new ReplayData())->setData(['startedAt' => $dt])));
+        }
+        $mapFn = fn($v) => new \DateTime($v->getData()['startedAt']);
+        $this->assertEquals(
+            array_map($mapFn, $g->replayData()),
+            array_map(fn($v) => (new \DateTime($v)), $inOrder));
+    }
+
+    public function testPlayedAt(): void
+    {
+        $expected = '2022-01-04 21:48:59 GMT';
+        $g = (new Game())
+            ->addReplay((new Replay())->setReplayData((new ReplayData())->setData(['startedAt' => '2022-01-02 20:48:59 GMT'])))
+            ->addReplay((new Replay())->setReplayData((new ReplayData())->setData(['startedAt' => '2022-01-04 21:48:59 GMT'])))
+            ->addReplay((new Replay())->setReplayData((new ReplayData())->setData(['startedAt' => '2022-01-03 21:48:59 GMT'])));
+        $this->assertEquals($g->playedAt(), new \DateTime($expected));
+    }
+
     private function stubReplayData(string $winner, array $matchUsers): ReplayData
     {
         $rd = $this->createStub(ReplayData::class);

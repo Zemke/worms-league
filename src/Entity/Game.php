@@ -134,21 +134,21 @@ class Game
     }
 
     /**
-     * Convenience for getting every replay's data.
+     * Convenience for getting every replay's data sorted by its startedAt ascendingly.
      *
      * @return ReplayData[]
      */
     public function replayData(): array
     {
         $this->assertFullyProcessed();
-        $rr =  array_reduce($this->getReplays()->getValues(), function($acc, $v) {
+        $rr = array_reduce($this->getReplays()->getValues(), function($acc, $v) {
             $acc[] = $v->getReplayData();
             return $acc;
         }, []);
         usort(
             $rr,
-            fn($a, $b) => (new \DateTime($a->getData()['startedAt']))
-                ->diff(new \DateTime($b->getData()['startedAt']))->f);
+            fn($a, $b) => strtotime($a->getData()['startedAt'])
+                - strtotime($b->getData()['startedAt']));
         return $rr;
     }
 
@@ -196,7 +196,8 @@ class Game
     public function playedAt(): \DateTime
     {
         $this->assertFullyProcessed();
-        return new \DateTime($this->replayData()[0]->getData()['startedAt']);
+        $rd = $this->replayData();
+        return new \DateTime(end($rd)->getData()['startedAt']);
     }
 
     #[ORM\PrePersist]
