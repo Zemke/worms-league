@@ -21,7 +21,7 @@
             <th>Games Won</th>
             <th>Games Won %</th>
             <th>Games Lost</th>
-            <th>Streak (Best)</th>
+            <th colspan="2">Streak (Best)</th>
             <th>Activity</th>
             <th>Recent</th>
         </tr>
@@ -35,21 +35,48 @@
                     {{ ranking.owner.username }}
                 </a>
             </td>
-            <td class="text-bold">{{ ranking.points }}</td>
-            <td>{{ ranking.roundsPlayed }}</td>
-            <td>{{ ranking.roundsPlayedRatio|format_number(style='percent') }}</td>
-            <td class="text-green">{{ ranking.roundsWon }}</td>
-            <td>{{ ranking.roundsWonRatio|format_number(style='percent') }}</td>
-            <td class="text-red">{{ ranking.roundsLost }}</td>
-            <td>{{ ranking.gamesPlayed }}</td>
-            <td>{{ ranking.gamesPlayedRatio|format_number(style='percent') }}</td>
-            <td class="text-green">{{ ranking.gamesWon }}</td>
-            <td>{{ ranking.gamesWonRatio|format_number(style='percent') }}</td>
-            <td class="text-red">{{ ranking.gamesLost }}</td>
+            <td class="text-bold">
+                {{ ranking.points|pad(season.rankings, 'getPoints') }}
+            </td>
             <td>
+                {{ ranking.roundsPlayed|pad(season.rankings, 'getRoundsPlayed') }}
+            </td>
+            <td>
+                {{ ranking.roundsPlayedRatio|format_number(style='percent')
+                    |pad(season.rankings, 'getRoundsPlayedRatio') }}
+            </td>
+            <td class="text-green">
+                {{ ranking.roundsWon|pad(season.rankings, 'getRoundsWon') }}
+            </td>
+            <td>
+                {{ ranking.roundsWonRatio|format_number(style='percent')
+                    |pad(season.rankings, 'getRoundsWonRatio') }}
+            </td>
+            <td class="text-red">
+                {{ ranking.roundsLost|pad(season.rankings, 'getRoundsLost') }}
+            </td>
+            <td>
+                {{ ranking.gamesPlayed|pad(season.rankings, 'getGamesPlayed') }}
+            </td>
+            <td>
+                {{ ranking.gamesPlayedRatio|format_number(style='percent')|
+                    pad(season.rankings, 'getGamesPlayedRatio') }}
+            </td>
+            <td class="text-green">
+                {{ ranking.gamesWon|pad(season.rankings, 'getGamesWon') }}
+            </td>
+            <td>
+                {{ ranking.gamesWonRatio|format_number(style='percent')|pad(season.rankings, 'getGamesWonRatio') }}
+            </td>
+            <td class="text-red">
+                {{ ranking.gamesLost|pad(season.rankings, 'getGamesLost') }}
+            </td>
+            <td class="streak">
                 <span class="{{ ranking.streak < 0 ? 'text-red' : 'text-green' }}">
-                    {{ ranking.streak }}
+                    {{ ranking.streak|pad(season.rankings, 'getStreak') }}
                 </span>
+            </td>
+            <td class="streak">
                 ({{ ranking.streakBest }})
             </td>
             <td>{{ ranking.activity }}</td>

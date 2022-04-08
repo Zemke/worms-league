@@ -608,6 +608,15 @@ table.ladder th:nth-child(2) {
     padding: inherit;
 }
 
+table.ladder td.streak {
+    padding-right: 0;
+}
+
+table.ladder td.streak + td.streak {
+    padding-right: inherit;
+    padding-left: 0;
+}
+
 .text-red {
     color: red;
 }
