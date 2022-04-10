@@ -56,6 +56,11 @@
                                class="texture">
                                 <img src="img/terrains/{{ replay.replayData.texture().value }}.gif"
                                      alt="{{ replay.replayData.texture().local() }}">
+                                {% if replay.replayData.data.suddenDeath %}
+                                    <img src="img/water.gif"
+                                         class="sudden-death"
+                                         style="left: -{{ random(0,40)/10 }}rem;">
+                                {% endif %}
                             </a>
                         </div>
                         <div class="color-batch {{ replay.winnerColor() | lower }}"

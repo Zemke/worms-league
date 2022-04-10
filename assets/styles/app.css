@@ -650,3 +650,9 @@ table.ladder td.streak + td.streak {
     display: inline-block;
 }
 
+img.sudden-death {
+    position: absolute;
+    width: 6rem;
+    bottom: -0.8rem;
+}
+
