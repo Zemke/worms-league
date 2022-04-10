@@ -504,7 +504,7 @@ table.matches div.spacer {
     letter-spacing: -.05rem;
 }
 
-div.color-batch {
+div.color-badge {
     display: inline-block;
     height: 2rem;
     width: 1.2rem;
@@ -513,31 +513,31 @@ div.color-batch {
     border: 1px solid gray;
 }
 
-div.color-batch.green {
+div.color-badge.green {
     background-color: #80FF80;
 }
 
-div.color-batch.blue {
+div.color-badge.blue {
     background-color: #9D9FFF;
 }
 
-div.color-batch.red {
+div.color-badge.red {
     background-color: #FF7F7F;
 }
 
-div.color-batch.yellow {
+div.color-badge.yellow {
     background-color: #FFFF80;
 }
 
-div.color-batch.cyan {
+div.color-badge.cyan {
     background-color: #80FFFF;
 }
 
-div.color-batch.magenta {
+div.color-badge.magenta {
     background-color: #FF82FF;
 }
 
-div.color-batch {
+div.color-badge {
     background-color: var(--light);
 }
 
