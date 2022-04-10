@@ -51,11 +51,15 @@
                         <img src="/img/replay.png" alt="Replay">
                     </a>
                     {% if replay.processed() %}
-                        <a href="/texture/{{ replay.replayData.texture().value }}" class="texture">
-                            <img src="img/terrains/{{ replay.replayData.texture().value }}.gif"
-                                 alt="{{ replay.replayData.texture().local() }}">
-                        </a>
-                        <div class="color-batch {{ replay.winnerColor() | lower }}">
+                        <div class="inline-block" data-tooltip="{{ replay.replayData.texture.local() }}">
+                            <a href="/texture/{{ replay.replayData.texture().value }}"
+                               class="texture">
+                                <img src="img/terrains/{{ replay.replayData.texture().value }}.gif"
+                                     alt="{{ replay.replayData.texture().local() }}">
+                            </a>
+                        </div>
+                        <div class="color-batch {{ replay.winnerColor() | lower }}"
+                             data-tooltip="{{ replay.replayData.winner() }}">
                         </div>
                     {% else %}
                         <div class="spacer"></div>

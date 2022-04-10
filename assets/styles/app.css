@@ -625,3 +625,28 @@ table.ladder td.streak + td.streak {
     color: green;
 }
 
+[data-tooltip]:hover {
+    position: relative;
+    overflow: visible;
+}
+
+[data-tooltip]:hover::before {
+    content: ""attr(data-tooltip)"";
+    background-color: var(--dark);
+    color: var(--light);
+    border: 1px solid var(--light);
+    border-radius: .1rem;
+    position: absolute;
+    font-size: .8rem;
+    z-index: 2;
+    padding: 0 .2rem;
+    height: .90rem;
+    top: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.inline-block {
+    display: inline-block;
+}
+
