@@ -67,7 +67,11 @@
                              data-tooltip="{{ replay.replayData.winner() }}">
                         </div>
                     {% else %}
-                        <div class="spacer"></div>
+                        <div class="inline-block" data-tooltip="Processing">
+                            <div class="processing">
+                                <img src="img/gameoptions.png">
+                            </div>
+                        </div>
                     {% endif %}
                 </td>
             {% endfor %}
