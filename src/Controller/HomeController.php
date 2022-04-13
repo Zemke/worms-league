@@ -5,14 +5,15 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\SeasonRepository;
 
 class HomeController extends AbstractController
 {
     #[Route('/')]
-    public function index(): Response
+    public function index(SeasonRepository $seasonRepo): Response
     {
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-        ]);
+        $var['season'] = $seasonRepo->findActive();
+        dump($var['season']);
+        return $this->render('home/index.html.twig', $var);
     }
 }
