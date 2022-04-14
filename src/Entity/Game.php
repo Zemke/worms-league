@@ -188,7 +188,6 @@ class Game
         return array_filter($this->replays->getValues(), fn($r) => is_null($r->winner()));
     }
 
-    // TODO validate during report playedAt is not before season has started
     /**
      * When the game was actually played.
      * That's the most recent replay's startedAt data property.
