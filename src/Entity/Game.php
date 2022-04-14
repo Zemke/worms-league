@@ -326,6 +326,17 @@ class Game
         return $this->home?->getId() !== $this->away?->getId();
     }
 
+    #[Assert\IsTrue(message: "Replay is not from within the season.")]
+    public function isWithinSeason(): bool
+    {
+        if (!$this->fullyProcessed()) {
+            return true;
+        }
+        $playedAt = $this->playedAt();
+        return $this->season->getStart() <= $playedAt
+            && $this->season->getEnding() >= $playedAt;
+    }
+
     /**
      * @return Collection<int, Replay>
      */
