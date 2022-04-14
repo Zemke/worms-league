@@ -321,7 +321,7 @@ class Game
     }
 
     #[Assert\IsTrue(message: "One must not play against oneself.")]
-    public function isOpponentDifferent()
+    public function isOpponentDifferent(): bool
     {
         return $this->home?->getId() !== $this->away?->getId();
     }
