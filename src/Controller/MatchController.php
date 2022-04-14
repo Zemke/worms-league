@@ -20,5 +20,14 @@ class MatchController extends AbstractController
         dump($var);
         return $this->render('match/index.html.twig', $var);
     }
+
+    #[Route('/matches/{gameId}', name: 'app_match_view')]
+    public function view(int $gameId,
+                         GameRepository $gameRepo): Response
+    {
+        $var['game'] = $gameRepo->find($gameId);
+        return $this->render('match/view.html.twig', $var);
+    }
+
 }
 

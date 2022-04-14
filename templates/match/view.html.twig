@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ game.home.username }}
+    {{ game.scoreHome }}–{{ game.scoreAway }}
+    {{ game.away.username }}
+{% endblock %}
+
+{% block body %}
+
+{{ dump(game) }}
+
+{% endblock %}

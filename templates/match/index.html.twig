@@ -20,7 +20,7 @@
         {% for game in games | sort((a,b) => b.created < a.created ? -1 : 1) %}
         <tr>
             <td>
-                <a href="/match/{{ game.id }}">
+                <a href="/matches/{{ game.id }}">
                     {{ game.id }}
                 </a>
             </td>
