@@ -664,6 +664,8 @@ img.sudden-death {
 .current-season {
     float: right;
     font-size: 1.3rem;
+    z-index: 10;
+    position: relative;
 }
 
 img.home {
