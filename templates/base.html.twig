@@ -39,9 +39,11 @@
         {% else %}
           <div class="sign-in">
             <form action="{{ path('app_login') }}" method="POST">
-                <input type="text" name="usernameOrEmail" id="usernameOrEmail" placeholder="Username or Email" required>
-                <input type="password" name="password" id="password" placeholder="Password" required>
+                <input type="text" id="username" name="_username" placeholder="Username or Email">
+                <input type="password" id="password" name="_password" placeholder="Password">
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                {# If you want to control the URL the user is redirected to on success #}
+                <input type="hidden" name="_target_path" value="/"/>
                 <button type="submit">Log in</button>
             </form>
           </div>

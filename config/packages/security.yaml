@@ -12,7 +12,6 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\User
-                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -20,13 +19,14 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            custom_authenticators:
-                - App\Security\UsernameOrEmailAuthenticator
+            #custom_authenticators:
+            #    - App\Security\UsernameOrEmailAuthenticator
             logout:
                 path: app_logout
-            #form_login:
-            #    login_path: login
-            #    check_path: login
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                enable_csrf: true
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
