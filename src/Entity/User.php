@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -22,6 +23,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     #[ORM\Column(type: 'string', length: 16, unique: true)]
+    #[Assert\Length(min: 3, max: 16)]
+    #[Assert\UniqueEntity]
+    #[Assert\Regex(
+        pattern: '/@/',
+        match: false,
+        message: 'Your name must not contain an @ sign',
+    )]
     private $username;
 
     #[ORM\Column(type: 'json')]
@@ -30,6 +38,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private $password;
 
+    #[Assert\Email]
+    #[Assert\UniqueEntity]
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $email;
 
