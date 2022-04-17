@@ -7,8 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use App\Entity\Game;
 use Symfony\Component\HttpFoundation\File\File;
-
-// TODO unique checksum validation
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: ReplayRepository::class)]
@@ -136,6 +135,12 @@ class Replay
     public function updateModified()
     {
         $this->modified = new \DateTime();
+
+        // TODO Warning: md5_file(phpFprDN6): Failed to open stream: No such file or directory
+        //$cksum = md5_file($this->file->getFilename());
+        //if ($cksum !== false) {
+        //    $this->cksum = $cksum;
+        //}
     }
 
     public function getId(): ?int
