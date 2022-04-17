@@ -169,18 +169,28 @@ class Ranking
         $this->gamesWon += +($won);
         $this->gamesWonRatio = $this->gamesWon / $this->gamesPlayed;
         $this->gamesLost += +(!$draw && !$won);
+
+        /* TODO sophisticated ranking calc
+         * - Ranking formular with these factors
+         *   - quality per opponent
+         *   - reward activity but don't reward noob bashing
+         *     - general activity
+         *     - activity against specific opponent
+         *   - entropy (older matches value less)
+         */
+
         if (!$draw) {
             if ($won) {
                 $this->streak = $this->streak > 0 ? ($this->streak + 1) : 1;
                 if ($this->streakBest < $this->streak) {
                     $this->streakBest = $this->streak;
                 }
-                $this->points += 3; // TODO get more creative here
+                $this->points += 3;
             } else {
                 $this->streak = $this->streak < 0 ? ($this->streak - 1) : -1;
             }
         } else {
-            $this->points += 1; // TODO also more creative here
+            $this->points += 1;
         }
         if (strlen($this->recent) === Ranking::RECENT_TRACK) {
             $this->recent = substr($this->recent, 0, -1);

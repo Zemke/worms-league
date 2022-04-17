@@ -50,14 +50,6 @@ class RankingService
     {
         $games = $this->gameRepo->findBySeason($season);
         usort($games, fn($a, $b) => $a->playedAt()->diff($b->playedAt())->f);
-        /* TODO sophisticated ranking calc
-         * - Ranking formular with these factors
-         *   - quality per opponent
-         *   - reward activity but don't reward noob bashing
-         *     - general activity
-         *     - activity against specific opponent
-         *   - entropy (older matches value less)
-         */
 
         $rankings = $this->rankingRepo->findBySeason($season);
         foreach ($rankings as &$ranking) {
