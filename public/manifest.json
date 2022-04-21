@@ -3,7 +3,7 @@
    "name" : "Worms League",
    "display" : "standalone",
    "description": "Worms Armageddon ladder and competitions.",
-   "theme_color" : "#338b9c",
+   "theme_color" : "#1f3f5e",
    "icons" : [
       {
          "src" : "/img/icons/android-chrome-192x192.png",
