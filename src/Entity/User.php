@@ -24,7 +24,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 16, unique: true)]
     #[Assert\Length(min: 3, max: 16)]
-    #[Assert\UniqueEntity]
+    #[Assert\Unique]
     #[Assert\Regex(
         pattern: '/@/',
         match: false,
@@ -39,7 +39,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     #[Assert\Email]
-    #[Assert\UniqueEntity]
+    #[Assert\Unique]
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $email;
 
