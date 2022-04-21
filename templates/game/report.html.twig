@@ -5,11 +5,6 @@
 {% block body %}
 
 {% if opponents is defined and opponents is not empty %}
-    <div class="alert warn">
-        Only upload replays that account to the end result of the game
-        as it is automatically derived from them.<br>
-        You can upload drawn rounds, though.
-    </div>
     <div {{ stimulus_controller('report') }}>
         <form action="{{ path('app_report') }}" method="POST" enctype="multipart/form-data">
             <select name="opponent" required>
