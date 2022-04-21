@@ -61,7 +61,7 @@ class Replay
         cascade: ['persist', 'remove'])]
     private $replayMap;
 
-    #[ORM\Column(type: 'string', length: 16, nullable: true, unique: true)]
+    #[ORM\Column(type: 'string', length: 32, nullable: true, unique: true)]
     #[Assert\Unique(message: 'Replay does already exist in another game')]
     private $cksum;
 
@@ -135,12 +135,7 @@ class Replay
     public function updateModified()
     {
         $this->modified = new \DateTime();
-
-        // TODO Warning: md5_file(phpFprDN6): Failed to open stream: No such file or directory
-        //$cksum = md5_file($this->file->getFilename());
-        //if ($cksum !== false) {
-        //    $this->cksum = $cksum;
-        //}
+        $this->cksum = md5_file($this->file->getRealPath());
     }
 
     public function getId(): ?int
