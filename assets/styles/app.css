@@ -637,6 +637,8 @@ table.ladder td.streak + td.streak {
 
 [data-tooltip]:hover::before {
     content: ""attr(data-tooltip)"";
+    font-weight: normal;
+    text-decoration: none;
     background-color: var(--dark);
     color: var(--light);
     border: 1px solid var(--light);
