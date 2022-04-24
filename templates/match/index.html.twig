@@ -25,7 +25,9 @@
                 </a>
             </td>
             <td class="letter-spacing-compressed">
-                {{ game.playedAt | date('M. j, H:i') }}
+                {% if game.fullyProcessed() %}
+                    {{ game.playedAt | date('M. j, H:i') }}
+                {% endif %}
             </td>
             <td>
                 <a href="/user/{{ game.home.id }}">
