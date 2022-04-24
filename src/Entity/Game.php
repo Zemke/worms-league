@@ -145,10 +145,7 @@ class Game
             $acc[] = $v->getReplayData();
             return $acc;
         }, []);
-        usort(
-            $rr,
-            fn($a, $b) => strtotime($a->getData()['startedAt'])
-                - strtotime($b->getData()['startedAt']));
+        usort($rr, fn($a, $b) => $a->startedAt() > $b->startedAt() ? 1 : -1);
         return $rr;
     }
 
@@ -196,7 +193,7 @@ class Game
     {
         $this->assertFullyProcessed();
         $rd = $this->replayData();
-        return new \DateTime(end($rd)->getData()['startedAt']);
+        return end($rd)->startedAt();
     }
 
     #[ORM\PrePersist]

@@ -44,6 +44,14 @@ class ReplayData
     }
 
     /**
+     * Convenience method to get the startedAt as a DateTime object.
+     */
+    public function startedAt(): \DateTime
+    {
+        return new \DateTime($this->data['startedAt']);
+    }
+
+    /**
      * The in-game users' names.
      *
      * @return string[]
