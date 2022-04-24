@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Repository\UserRepository;
 use App\Repository\SeasonRepository;
 use App\Entity\Game;
@@ -30,6 +31,7 @@ class GameController extends AbstractController
     }
 
     #[Route('/report', name: 'app_report', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
     public function report(Request $request,
                            UserRepository $users,
                            SeasonRepository $seasons,
