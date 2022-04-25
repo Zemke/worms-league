@@ -16,10 +16,9 @@ class MatchController extends AbstractController
                           SeasonRepository $seasonRepo): Response
     {
         $season = $seasonRepo->findActive();
-        $var = [ 'controller_name' => 'MatchController', ];
-        $var['games'] = $gameRepo->findBySeason($season);
-        dump($var);
-        return $this->render('match/index.html.twig', $var);
+        return $this->render('match/index.html.twig', [
+            'games' => $gameRepo->findBySeason($season)
+        ]);
     }
 
     #[Route('/matches/{gameId}', name: 'app_match_view')]
@@ -27,10 +26,10 @@ class MatchController extends AbstractController
                          int $gameId,
                          GameRepository $gameRepo): Response
     {
-        $var['round'] = $request->query->getInt('round', 1) - 1;
-        $var['game'] = $gameRepo->find($gameId);
-        return $this->render('match/view.html.twig', $var);
+        return $this->render('match/view.html.twig', [
+            'round' => $request->query->getInt('round', 1) - 1,
+            'game' => $gameRepo->find($gameId),
+        ]);
     }
-
 }
 
