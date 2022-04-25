@@ -316,7 +316,6 @@ table td img {
 }
 
 .whitepad {
-    display: inline-block;
     padding: .3rem;
     background-color: var(--light);
 }
