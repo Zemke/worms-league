@@ -686,14 +686,21 @@ ul.tabs {
 
 ul.tabs > li {
     display: inline-block;
-    padding: 0;
     margin: 0;
-    padding-right: 1rem;
+    padding: 0 .3rem;
     list-style: none;
 }
 
 ul.tabs > li::before {
     content: none;
+}
+
+ul.tabs > li.active {
+    background-color: var(--tertiary);
+}
+
+ul.tabs > li.active a {
+    color: var(--light);
 }
 
 .panel {

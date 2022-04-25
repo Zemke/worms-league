@@ -12,16 +12,13 @@
     <li>
         Round
     </li>
-    <li>
-        <a href="">
-            1
-        </a>
-    </li>
-    <li>
-        <a href="">
-            2
-        </a>
-    </li>
+    {% for _ in game.replays %}
+        <li class="{{ round == (loop.index-1) ? 'active' : '' }}">
+            <a href="?round={{ loop.index }}">
+                {{ loop.index }}
+            </a>
+        </li>
+    {% endfor %}
 </ul>
 
 <div class="whitepad row g-0">
@@ -31,13 +28,13 @@
     <div class="col-8">
         <div class="row">
             <div class="col-12 map">
-                <img src="/maps/{{ game.replays[0].replayMap.name }}"
-                     title="{{ game.replays[0].replayData.texture.local() }}"
+                <img src="/maps/{{ game.replays[round].replayMap.name }}"
+                     title="{{ game.replays[round].replayData.texture.local() }}"
                      alt="Map">
             </div>
             <div class="col-12">
                 <div class="chat">
-                    {% for message in game.replays[0].replayData.data.messages %}
+                    {% for message in game.replays[round].replayData.data.messages %}
                         <span class="user">{{ message.user }}</span>
                         <span class="body">{{ message.body }}</span>
                         <br>

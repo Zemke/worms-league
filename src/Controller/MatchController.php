@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\SeasonRepository;
 use App\Repository\GameRepository;
@@ -22,9 +23,11 @@ class MatchController extends AbstractController
     }
 
     #[Route('/matches/{gameId}', name: 'app_match_view')]
-    public function view(int $gameId,
+    public function view(Request $request,
+                         int $gameId,
                          GameRepository $gameRepo): Response
     {
+        $var['round'] = $request->query->getInt('round', 1) - 1;
         $var['game'] = $gameRepo->find($gameId);
         return $this->render('match/view.html.twig', $var);
     }
