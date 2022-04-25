@@ -29,6 +29,7 @@ class MatchController extends AbstractController
         return $this->render('match/view.html.twig', [
             'round' => $request->query->getInt('round', 1) - 1,
             'game' => $gameRepo->find($gameId),
+            'averageTurnTimes' => [15, 20],
         ]);
     }
 }
