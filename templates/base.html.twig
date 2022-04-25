@@ -8,6 +8,7 @@
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="/img/icons/apple-touch-icon.png"/>
   {% block stylesheets %}
+    {{ encore_entry_link_tags('bootstrap') }}
     {{ encore_entry_link_tags('app') }}
   {% endblock %}
   {% block javascripts %}
