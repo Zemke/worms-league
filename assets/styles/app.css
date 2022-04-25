@@ -675,3 +675,38 @@ img.home {
     margin-top: -5rem;
 }
 
+ul.tabs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    padding: .3rem;
+    background-color: var(--light);
+}
+
+ul.tabs > li {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    padding-right: 1rem;
+    list-style: none;
+}
+
+ul.tabs > li::before {
+    content: none;
+}
+
+.panel {
+    border-top: .18rem solid #2e5e8f;
+    background-color: var(--gray);
+    padding: .2rem .4rem;
+}
+
+.panel > .title {
+    font-size: 1.3rem;
+    background-color: var(--tertiary);
+    color: var(--light);
+    padding: .5rem .4rem;
+    margin: -.2rem -.4rem .4rem;
+}
+
