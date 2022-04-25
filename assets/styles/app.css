@@ -710,3 +710,29 @@ ul.tabs > li::before {
     margin: -.2rem -.4rem .4rem;
 }
 
+.map img {
+    width: 100%;
+}
+
+.chat {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    line-height: 1.2rem;
+    font-weight: bold;
+    background-color: #000;
+    color: #aaa;
+    margin-bottom: .5rem;
+    padding: .3rem .2rem;
+    border: .1rem solid #aaa;
+    border-radius: 2px;
+    max-height: 25rem;
+    overflow: scroll;
+}
+
+.chat .user::before {
+    content: "["
+}
+
+.chat .user::after {
+    content: "]"
+}
+
