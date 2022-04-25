@@ -3,6 +3,7 @@
     --secondary: #086071;
     --tertiary: #1f3f5e;
     --dark: #2e2e2e;
+    --gray: #d1d1d1;
     --light: #ececec;
     --warn: #7d5f1e;
     --error: #5b2f3f;
@@ -283,7 +284,7 @@ table thead tr {
 }
 
 table tbody tr:nth-child(odd) {
-    background-color: #d1d1d1;
+    background-color: var(--gray);
 }
 
 table tbody tr:nth-child(even) {
