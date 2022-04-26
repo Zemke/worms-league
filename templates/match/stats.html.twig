@@ -11,10 +11,12 @@
     </div>
     {% for turn in stats.turns %}
         <div>
-            <div class="suddenDeath" *ngIf="suddenDeathBeforeTurn === index + 1">
-                <img [src]="waterImage" alt="water"/>
-                <img [src]="waterImage" alt="water"/>
-            </div>
+            {% if suddenDeathBeforeTurn == loop.index %}
+                <div class="suddenDeath">
+                    <img src="/img/water.gif" alt="water"/>
+                    <img src="/img/water.gif" alt="water"/>
+                </div>
+            {% endif %}
             <div class="turn"
                  style="background: linear-gradient(to right, {{ gradients[loop.index]|join(', ') }})"
                  [ngClass]="{'lossOfControl': turn.lossOfControl}">

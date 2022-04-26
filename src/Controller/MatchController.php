@@ -46,7 +46,33 @@ class MatchController extends AbstractController
             'round' => $round - 1,
             'gradients' => $this->gradients($stats),
             'kills' => $this->kills($stats),
+            'suddenDeathBeforeTurn' => $this->suddenDeathBeforeTurn($stats),
         ]);
+    }
+    private function suddenDeathBeforeTurn(array $stats): int
+    {
+        $timestampToSeconds = function (string $timestamp): int {
+            $timeParts = array_map(fn($v) => (int) $v, preg_split('/[^\d]/', $timestamp));
+            return (
+                ($timeParts[0] * 60 * 60)
+                + ($timeParts[1] * 60)
+                + ($timeParts[2])
+                + $timeParts[2] / 100
+            );
+        };
+
+        $turnSeconds = array_map(fn($turn) => $timestampToSeconds($turn['timestamp']), $stats['turns']);
+        if (is_null($stats['suddenDeath'])) {
+            return -1;
+        }
+        $suddenDeathSeconds = $timestampToSeconds($stats['suddenDeath']);
+        for ($i = 0; $i < count($turnSeconds); $i++) {
+            $turnSecond = $turnSeconds[$i];
+            if ($turnSecond > $suddenDeathSeconds) {
+                return $i + 1;
+            }
+        }
+        return -1;
     }
 
     private function gradients(array $stats): array
@@ -114,12 +140,5 @@ class MatchController extends AbstractController
         }
         return $result;
     }
-
-    /*
-    public function colorOfUser(): string
-    {
-        return this.stats.teams.find(t => t.user === user).color;
-    }
-    */
 }
 
