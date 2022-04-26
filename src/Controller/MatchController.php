@@ -84,8 +84,8 @@ class MatchController extends AbstractController
             $this->calcLostHealthPoints($stats['turns'], $losingUser | $stats['teams'][0]['user']);
 
         $result = [];
-        $cStats = count($stats);
-        for ($turnNum = 0; $turnNum <= $cStats; $turnNum++) {
+        $cTurns = count($stats['turns']);
+        for ($turnNum = 0; $turnNum <= $cTurns; $turnNum++) {
             $pastTurns = array_slice($stats['turns'], 0, $turnNum);
             $healthPoints =
                 array_map(fn($team) => [
@@ -131,8 +131,8 @@ class MatchController extends AbstractController
     private function kills(array $stats): array
     {
         $result = [];
-        $cStats = count($stats);
-        for ($turnNum = 0; $turnNum < $cStats; $turnNum++) {
+        $cTurns = count($stats['turns']);
+        for ($turnNum = 0; $turnNum < $cTurns; $turnNum++) {
             $result[] = array_reduce($stats['turns'][$turnNum]['damages'], function ($acc, $v) {
                 $acc[$v['victim']] += $v['kills'];
                 return $acc;
