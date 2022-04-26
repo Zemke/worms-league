@@ -80,8 +80,8 @@ class MatchController extends AbstractController
         $losingUser = current(array_filter(
             $stats['teams'],
             fn($t) => $t['team'] !== $stats['winsTheRound']))['user'];
-        $totalHealthPointsPerTeam =
-            $this->calcLostHealthPoints($stats['turns'], $losingUser | $stats['teams'][0]['user']);
+        $totalHealthPointsPerTeam = $this->calcLostHealthPoints(
+            $stats['turns'], $losingUser ? $losingUser : $stats['teams'][0]['user']);
 
         $result = [];
         $cTurns = count($stats['turns']);
