@@ -660,6 +660,7 @@ table.ladder td.streak + td.streak {
     top: -1rem;
     left: 50%;
     transform: translateX(-50%);
+    white-space: nowrap;
 }
 
 .inline-block {
@@ -860,10 +861,14 @@ ul.tabs > li.active a {
     box-shadow: 0 0 .25rem #000;
 }
 
-.stats .blue { background-color: var(--wa-blue);}
-.stats .red { background-color: var(--wa-red);}
-.stats .green { background-color: var(--wa-green);}
-.stats .yellow { background-color: var(--wa-yellow);}
-.stats .cyan { background-color: var(--wa-cyan);}
-.stats .magenta { background-color: var(--wa-magenta);}
+.weapon, .weapon img {
+    height: 2rem;
+}
+
+.stats .blue { background-color: var(--wa-blue); }
+.stats .red { background-color: var(--wa-red); }
+.stats .green { background-color: var(--wa-green); }
+.stats .yellow { background-color: var(--wa-yellow); }
+.stats .cyan { background-color: var(--wa-cyan); }
+.stats .magenta { background-color: var(--wa-magenta); }
 

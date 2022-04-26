@@ -114,5 +114,12 @@ class MatchController extends AbstractController
         }
         return $result;
     }
+
+    /*
+    public function colorOfUser(): string
+    {
+        return this.stats.teams.find(t => t.user === user).color;
+    }
+    */
 }
 

@@ -26,10 +26,12 @@
                     {% endfor %}
                 </div>
                 <div class="weapons">
-                    <div *ngFor="let weapon of turn.weapons"
-                         class="weapon {{ game.replays[round].winnerColor() }}"> <!-- TODO -->
-                        <cwt-weapon [weapon]="weapon"></cwt-weapon>
-                    </div>
+                    {% for weapon in turn.weapons %}
+                        <div class="weapon {{ stats.teams[(loop.parent.loop.index0 % 2 == 0)|format_number].color|lower }}"
+                             data-tooltip="{{ weapon }}">
+                            <img src="/img/weapons/{{ weapon|lower|split(' ')|join }}.png" alt="{{ weapon }}">
+                        </div>
+                    {% endfor %}
                 </div>
                 <div class="kills">
                     {% for _ in range(0, kills[loop.index0][stats.teams[1].user]) %}
