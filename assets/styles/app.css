@@ -7,6 +7,13 @@
     --light: #ececec;
     --warn: #7d5f1e;
     --error: #5b2f3f;
+
+    --wa-green: #80FF80;
+    --wa-blue: #9D9FFF;
+    --wa-red: #FF7F7F;
+    --wa-yellow: #FFFF80;
+    --wa-cyan: #80FFFF;
+    --wa-magenta: #FF82FF;
 }
 
 .text-primary {
@@ -520,27 +527,27 @@ div.color-badge {
 }
 
 div.color-badge.green {
-    background-color: #80FF80;
+    background-color: var(--wa-green);
 }
 
 div.color-badge.blue {
-    background-color: #9D9FFF;
+    background-color: var(--wa-blue);
 }
 
 div.color-badge.red {
-    background-color: #FF7F7F;
+    background-color: var(--wa-red);
 }
 
 div.color-badge.yellow {
-    background-color: #FFFF80;
+    background-color: var(--wa-yellow);
 }
 
 div.color-badge.cyan {
-    background-color: #80FFFF;
+    background-color: var(--wa-cyan);
 }
 
 div.color-badge.magenta {
-    background-color: #FF82FF;
+    background-color: var(--wa-magenta);
 }
 
 div.color-badge {
