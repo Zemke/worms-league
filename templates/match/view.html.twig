@@ -38,7 +38,7 @@
                 Round
             </li>
             {% for _ in game.replays %}
-                <li class="{{ round == (loop.index) ? 'active' : '' }}">
+                <li class="{{ round == (loop.index0) ? 'active' : '' }}">
                     <a href="?round={{ loop.index }}">
                         {{ loop.index }}
                     </a>
