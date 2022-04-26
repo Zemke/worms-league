@@ -21,121 +21,12 @@
     {% endfor %}
 </ul>
 
-<script>
-    linearGradientHealthPoints(turnNum: number): string {
-        const pastTurns = this.stats.turns.slice(0, turnNum);
-        const healthPoints: { team: GameStats.Team, health: number }[] =
-            this.stats.teams.map(team => ({
-                team: team,
-                health: this.totalHealthPointsPerTeam -
-                    this.calcLostHealthPoints(pastTurns, team.user)
-            }));
-
-        const gradients = healthPoints.map((health, idx) => {
-            const remainingHealth =
-                Math.round(health.health / this.totalHealthPointsPerTeam * 10000) / 100;
-            const lostHealth = 100 - remainingHealth;
-            const teamColor = colors[health.team.color.toLowerCase()];
-            let result = '';
-            if (idx === 0) {
-                result += `#1B2021 0, `;
-                result += `#1B2021 ${lostHealth === 100 ? '50' : Math.min(lostHealth / 2, 48)}%, `;
-                result += `${teamColor} ${lostHealth === 100 ? '50' : Math.min(lostHealth / 2, 48)}%, `;
-                result += `${teamColor} 50%`;
-            } else if (idx === 1) {
-                result += `${teamColor} 50%, `;
-                result += `${teamColor} ${lostHealth === 100 ? '0' : Math.max((remainingHealth / 2) + 50, 52)}%, `;
-                result += `#1B2021 ${lostHealth === 100 ? '0' : Math.max((remainingHealth / 2) + 50, 52)}%, `;
-                result += `#1B2021 100%`;
-            }
-            return result
-        });
-
-        return `linear-gradient(to right, ${gradients.join(', ')})`;
-    }
-
-</script>
-
-{% set stats = game.replays[round].replayData.data %}
-
 <div class="whitepad row g-0">
     <div class="col-4">
-        <div class="stats">
-            <div class="head" [ngStyle]="{'background-image': linearGradientHealthPoints(0)}">
-                <div class="user">
-                    <span class="user">{{ stats.teams[0].user }}</span>
-                    <span class="team">{{ stats.teams[0].team }}</span>
-                </div>
-                <div class="user">
-                    <span class="user">{{ stats.teams[1].user }}</span>
-                    <span class="team">{{ stats.teams[1].team }}</span>
-                </div>
-            </div>
-            {% for turn in stats.turns %}
-                <div>
-                    <div class="suddenDeath" *ngIf="suddenDeathBeforeTurn === index + 1">
-                        <img [src]="waterImage" alt="water"/>
-                        <img [src]="waterImage" alt="water"/>
-                    </div>
-                    <div class="turn"
-                         [ngStyle]="{'background-image': linearGradientHealthPoints(index + 1)}"
-                         [ngClass]="{'lossOfControl': turn.lossOfControl}">
-                        <div class="kills">
-                            <img *ngFor="let kill of retrieveKills(index, stats.teams[0].user)" [src]="kill"/>
-                        </div>
-                        <div class="weapons">
-                            <div *ngFor="let weapon of turn.weapons"
-                                 class="weapon {{ game.replays[round].winnerColor() }}"> <!-- TODO -->
-                                <cwt-weapon [weapon]="weapon"></cwt-weapon>
-                            </div>
-                        </div>
-                        <div class="kills">
-                            <img *ngFor="let kill of retrieveKills(index, stats.teams[1].user)" [src]="kill"/>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-            <div class="head" [ngStyle]="{'background-image': linearGradientHealthPoints(0)}">
-                {% for averageTurnTime in averageTurnTimes %}
-                    <div class="user">
-                        &empty; {{ averageTurnTime }}s
-                    </div>
-                {% endfor %}
-            </div>
-            <div class="head">
-                {{ stats.roundTime|split(':')[1] }}m
-                {{ stats.roundTime|split(':')[2] }}s
-            </div>
-        </div>
-        <div class="text-right mt-1">
-            <div style="display: none;">
-                <p>
-                    The bars in the background are approximations of health points. They do not include health reductions to due
-                    self-killing weapons like Kamikaze or continuous health reductions due to Sudden Death or Skunks or the like.<br>
-                    They’re actually more like accumulations of damage conceded.
-                </p>
-                <p>
-                    Other than that the bars in the background depict the state after that turn whose used weapons are shown on top
-                    with a border of the color of the team that used the weapon.
-                </p>
-                <p>
-                    Dashed red border means that the turn has ended due to the Worm losing control. Like he or she
-                    slipped or fell off the cliff or the like. Poor worm.
-                </p>
-                <p>
-                    Weapons like Ninja Rope are shown to be used even if the usage didn’t reduce ammo.
-                    Like when shooting a Ninja Rope into empty space.
-                </p>
-                <p *ngIf="suddenDeathBeforeTurn !== -1">
-                    Yes, that wave is Sudden Death.
-                </p>
-                <p>
-                    Powered by <a href="https://waaas.zemke.io/" target="_blank" class="font-weight-bolder">WAaaS</a>
-                </p>
-            </div>
-            <i class="fa cursor-pointer fa-question d-none d-sm-block"
-               [ngbPopover]="statsDescription" placement="right-bottom"></i>
-        </div>
+        {{ render(controller(
+               'App\\Controller\\MatchController::stats',
+               {gameId: game.id, round: round}
+        )) }}
     </div>
     <div class="col-8">
         <div class="row">

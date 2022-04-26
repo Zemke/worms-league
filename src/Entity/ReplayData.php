@@ -9,6 +9,16 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ReplayDataRepository::class)]
 class ReplayData
 {
+    const COLORS = [
+        'green' => '#80FF80',
+        'blue' => '#9D9FFF',
+        'red' => '#FF7F7F',
+        'yellow' => '#FFFF80',
+        'cyan' => '#80FFFF',
+        'magenta' => '#FF82FF',
+    ];
+
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
