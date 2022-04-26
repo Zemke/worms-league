@@ -758,13 +758,12 @@ ul.tabs > li.active a {
 }
 
 .stats {
-    border-radius: .25rem;
     overflow: hidden;
     padding: 0;
     margin: 0;
 }
 
-.stats .head {
+.stats .top {
     display: flex;
     justify-content: center;
     color: #fbfbfb;
@@ -776,16 +775,16 @@ ul.tabs > li.active a {
     text-align: center;
 }
 
-.stats .head > div.user {
+.stats .top > div.user {
     flex-grow: 1;
 }
 
-.stats .head div.user > span.user {
+.stats .top div.user > span.user {
     display: block;
     font-size: 1rem;
 }
 
-.stats .head div.user > span.team {
+.stats .top div.user > span.team {
     display: block;
     font-size: .8rem;
 }
