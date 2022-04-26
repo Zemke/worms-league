@@ -91,7 +91,8 @@ class MatchController extends AbstractController
         return $result;
     }
 
-    private function calcLostHealthPoints(array $turns, string $victim) {
+    private function calcLostHealthPoints(array $turns, string $victim): int
+    {
         return array_reduce(
             $turns,
             fn($acc, $t) =>
