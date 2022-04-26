@@ -19,7 +19,11 @@
                  style="background: linear-gradient(to right, {{ gradients[loop.index]|join(', ') }})"
                  [ngClass]="{'lossOfControl': turn.lossOfControl}">
                 <div class="kills">
-                    <img *ngFor="let kill of retrieveKills(index, stats.teams[0].user)" [src]="kill"/>
+                    {% for _ in range(0, kills[loop.index0][stats.teams[0].user]) %}
+                        {% if not loop.first %}
+                            <img src="/img/grave.png"/>
+                        {% endif %}
+                    {% endfor %}
                 </div>
                 <div class="weapons">
                     <div *ngFor="let weapon of turn.weapons"
@@ -28,7 +32,11 @@
                     </div>
                 </div>
                 <div class="kills">
-                    <img *ngFor="let kill of retrieveKills(index, stats.teams[1].user)" [src]="kill"/>
+                    {% for _ in range(0, kills[loop.index0][stats.teams[1].user]) %}
+                        {% if not loop.first %}
+                            <img src="/img/grave.png"/>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
         </div>

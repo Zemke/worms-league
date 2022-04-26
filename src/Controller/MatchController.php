@@ -45,6 +45,7 @@ class MatchController extends AbstractController
             'game' => $game,
             'round' => $round - 1,
             'gradients' => $this->gradients($stats),
+            'kills' => $this->kills($stats),
         ]);
     }
 
@@ -98,6 +99,19 @@ class MatchController extends AbstractController
                     array_filter($t['damages'], fn($d) => $d['victim'] === $victim),
                     fn($accD, $currD) => $accD + $currD['damage'], 0)
         , 0);
+    }
+
+    private function kills(array $stats): array
+    {
+        $result = [];
+        $cStats = count($stats);
+        for ($turnNum = 0; $turnNum < $cStats; $turnNum++) {
+            $result[] = array_reduce($stats['turns'][$turnNum]['damages'], function ($acc, $v) {
+                $acc[$v['victim']] += $v['kills'];
+                return $acc;
+            }, [$stats['teams'][0]['user'] => 0, $stats['teams'][1]['user'] => 0]);
+        }
+        return $result;
     }
 }
 
