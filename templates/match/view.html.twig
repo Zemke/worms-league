@@ -8,43 +8,52 @@
 
 {% block body %}
 
-<ul class="tabs">
-    <li>
-        Round
-    </li>
-    {% for _ in game.replays %}
-        <li class="{{ round == (loop.index-1) ? 'active' : '' }}">
-            <a href="?round={{ loop.index }}">
-                {{ loop.index }}
-            </a>
-        </li>
-    {% endfor %}
-</ul>
-
-<div class="whitepad row g-0">
-    <div class="col-4">
-        {{ render(controller(
-               'App\\Controller\\MatchController::stats',
-               {gameId: game.id, round: round}
-        )) }}
+{% for replay in game.replays %}
+    <div class="whitepad text-bold inline-block">
+        Round {{ loop.index }}
     </div>
-    <div class="col-8">
-        <div class="row">
-            <div class="col-12 map">
-                <img src="/maps/{{ game.replays[round].replayMap.name }}"
-                     title="{{ game.replays[round].replayData.texture.local() }}"
-                     alt="Map">
-            </div>
-            <div class="col-12">
-                <div class="chat">
-                    {% for message in game.replays[round].replayData.data.messages %}
-                        <span class="user">{{ message.user }}</span>
-                        <span class="body">{{ message.body }}</span>
-                        <br>
-                    {% endfor %}
-                </div>
+    <div class="whitepad">
+        <div class="col-12 map">
+            <img src="/maps/{{ game.replays[loop.index0].replayMap.name }}"
+                 title="{{ game.replays[loop.index0].replayData.texture.local() }}"
+                 alt="Map">
+        </div>
+        <div class="col-12">
+            <div class="chat">
+                {% for message in game.replays[loop.index0].replayData.data.messages %}
+                    <span class="user">{{ message.user }}</span>
+                    <span class="body">{{ message.body }}</span>
+                    <br>
+                {% endfor %}
             </div>
         </div>
+    </div>
+    <br>
+{% endfor %}
+
+<div class="row">
+    <div class="col-4">
+        <ul class="tabs">
+            <li>
+                Round
+            </li>
+            {% for _ in game.replays %}
+                <li class="{{ round == (loop.index) ? 'active' : '' }}">
+                    <a href="?round={{ loop.index }}">
+                        {{ loop.index }}
+                    </a>
+                </l/>
+            {% endfor %}
+        </ul>
+        <div class="whitepad">
+            {{ render(controller(
+                   'App\\Controller\\MatchController::stats',
+                   {gameId: game.id, round: round}
+            )) }}
+        </div>
+    </div>
+    <div class="col-8">
+        Comments
     </div>
 </div>
 

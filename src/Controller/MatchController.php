@@ -101,15 +101,15 @@ class MatchController extends AbstractController
                 $teamColor = ReplayData::COLORS[strtolower($health['team']['color'])];
                 $result = '';
                 if ($idx === 0) {
-                    $result .= "#000 0, ";
-                    $result .= '#000 ' . ($lostHealth === 100 ? '50' : min($lostHealth / 2, 48)) . '%, ';
+                    $result .= "var(--dark) 0, ";
+                    $result .= 'var(--dark) ' . ($lostHealth === 100 ? '50' : min($lostHealth / 2, 48)) . '%, ';
                     $result .= "{$teamColor} " . ($lostHealth === 100 ? '50' : min($lostHealth / 2, 48)) . '%, ';
                     $result .= "{$teamColor} 50%";
                 } else if ($idx === 1) {
                     $result .= "{$teamColor} 50%, ";
                     $result .= "{$teamColor} " . ($lostHealth === 100 ? '0' : max(($remainingHealth / 2) + 50, 52)) . '%, ';
-                    $result .= '#000 ' . ($lostHealth === 100 ? '0' : max(($remainingHealth / 2) + 50, 52)) .'%, ';
-                    $result .= '#000 100%';
+                    $result .= 'var(--dark) ' . ($lostHealth === 100 ? '0' : max(($remainingHealth / 2) + 50, 52)) .'%, ';
+                    $result .= 'var(--dark) 100%';
                 }
                 return $result;
             }, $healthPoints, array_keys($healthPoints));
