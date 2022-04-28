@@ -235,6 +235,14 @@ p.lead {
     text-align: center;
 }
 
+.text-right {
+    text-align: right;
+}
+
+.float-right {
+    float: right;
+}
+
 .popup {
     display: none;
     position: absolute;
