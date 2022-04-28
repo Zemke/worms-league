@@ -67,6 +67,9 @@ class Game
     #[ORM\Column(type: 'boolean', options: ["default" => false])]
     private $ranked;
 
+    #[ORM\OneToMany(mappedBy: 'game', targetEntity: Comment::class, orphanRemoval: true)]
+    private $comments;
+
     public function __construct()
     {
         $this->voided = false;
@@ -74,6 +77,7 @@ class Game
         $this->created = new \DateTime();
         $this->modified = $this->created;
         $this->replays = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function played(): bool
@@ -371,6 +375,36 @@ class Game
     public function setRanked(bool $ranked): self
     {
         $this->ranked = $ranked;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setGame($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getGame() === $this) {
+                $comment->setGame(null);
+            }
+        }
 
         return $this;
     }
