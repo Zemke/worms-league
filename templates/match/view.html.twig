@@ -8,6 +8,13 @@
 
 {% block body %}
 
+<div class="gotocomments">
+    <a href="#comments">
+        Go to comments
+        <img src="/img/speech.png">
+    </a>
+</div>
+
 {% for replay in game.replays %}
     <div class="whitepad text-bold inline-block">
         Round {{ loop.index }}
@@ -31,6 +38,9 @@
     <br>
 {% endfor %}
 
+<a name="comments"></a>
+<br>
+
 <div class="row">
     <div class="col-4">
         <ul class="tabs">
@@ -39,7 +49,7 @@
             </li>
             {% for _ in game.replays %}
                 <li class="{{ round == (loop.index0) ? 'active' : '' }}">
-                    <a href="?round={{ loop.index }}">
+                    <a href="?round={{ loop.index }}#comments">
                         {{ loop.index }}
                     </a>
                 </l/>

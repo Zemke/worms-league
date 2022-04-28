@@ -881,3 +881,12 @@ ul.tabs > li.active a {
 .stats .cyan { background-color: var(--wa-cyan); }
 .stats .magenta { background-color: var(--wa-magenta); }
 
+.gotocomments {
+    text-align: right;
+}
+
+.gotocomments img {
+    height: 2.2rem;
+    margin-left: -1.5rem;
+}
+
