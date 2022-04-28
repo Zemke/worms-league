@@ -675,6 +675,7 @@ table.ladder td.streak + td.streak {
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;
+    line-height: normal;
 }
 
 .inline-block {
