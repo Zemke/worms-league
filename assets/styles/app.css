@@ -202,6 +202,12 @@ textarea:focus {
     box-shadow: 0rem 0rem .2rem .1rem var(--primary);
 }
 
+textarea {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 a {
     text-decoration: none;
     color: var(--secondary);
@@ -888,5 +894,34 @@ ul.tabs > li.active a {
 .gotocomments img {
     height: 2.2rem;
     margin-left: -1.5rem;
+}
+
+.justthetip {
+    margin-top: .1rem;
+}
+
+.bg-light {
+    background-color: var(--light);
+}
+
+.bg-dark {
+    background-color: var(--dark);
+    color: var(--light);
+}
+
+.comments > div {
+    padding: 1rem;
+}
+
+.comments > div:nth-child(odd) {
+    background-color: var(--gray);
+}
+
+.comments > div:nth-child(even) {
+    background-color: #a9a9a9;
+}
+
+.comments p {
+    margin-top: .5rem;
 }
 

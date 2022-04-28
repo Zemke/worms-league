@@ -1,6 +1,5 @@
 <div class="stats">
-    <div class="top" style="background: linear-gradient(to right, {{ gradients[0]|join(', ') }})">
-        {% for i in [0, 1] %}
+    <div class="top" style="background: linear-gradient(to right, {{ gradients[0]|join(', ') }})"> {% for i in [0, 1] %}
             <div class="user">
                 <span class="user">{{ stats.teams[i].user }}</span>
                 <span class="team">{{ stats.teams[i].team }}</span>

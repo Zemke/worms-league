@@ -63,7 +63,28 @@
         </div>
     </div>
     <div class="col-8">
-        Comments
+        <form>
+            <div>
+                <textarea class="textarea" rows="4" placeholder="Why not compose a comment?"></textarea>
+            </div>
+            <div class="text-right justthetip">
+                <input type="submit" value="Comment">
+            </div>
+        </form>
+        <br>
+        <div class="comments whitepad">
+            {% for comment in 1..5 %}
+                <div>
+                    <a href="todo">
+                        Zemke
+                    </a>
+                    <div class="small float-right">on <strong>Jan. 23, 2022</strong> at <strong>18:45</strong></div>
+                    <p>
+                        That was an amazing game with many specifics to it. Amazing!
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 

@@ -47,7 +47,7 @@
                 </a>
             </td>
             <td>
-                <a href="/todo">4</a>
+                <a href="{{ path('app_match_view', {gameId: game.id}) }}#comments">4</a>
             </td>
             {% for replay in game.replays | sort((a,b) =>
                 (a.replayData is null or b.replayData is null)
