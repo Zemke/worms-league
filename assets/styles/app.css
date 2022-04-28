@@ -914,6 +914,11 @@ ul.tabs > li.active a {
     padding: 1rem;
 }
 
+.comments a {
+    display: inline-block;
+    margin-bottom: .2rem;
+}
+
 .comments > div:nth-child(odd) {
     background-color: var(--gray);
 }
@@ -922,7 +927,7 @@ ul.tabs > li.active a {
     background-color: #a9a9a9;
 }
 
-.comments p {
-    margin-top: .5rem;
+.comments div p {
+    margin-top: .3rem;
 }
 

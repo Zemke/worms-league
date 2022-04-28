@@ -73,15 +73,18 @@
         </form>
         <br>
         <div class="comments whitepad">
-            {% for comment in 1..5 %}
+            {% for comment in game.comments|sort((a, b) => b.modified <=> a.modified) %}
                 <div>
                     <a href="todo">
-                        Zemke
+                        {{ comment.author.username }}
                     </a>
-                    <div class="small float-right">on <strong>Jan. 23, 2022</strong> at <strong>18:45</strong></div>
-                    <p>
-                        That was an amazing game with many specifics to it. Amazing!
-                    </p>
+                    <div class="small float-right">
+                        on <strong>{{ comment.modified|date('M. j.') }}</strong>
+                        at <strong>{{ comment.modified|date('H:i') }}</strong>
+                    </div>
+                    {% for ln in comment.body|split("\n\n") %}
+                        {% if ln != '' %}<p>{{ ln|e|nl2br }}</p>{% endif %}
+                    {% endfor %}
                 </div>
             {% endfor %}
         </div>
