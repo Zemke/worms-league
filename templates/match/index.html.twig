@@ -52,36 +52,38 @@
             {% for replay in game.replays | sort((a,b) =>
                 (a.replayData is null or b.replayData is null)
                     ? 0 : ((a.replayData.data.startedAt|date("U")) - (b.replayData.data.startedAt|date("U")) ? 1 : -1)) %}
-                <a href="/replays/{{ game.id }}/{{ replay.name }}"
-                   class="inline-block"
-                   {% if replay.processed() %}data-tooltip="{{ replay.replayData.startedAt() | date('M. j, H:i') }}"{% endif %}>
-                    <img src="/img/replay.png"
-                         alt="Download Replay"
-                         title="Download Replay">
-                </a>
-                {% if replay.processed() %}
-                    <div class="inline-block" data-tooltip="{{ replay.replayData.texture.local() }}">
-                        <a href="/texture/{{ replay.replayData.texture().value }}"
-                           class="texture">
-                            <img src="img/terrains/{{ replay.replayData.texture().value }}.gif"
-                                 alt="{{ replay.replayData.texture().local() }}">
-                            {% if replay.replayData.data.suddenDeath %}
-                                <img src="img/water.gif"
-                                     class="sudden-death"
-                                     style="left: -{{ random(0,40)/10 }}rem;">
-                            {% endif %}
-                        </a>
-                    </div>
-                    <div class="color-badge {{ replay.winnerColor() | lower }}"
-                         data-tooltip="{{ replay.replayData.winner() }}">
-                    </div>
-                {% else %}
-                    <div class="inline-block" data-tooltip="Processing">
-                        <div class="processing">
-                            <img src="img/gameoptions.png">
+                <td>
+                    <a href="/replays/{{ game.id }}/{{ replay.name }}"
+                       class="inline-block"
+                       {% if replay.processed() %}data-tooltip="{{ replay.replayData.startedAt() | date('M. j, H:i') }}"{% endif %}>
+                        <img src="/img/replay.png"
+                             alt="Download Replay"
+                             title="Download Replay">
+                    </a>
+                    {% if replay.processed() %}
+                        <div class="inline-block" data-tooltip="{{ replay.replayData.texture.local() }}">
+                            <a href="/texture/{{ replay.replayData.texture().value }}"
+                               class="texture">
+                                <img src="img/terrains/{{ replay.replayData.texture().value }}.gif"
+                                     alt="{{ replay.replayData.texture().local() }}">
+                                {% if replay.replayData.data.suddenDeath %}
+                                    <img src="img/water.gif"
+                                         class="sudden-death"
+                                         style="left: -{{ random(0,40)/10 }}rem;">
+                                {% endif %}
+                            </a>
                         </div>
-                    </div>
-                {% endif %}
+                        <div class="color-badge {{ replay.winnerColor() | lower }}"
+                             data-tooltip="{{ replay.replayData.winner() }}">
+                        </div>
+                    {% else %}
+                        <div class="inline-block" data-tooltip="Processing">
+                            <div class="processing">
+                                <img src="img/gameoptions.png">
+                            </div>
+                        </div>
+                    {% endif %}
+                </td>
             {% endfor %}
             {% if 5-(game.replays|length) > 0 %}
                 <td colspan="{{ 5-(game.replays|length) }}"></td>
