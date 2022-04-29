@@ -8,61 +8,71 @@
 
 {% block body %}
 
-<div class="gotocomments">
-    <a href="#comments">
-        Go to comments
-        <img src="/img/speech.png">
-    </a>
-</div>
-
-{% for replay in game.replays %}
-    <div class="whitepad text-bold inline-block">
-        Round {{ loop.index }}
+{% if not game.fullyProcessed() %}
+    <div class="alert warn">
+        This game has not been fully processed yet.
     </div>
-    <div class="whitepad">
-        <div class="col-12 map">
-            <img src="/maps/{{ game.replays[loop.index0].replayMap.name }}"
-                 title="{{ game.replays[loop.index0].replayData.texture.local() }}"
-                 alt="Map">
+{% else %}
+    <div class="gotocomments">
+        <a href="#comments">
+            Go to comments
+            <img src="/img/speech.png">
+        </a>
+    </div>
+{% endif %}
+
+{% if game.fullyProcessed() %}
+    {% for replay in game.replays %}
+        <div class="whitepad text-bold inline-block">
+            Round {{ loop.index }}
         </div>
-        <div class="col-12">
-            <div class="chat">
-                {% for message in game.replays[loop.index0].replayData.data.messages %}
-                    <span class="user">{{ message.user }}</span>
-                    <span class="body">{{ message.body }}</span>
-                    <br>
-                {% endfor %}
+        <div class="whitepad">
+            <div class="col-12 map">
+                <img src="/maps/{{ game.replays[loop.index0].replayMap.name }}"
+                     title="{{ game.replays[loop.index0].replayData.texture.local() }}"
+                     alt="Map">
+            </div>
+            <div class="col-12">
+                <div class="chat">
+                    {% for message in game.replays[loop.index0].replayData.data.messages %}
+                        <span class="user">{{ message.user }}</span>
+                        <span class="body">{{ message.body }}</span>
+                        <br>
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
-    <br>
-{% endfor %}
+        <br>
+    {% endfor %}
 
-<a name="comments"></a>
-<br>
+    <a name="comments"></a>
+    <br>
+{% endif %}
 
 <div class="row">
-    <div class="col-4">
-        <ul class="tabs">
-            <li>
-                Round
-            </li>
-            {% for _ in game.replays %}
-                <li class="{{ round == (loop.index0) ? 'active' : '' }}">
-                    <a href="?round={{ loop.index }}#comments">
-                        {{ loop.index }}
-                    </a>
-                </l/>
-            {% endfor %}
-        </ul>
-        <div class="whitepad">
-            {{ render(controller(
-                   'App\\Controller\\StatsController::stats',
-                   {gameId: game.id, round: round}
-            )) }}
+    {% if game.fullyProcessed() %}
+        <div class="col-4">
+            <ul class="tabs">
+                <li>
+                    Round
+                </li>
+                {% for _ in game.replays %}
+                    <li class="{{ round == (loop.index0) ? 'active' : '' }}">
+                        <a href="?round={{ loop.index }}#comments">
+                            {{ loop.index }}
+                        </a>
+                    </l/>
+                {% endfor %}
+            </ul>
+            <div class="whitepad">
+                {{ render(controller(
+                       'App\\Controller\\StatsController::stats',
+                       {gameId: game.id, round: round}
+                )) }}
+            </div>
         </div>
-    </div>
-    <div class="col-8">
+    {% endif %}
+    <div class="col">
         <form action="{{ path('app_match_comment', {gameId: game.id}) }}" method="post">
             <div>
                 <textarea name="body"
