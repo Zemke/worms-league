@@ -96,7 +96,7 @@
                         {{ comment.author.username }}
                     </a>
                     <div class="small float-right">
-                        on <strong>{{ comment.modified|date('M. j.') }}</strong>
+                        on <strong>{{ comment.modified|date('M. j') }}</strong>
                         at <strong>{{ comment.modified|date('H:i') }}</strong>
                     </div>
                     {% for ln in comment.body|split("\n\n") %}
