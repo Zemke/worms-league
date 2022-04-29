@@ -245,6 +245,10 @@ p.lead {
     text-align: right;
 }
 
+.text-italic {
+    font-style: italic;
+}
+
 .float-right {
     float: right;
 }

@@ -77,6 +77,9 @@
         </form>
         <br>
         <div class="comments whitepad">
+            {% if game.comments is empty %}
+                <span class="text-italic">Be the first to comment.</spaF>
+            {% endif %}
             {% for comment in game.comments|sort((a, b) => b.modified <=> a.modified) %}
                 <div>
                     <a href="todo">
