@@ -13,7 +13,6 @@ class HomeController extends AbstractController
     public function index(SeasonRepository $seasonRepo): Response
     {
         $var['season'] = $seasonRepo->findActive();
-        dump($var['season']);
         return $this->render('home/index.html.twig', $var);
     }
 }
