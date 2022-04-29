@@ -16,7 +16,7 @@ class StatsController extends AbstractController
         $game = $gameRepo->find($gameId);
         $stats = $game->getReplays()[$round]->getReplayData()->getData();
         return $this->render('stats/stats.html.twig', [
-            'averageTurnTimes' => [15, 20],
+            'averageTurnTimes' => $this->averageTurnTimes($stats),
             'stats' => $stats,
             'game' => $game,
             'round' => $round - 1,
@@ -25,6 +25,22 @@ class StatsController extends AbstractController
             'suddenDeathBeforeTurn' => $this->suddenDeathBeforeTurn($stats),
         ]);
     }
+
+    private function averageTurnTimes(array $stats): array
+    {
+        $tt = array_reduce($stats['turns'], function ($acc, $turn) {
+            $acc[$turn['user']][0] += $turn['timeUsedSeconds'];
+            $acc[$turn['user']][1] += 1;
+            return $acc;
+        }, [$stats['teams'][0]['user'] => [0, 0], $stats['teams'][1]['user'] => [0, 0]]);
+        $tt = array_values($tt);
+        return [
+            round($tt[0][0] / $tt[0][1]),
+            round($tt[1][0] / $tt[1][1]),
+        ];
+    }
+
+
     private function suddenDeathBeforeTurn(array $stats): int
     {
         $timestampToSeconds = function (string $timestamp): int {
