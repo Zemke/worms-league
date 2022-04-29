@@ -214,6 +214,13 @@ a {
     font-weight: bold;
 }
 
+a[name] {
+    display: block;
+    position: relative;
+    top: -2.2rem;
+    visibility: hidden;
+}
+
 a:hover {
     color: var(--tertiary);
 }
