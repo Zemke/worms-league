@@ -935,3 +935,14 @@ ul.tabs > li.active a {
     margin-top: .3rem;
 }
 
+.replays {
+    float: right;
+    margin-top: -.4rem;
+    margin-bottom: -1rem;
+}
+
+.replays img {
+    height: 2rem;
+    margin-left: .1rem;
+}
+
