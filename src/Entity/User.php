@@ -26,9 +26,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(min: 3, max: 16)]
     #[Assert\Unique]
     #[Assert\Regex(
-        pattern: '/@/',
-        match: false,
-        message: 'Your name must not contain an @ sign',
+        pattern: '/[A-Za-z0-9-]/',
+        match: true,
+        message: 'Your name must be alphanumeric',
     )]
     private $username;
 
