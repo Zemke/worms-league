@@ -4,6 +4,27 @@
 
 {% block body %}
 
+<table>
+    <thead>
+        <tr>
+            <th>Opponent</th>
+            <th>Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for g in games %}
+            <tr>
+                <td>
+                    {{ g.opp.username }}
+                </td>
+                <td>
+                    {{ g.won }}–{{ g.lost }}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
 {{ dump(games) }}
 {{ dump(user) }}
 
