@@ -16,7 +16,8 @@ class RankingService
     public function __construct(private RankingRepository $rankingRepo,
                                 private GameRepository $gameRepo,
                                 private SeasonRepository $seasonRepo,
-                                private EntityManagerInterface $em)
+                                private RelativizingService $relativizingService,
+                                private EntityManagerInterface $em,)
     {}
 
     /**
@@ -75,12 +76,13 @@ class RankingService
     /**
      * Points pattern.
      *
-     * @param Ranking[]
+     * @param Ranking[] rankings
+     * @param Game[] games
      */
-    public function rank(array $rankings): void
+    public function rank(array $rankings, array $games): void
     {
         /* TODO
-        There's an absolute ranking which is simply round ratio.
+        There's an absolute ranking which is simply won rounds.
         This is then relativized through several tweakable factors.
         Each relativizing step is based on each previous step.
         The first one is based on the absolute ranking.
@@ -91,10 +93,19 @@ class RankingService
         - Entropy values older rounds less.
         - Opponent variety. Winning rounds against different opponents is
           worth more than beating the same over and over.
+        - De-value activity by relativizing amount rounds.
+
+        Each of the factors should be weighted.
 
         The more relativizing steps are run, the more the absolute ranking
         is relativized and the less worth is allocated to activity.
         */
+        usort($rankings, fn($a, $b) => $a->getPoints() - $b->getPoints());
+        $X = count($rankings);
+        foreach ($rankings as &$ranking) {
+            $user = $ranking->getOwner();
+            $this->relativizingService->byOpponentQuality($user, $rankings, $games);
+        }
         return;
     }
 }
