@@ -31,7 +31,7 @@
         <tr>
             <td>{{ loop.index }}</td>
             <td>
-                <a href="todo">
+                <a href="{{ path('app_user_view', {usernameOrId: ranking.owner.username}) }}">
                     {{ ranking.owner.username }}
                 </a>
             </td>

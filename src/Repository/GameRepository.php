@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Game;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -43,6 +44,20 @@ class GameRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    /**
+     * Find games a user played.
+     *
+     * @return Game[] Returns an array of Game where user is home or away.
+     */
+    public function findOfUser(User $user): array
+    {
+        return $this->createQueryBuilder('g')
+            ->where('g.home = :user or g.away = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
     }
 
     // /**
