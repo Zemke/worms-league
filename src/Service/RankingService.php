@@ -91,6 +91,9 @@ class RankingService
         - Entropy values older rounds less.
         - Opponent variety. Winning rounds against different opponents is
           worth more than beating the same over and over.
+
+        The more relativizing steps are run, the more the absolute ranking
+        is relativized and the less worth is allocated to activity.
         */
         return;
     }
