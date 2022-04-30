@@ -185,12 +185,9 @@ class Ranking
                 if ($this->streakBest < $this->streak) {
                     $this->streakBest = $this->streak;
                 }
-                $this->points += 3;
             } else {
                 $this->streak = $this->streak < 0 ? ($this->streak - 1) : -1;
             }
-        } else {
-            $this->points += 1;
         }
         if (strlen($this->recent) === Ranking::RECENT_TRACK) {
             $this->recent = substr($this->recent, 0, -1);
