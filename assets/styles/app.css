@@ -260,6 +260,10 @@ p.lead {
     float: right;
 }
 
+.p0 {
+    padding: 0;
+}
+
 .popup {
     display: none;
     position: absolute;

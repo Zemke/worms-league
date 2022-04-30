@@ -15,12 +15,9 @@ class UserController extends AbstractController
                           UserRepository $userRepo,
                           GameRepository $gameRepo,): Response
     {
-        if (ctype_digit($usernameOrId)) {
-            $user = $userRepo->find($usernameOrId);
-        } else {
-            $user = $userRepo->findOneByUsername($usernameOrId);
-        }
-
+        $user = ctype_digit($usernameOrId)
+            ? $userRepo->find($usernameOrId)
+            : $userRepo->findOneByUsername($usernameOrId);
         $games = array_reduce($gameRepo->findOfUser($user), function ($acc, $g) use ($user) {
             if (!$g->fullyProcessed()) {
                 return $acc;
