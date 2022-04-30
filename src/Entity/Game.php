@@ -137,6 +137,15 @@ class Game
         }
     }
 
+    private function assertHomeOrAway(User $user): void
+    {
+        if (!$this->isHomeOrAway($user)) {
+            throw new \RuntimeException(
+                "User {$user->getId()} is neither "
+                . "home {$this->home?->getId()} nor away {$this->away?->getId}");
+        }
+    }
+
     /**
      * Convenience for getting every replay's data sorted by its startedAt ascendingly.
      *
@@ -174,6 +183,19 @@ class Game
     public function isHomeOrAway(User $user): bool
     {
         return $this->isHome($user) || $this->isAway($user);
+    }
+
+    public function opponent(User $user): User
+    {
+        $this->assertHomeOrAway($user);
+        return $this->isHome($user) ? $this->away : $this->home;
+    }
+
+    public function scoreOf(User $user): int
+    {
+        $this->assertFullyProcessed();
+        $this->assertHomeOrAway($user);
+        return $this->isHome($user) ? $this->scoreHome : $this->scoreAway;
     }
 
     /**
