@@ -170,15 +170,6 @@ class Ranking
         $this->gamesWonRatio = $this->gamesWon / $this->gamesPlayed;
         $this->gamesLost += +(!$draw && !$won);
 
-        /* TODO sophisticated ranking calc
-         * - Ranking formular with these factors
-         *   - quality per opponent
-         *   - reward activity but don't reward noob bashing
-         *     - general activity
-         *     - activity against specific opponent
-         *   - entropy (older matches value less)
-         */
-
         if (!$draw) {
             if ($won) {
                 $this->streak = $this->streak > 0 ? ($this->streak + 1) : 1;

@@ -71,5 +71,28 @@ class RankingService
         }
         $this->em->flush();
     }
+
+    /**
+     * Points pattern.
+     *
+     * @param Ranking[]
+     */
+    public function rank(array $rankings): void
+    {
+        /* TODO
+        There's an absolute ranking which is simply round ratio.
+        This is then relativized through several tweakable factors.
+        Each relativizing step is based on each previous step.
+        The first one is based on the absolute ranking.
+
+        These are the relativizing factors applied
+        on the won rounds (relativizing won rounds):
+        - How good is the opponent?
+        - Entropy values older rounds less.
+        - Opponent variety. Winning rounds against different opponents is
+          worth more than beating the same over and over.
+        */
+        return;
+    }
 }
 
