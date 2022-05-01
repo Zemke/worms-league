@@ -13,9 +13,11 @@ class RelativizingService
     {}
 
     /**
-     * @param User user
-     * @param Ranking[] rankings
-     * @param Game[] games
+     * Relativize by how well the user's opponents are ranked.
+     *
+     * @param User $user The user whose won rounds are to be relativized.
+     * @param Ranking[] $rankings Quality of opponents based on these rankings.
+     * @param Game[] games Games to find the opponents of the given user.
      */
     public function byOpponentQuality(User $user, array &$rankings, array $games): void
     {
