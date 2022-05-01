@@ -83,7 +83,7 @@ class RankingService
     {
         /* TODO
         There's an absolute ranking which is simply won rounds.
-        This is then relativized through several tweakable factors.
+        This is then relativized through several weighted factors.
         Each relativizing step is based on each previous step.
         The first one is based on the absolute ranking.
 
@@ -94,8 +94,6 @@ class RankingService
         - Opponent variety. Winning rounds against different opponents is
           worth more than beating the same over and over.
         - De-value activity by relativizing amount rounds.
-
-        Each of the factors should be weighted.
 
         The more relativizing steps are run, the more the absolute ranking
         is relativized and the less worth is allocated to activity.
