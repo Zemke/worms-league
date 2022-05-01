@@ -18,11 +18,13 @@ class RelativizingService
      * @param User $user The user whose won rounds are to be relativized.
      * @param Ranking[] $rankings Quality of opponents based on these rankings.
      * @param Game[] games Games to find the opponents of the given user.
+     * @return float The weight of the won rounds according to opponent quality.
      */
-    public function byOpponentQuality(User $user, array &$rankings, array $games): void
+    public function byOpponentQuality(User $user, array &$rankings, array $games): float
     {
-        usort($rankings, fn($a, $b) => $a->getPoints() - $b->getPoints());
-        $oppRanks = array_reduce($games, function ($acc, $g) use ($user) {
+        // TODO subsequent steps need to sort by points
+        usort($rankings, fn($a, $b) => $a->getRoundsWon() - $b->getRoundsWon());
+        $oppRanks = array_reduce($games, function ($acc, $g) use ($user, $rankings) {
             if (!$g->fullyProcessed() || !$g->isHomeOrAway($user)) {
                 return $acc;
             }
@@ -37,11 +39,14 @@ class RelativizingService
             return $acc;
         }, []);
         $X = count($rankings);
+        $P = 0;
+        $userRanking = current(array_filter($rankings, fn($r) => $r->ownedBy($user)));
+        assert(array_sum(array_column($oppRanks, 'won')) === $userRanking->getRoundsWon());
         foreach ($oppRanks as $r) {
             $weight = (array_search($r['opp'], $rankings) + 1) / $X;
-            $r['won'] * $weight;
+            $P += ($weight) * ($r['won'] / $userRanking->getRoundsWon());
         }
-        return;
+        return $P;
     }
 }
 
