@@ -29,10 +29,11 @@ class RelativizingService
             $opp = $g->opponent($user);
             $oppRanking = current(
                 array_filter($rankings, fn($r) => $r->getOwner()->getId() === $opp->getId()));
-            if (!count(array_filter($acc, fn($x) => $x['opp']->getOwner()->getId() === $opp->getId()))) {
+            $accKey = key(array_filter($acc, fn($x) => $x['opp']->getOwner()->getId() === $opp->getId()));
+            if (is_null($accKey)) {
                 $acc[] = ['opp' => $oppRanking, 'won' => $g->scoreOf($user)];
             } else {
-                $oppRanking['won'] += $g->scoreOf($user);
+                $acc[$accKey]['won'] += $g->scoreOf($user);
             }
             return $acc;
         }, []);
