@@ -27,7 +27,7 @@ class Ranking
     #[ORM\JoinColumn(nullable: false)]
     private $owner;
 
-    #[ORM\Column(type: 'integer', options: ['default' => 0])]
+    #[ORM\Column(type: 'integer')]
     private $points;
 
     #[ORM\ManyToOne(targetEntity: Season::class, inversedBy: 'rankings')]
@@ -90,7 +90,7 @@ class Ranking
 
     public function reset(): self
     {
-        $this->points = 0;
+        // $this->points = 0;
         $this->roundsPlayed = 0;
         $this->roundsWon = 0;
         $this->roundsLost = 0;
