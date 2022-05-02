@@ -37,7 +37,6 @@ class RelativizingService
             }
             return $acc;
         }, []);
-        $X = count($rankings);
         $P = 0;
         $roundsWon = array_unique(array_map(
             fn($r) => is_null($r->getPoints()) ? $r->getRoundsWon() : $r->getPoints(),
@@ -45,6 +44,7 @@ class RelativizingService
         sort($roundsWon);
         $userRanking = current(array_filter($rankings, fn($r) => $r->ownedBy($user)));
         assert(array_sum(array_column($oppRanks, 'won')) === $userRanking->getRoundsWon());
+        $X = count($rankings);
         foreach ($oppRanks as $r) {
             $weight = (array_search($r['opp']->getRoundsWon(), $roundsWon) + 1) / $X;
             $P += ($weight) * ($r['won'] / $userRanking->getRoundsWon());
