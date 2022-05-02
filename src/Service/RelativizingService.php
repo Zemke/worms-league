@@ -20,7 +20,7 @@ class RelativizingService
      * @param Game[] games Games to find the opponents of the given user.
      * @return float The weight of the won rounds according to opponent quality.
      */
-    public function byOpponentQuality(User $user, array &$rankings, array $games): float
+    public function byOpponentQuality(User $user, array $rankings, array $games): float
     {
         // TODO subsequent steps need to sort by points
         usort($rankings, fn($a, $b) => $a->getRoundsWon() - $b->getRoundsWon());
