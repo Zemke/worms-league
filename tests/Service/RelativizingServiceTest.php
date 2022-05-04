@@ -13,7 +13,6 @@ class RelativizingServiceTest extends TestCase
 {
     public function testByOpponentQuallity(): void
     {
-
         $zem = Helper::setId(new User(), 1)
             ->setUsername('Zem');
         $mab = Helper::setId(new User(), 2)
@@ -40,16 +39,16 @@ class RelativizingServiceTest extends TestCase
                 ->setAway($mab)->setScoreAway(1),
         ];
         $rankings = [
-            Helper::setId(new Ranking(), 2)
+            Helper::setId(new Ranking(), 1)
                 ->setOwner($zem)
                 ->setRoundsWon(5),
-            Helper::setId(new Ranking(), 3)
+            Helper::setId(new Ranking(), 2)
                 ->setOwner($daz)
                 ->setRoundsWon(6),
             Helper::setId(new Ranking(), 3)
                 ->setOwner($mab)
                 ->setRoundsWon(7),
-            Helper::setId(new Ranking(), 3)
+            Helper::setId(new Ranking(), 4)
                 ->setOwner($kor)
                 ->setRoundsWon(4),
         ];
