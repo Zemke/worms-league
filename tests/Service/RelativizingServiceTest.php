@@ -11,7 +11,7 @@ use App\Service\RelativizingService;
 
 class RelativizingServiceTest extends TestCase
 {
-    public function testByOpponentQuallity(): void
+    public function testByOpponentQuality(): void
     {
         $zem = Helper::setId(new User(), 1)
             ->setUsername('Zem');
@@ -62,7 +62,7 @@ class RelativizingServiceTest extends TestCase
         $this->assertEqualsWithDelta($korW, .875, .00001);
     }
 
-    public function testByOpponentQuallity_fair(): void
+    public function testByOpponentQuality_fair(): void
     {
         $zem = Helper::setId(new User(), 1)
             ->setUsername('Zem');
