@@ -61,5 +61,43 @@ class RelativizingServiceTest extends TestCase
         $this->assertEqualsWithDelta($zemW, .7, .00001);
         $this->assertEqualsWithDelta($korW, .875, .00001);
     }
+
+    public function testByOpponentQuallity_fair(): void
+    {
+        $zem = Helper::setId(new User(), 1)
+            ->setUsername('Zem');
+        $kor = Helper::setId(new User(), 2)
+            ->setUsername('Kor');
+        $mab = Helper::setId(new User(), 3)
+            ->setUsername('Mab');
+        $daz = Helper::setId(new User(), 4)
+            ->setUsername('Daz');
+        $games = [
+            Helper::setId(new Game(), 1)
+                ->setHome($daz)->setScoreHome(3)
+                ->setAway($kor)->setScoreAway(1),
+            Helper::setId(new Game(), 1)
+                ->setHome($mab)->setScoreHome(3)
+                ->setAway($zem)->setScoreAway(1),
+        ];
+        $rankings = [
+            Helper::setId(new Ranking(), 1)
+                ->setOwner($zem)
+                ->setRoundsWon(20),
+            Helper::setId(new Ranking(), 2)
+                ->setOwner($kor)
+                ->setRoundsWon(10),
+            Helper::setId(new Ranking(), 3)
+                ->setOwner($daz)
+                ->setRoundsWon(3),
+            Helper::setId(new Ranking(), 4)
+                ->setOwner($mab)
+                ->setRoundsWon(3),
+        ];
+        $dazW = (new RelativizingService())->byOpponentQuality($daz, $rankings, $games);
+        $mabW = (new RelativizingService())->byOpponentQuality($mab, $rankings, $games);
+        $this->assertEqualsWithDelta($dazW, .5, .00001);
+        $this->assertEqualsWithDelta($mabW, .75, .00001);
+    }
 }
 
