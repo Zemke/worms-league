@@ -28,7 +28,7 @@ class RelativizingService
             fn($r) => is_null($r->getPoints()) ? $r->getRoundsWon() : $r->getPoints(),
             $rankings));
         sort($roundsWon);
-        $userRanking = current(array_filter($rankings, fn($r) => $r->ownedBy($user)));
+        $userRanking = $this->userRanking($user, $rankings);
         assert(array_sum(array_column($oppRanks, 'won')) === $userRanking->getRoundsWon());
         $X = count($rankings);
         foreach ($oppRanks as $r) {
@@ -54,16 +54,19 @@ class RelativizingService
         //   so the value -- if it were x as well -- that would get us .01.
         //   In other words a is the max in a set of x.
         // -(99/(100ln(a)))ln(x)+1
-        $a = array_reduce($rankings, function ($acc, $r) {
-            $oppRanks = $this->reduceOppRanks($user, $rankings, $games);
+        $a = array_reduce($rankings, function ($acc, $r) use ($rankings, $games) {
+            $oppRanks = $this->reduceOppRanks($r->getOwner(), $rankings, $games);
             return max($acc, max(array_column($oppRanks, 'won')));
         }, 0);
+        dump('a' . $a);
+        $userRanking = $this->userRanking($user, $rankings);
         $oppRanks = $this->reduceOppRanks($user, $rankings, $games);
+        $P = 0;
         foreach ($oppRanks as ['won' => $x]) {
-            $x = $r['won'];
             $y = -(99/(100*log($a)))*log($x)+1;
-            $P += ($x) * ($r['won'] / $userRanking->getRoundsWon());
+            $P += $y * ($x / $userRanking->getRoundsWon());
         }
+        return $P;
     }
 
     private function reduceOppRanks(User $user, array $rankings, array $games): array
@@ -83,6 +86,11 @@ class RelativizingService
             }
             return $acc;
         }, []);
+    }
+
+    private function userRanking(User $user, array $rankings): Ranking
+    {
+        return current(array_filter($rankings, fn($r) => $r->ownedBy($user)));
     }
 }
 
