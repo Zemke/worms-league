@@ -45,7 +45,7 @@ class RankingService
     /**
      * Take given games into account for a full recalc.
      *
-     * @param Game[] games to take into account for re-calc
+     * @param Season $season The season to run re-calc for.
      */
     public function reCalc(Season $season): void
     {
@@ -76,8 +76,8 @@ class RankingService
     /**
      * Points pattern.
      *
-     * @param Ranking[] rankings
-     * @param Game[] games
+     * @param Ranking[] $rankings
+     * @param Game[] $games
      */
     public function rank(array $rankings, array $games): void
     {

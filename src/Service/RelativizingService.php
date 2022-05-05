@@ -17,7 +17,7 @@ class RelativizingService
      *
      * @param User $user The user whose won rounds are to be relativized.
      * @param Ranking[] $rankings Quality of opponents based on these rankings.
-     * @param Game[] games Games to find the opponents of the given user.
+     * @param Game[] $games Games to find the opponents of the given user.
      * @return float The weight of the won rounds according to opponent quality.
      */
     public function byOpponentQuality(User $user, array $rankings, array $games): float

@@ -109,7 +109,7 @@ class Ranking
     /**
      * Update ranking fields which rely on all games..
      *
-     * @param Game[] games of this season relevant for this ranking.
+     * @param Game[] $games Of this season relevant for this ranking.
      */
     public function updateByAllGames(array $games): self
     {
@@ -136,8 +136,7 @@ class Ranking
     /**
      * Update ranking.
      *
-     * @param game Games based on which the update is to occur.
-     * @param user User whose ranking is to update.
+     * @param Game $game Games based on which the update is to occur.
      */
     public function updateByGame(Game $game): self
     {
