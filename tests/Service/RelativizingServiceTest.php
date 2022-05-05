@@ -132,10 +132,11 @@ class RelativizingServiceTest extends TestCase
         ];
         $dazW = (new RelativizingService())->byOpponentBashing($daz, $rankings, $games);
         $mabW = (new RelativizingService())->byOpponentBashing($mab, $rankings, $games);
-        dump($dazW, $mabW);
         $this->assertTrue($dazW < $mabW);
-        $this->assertEqualsWithDelta($mabW, 0.32421986745887443, .00001);
-        $this->assertEqualsWithDelta($dazW, 0.01, .00001);
+        $this->assertEqualsWithDelta($mabW, .6326166916554051458844579, .00001);
+        $this->assertEqualsWithDelta($dazW, .4110220979961794394653125, .00001);
+        // Daz would still get more points but not linearly (by rounds) more.
+        $this->assertTrue((5 * $dazW) > (3 * $mabW));
     }
 }
 

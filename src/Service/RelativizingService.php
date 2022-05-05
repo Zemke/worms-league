@@ -58,13 +58,13 @@ class RelativizingService
             $oppRanks = $this->reduceOppRanks($r->getOwner(), $rankings, $games);
             return max($acc, max(array_column($oppRanks, 'won')));
         }, 0);
-        dump('a' . $a);
         $userRanking = $this->userRanking($user, $rankings);
         $oppRanks = $this->reduceOppRanks($user, $rankings, $games);
         $P = 0;
-        foreach ($oppRanks as ['won' => $x]) {
-            $y = -(99/(100*log($a)))*log($x)+1;
-            $P += $y * ($x / $userRanking->getRoundsWon());
+        foreach ($oppRanks as ['won' => $won]) {
+            // Sum[-(99/(100*log(a)))*log(x)+1),{x,1,z}]/z
+            $y = array_sum(array_map(fn($x) => -(99/(100*log($a)))*log($x)+1, range(1, $won))) / $won;
+            $P += $y * ($won / $userRanking->getRoundsWon());
         }
         return $P;
     }
