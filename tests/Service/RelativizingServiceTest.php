@@ -99,5 +99,43 @@ class RelativizingServiceTest extends TestCase
         $this->assertEqualsWithDelta($dazW, .5, .00001);
         $this->assertEqualsWithDelta($mabW, .75, .00001);
     }
+
+    /**
+     * Value of won rounds doesn't increase linearly against the same opponent.
+     */
+    public function testByOpponentBashing_notLinear(): void
+    {
+        $kor = Helper::setId(new User(), 2)
+            ->setUsername('Kor');
+        $mab = Helper::setId(new User(), 3)
+            ->setUsername('Mab');
+        $daz = Helper::setId(new User(), 4)
+            ->setUsername('Daz');
+        $games = [
+            Helper::setId(new Game(), 1)
+                ->setHome($daz)->setScoreHome(5)
+                ->setAway($kor)->setScoreAway(0),
+            Helper::setId(new Game(), 1)
+                ->setHome($mab)->setScoreHome(3)
+                ->setAway($kor)->setScoreAway(0),
+        ];
+        $rankings = [
+            Helper::setId(new Ranking(), 2)
+                ->setOwner($kor)
+                ->setRoundsWon(10),
+            Helper::setId(new Ranking(), 3)
+                ->setOwner($daz)
+                ->setRoundsWon(5),
+            Helper::setId(new Ranking(), 4)
+                ->setOwner($mab)
+                ->setRoundsWon(3),
+        ];
+        $dazW = (new RelativizingService())->byOpponentBashing($daz, $rankings, $games);
+        $mabW = (new RelativizingService())->byOpponentBashing($mab, $rankings, $games);
+        dump($dazW, $mabW);
+        $this->assertTrue($dazW < $mabW);
+        $this->assertEqualsWithDelta($mabW, 0.32421986745887443, .00001);
+        $this->assertEqualsWithDelta($dazW, 0.01, .00001);
+    }
 }
 
