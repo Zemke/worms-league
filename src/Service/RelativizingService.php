@@ -22,21 +22,7 @@ class RelativizingService
      */
     public function byOpponentQuality(User $user, array $rankings, array $games): float
     {
-        $oppRanks = array_reduce($games, function ($acc, $g) use ($user, $rankings) {
-            if (!$g->fullyProcessed() || !$g->isHomeOrAway($user)) {
-                return $acc;
-            }
-            $opp = $g->opponent($user);
-            $oppRanking = current(
-                array_filter($rankings, fn($r) => $r->getOwner()->getId() === $opp->getId()));
-            $accKey = key(array_filter($acc, fn($x) => $x['opp']->getOwner()->getId() === $opp->getId()));
-            if (is_null($accKey)) {
-                $acc[] = ['opp' => $oppRanking, 'won' => $g->scoreOf($user)];
-            } else {
-                $acc[$accKey]['won'] += $g->scoreOf($user);
-            }
-            return $acc;
-        }, []);
+        $oppRanks = $this->reduceOppRanks($user, $rankings, $games);
         $P = 0;
         $roundsWon = array_unique(array_map(
             fn($r) => is_null($r->getPoints()) ? $r->getRoundsWon() : $r->getPoints(),
@@ -51,6 +37,52 @@ class RelativizingService
         }
         return $P;
     }
-}
 
+    /**
+     * Relativize by total rounds won against the same opponent.
+     * The more rounds you've won against the same opponent the less it values
+     * in the bigger picture.
+     *
+     * @param User $user The user whose won rounds are to be relativized.
+     * @param Ranking[] $rankings Quality of opponents based on these rankings.
+     * @param Game[] $games Games to find the opponents of the given user.
+     * @return float The weight of the won rounds according to opponent quality.
+     */
+    public function byOpponentBashing(User $user, array $rankings, array $games): float
+    {
+        // a Is the max rounds won of a single player against another one
+        //   so the value -- if it were x as well -- that would get us .01.
+        //   In other words a is the max in a set of x.
+        // -(99/(100ln(a)))ln(x)+1
+        $a = array_reduce($rankings, function ($acc, $r) {
+            $oppRanks = $this->reduceOppRanks($user, $rankings, $games);
+            return max($acc, max(array_column($oppRanks, 'won')));
+        }, 0);
+        $oppRanks = $this->reduceOppRanks($user, $rankings, $games);
+        foreach ($oppRanks as ['won' => $x]) {
+            $x = $r['won'];
+            $y = -(99/(100*log($a)))*log($x)+1;
+            $P += ($x) * ($r['won'] / $userRanking->getRoundsWon());
+        }
+    }
+
+    private function reduceOppRanks(User $user, array $rankings, array $games): array
+    {
+        return array_reduce($games, function ($acc, $g) use ($user, $rankings) {
+            if (!$g->fullyProcessed() || !$g->isHomeOrAway($user)) {
+                return $acc;
+            }
+            $opp = $g->opponent($user);
+            $oppRanking = current(
+                array_filter($rankings, fn($r) => $r->getOwner()->getId() === $opp->getId()));
+            $accKey = key(array_filter($acc, fn($x) => $x['opp']->getOwner()->getId() === $opp->getId()));
+            if (is_null($accKey)) {
+                $acc[] = ['opp' => $oppRanking, 'won' => $g->scoreOf($user)];
+            } else {
+                $acc[$accKey]['won'] += $g->scoreOf($user);
+            }
+            return $acc;
+        }, []);
+    }
+}
 
