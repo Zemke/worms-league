@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<table>
+<table class="w100">
     <thead>
         <tr>
             <th>Opponent</th>
@@ -21,13 +21,13 @@
                 <td>
                     {{ g.opp.username }}
                 </td>
-                <td class="monospace">
+                <td class="monospace" width="40">
                     {{ g.lost|pad(games, 'lost') }}
                 </td>
-                <td class="monospace p0">
+                <td class="monospace p0 text-center" width="10">
                     –
                 </td>
-                <td class="monospace">
+                <td class="monospace" width="40">
                     {{ g.won|pad(games, 'won') }}
                 </td>
                 <td class="monospace {{ g.diff < 0 ? 'text-red' : 'text-green' }}">
