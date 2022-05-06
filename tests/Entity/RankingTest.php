@@ -33,7 +33,6 @@ class RankingTest extends TestCase
         foreach ($games as $game) {
             $r->updateByGame($game);
         }
-        $this->assertEquals($r->getPoints(), 7);
         $this->assertEquals($r->getRoundsPlayed(), 21);
         $this->assertEquals($r->getRoundsWon(), 11);
         $this->assertEquals($r->getRoundsLost(), 10);
