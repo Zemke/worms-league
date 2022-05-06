@@ -13,21 +13,22 @@
             <th>Won %</th>
             <th>Total</th>
             <th>Total %</th>
+            <th>Total Won %</th>
         </tr>
     </thead>
     <tbody>
         {% for g in games %}
             <tr>
                 <td>
-                    {{ g.opp.username }}
+                    {{ g.opp is null ? '' : g.opp.username }}
                 </td>
-                <td class="monospace" width="40">
+                <td class="monospace text-red" width="40">
                     {{ g.lost|pad(games, 'lost') }}
                 </td>
                 <td class="monospace p0 text-center" width="10">
                     –
                 </td>
-                <td class="monospace" width="40">
+                <td class="monospace text-green" width="40">
                     {{ g.won|pad(games, 'won') }}
                 </td>
                 <td class="monospace {{ g.diff < 0 ? 'text-red' : 'text-green' }}">
@@ -41,6 +42,9 @@
                 </td>
                 <td class="monospace">
                     {{ g.totalRatio|pad(games, 'totalRatio') }}%
+                </td>
+                <td class="monospace">
+                    {{ g.totalWonRatio|pad(games, 'totalWonRatio') }}%
                 </td>
             </tr>
         {% endfor %}
