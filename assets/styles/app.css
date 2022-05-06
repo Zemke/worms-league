@@ -673,6 +673,12 @@ table.ladder td.streak + td.streak {
     overflow: visible;
 }
 
+[data-tooltip]::before {
+    content: "";
+    transition: opacity .15s linear;
+    opacity: 0;
+}
+
 [data-tooltip]:hover::before {
     content: ""attr(data-tooltip)"";
     font-weight: normal;
@@ -691,6 +697,7 @@ table.ladder td.streak + td.streak {
     transform: translateX(-50%);
     white-space: nowrap;
     line-height: normal;
+    opacity: 1;
 }
 
 .inline-block {
