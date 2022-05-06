@@ -698,6 +698,7 @@ table.ladder td.streak + td.streak {
     white-space: nowrap;
     line-height: normal;
     opacity: 1;
+    letter-spacing: initial;
 }
 
 .inline-block {
