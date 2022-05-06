@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Report{% endblock %}
+{% block title %}{{ user.username }}{% endblock %}
 
 {% block body %}
 
@@ -9,6 +9,10 @@
         <tr>
             <th>Opponent</th>
             <th colspan="3">Score</th>
+            <th>Diff</th>
+            <th>Won %</th>
+            <th>Total</th>
+            <th>Total %</th>
         </tr>
     </thead>
     <tbody>
@@ -17,22 +21,31 @@
                 <td>
                     {{ g.opp.username }}
                 </td>
-                <td class="monospace text-right">
-                    {{ g.lost }}
+                <td class="monospace">
+                    {{ g.lost|pad(games, 'lost') }}
                 </td>
                 <td class="monospace p0">
                     –
                 </td>
-                <td class="monospace text-right">
-                    {{ g.won }}
+                <td class="monospace">
+                    {{ g.won|pad(games, 'won') }}
+                </td>
+                <td class="monospace {{ g.diff < 0 ? 'text-red' : 'text-green' }}">
+                    {{ g.diff|pad(games, 'diff') }}
+                </td>
+                <td class="monospace">
+                    {{ g.wonRatio|pad(games, 'wonRatio') }}%
+                </td>
+                <td class="monospace">
+                    {{ g.total|pad(games, 'total') }}
+                </td>
+                <td class="monospace">
+                    {{ g.totalRatio|pad(games, 'totalRatio') }}%
                 </td>
             </tr>
         {% endfor %}
     </tbody>
 </table>
-
-{{ dump(games) }}
-{{ dump(user) }}
 
 {% endblock %}
 

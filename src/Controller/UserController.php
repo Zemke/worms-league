@@ -32,9 +32,17 @@ class UserController extends AbstractController
             }
             return $acc;
         }, []);
+        $total = array_reduce($games, fn($acc, $g) => $acc + $g['won'] + $g['lost'], 0);
+        foreach ($games as &$g) {
+            $g['diff'] = $g['won'] - $g['lost'];
+            $g['wonRatio'] = round((($g['won'] / ($g['won'] + $g['lost'])) * 100));
+            $g['total'] = $g['won'] + $g['lost'];
+            $g['totalRatio'] = round((($g['total']) / $total) * 100);
+        }
         return $this->render('user/view.html.twig', [
             'user' => $user,
             'games' => $games,
+            'total' => $total,
         ]);
     }
 }
