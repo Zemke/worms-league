@@ -9,11 +9,11 @@
         <tr>
             <th>Opponent</th>
             <th colspan="3">Score</th>
-            <th>Diff</th>
-            <th>Won %</th>
-            <th>Total</th>
-            <th>Total %</th>
-            <th>Total Won %</th>
+            <th width="120">Diff</th>
+            <th width="120">Won %</th>
+            <th width="120">Total</th>
+            <th width="120">Total %</th>
+            <th width="120">Total Won %</th>
         </tr>
     </thead>
     <tbody>
@@ -22,13 +22,13 @@
                 <td>
                     {{ g.opp is null ? '' : g.opp.username }}
                 </td>
-                <td class="monospace text-red" width="40">
+                <td class="monospace p0 text-red" width="40">
                     {{ g.lost|pad(games, 'lost') }}
                 </td>
                 <td class="monospace p0 text-center" width="10">
                     –
                 </td>
-                <td class="monospace text-green" width="40">
+                <td class="monospace p0 text-green" width="40">
                     {{ g.won|pad(games, 'won') }}
                 </td>
                 <td class="monospace {{ g.diff < 0 ? 'text-red' : 'text-green' }}">
