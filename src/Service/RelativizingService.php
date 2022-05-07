@@ -30,7 +30,7 @@ class RelativizingService
         assert(array_sum(array_column($oppRanks, 'won')) === $userRanking->getRoundsWon());
         $X = count($rankings);
         foreach ($oppRanks as $r) {
-            $weight = (array_search($r['opp']->ranking(), $ranking) + 1) / $X;
+            $weight = pow((array_search($r['opp']->ranking(), $ranking) + 1) / $X, 3);
             $P += ($weight) * ($r['won'] / $userRanking->getRoundsWon());
         }
         return $P;

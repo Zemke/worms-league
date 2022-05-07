@@ -57,9 +57,9 @@ class RelativizingServiceTest extends TestCase
         $zemW = (new RelativizingService())->byOpponentQuality($zem, $rankings, $games);
         $korW = (new RelativizingService())->byOpponentQuality($kor, $rankings, $games);
         $this->assertEqualsWithDelta($dazW, 1, .00001);
-        $this->assertEqualsWithDelta($mabW, .60714285714286, .00001);
-        $this->assertEqualsWithDelta($zemW, .7, .00001);
-        $this->assertEqualsWithDelta($korW, .875, .00001);
+        $this->assertEqualsWithDelta($mabW, .2790178571428571, .00001);
+        $this->assertEqualsWithDelta($zemW, .60625, .00001);
+        $this->assertEqualsWithDelta($korW, .78125, .00001);
     }
 
     public function testByOpponentQuality_fair(): void
@@ -96,8 +96,8 @@ class RelativizingServiceTest extends TestCase
         ];
         $dazW = (new RelativizingService())->byOpponentQuality($daz, $rankings, $games);
         $mabW = (new RelativizingService())->byOpponentQuality($mab, $rankings, $games);
-        $this->assertEqualsWithDelta($dazW, .5, .00001);
-        $this->assertEqualsWithDelta($mabW, .75, .00001);
+        $this->assertEqualsWithDelta($dazW, .125, .00001);
+        $this->assertEqualsWithDelta($mabW, .421875, .00001);
     }
 
     /**
