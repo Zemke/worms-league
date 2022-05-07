@@ -24,15 +24,13 @@ class RelativizingService
     {
         $oppRanks = $this->reduceOppRanks($user, $rankings, $games);
         $P = 0;
-        $roundsWon = array_unique(array_map(
-            fn($r) => is_null($r->getPoints()) ? $r->getRoundsWon() : $r->getPoints(),
-            $rankings));
-        sort($roundsWon);
+        $ranking = array_unique(array_map(fn($r) => $r->ranking(), $rankings));
+        sort($ranking);
         $userRanking = $this->userRanking($user, $rankings);
         assert(array_sum(array_column($oppRanks, 'won')) === $userRanking->getRoundsWon());
         $X = count($rankings);
         foreach ($oppRanks as $r) {
-            $weight = (array_search($r['opp']->getRoundsWon(), $roundsWon) + 1) / $X;
+            $weight = (array_search($r['opp']->ranking(), $ranking) + 1) / $X;
             $P += ($weight) * ($r['won'] / $userRanking->getRoundsWon());
         }
         return $P;

@@ -191,6 +191,16 @@ class Ranking
         return $this->owner->getId() === $other->getId();
     }
 
+    /**
+     * Get absolute ranking if points are not relativized yet.
+     *
+     * @return roundsWon if points are null, points otherwise.
+     */
+    public function ranking(): int
+    {
+        return is_null($this->points) ? $this->roundsWon : $this->points;
+    }
+
     public function getId(): ?int
 
     {

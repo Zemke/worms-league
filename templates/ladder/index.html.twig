@@ -27,7 +27,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for ranking in season.rankings|sort((a,b) => b.points - a.points) %}
+        {% for ranking in season.rankings|sort((a,b) => b.ranking() - a.ranking()) %}
         <tr>
             <td>{{ loop.index }}</td>
             <td>
