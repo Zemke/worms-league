@@ -81,6 +81,7 @@ class ReplayData
      *
      * @return string Wining in-game user's name or null if drawn.
      */
+    // TODO mass test with CWT data
     public function winner(): ?string
     {
         $names = $this->names();
@@ -104,6 +105,7 @@ class ReplayData
         }
     }
 
+    // TODO massa test with CWT data
     /**
      * Match user to in-game users' names.
      *
@@ -113,8 +115,7 @@ class ReplayData
     {
         [$n1, $n2] = $this->names();
         $mxmatch = array_reduce([$ua, $ub], function ($mx, $u) use ($n1, $n2) {
-            // TODO Maybe there should be a lower boundary for a match?
-            // TODO mass test with NNN data
+            // TODO lower boundary for matching
             $sm = [$u->similarUsername($n1), $u->similarUsername($n2)];
             $mxp = max($sm);
             if (is_null($mx) || $mxp > $mx[1]) {
