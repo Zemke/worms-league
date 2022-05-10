@@ -363,6 +363,12 @@ class Game
             && $this->season->getEnding() >= $playedAt;
     }
 
+    #[Assert\IsTrue(message: "There are not enough replays.")]
+    public function isEnoughReplays(): bool
+    {
+        return ($this->scoreHome + $this->scoreAway) <= count($this->replays);
+    }
+
     /**
      * @return Collection<int, Replay>
      */
