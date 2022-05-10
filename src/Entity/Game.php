@@ -165,7 +165,11 @@ class Game
     public function fullyProcessed(): bool
     {
         $replays = $this->getReplays()->getValues();
-        return count($replays) === array_reduce($replays, function($acc, $replay) {
+        $c = count($replays);
+        if (!$c) {
+            return false;
+        }
+        return $c === array_reduce($replays, function($acc, $replay) {
             return $acc + $replay->processed();
         }, 0);
     }
