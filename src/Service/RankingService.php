@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Game;
+use App\Entity\Ranking;
 use App\Entity\Season;
 use App\Entity\User;
 use App\Repository\RankingRepository;
@@ -57,9 +58,9 @@ class RankingService
             $ranking->reset();
             $ranking->updateByAllGames($games);
         }
-        $findOrCreate = function (User $user) use ($rankings) {
+        $findOrCreate = function (User $user) use ($rankings, $season) {
             $r = current(array_filter($rankings, fn($r) => $r->ownedBy($user)));
-            return $r === false ? (new Ranking())->setOwner($user) : $r;
+            return $r === false ? (new Ranking())->setOwner($user)->setSeason($season) : $r;
         };
         foreach ($games as $game) {
             if (!$game->played() || !$game->fullyProcessed()) {
