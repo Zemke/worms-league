@@ -128,17 +128,15 @@ class Ranking
         $this->roundsPlayedRatio = $myRounds / $totalRounds;
         $this->gamesPlayedRatio = count($myGames) / count($games);
         $recentGames = array_filter(
-            $myGames, fn($g) => $g->getCreated()->modify('+7 days') >= $today);
+            $myGames, fn($g) => $g->getCreated()->modify('+7 days') >= $today); // TODO should be playedAt?
         $this->activity = count($recentGames) / Ranking::ACTIVITY_LOOKBACK;
+        foreach ($myGames as $g) {
+            $this->updateByGame($g);
+        }
         return $this;
     }
 
-    /**
-     * Update ranking.
-     *
-     * @param Game $game Games based on which the update is to occur.
-     */
-    public function updateByGame(Game $game): self
+    private function updateByGame(Game $game): void
     {
         if ($game->getSeason()->getId() !== $this->season->getId()) {
             throw new \RuntimeException(
@@ -183,7 +181,6 @@ class Ranking
             $this->recent = substr($this->recent, 0, -1);
         }
         $this->recent = ($won ? 'W' : ($draw ? 'D' : 'L')) . $this->recent;
-        return $this;
     }
 
     public function ownedBy(User $other): bool

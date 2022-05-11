@@ -30,9 +30,9 @@ class RankingTest extends TestCase
         $r = (new Ranking())
             ->setSeason($this->createSeason())
             ->setOwner($homeUser);
-        foreach ($games as $game) {
-            $r->updateByGame($game);
-        }
+
+        $r->updateByAllGames($games);
+
         $this->assertEquals($r->getRoundsPlayed(), 21);
         $this->assertEquals($r->getRoundsWon(), 11);
         $this->assertEquals($r->getRoundsLost(), 10);
@@ -44,6 +44,10 @@ class RankingTest extends TestCase
         $this->assertEquals($r->getStreakBest(), 1);
         $this->assertEquals($r->getRoundsWonRatio(), 11 / 21);
         $this->assertEquals($r->getGamesWonRatio(), 2 / 4);
+
+        $this->assertEquals($r->getActivity(), 4 / 7);
+        $this->assertEquals($r->getRoundsPlayedRatio(), 1);
+        $this->assertEquals($r->getGamesPlayedRatio(), 1);
     }
 
     public function testUpdateByAllGames(): void
