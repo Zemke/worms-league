@@ -31,7 +31,7 @@ class RankingTest extends TestCase
             ->setSeason($this->createSeason())
             ->setOwner($homeUser);
 
-        $r->updateByAllGames($games);
+        $r->updateByGames($games);
 
         $this->assertEquals($r->getRoundsPlayed(), 21);
         $this->assertEquals($r->getRoundsWon(), 11);
@@ -63,15 +63,15 @@ class RankingTest extends TestCase
         $homeRanking = (new Ranking())
            ->setSeason($this->createSeason())
            ->setOwner($homeUser)
-           ->updateByAllGames($games);
+           ->updateByGames($games);
         $awayRanking = (new Ranking())
            ->setSeason($this->createSeason())
            ->setOwner($awayUser)
-           ->updateByAllGames($games);
+           ->updateByGames($games);
         $thirdRanking = (new Ranking())
            ->setSeason($this->createSeason())
            ->setOwner($thirdUser)
-           ->updateByAllGames($games);
+           ->updateByGames($games);
 
         $totalRounds =
             count($games[0]->getReplays())

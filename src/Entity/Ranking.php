@@ -111,7 +111,7 @@ class Ranking
      *
      * @param Game[] $games Of this season relevant for this ranking.
      */
-    public function updateByAllGames(array $games): self
+    public function updateByGames(array $games): self
     {
         $today = new \DateTime('today');
         $myGames = array_filter($games, fn($g) => $g->isHomeOrAway($this->owner));

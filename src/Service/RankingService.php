@@ -56,7 +56,7 @@ class RankingService
         $rankings = $this->rankingRepo->findBySeason($season);
         foreach ($rankings as &$ranking) {
             $ranking->reset();
-            $ranking->updateByAllGames($games);
+            $ranking->updateByGames($games);
         }
         $findOrCreate = function (User $user) use ($rankings, $season) {
             $r = current(array_filter($rankings, fn($r) => $r->ownedBy($user)));
