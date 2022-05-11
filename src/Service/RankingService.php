@@ -58,18 +58,20 @@ class RankingService
             $ranking->reset();
             $ranking->updateByGames($games);
         }
-        $findOrCreate = function (User $user) use ($rankings, $season) {
-            $r = current(array_filter($rankings, fn($r) => $r->ownedBy($user)));
-            return $r === false ? (new Ranking())->setOwner($user)->setSeason($season) : $r;
-        };
-        foreach ($games as $game) {
-            if (!$game->played() || !$game->fullyProcessed()) {
-                continue;
+        $rankings = array_reduce($games, function (array $acc, Game $g) use ($season, $games) {
+            foreach ([$g->getHome(), $g->getAway()] as $u) {
+                if (empty(array_filter($acc, fn($r) => $r->ownedBy($u)))) {
+                    $newr = (new Ranking())->setOwner($u)->setSeason($season);
+                    $newr->reset();
+                    $newr->updateByGames($games);
+                    $acc[] = $newr;
+                }
             }
-            $homeRanking = $findOrCreate($game->getHome())->updateByGame($game);
-            $awayRanking = $findOrCreate($game->getAway())->updateByGame($game);
-            $this->em->persist($homeRanking);
-            $this->em->persist($awayRanking);
+            return $acc;
+        }, $rankings);
+        $this->rank($rankings, $games);
+        foreach ($rankings as &$r) {
+            $this->em->persist($r);
         }
         $this->em->flush();
     }
