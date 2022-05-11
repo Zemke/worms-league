@@ -57,6 +57,9 @@ class RelativizingService
             return max($acc, max(array_column($oppRanks, 'won')));
         }, 0);
         $userRanking = $this->userRanking($user, $rankings);
+        if ($userRanking->getRoundsWon() === 0) {
+            return 0;
+        }
         $oppRanks = $this->reduceOppRanks($user, $rankings, $games);
         $P = 0;
         foreach ($oppRanks as ['won' => $won]) {
@@ -70,7 +73,7 @@ class RelativizingService
     private function reduceOppRanks(User $user, array $rankings, array $games): array
     {
         return array_reduce($games, function ($acc, $g) use ($user, $rankings) {
-            if (!$g->fullyProcessed() || !$g->isHomeOrAway($user)) {
+            if (!$g->fullyProcessed() || !$g->isHomeOrAway($user) || ($userScore = $g->scoreOf($user)) === 0) {
                 return $acc;
             }
             $opp = $g->opponent($user);
@@ -78,9 +81,9 @@ class RelativizingService
                 array_filter($rankings, fn($r) => $r->getOwner()->getId() === $opp->getId()));
             $accKey = key(array_filter($acc, fn($x) => $x['opp']->getOwner()->getId() === $opp->getId()));
             if (is_null($accKey)) {
-                $acc[] = ['opp' => $oppRanking, 'won' => $g->scoreOf($user)];
+                $acc[] = ['opp' => $oppRanking, 'won' => $userScore];
             } else {
-                $acc[$accKey]['won'] += $g->scoreOf($user);
+                $acc[$accKey]['won'] += $userScore;
             }
             return $acc;
         }, []);
