@@ -54,6 +54,9 @@ class RelativizingService
         // -(99/(100ln(a)))ln(x)+1
         $a = array_reduce($rankings, function ($acc, $r) use ($rankings, $games) {
             $oppRanks = $this->reduceOppRanks($r->getOwner(), $rankings, $games);
+            if (empty($oppRanks)) {
+                return $acc;
+            }
             return max($acc, max(array_column($oppRanks, 'won')));
         }, 0);
         $userRanking = $this->userRanking($user, $rankings);
