@@ -103,9 +103,17 @@ class RankingService
         */
         usort($rankings, fn($a, $b) => $a->getPoints() - $b->getPoints());
         $X = count($rankings);
-        foreach ($rankings as &$ranking) {
-            $user = $ranking->getOwner();
-            $this->relativizingService->byOpponentQuality($user, $rankings, $games);
+        for ($i = 0; $i < 1; $i++) {
+            foreach ($rankings as &$ranking) {
+                $s = microtime(true);
+                $user = $ranking->getOwner();
+                $rels = [
+                    $this->relativizingService->byOpponentQuality($user, $rankings, $games),
+                    $this->relativizingService->byOpponentBashing($user, $rankings, $games),
+                ];
+                dump(microtime(true) - $s);
+                $ranking->setPoints($ranking->ranking() * (array_sum($rels) / count($rels)));
+            }
         }
         return;
     }
