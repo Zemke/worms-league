@@ -142,7 +142,7 @@ class Game
         if (!$this->isHomeOrAway($user)) {
             throw new \RuntimeException(
                 "User {$user->getId()} is neither "
-                . "home {$this->home?->getId()} nor away {$this->away?->getId}");
+                . "home {$this->home?->getId()} nor away {$this->away?->getId()}");
         }
     }
 
