@@ -80,7 +80,7 @@ class RankingService
      * @param Ranking[] $rankings
      * @param Game[] $games
      */
-    public function rank(array $rankings, array $games): void
+    public function rank(array &$rankings, array $games): void
     {
         /* TODO
         There's an absolute ranking which is simply won rounds.
