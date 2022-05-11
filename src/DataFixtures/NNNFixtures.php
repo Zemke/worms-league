@@ -54,7 +54,7 @@ class NNNFixtures extends Fixture
             $c++;
             dump($c . ' ' . $game->getHome()->getUsername() . ' '
                  . $game->getScoreHome() . '–' . $game->getScoreAway() . ' '
-                 . $game->getAway()->getUsername() . "\n");
+                 . $game->getAway()->getUsername();
             dump($vv);
         }
         fclose($gamescsv);
