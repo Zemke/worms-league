@@ -127,8 +127,10 @@ class Ranking
         }, 0);
         $this->roundsPlayedRatio = $myRounds / $totalRounds;
         $this->gamesPlayedRatio = count($myGames) / count($games);
+        // TODO should be playedAt?
+        // TODO should be related to most recent game played (not $today)
         $recentGames = array_filter(
-            $myGames, fn($g) => $g->getCreated()->modify('+7 days') >= $today); // TODO should be playedAt?
+            $myGames, fn($g) => $g->getCreated()->modify('+7 days') >= $today);
         $this->activity = count($recentGames) / Ranking::ACTIVITY_LOOKBACK;
         foreach ($myGames as $g) {
             $this->updateByGame($g);
