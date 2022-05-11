@@ -84,5 +84,10 @@ enum Texture: int
         }
         return $fn($this->name);
     }
+
+    public function game(): string
+    {
+        return 'Data\\Level\\' . $this->local();
+    }
 }
 
