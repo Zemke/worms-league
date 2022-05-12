@@ -90,7 +90,7 @@ class Ranking
 
     public function reset(): self
     {
-        // $this->points = 0;
+        $this->points = null;
         $this->roundsPlayed = 0;
         $this->roundsWon = 0;
         $this->roundsLost = 0;
