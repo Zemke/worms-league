@@ -27,7 +27,7 @@ class Ranking
     #[ORM\JoinColumn(nullable: false)]
     private $owner;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'float')]
     private $points;
 
     #[ORM\ManyToOne(targetEntity: Season::class, inversedBy: 'rankings')]
@@ -195,9 +195,9 @@ class Ranking
      *
      * @return roundsWon if points are null, points otherwise.
      */
-    public function ranking(): int
+    public function ranking(): float
     {
-        return is_null($this->points) ? $this->roundsWon : $this->points;
+        return is_null($this->points) ? (float) $this->roundsWon : $this->points;
     }
 
     public function getId(): ?int
@@ -218,12 +218,12 @@ class Ranking
         return $this;
     }
 
-    public function getPoints(): ?int
+    public function getPoints(): ?float
     {
         return $this->points;
     }
 
-    public function setPoints(int $points): self
+    public function setPoints(float $points): self
     {
         $this->points = $points;
 
