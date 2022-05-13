@@ -96,8 +96,8 @@ class RelativizingServiceTest extends TestCase
         ];
         $dazW = (new RelativizingService())->byOpponentQuality($daz, $rankings, $games);
         $mabW = (new RelativizingService())->byOpponentQuality($mab, $rankings, $games);
-        $this->assertEqualsWithDelta($dazW, .125, .00001);
-        $this->assertEqualsWithDelta($mabW, .421875, .00001);
+        $this->assertEqualsWithDelta($dazW, .2962962962962962, .00001);
+        $this->assertEqualsWithDelta($mabW, 1., .00001);
     }
 
     /**
