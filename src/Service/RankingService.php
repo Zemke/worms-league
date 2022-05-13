@@ -111,7 +111,11 @@ class RankingService
                     $this->relativizingService->byOpponentQuality($user, $rankings, $games),
                     $this->relativizingService->byOpponentBashing($user, $rankings, $games),
                 ];
-                dump(microtime(true) - $s);
+                // TODO total rounds played devalue rounds won
+                if (in_array($user->getUsername(), ['chuvash', 'Kayz', 'Master'])) {
+                    dump($user->getUsername(), $rels);
+                }
+                //dump(microtime(true) - $s);
                 $ranking->setPoints($ranking->ranking() * (array_sum($rels) / count($rels)));
             }
         }
