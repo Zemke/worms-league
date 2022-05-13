@@ -8,6 +8,8 @@ use App\Entity\User;
 
 class RelativizingService
 {
+    /** @var float just so that there are no zero value points */
+    private const JUMP_MIN = .00001;
 
     public function __construct()
     {}
@@ -43,7 +45,7 @@ class RelativizingService
         $roundsWon = $this->userRanking($user, $rankings)->getRoundsWon();
         assert(array_sum(array_map(fn($or) => $or->getWon(), $oppRanks)) === $roundsWon);
         $allRankings = array_map(fn($r) => $r->ranking(), $rankings);
-        $mn = min($allRankings) - PHP_FLOAT_MIN;
+        $mn = min($allRankings) - self::JUMP_MIN;
         $mx = max($allRankings);
         $P = 0;
         foreach ($oppRanks as $r) {
