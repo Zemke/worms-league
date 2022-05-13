@@ -15,7 +15,7 @@ class RelativizingService
     {}
 
     /**
-     * Relativize by how well the user's opponents are ranked.
+     * Relativize by ranking of opponents.
      *
      * @param User $user The user whose won rounds are to be relativized.
      * @param Ranking[] $rankings Quality of opponents based on these rankings.
@@ -61,7 +61,7 @@ class RelativizingService
      * in the bigger picture.
      *
      * @param User $user The user whose won rounds are to be relativized.
-     * @param Ranking[] $rankings Quality of opponents based on these rankings.
+     * @param Ranking[] $rankings All rankings.
      * @param Game[] $games Games to find the opponents of the given user.
      * @return float The weight of the won rounds according to opponent quality.
      */
@@ -153,6 +153,15 @@ class OppRank
         return $this->won;
     }
 
+    /**
+     * Reduce games into round totals against each opponent of the given user.
+     *
+     * @param User $user That user's opponents
+     * @param Ranking[] $rankings All the rankings
+     * @param Game[] $games All games that lead to the rankings.
+     * @param array $DP User ID to OppRank[] mapping to apply memoization (Dynamic Programming).
+     * @return The OppRank array for the given user.
+     */
     public static function reduce(User $user, array $rankings, array $games, array &$DP = []): array
     {
         if (array_key_exists($user->getId(), $DP)) {
