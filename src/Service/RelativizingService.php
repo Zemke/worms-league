@@ -97,10 +97,17 @@ class RelativizingService
      * How many rounds it took the user to attain the rounds won.
      * All rounds played devalue the rounds won.
      * The more total rounds played, the less value for a round won.
+     *
+     * @param User $user The user whose won rounds are to be relativized.
+     * @param Ranking[] Feature scaling rounds played across all rankings.
+     * @return float The weight of the won rounds according to opponent quality.
      */
-    private function byEffort(User $user, array $rankings, array $games, array &$DP = []): float
+    public function byEffort(User $user, array $rankings): float
     {
-        return 1.; // TODO byEffort
+        $allRoundsPlayed = array_map(fn($r) => $r->getRoundsPlayed(), $rankings);
+        $mx = min($allRoundsPlayed);
+        $mn = max($allRoundsPlayed) + self::JUMP_MIN;
+        return ($this->userRanking($user, $rankings)->getRoundsPlayed() - $mn) / ($mx - $mn);
     }
 
     /**

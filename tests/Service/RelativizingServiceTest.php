@@ -138,5 +138,36 @@ class RelativizingServiceTest extends TestCase
         // Daz would still get more points but not linearly (by rounds) more.
         $this->assertTrue((5 * $dazW) > (3 * $mabW));
     }
+
+    public function testByEffort(): void
+    {
+        $kor = Helper::setId(new User(), 2)
+            ->setUsername('Kor');
+        $mab = Helper::setId(new User(), 3)
+            ->setUsername('Mab');
+        $daz = Helper::setId(new User(), 4)
+            ->setUsername('Daz');
+        $rankings = [
+            Helper::setId(new Ranking(), 1)
+                ->setOwner($kor)
+                ->setRoundsPlayed(4)
+                ->setRoundsWon(3),
+            Helper::setId(new Ranking(), 2)
+                ->setOwner($mab)
+                ->setRoundsPlayed(3)
+                ->setRoundsWon(3),
+            Helper::setId(new Ranking(), 3)
+                ->setOwner($daz)
+                ->setRoundsPlayed(2)
+                ->setRoundsWon(3),
+        ];
+        $dazW = (new RelativizingService())->byEffort($daz, $rankings, []);
+        $mabW = (new RelativizingService())->byEffort($mab, $rankings, []);
+        $korW = (new RelativizingService())->byEffort($kor, $rankings, []);
+        $this->assertEquals($dazW, 1.);
+        $this->assertTrue($dazW > $mabW && $mabW > $korW);
+        $this->assertEqualsWithDelta($dazW - $mabW, $mabW - $korW, .000001);
+        $this->assertTrue($korW > 0);
+    }
 }
 

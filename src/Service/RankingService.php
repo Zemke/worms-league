@@ -111,8 +111,8 @@ class RankingService
                 $rels = [
                     $this->relativizingService->byQuality($user, $rankings, $games, $DP),
                     $this->relativizingService->byFarming($user, $rankings, $games, $DP),
+                    $this->relativizingService->byEffort ($user, $rankings, $games, $DP),
                 ];
-                // TODO total rounds played devalue rounds won
                 if (in_array($user->getUsername(), ['chuvash', 'Kayz', 'Master'])) {
                     dump($user->getUsername(), $rels);
                 }
