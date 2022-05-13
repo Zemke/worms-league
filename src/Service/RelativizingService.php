@@ -102,6 +102,7 @@ class RelativizingService
      * @param Ranking[] Feature scaling rounds played across all rankings.
      * @return float The weight of the won rounds according to opponent quality.
      */
+    // TODO Maybe do this on a per OppRank basis
     public function byEffort(User $user, array $rankings): float
     {
         $allRoundsPlayed = array_map(fn($r) => $r->getRoundsPlayed(), $rankings);
