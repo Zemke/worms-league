@@ -106,8 +106,11 @@ class RelativizingService
     {
         $allRoundsPlayed = array_map(fn($r) => $r->getRoundsPlayed(), $rankings);
         $mx = min($allRoundsPlayed);
-        $mn = max($allRoundsPlayed) + self::JUMP_MIN;
-        return ($this->userRanking($user, $rankings)->getRoundsPlayed() - $mn) / ($mx - $mn);
+        //$mn = max($allRoundsPlayed) + self::JUMP_MIN;
+        $mn = max($allRoundsPlayed);
+        $norm = ($this->userRanking($user, $rankings)->getRoundsPlayed() - $mn) / ($mx - $mn);
+        // scale values from .35 to 1. Could also return $norm directly for bigger effect.
+        return .35 + .65 * $norm;
     }
 
     /**
