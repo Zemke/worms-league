@@ -147,27 +147,38 @@ class RelativizingServiceTest extends TestCase
             ->setUsername('Mab');
         $daz = Helper::setId(new User(), 4)
             ->setUsername('Daz');
+        $games = [
+            Helper::setId(new Game(), 1)
+                ->setHome($daz)->setScoreHome(2)
+                ->setAway($kor)->setScoreAway(0),
+            Helper::setId(new Game(), 2)
+                ->setHome($mab)->setScoreHome(2)
+                ->setAway($kor)->setScoreAway(0),
+            Helper::setId(new Game(), 3)
+                ->setHome($daz)->setScoreHome(2)
+                ->setAway($kor)->setScoreAway(1),
+            Helper::setId(new Game(), 5)
+                ->setHome($mab)->setScoreHome(2)
+                ->setAway($kor)->setScoreAway(0),
+        ];
         $rankings = [
             Helper::setId(new Ranking(), 1)
                 ->setOwner($kor)
-                ->setRoundsPlayed(4)
-                ->setRoundsWon(3),
+                ->setRoundsWon(1),
             Helper::setId(new Ranking(), 2)
                 ->setOwner($mab)
-                ->setRoundsPlayed(3)
-                ->setRoundsWon(3),
+                ->setRoundsWon(4),
             Helper::setId(new Ranking(), 3)
                 ->setOwner($daz)
-                ->setRoundsPlayed(2)
-                ->setRoundsWon(3),
+                ->setRoundsWon(4),
         ];
-        $dazW = (new RelativizingService())->byEffort($daz, $rankings, []);
-        $mabW = (new RelativizingService())->byEffort($mab, $rankings, []);
-        $korW = (new RelativizingService())->byEffort($kor, $rankings, []);
-        $this->assertEquals($dazW, 1.);
-        $this->assertTrue($dazW > $mabW && $mabW > $korW);
-        $this->assertEqualsWithDelta($dazW - $mabW, $mabW - $korW, .000001);
-        $this->assertTrue($korW > 0);
+        $dazW = dump((new RelativizingService())->byEffort($daz, $rankings, $games));
+        $mabW = dump((new RelativizingService())->byEffort($mab, $rankings, $games));
+        $korW = dump((new RelativizingService())->byEffort($kor, $rankings, $games));
+        $this->assertEquals($mabW, 1.);
+        //$this->assertTrue($mnzW > $mabW && $mabW > $korW);
+        //$this->assertEqualsWithDelta($dazW - $mabW, $mabW - $korW, .000001);
+        //$this->assertTrue($korW > 0);
     }
 }
 

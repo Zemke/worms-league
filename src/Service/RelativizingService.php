@@ -29,6 +29,9 @@ class RelativizingService
         $ranking = array_unique(array_map(fn($r) => $r->ranking(), $rankings));
         sort($ranking);
         $roundsWon = $this->userRanking($user, $rankings)->getRoundsWon();
+        if ($roundsWon === 0) {
+            return 1.;
+        }
         assert(array_sum(array_map(fn($or) => $or->getWon(), $oppRanks)) === $roundsWon);
         $X = count($ranking);
         foreach ($oppRanks as $or) {
@@ -86,8 +89,12 @@ class RelativizingService
         $P = 0;
         foreach ($oppRanks as $or) {
             // Sum[-(99/(100*log(a)))*log(x)+1),{x,1,z}]/z
-            $y = array_sum(array_map(fn($x) =>
-                -(99/(100*log($a)))*log($x)+1, range(1, $or->getWon()))) / $or->getWon();
+            if ($or->getWon() === 0) {
+                $y = 1;
+            } else {
+                $y = array_sum(array_map(fn($x) =>
+                    -(99/(100*log($a)))*log($x)+1, range(1, $or->getWon()))) / $or->getWon();
+            }
             $P += $y * ($or->getWon() / $roundsWon);
         }
         return $P;
@@ -100,18 +107,54 @@ class RelativizingService
      *
      * @param User $user The user whose won rounds are to be relativized.
      * @param Ranking[] Feature scaling rounds played across all rankings.
+     * @param Game[] $games Games to find the opponents of the given user.
      * @return float The weight of the won rounds according to opponent quality.
      */
-    // TODO Maybe do this on a per OppRank basis
-    public function byEffort(User $user, array $rankings): float
+    public function byEffort(User $user, array $rankings, array $games, array &$DP = []): float
     {
-        $allRoundsPlayed = array_map(fn($r) => $r->getRoundsPlayed(), $rankings);
-        $mx = min($allRoundsPlayed);
-        //$mn = max($allRoundsPlayed) + self::JUMP_MIN;
-        $mn = max($allRoundsPlayed);
-        $norm = ($this->userRanking($user, $rankings)->getRoundsPlayed() - $mn) / ($mx - $mn);
-        // scale values from .35 to 1. Could also return $norm directly for bigger effect.
-        return .35 + .65 * $norm;
+        $roundsWon = $this->userRanking($user, $rankings)->getRoundsWon();
+        if ($roundsWon === 0) {
+            return 1.;
+        }
+        $oppRanks = OppRank::reduce($user, $rankings, $games, $DP);
+        //dump(
+        //    $user->getUsername(),
+        //    array_map(
+        //        fn($or) => [$or->getOpp()->getOwner()->getUsername(),
+        //        $or->getWon(), $or->getLost()], $oppRanks)
+        //);
+        $a = array_reduce(
+            $rankings,
+            fn($acc, $r) => [
+                ...$acc,
+                ...array_map(
+                    fn($or) => $or->getLost(),
+                    OppRank::reduce($r->getOwner(), $rankings, $games, $DP))
+            ],
+            []);
+        $a = array_map(fn($or) => $or->getLost(), $oppRanks);
+            
+        $mx = 0 - self::JUMP_MIN;
+        $mn = max($a);
+        $P = 0;
+        foreach ($oppRanks as $or) {
+            $y = (($or->getLost()) - $mn) / ($mx - $mn);
+
+            if ($user->getUsername() === 'KinslayeR') {
+                if ($or->getOpp()->getOwner()->getUsername() === 'chuvash') {
+                    dump(['chuvash', $y]);
+                } else if ($or->getOpp()->getOwner()->getUsername() === 'Albus') {
+                    dump(['Albus', $y]);
+                } else if ($or->getOpp()->getOwner()->getUsername() === 'Master') {
+                    dump(['Master', $y]);
+                } else if ($or->getOpp()->getOwner()->getUsername() === 'Psykologi') {
+                    dump(['Psykologi', $y]);
+                }
+            }
+            $P += $y * ($or->getWon() / $roundsWon);
+        }
+        //return $P;
+        return .35 + .65 * $P;
     }
 
     /**
@@ -133,8 +176,9 @@ class OppRank
     /**
      * @param Ranking $opp The opponent's ranking.
      * @param int $won Number of won rounds against opponent.
+     * @param int $lost Number of lost rounds against opponent.
      */
-    public function __construct(private Ranking $opp, private int $won)
+    public function __construct(private Ranking $opp, private int $won, private int $lost)
     {
     }
 
@@ -147,6 +191,15 @@ class OppRank
         return $this;
     }
 
+    public function plusLost(int $n): self
+    {
+        if ($n < 0) {
+            throw new RuntimeException($n . ' is negative');
+        }
+        $this->lost += $n;
+        return $this;
+    }
+
     public function getOpp(): Ranking
     {
         return $this->opp;
@@ -155,6 +208,16 @@ class OppRank
     public function getWon(): int
     {
         return $this->won;
+    }
+
+    public function getLost(): int
+    {
+        return $this->lost;
+    }
+
+    public function total(): int
+    {
+        return $this->won + $this->lost;
     }
 
     /**
@@ -172,17 +235,20 @@ class OppRank
             return $DP[$user->getId()];
         }
         $DP[$user->getId()] = array_reduce($games, function ($acc, $g) use ($user, $rankings) {
-            if (!$g->fullyProcessed() || !$g->isHomeOrAway($user) || ($userScore = $g->scoreOf($user)) === 0) {
+            if (!$g->fullyProcessed() || !$g->isHomeOrAway($user)) {
                 return $acc;
             }
+            $userScore = $g->scoreOf($user);
             $opp = $g->opponent($user);
+            $oppScore = $g->scoreOf($opp);
             $oppRanking = current(
                 array_filter($rankings, fn($r) => $r->getOwner()->getId() === $opp->getId()));
             $accKey = key(array_filter($acc, fn($x) => $x->getOpp()->getOwner()->getId() === $opp->getId()));
             if (is_null($accKey)) {
-                $acc[] = new OppRank($oppRanking, $userScore);
+                $acc[] = new OppRank($oppRanking, $userScore, $oppScore);
             } else {
                 $acc[$accKey]->plusWon($userScore);
+                $acc[$accKey]->plusLost($oppScore);
             }
             return $acc;
         }, []);
