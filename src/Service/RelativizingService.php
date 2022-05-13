@@ -73,6 +73,24 @@ class RelativizingService
         return $P;
     }
 
+    /**
+     * How many rounds it took the user to attain the rounds won.
+     * All rounds played devalue the rounds won.
+     * The more total rounds played, the less value for a round won.
+     */
+    private function byEffort(User $user, array $rankings, array $games): float
+    {
+        return 1.; // TODO byEffort
+    }
+
+    /**
+     * Value of rounds won decay over time. The older a won round, the less value.
+     */
+    private function byEntropy(User $user, array $rankings, array $games): float
+    {
+        return 1.; // TODO byEntropy
+    }
+
     private function reduceOppRanks(User $user, array $rankings, array $games): array
     {
         return array_reduce($games, function ($acc, $g) use ($user, $rankings) {
