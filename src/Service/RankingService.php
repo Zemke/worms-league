@@ -113,12 +113,14 @@ class RankingService
                     $this->relativizingService->byFarming($user, $rankings, $games, $DP),
                     $this->relativizingService->byEffort ($user, $rankings, $games, $DP),
                 ];
-                if (in_array($user->getUsername(), ['chuvash', 'Kayz', 'Master'])) {
+                if (in_array($user->getUsername(), ['chuvash', 'Kayz', 'Master', 'KinslayeR', 'Rafka'])
+                    && $i === 0) {
                     dump($user->getUsername(), $rels);
                 }
                 //dump(microtime(true) - $s);
                 $ranking->setPoints($ranking->ranking() * (array_sum($rels) / count($rels)));
             }
+            dump('------------------------------------');
         }
         return;
     }
