@@ -115,7 +115,7 @@ class RelativizingServiceTest extends TestCase
             Helper::setId(new Game(), 1)
                 ->setHome($daz)->setScoreHome(5)
                 ->setAway($kor)->setScoreAway(0),
-            Helper::setId(new Game(), 1)
+            Helper::setId(new Game(), 2)
                 ->setHome($mab)->setScoreHome(3)
                 ->setAway($kor)->setScoreAway(0),
         ];
