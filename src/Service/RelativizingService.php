@@ -26,12 +26,12 @@ class RelativizingService
         $P = 0;
         $ranking = array_unique(array_map(fn($r) => $r->ranking(), $rankings));
         sort($ranking);
-        $userRanking = $this->userRanking($user, $rankings);
-        assert(array_sum(array_map(fn($or) => $or->getWon(), $oppRanks)) === $userRanking->getRoundsWon());
+        $roundsWon = $this->userRanking($user, $rankings)->getRoundsWon();
+        assert(array_sum(array_map(fn($or) => $or->getWon(), $oppRanks)) === $roundsWon);
         $X = count($ranking);
         foreach ($oppRanks as $or) {
             $weight = pow((array_search($or->getOpp()->ranking(), $ranking) + 1) / $X, 3);
-            $P += ($weight) * ($or->getWon() / $userRanking->getRoundsWon());
+            $P += ($weight) * ($or->getWon() / $roundsWon);
         }
         return $P;
     }
@@ -40,15 +40,15 @@ class RelativizingService
     public function byQualityMinMax(User $user, array $rankings, array $games, array &$DP = []): float
     {
         $oppRanks = OppRank::reduce($user, $rankings, $games, $DP);
-        $userRanking = $this->userRanking($user, $rankings);
-        assert(array_sum(array_map(fn($or) => $or->getWon(), $oppRanks)) === $userRanking->getRoundsWon());
+        $roundsWon = $this->userRanking($user, $rankings)->getRoundsWon();
+        assert(array_sum(array_map(fn($or) => $or->getWon(), $oppRanks)) === $roundsWon);
         $allRankings = array_map(fn($r) => $r->ranking(), $rankings);
         $mn = min($allRankings) - PHP_FLOAT_MIN;
         $mx = max($allRankings);
         $P = 0;
         foreach ($oppRanks as $r) {
             $weight = ($r->getOpp()->ranking() - $mn) / ($mx - $mn);
-            $P += ($weight) * ($r->getWon() / $userRanking->getRoundsWon());
+            $P += ($weight) * ($r->getWon() / $roundsWon);
         }
         return $P;
     }
@@ -76,8 +76,8 @@ class RelativizingService
             }
             return max($acc, max(array_map(fn($or) => $or->getWon(), $oppRanks)));
         }, 0);
-        $userRanking = $this->userRanking($user, $rankings);
-        if ($userRanking->getRoundsWon() === 0) {
+        $roundsWon = $this->userRanking($user, $rankings)->getRoundsWon();
+        if ($roundsWon === 0) {
             return 0;
         }
         $oppRanks = OppRank::reduce($user, $rankings, $games, $DP);
@@ -86,7 +86,7 @@ class RelativizingService
             // Sum[-(99/(100*log(a)))*log(x)+1),{x,1,z}]/z
             $y = array_sum(array_map(fn($x) =>
                 -(99/(100*log($a)))*log($x)+1, range(1, $or->getWon()))) / $or->getWon();
-            $P += $y * ($or->getWon() / $userRanking->getRoundsWon());
+            $P += $y * ($or->getWon() / $roundsWon);
         }
         return $P;
     }
