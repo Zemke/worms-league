@@ -103,7 +103,7 @@ class RankingService
         */
         usort($rankings, fn($a, $b) => $a->getPoints() - $b->getPoints());
         $X = count($rankings);
-        for ($i = 0; $i < 1; $i++) {
+        for ($i = 0; $i < 3; $i++) {
             foreach ($rankings as &$ranking) {
                 $s = microtime(true);
                 $user = $ranking->getOwner();
