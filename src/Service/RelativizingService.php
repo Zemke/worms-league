@@ -22,7 +22,7 @@ class RelativizingService
      */
     public function byQuality(User $user, array $rankings, array $games, array &$DP = []): float
     {
-        $oppRanks = $this->reduceOppRanks($user, $rankings, $games, $DP);
+        $oppRanks = OppRank::reduce($user, $rankings, $games, $DP);
         $P = 0;
         $ranking = array_unique(array_map(fn($r) => $r->ranking(), $rankings));
         sort($ranking);
@@ -39,7 +39,7 @@ class RelativizingService
     // this is an alternative using min max rather than rank exponentially
     public function byQualityMinMax(User $user, array $rankings, array $games, array &$DP = []): float
     {
-        $oppRanks = $this->reduceOppRanks($user, $rankings, $games, $DP);
+        $oppRanks = OppRank::reduce($user, $rankings, $games, $DP);
         $userRanking = $this->userRanking($user, $rankings);
         assert(array_sum(array_map(fn($or) => $or->getWon(), $oppRanks)) === $userRanking->getRoundsWon());
         $allRankings = array_map(fn($r) => $r->ranking(), $rankings);
@@ -70,7 +70,7 @@ class RelativizingService
         //   In other words a is the max in a set of x.
         // -(99/(100ln(a)))ln(x)+1
         $a = array_reduce($rankings, function ($acc, $r) use ($rankings, $games, &$DP) {
-            $oppRanks = $this->reduceOppRanks($r->getOwner(), $rankings, $games, $DP);
+            $oppRanks = OppRank::reduce($r->getOwner(), $rankings, $games, $DP);
             if (empty($oppRanks)) {
                 return $acc;
             }
@@ -80,7 +80,7 @@ class RelativizingService
         if ($userRanking->getRoundsWon() === 0) {
             return 0;
         }
-        $oppRanks = $this->reduceOppRanks($user, $rankings, $games, $DP);
+        $oppRanks = OppRank::reduce($user, $rankings, $games, $DP);
         $P = 0;
         foreach ($oppRanks as $or) {
             // Sum[-(99/(100*log(a)))*log(x)+1),{x,1,z}]/z
@@ -107,29 +107,6 @@ class RelativizingService
     private function byEntropy(User $user, array $rankings, array $games, array &$DP = []): float
     {
         return 1.; // TODO byEntropy
-    }
-
-    private function reduceOppRanks(User $user, array $rankings, array $games, array &$DP = []): array
-    {
-        if (array_key_exists($user->getId(), $DP)) {
-            return $DP[$user->getId()];
-        }
-        $DP[$user->getId()] = array_reduce($games, function ($acc, $g) use ($user, $rankings) {
-            if (!$g->fullyProcessed() || !$g->isHomeOrAway($user) || ($userScore = $g->scoreOf($user)) === 0) {
-                return $acc;
-            }
-            $opp = $g->opponent($user);
-            $oppRanking = current(
-                array_filter($rankings, fn($r) => $r->getOwner()->getId() === $opp->getId()));
-            $accKey = key(array_filter($acc, fn($x) => $x->getOpp()->getOwner()->getId() === $opp->getId()));
-            if (is_null($accKey)) {
-                $acc[] = new OppRank($oppRanking, $userScore);
-            } else {
-                $acc[$accKey]->plusWon($userScore);
-            }
-            return $acc;
-        }, []);
-        return $DP[$user->getId()];
     }
 
     private function userRanking(User $user, array $rankings): Ranking
@@ -165,6 +142,29 @@ class OppRank
     public function getWon(): int
     {
         return $this->won;
+    }
+
+    public static function reduce(User $user, array $rankings, array $games, array &$DP = []): array
+    {
+        if (array_key_exists($user->getId(), $DP)) {
+            return $DP[$user->getId()];
+        }
+        $DP[$user->getId()] = array_reduce($games, function ($acc, $g) use ($user, $rankings) {
+            if (!$g->fullyProcessed() || !$g->isHomeOrAway($user) || ($userScore = $g->scoreOf($user)) === 0) {
+                return $acc;
+            }
+            $opp = $g->opponent($user);
+            $oppRanking = current(
+                array_filter($rankings, fn($r) => $r->getOwner()->getId() === $opp->getId()));
+            $accKey = key(array_filter($acc, fn($x) => $x->getOpp()->getOwner()->getId() === $opp->getId()));
+            if (is_null($accKey)) {
+                $acc[] = new OppRank($oppRanking, $userScore);
+            } else {
+                $acc[$accKey]->plusWon($userScore);
+            }
+            return $acc;
+        }, []);
+        return $DP[$user->getId()];
     }
 }
 
