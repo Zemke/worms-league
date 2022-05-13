@@ -36,6 +36,23 @@ class RelativizingService
         return $P;
     }
 
+    // this is an alternative using min max rather than rank exponentially
+    public function byQualityMinMax(User $user, array $rankings, array $games): float
+    {
+        $oppRanks = $this->reduceOppRanks($user, $rankings, $games);
+        $P = 0;
+        $userRanking = $this->userRanking($user, $rankings);
+        assert(array_sum(array_column($oppRanks, 'won')) === $userRanking->getRoundsWon());
+        $allRankings = array_map(fn($r) => $r->ranking(), $rankings);
+        $mn = min($allRankings) - PHP_FLOAT_MIN;
+        $mx = max($allRankings);
+        foreach ($oppRanks as $r) {
+            $weight = ($r['opp']->ranking() - $mn) / ($mx - $mn);
+            $P += ($weight) * ($r['won'] / $userRanking->getRoundsWon());
+        }
+        return $P;
+    }
+
     /**
      * Relativize by total rounds won against the same opponent.
      * The more rounds you've won against the same opponent the less it values
