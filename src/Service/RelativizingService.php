@@ -27,11 +27,11 @@ class RelativizingService
         $ranking = array_unique(array_map(fn($r) => $r->ranking(), $rankings));
         sort($ranking);
         $userRanking = $this->userRanking($user, $rankings);
-        assert(array_sum(array_column($oppRanks, 'won')) === $userRanking->getRoundsWon());
+        assert(array_sum(array_map(fn($or) => $or->getWon(), $oppRanks)) === $userRanking->getRoundsWon());
         $X = count($ranking);
-        foreach ($oppRanks as $r) {
-            $weight = pow((array_search($r['opp']->ranking(), $ranking) + 1) / $X, 3);
-            $P += ($weight) * ($r['won'] / $userRanking->getRoundsWon());
+        foreach ($oppRanks as $or) {
+            $weight = pow((array_search($or->getOpp()->ranking(), $ranking) + 1) / $X, 3);
+            $P += ($weight) * ($or->getWon() / $userRanking->getRoundsWon());
         }
         return $P;
     }
@@ -40,15 +40,15 @@ class RelativizingService
     public function byQualityMinMax(User $user, array $rankings, array $games): float
     {
         $oppRanks = $this->reduceOppRanks($user, $rankings, $games);
-        $P = 0;
         $userRanking = $this->userRanking($user, $rankings);
-        assert(array_sum(array_column($oppRanks, 'won')) === $userRanking->getRoundsWon());
+        assert(array_sum(array_map(fn($or) => $or->getWon(), $oppRanks)) === $userRanking->getRoundsWon());
         $allRankings = array_map(fn($r) => $r->ranking(), $rankings);
         $mn = min($allRankings) - PHP_FLOAT_MIN;
         $mx = max($allRankings);
+        $P = 0;
         foreach ($oppRanks as $r) {
-            $weight = ($r['opp']->ranking() - $mn) / ($mx - $mn);
-            $P += ($weight) * ($r['won'] / $userRanking->getRoundsWon());
+            $weight = ($r->getOpp()->ranking() - $mn) / ($mx - $mn);
+            $P += ($weight) * ($r->getWon() / $userRanking->getRoundsWon());
         }
         return $P;
     }
@@ -74,7 +74,7 @@ class RelativizingService
             if (empty($oppRanks)) {
                 return $acc;
             }
-            return max($acc, max(array_column($oppRanks, 'won')));
+            return max($acc, max(array_map(fn($or) => $or->getWon(), $oppRanks)));
         }, 0);
         $userRanking = $this->userRanking($user, $rankings);
         if ($userRanking->getRoundsWon() === 0) {
@@ -82,10 +82,11 @@ class RelativizingService
         }
         $oppRanks = $this->reduceOppRanks($user, $rankings, $games);
         $P = 0;
-        foreach ($oppRanks as ['won' => $won]) {
+        foreach ($oppRanks as $or) {
             // Sum[-(99/(100*log(a)))*log(x)+1),{x,1,z}]/z
-            $y = array_sum(array_map(fn($x) => -(99/(100*log($a)))*log($x)+1, range(1, $won))) / $won;
-            $P += $y * ($won / $userRanking->getRoundsWon());
+            $y = array_sum(array_map(fn($x) =>
+                -(99/(100*log($a)))*log($x)+1, range(1, $or->getWon()))) / $or->getWon();
+            $P += $y * ($or->getWon() / $userRanking->getRoundsWon());
         }
         return $P;
     }
@@ -117,11 +118,11 @@ class RelativizingService
             $opp = $g->opponent($user);
             $oppRanking = current(
                 array_filter($rankings, fn($r) => $r->getOwner()->getId() === $opp->getId()));
-            $accKey = key(array_filter($acc, fn($x) => $x['opp']->getOwner()->getId() === $opp->getId()));
+            $accKey = key(array_filter($acc, fn($x) => $x->getOpp()->getOwner()->getId() === $opp->getId()));
             if (is_null($accKey)) {
-                $acc[] = ['opp' => $oppRanking, 'won' => $userScore];
+                $acc[] = new OppRank($oppRanking, $userScore);
             } else {
-                $acc[$accKey]['won'] += $userScore;
+                $acc[$accKey]->plusWon($userScore);
             }
             return $acc;
         }, []);
@@ -130,6 +131,36 @@ class RelativizingService
     private function userRanking(User $user, array $rankings): Ranking
     {
         return current(array_filter($rankings, fn($r) => $r->ownedBy($user)));
+    }
+}
+
+class OppRank
+{
+    /**
+     * @param Ranking $opp The opponent's ranking.
+     * @param int $won Number of won rounds against opponent.
+     */
+    public function __construct(private Ranking $opp, private int $won)
+    {
+    }
+
+    public function plusWon(int $n): self
+    {
+        if ($n < 0) {
+            throw new RuntimeException($n . ' is negative');
+        }
+        $this->won += $n;
+        return $this;
+    }
+
+    public function getOpp(): Ranking
+    {
+        return $this->opp;
+    }
+
+    public function getWon(): int
+    {
+        return $this->won;
     }
 }
 
