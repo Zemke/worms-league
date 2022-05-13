@@ -11,7 +11,7 @@ use App\Service\RelativizingService;
 
 class RelativizingServiceTest extends TestCase
 {
-    public function testByOpponentQuality(): void
+    public function testByQuality(): void
     {
         $zem = Helper::setId(new User(), 1)
             ->setUsername('Zem');
@@ -52,17 +52,17 @@ class RelativizingServiceTest extends TestCase
                 ->setOwner($kor)
                 ->setRoundsWon(4),
         ];
-        $dazW = (new RelativizingService())->byOpponentQuality($daz, $rankings, $games);
-        $mabW = (new RelativizingService())->byOpponentQuality($mab, $rankings, $games);
-        $zemW = (new RelativizingService())->byOpponentQuality($zem, $rankings, $games);
-        $korW = (new RelativizingService())->byOpponentQuality($kor, $rankings, $games);
+        $dazW = (new RelativizingService())->byQuality($daz, $rankings, $games);
+        $mabW = (new RelativizingService())->byQuality($mab, $rankings, $games);
+        $zemW = (new RelativizingService())->byQuality($zem, $rankings, $games);
+        $korW = (new RelativizingService())->byQuality($kor, $rankings, $games);
         $this->assertEqualsWithDelta($dazW, 1, .00001);
         $this->assertEqualsWithDelta($mabW, .2790178571428571, .00001);
         $this->assertEqualsWithDelta($zemW, .60625, .00001);
         $this->assertEqualsWithDelta($korW, .78125, .00001);
     }
 
-    public function testByOpponentQuality_fair(): void
+    public function testByQuality_fair(): void
     {
         $zem = Helper::setId(new User(), 1)
             ->setUsername('Zem');
@@ -94,8 +94,8 @@ class RelativizingServiceTest extends TestCase
                 ->setOwner($mab)
                 ->setRoundsWon(3),
         ];
-        $dazW = (new RelativizingService())->byOpponentQuality($daz, $rankings, $games);
-        $mabW = (new RelativizingService())->byOpponentQuality($mab, $rankings, $games);
+        $dazW = (new RelativizingService())->byQuality($daz, $rankings, $games);
+        $mabW = (new RelativizingService())->byQuality($mab, $rankings, $games);
         $this->assertEqualsWithDelta($dazW, .2962962962962962, .00001);
         $this->assertEqualsWithDelta($mabW, 1., .00001);
     }
@@ -103,7 +103,7 @@ class RelativizingServiceTest extends TestCase
     /**
      * Value of won rounds doesn't increase linearly against the same opponent.
      */
-    public function testByOpponentBashing_notLinear(): void
+    public function testByFarming_notLinear(): void
     {
         $kor = Helper::setId(new User(), 2)
             ->setUsername('Kor');
@@ -130,8 +130,8 @@ class RelativizingServiceTest extends TestCase
                 ->setOwner($mab)
                 ->setRoundsWon(3),
         ];
-        $dazW = (new RelativizingService())->byOpponentBashing($daz, $rankings, $games);
-        $mabW = (new RelativizingService())->byOpponentBashing($mab, $rankings, $games);
+        $dazW = (new RelativizingService())->byFarming($daz, $rankings, $games);
+        $mabW = (new RelativizingService())->byFarming($mab, $rankings, $games);
         $this->assertTrue($dazW < $mabW);
         $this->assertEqualsWithDelta($mabW, .6326166916554051458844579, .00001);
         $this->assertEqualsWithDelta($dazW, .4110220979961794394653125, .00001);

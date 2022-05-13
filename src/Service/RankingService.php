@@ -108,8 +108,8 @@ class RankingService
                 $s = microtime(true);
                 $user = $ranking->getOwner();
                 $rels = [
-                    $this->relativizingService->byOpponentQuality($user, $rankings, $games),
-                    $this->relativizingService->byOpponentBashing($user, $rankings, $games),
+                    $this->relativizingService->byQuality($user, $rankings, $games),
+                    $this->relativizingService->byFarming($user, $rankings, $games),
                 ];
                 // TODO total rounds played devalue rounds won
                 if (in_array($user->getUsername(), ['chuvash', 'Kayz', 'Master'])) {

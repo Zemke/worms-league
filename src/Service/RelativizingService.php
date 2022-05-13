@@ -20,7 +20,7 @@ class RelativizingService
      * @param Game[] $games Games to find the opponents of the given user.
      * @return float The weight of the won rounds according to opponent quality.
      */
-    public function byOpponentQuality(User $user, array $rankings, array $games): float
+    public function byQuality(User $user, array $rankings, array $games): float
     {
         $oppRanks = $this->reduceOppRanks($user, $rankings, $games);
         $P = 0;
@@ -46,7 +46,7 @@ class RelativizingService
      * @param Game[] $games Games to find the opponents of the given user.
      * @return float The weight of the won rounds according to opponent quality.
      */
-    public function byOpponentBashing(User $user, array $rankings, array $games): float
+    public function byFarming(User $user, array $rankings, array $games): float
     {
         // a Is the max rounds won of a single player against another one
         //   so the value -- if it were x as well -- that would get us .01.
