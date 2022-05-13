@@ -20,9 +20,9 @@ class RelativizingService
      * @param Game[] $games Games to find the opponents of the given user.
      * @return float The weight of the won rounds according to opponent quality.
      */
-    public function byQuality(User $user, array $rankings, array $games): float
+    public function byQuality(User $user, array $rankings, array $games, array &$DP = []): float
     {
-        $oppRanks = $this->reduceOppRanks($user, $rankings, $games);
+        $oppRanks = $this->reduceOppRanks($user, $rankings, $games, $DP);
         $P = 0;
         $ranking = array_unique(array_map(fn($r) => $r->ranking(), $rankings));
         sort($ranking);
@@ -37,9 +37,9 @@ class RelativizingService
     }
 
     // this is an alternative using min max rather than rank exponentially
-    public function byQualityMinMax(User $user, array $rankings, array $games): float
+    public function byQualityMinMax(User $user, array $rankings, array $games, array &$DP = []): float
     {
-        $oppRanks = $this->reduceOppRanks($user, $rankings, $games);
+        $oppRanks = $this->reduceOppRanks($user, $rankings, $games, $DP);
         $userRanking = $this->userRanking($user, $rankings);
         assert(array_sum(array_map(fn($or) => $or->getWon(), $oppRanks)) === $userRanking->getRoundsWon());
         $allRankings = array_map(fn($r) => $r->ranking(), $rankings);
@@ -63,14 +63,14 @@ class RelativizingService
      * @param Game[] $games Games to find the opponents of the given user.
      * @return float The weight of the won rounds according to opponent quality.
      */
-    public function byFarming(User $user, array $rankings, array $games): float
+    public function byFarming(User $user, array $rankings, array $games, array &$DP = []): float
     {
         // a Is the max rounds won of a single player against another one
         //   so the value -- if it were x as well -- that would get us .01.
         //   In other words a is the max in a set of x.
         // -(99/(100ln(a)))ln(x)+1
-        $a = array_reduce($rankings, function ($acc, $r) use ($rankings, $games) {
-            $oppRanks = $this->reduceOppRanks($r->getOwner(), $rankings, $games);
+        $a = array_reduce($rankings, function ($acc, $r) use ($rankings, $games, &$DP) {
+            $oppRanks = $this->reduceOppRanks($r->getOwner(), $rankings, $games, $DP);
             if (empty($oppRanks)) {
                 return $acc;
             }
@@ -80,7 +80,7 @@ class RelativizingService
         if ($userRanking->getRoundsWon() === 0) {
             return 0;
         }
-        $oppRanks = $this->reduceOppRanks($user, $rankings, $games);
+        $oppRanks = $this->reduceOppRanks($user, $rankings, $games, $DP);
         $P = 0;
         foreach ($oppRanks as $or) {
             // Sum[-(99/(100*log(a)))*log(x)+1),{x,1,z}]/z
@@ -96,7 +96,7 @@ class RelativizingService
      * All rounds played devalue the rounds won.
      * The more total rounds played, the less value for a round won.
      */
-    private function byEffort(User $user, array $rankings, array $games): float
+    private function byEffort(User $user, array $rankings, array $games, array &$DP = []): float
     {
         return 1.; // TODO byEffort
     }
@@ -104,14 +104,17 @@ class RelativizingService
     /**
      * Value of rounds won decay over time. The older a won round, the less value.
      */
-    private function byEntropy(User $user, array $rankings, array $games): float
+    private function byEntropy(User $user, array $rankings, array $games, array &$DP = []): float
     {
         return 1.; // TODO byEntropy
     }
 
-    private function reduceOppRanks(User $user, array $rankings, array $games): array
+    private function reduceOppRanks(User $user, array $rankings, array $games, array &$DP = []): array
     {
-        return array_reduce($games, function ($acc, $g) use ($user, $rankings) {
+        if (array_key_exists($user->getId(), $DP)) {
+            return $DP[$user->getId()];
+        }
+        $DP[$user->getId()] = array_reduce($games, function ($acc, $g) use ($user, $rankings) {
             if (!$g->fullyProcessed() || !$g->isHomeOrAway($user) || ($userScore = $g->scoreOf($user)) === 0) {
                 return $acc;
             }
@@ -126,6 +129,7 @@ class RelativizingService
             }
             return $acc;
         }, []);
+        return $DP[$user->getId()];
     }
 
     private function userRanking(User $user, array $rankings): Ranking

@@ -103,13 +103,14 @@ class RankingService
         */
         usort($rankings, fn($a, $b) => $a->getPoints() - $b->getPoints());
         $X = count($rankings);
+        $DP = [];
         for ($i = 0; $i < 3; $i++) {
             foreach ($rankings as &$ranking) {
                 $s = microtime(true);
                 $user = $ranking->getOwner();
                 $rels = [
-                    $this->relativizingService->byQuality($user, $rankings, $games),
-                    $this->relativizingService->byFarming($user, $rankings, $games),
+                    $this->relativizingService->byQuality($user, $rankings, $games, $DP),
+                    $this->relativizingService->byFarming($user, $rankings, $games, $DP),
                 ];
                 // TODO total rounds played devalue rounds won
                 if (in_array($user->getUsername(), ['chuvash', 'Kayz', 'Master'])) {
