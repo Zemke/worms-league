@@ -109,6 +109,7 @@ class RankingService
                 $s = microtime(true);
                 $user = $ranking->getOwner();
                 $rels = [
+                    1.,
                     $this->relativizingService->byQuality($user, $rankings, $games, $DP),
                     $this->relativizingService->byFarming($user, $rankings, $games, $DP),
                     $this->relativizingService->byEffort ($user, $rankings, $games, $DP),

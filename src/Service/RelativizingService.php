@@ -111,7 +111,8 @@ class RelativizingService
         $mn = max($allRoundsPlayed);
         $norm = ($this->userRanking($user, $rankings)->getRoundsPlayed() - $mn) / ($mx - $mn);
         // scale values from .35 to 1. Could also return $norm directly for bigger effect.
-        return .35 + .65 * $norm;
+        //return .35 + .65 * $norm;
+        return $norm;
     }
 
     /**
