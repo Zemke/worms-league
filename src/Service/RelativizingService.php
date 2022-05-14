@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Game;
 use App\Entity\Ranking;
 use App\Entity\User;
+use App\Thing\Decimal;
 
 class RelativizingService
 {
@@ -20,20 +21,23 @@ class RelativizingService
      * @param User $user The user whose won rounds are to be relativized.
      * @param Ranking[] $rankings Quality of opponents based on these rankings.
      * @param Game[] $games Games to find the opponents of the given user.
-     * @return float The weight of the won rounds according to opponent quality.
+     * @return Decimal The weight of the won rounds according to opponent quality.
      */
-    public function byQuality(User $user, array $rankings, array $games, array &$DP = []): float
+    public function byQuality(User $user, array $rankings, array $games, array &$DP = []): Decimal
     {
         $oppRanks = OppRank::reduce($user, $rankings, $games, $DP);
-        $P = 0;
+        $P = new Decimal(0);
         $ranking = array_unique(array_map(fn($r) => $r->ranking(), $rankings));
         sort($ranking);
         $roundsWon = $this->userRanking($user, $rankings)->getRoundsWon();
         assert(array_sum(array_map(fn($or) => $or->getWon(), $oppRanks)) === $roundsWon);
         $X = count($ranking);
         foreach ($oppRanks as $or) {
-            $weight = pow((array_search($or->getOpp()->ranking(), $ranking) + 1) / $X, 3);
-            $P += ($weight) * ($or->getWon() / $roundsWon);
+            $y = (new Decimal(array_search($or->getOpp()->ranking(), $ranking)))
+                ->add(1)
+                ->div($X)
+                ->pow(3);
+            $P = $P->add($y->mul((new Decimal($or->getWon()))->div($roundsWon)));
         }
         return $P;
     }

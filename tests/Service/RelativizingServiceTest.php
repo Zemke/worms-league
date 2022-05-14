@@ -56,10 +56,10 @@ class RelativizingServiceTest extends TestCase
         $mabW = (new RelativizingService())->byQuality($mab, $rankings, $games);
         $zemW = (new RelativizingService())->byQuality($zem, $rankings, $games);
         $korW = (new RelativizingService())->byQuality($kor, $rankings, $games);
-        $this->assertEqualsWithDelta($dazW, 1, .00001);
-        $this->assertEqualsWithDelta($mabW, .2790178571428571, .00001);
-        $this->assertEqualsWithDelta($zemW, .60625, .00001);
-        $this->assertEqualsWithDelta($korW, .78125, .00001);
+        $this->assertEquals("1.00000000000000000000", $dazW);
+        $this->assertEquals("0.27901785714285714284", $mabW);
+        $this->assertEquals("0.60625000000000000000", $zemW);
+        $this->assertEquals("0.78125000000000000000", $korW);
     }
 
     public function testByQuality_fair(): void
