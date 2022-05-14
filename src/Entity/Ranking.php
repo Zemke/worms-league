@@ -7,6 +7,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use App\Repository\RankingRepository;
 use App\Entity\Game;
 use App\Entity\User;
+use App\Thing\Decimal;
 
 #[ORM\Entity(repositoryClass: RankingRepository::class)]
 #[ORM\UniqueConstraint(name: 'owner_season_uidx', columns: ['owner_id', 'season_id'])]
@@ -195,9 +196,9 @@ class Ranking
      *
      * @return roundsWon if points are null, points otherwise.
      */
-    public function ranking(): string|int
+    public function ranking(): Decimal
     {
-        return is_null($this->points) ? $this->roundsWon : $this->points;
+        return new Decimal(is_null($this->points) ? (float) $this->roundsWon : $this->points);
     }
 
     public function getId(): ?int
