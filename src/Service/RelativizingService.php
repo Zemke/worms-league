@@ -33,11 +33,11 @@ class RelativizingService
         assert(array_sum(array_map(fn($or) => $or->getWon(), $oppRanks)) === $roundsWon);
         $X = count($ranking);
         foreach ($oppRanks as $or) {
-            $y = (new Decimal(array_search($or->getOpp()->ranking(), $ranking)))
+            $y = Decimal::of(array_search($or->getOpp()->ranking(), $ranking))
                 ->add(1)
                 ->div($X)
                 ->pow(3);
-            $P = $P->add($y->mul((new Decimal($or->getWon()))->div($roundsWon)));
+            $P = $P->add($y->mul(Decimal::of($or->getWon())->div($roundsWon)));
         }
         return $P;
     }
@@ -114,7 +114,7 @@ class RelativizingService
         $a = Decimal::min();
         $b = Decimal::one();
         // custom scale min-max normalization
-        $norm = (new Decimal($this->userRanking($user, $rankings)->getRoundsPlayed() - $mn))
+        $norm = Decimal::of($this->userRanking($user, $rankings)->getRoundsPlayed() - $mn)
             ->mul($b->sub($a))
             ->div($mx - $mn);
         $norm = $norm->add($a);

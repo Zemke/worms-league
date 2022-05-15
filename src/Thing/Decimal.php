@@ -8,7 +8,7 @@ class Decimal implements \Stringable
 
     private string $s;
 
-    public function __construct(mixed $x)
+    private function __construct(mixed $x)
     {
         \bcscale(self::SCALE);
         if ($x instanceof Decimal) {
@@ -53,12 +53,12 @@ class Decimal implements \Stringable
 
     public function comp(mixed $x): int
     {
-        return \bccomp($this->s, strval(new Decimal($x)));
+        return \bccomp($this->s, strval(self::of($x)));
     }
 
     private function op(callable $op, mixed $x): Decimal
     {
-        return new Decimal(call_user_func($op, $this->s, new Decimal($x)));
+        return self::of(call_user_func($op, $this->s, self::of($x)));
     }
 
     public function __toString(): string
@@ -66,19 +66,24 @@ class Decimal implements \Stringable
         return $this->s;
     }
 
+    public static function of(mixed $x): Decimal
+    {
+        return new Decimal($x);
+    }
+
     public static function min(): Decimal
     {
-        return new Decimal('0.' . str_repeat('0', self::SCALE - 1) . '1');
+        return self::of('0.' . str_repeat('0', self::SCALE - 1) . '1');
     }
 
     public static function zero(): Decimal
     {
-        return new Decimal(0);
+        return self::of(0);
     }
 
     public static function one(): Decimal
     {
-        return new Decimal(1);
+        return self::of(1);
     }
 }
 

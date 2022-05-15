@@ -198,7 +198,7 @@ class Ranking
      */
     public function ranking(): Decimal
     {
-        return new Decimal(is_null($this->points) ? (float) $this->roundsWon : $this->points);
+        return Decimal::of(is_null($this->points) ? (float) $this->roundsWon : $this->points);
     }
 
     public function getId(): ?int
