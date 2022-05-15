@@ -71,6 +71,11 @@ class Decimal implements \Stringable
         return new Decimal($x);
     }
 
+    public static function sum(array $xx): Decimal
+    {
+        return array_reduce($xx, fn($acc, $x) => $acc->add($x), self::zero());
+    }
+
     public static function min(): Decimal
     {
         return self::of('0.' . str_repeat('0', self::SCALE - 1) . '1');
