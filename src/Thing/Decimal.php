@@ -4,11 +4,13 @@ namespace App\Thing;
 
 class Decimal implements \Stringable
 {
+    public const SCALE = 20;
+
     private string $s;
 
     public function __construct(mixed $x)
     {
-        \bcscale(20);
+        \bcscale(self::SCALE);
         if ($x instanceof Decimal) {
             $this->s = $x;
         } else {
@@ -57,6 +59,11 @@ class Decimal implements \Stringable
     public function __toString(): string
     {
         return $this->s;
+    }
+
+    public static function min(): Decimal
+    {
+        return new Decimal('0.' . str_repeat('0', self::SCALE - 1) . '1');
     }
 }
 
