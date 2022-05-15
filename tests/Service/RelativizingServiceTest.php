@@ -131,13 +131,13 @@ class RelativizingServiceTest extends TestCase
                 ->setOwner($mab)
                 ->setRoundsWon(3),
         ];
-        $dazW = (new RelativizingService())->byFarming($daz, $rankings, $games);
         $mabW = (new RelativizingService())->byFarming($mab, $rankings, $games);
-        $this->assertTrue($dazW < $mabW);
-        $this->assertEqualsWithDelta($mabW, .6326166916554051458844579, .00001);
-        $this->assertEqualsWithDelta($dazW, .4110220979961794394653125, .00001);
+        $dazW = (new RelativizingService())->byFarming($daz, $rankings, $games);
+        $this->assertTrue($dazW->comp($mabW) < 0);
+        $this->assertEquals("0.63261669165540608575", $mabW);
+        $this->assertEquals("0.41102209799617880958", $dazW);
         // Daz would still get more points but not linearly (by rounds) more.
-        $this->assertTrue((5 * $dazW) > (3 * $mabW));
+        $this->assertTrue($dazW->mul(5)->comp($mabW->mul(3)) > 0);
     }
 
     public function testByEffort(): void

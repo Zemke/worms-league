@@ -67,9 +67,9 @@ class RelativizingService
      * @param User $user The user whose won rounds are to be relativized.
      * @param Ranking[] $rankings All rankings.
      * @param Game[] $games Games to find the opponents of the given user.
-     * @return float The weight of the won rounds according to opponent quality.
+     * @return D The weight of the won rounds according to opponent quality.
      */
-    public function byFarming(User $user, array $rankings, array $games, array &$DP = []): float
+    public function byFarming(User $user, array $rankings, array $games, array &$DP = []): D
     {
         // a Is the max rounds won of a single player against another one
         //   so the value -- if it were x as well -- that would get us .01.
@@ -87,12 +87,13 @@ class RelativizingService
             return 0;
         }
         $oppRanks = OppRank::reduce($user, $rankings, $games, $DP);
-        $P = 0;
+        $P = D::zero();
         foreach ($oppRanks as $or) {
             // Sum[-(99/(100*log(a)))*log(x)+1),{x,1,z}]/z
-            $y = array_sum(array_map(fn($x) =>
-                -(99/(100*log($a)))*log($x)+1, range(1, $or->getWon()))) / $or->getWon();
-            $P += $y * ($or->getWon() / $roundsWon);
+            $y = D::sum(array_map(fn($x) =>
+                D::of('-'.D::of(99)->div((D::of(100)->mul(log($a)))))->mul(log($x))->add(1),
+                range(1, $or->getWon())))->div($or->getWon());
+            $P = $P->add($y->mul(D::of($or->getWon())->div($roundsWon)));
         }
         return $P;
     }
