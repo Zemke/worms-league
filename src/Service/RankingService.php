@@ -88,12 +88,12 @@ class RankingService
         usort($rankings, fn($a, $b) => $a->getPoints() - $b->getPoints());
         $X = count($rankings);
         $DP = [];
-        for ($i = 0; $i < 3; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             foreach ($rankings as &$ranking) {
                 $s = microtime(true);
                 $user = $ranking->getOwner();
                 $rels = [
-                    1.,
+                    2.6,
                     $this->relativizingService->byQuality($user, $rankings, $games, $DP),
                     $this->relativizingService->byFarming($user, $rankings, $games, $DP),
                     $this->relativizingService->byEffort ($user, $rankings, $games, $DP),
