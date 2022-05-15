@@ -5,7 +5,7 @@ namespace App\Service;
 use App\Entity\Game;
 use App\Entity\Ranking;
 use App\Entity\User;
-use App\Thing\Decimal;
+use App\Thing\Decimal as D;
 
 class RelativizingService
 {
@@ -21,23 +21,23 @@ class RelativizingService
      * @param User $user The user whose won rounds are to be relativized.
      * @param Ranking[] $rankings Quality of opponents based on these rankings.
      * @param Game[] $games Games to find the opponents of the given user.
-     * @return Decimal The weight of the won rounds according to opponent quality.
+     * @return D The weight of the won rounds according to opponent quality.
      */
-    public function byQuality(User $user, array $rankings, array $games, array &$DP = []): Decimal
+    public function byQuality(User $user, array $rankings, array $games, array &$DP = []): D
     {
         $oppRanks = OppRank::reduce($user, $rankings, $games, $DP);
-        $P = Decimal::zero();
+        $P = D::zero();
         $ranking = array_unique(array_map(fn($r) => $r->ranking(), $rankings));
         sort($ranking);
         $roundsWon = $this->userRanking($user, $rankings)->getRoundsWon();
         assert(array_sum(array_map(fn($or) => $or->getWon(), $oppRanks)) === $roundsWon);
         $X = count($ranking);
         foreach ($oppRanks as $or) {
-            $y = Decimal::of(array_search($or->getOpp()->ranking(), $ranking))
+            $y = D::of(array_search($or->getOpp()->ranking(), $ranking))
                 ->add(1)
                 ->div($X)
                 ->pow(3);
-            $P = $P->add($y->mul(Decimal::of($or->getWon())->div($roundsWon)));
+            $P = $P->add($y->mul(D::of($or->getWon())->div($roundsWon)));
         }
         return $P;
     }
@@ -104,17 +104,17 @@ class RelativizingService
      *
      * @param User $user The user whose won rounds are to be relativized.
      * @param Ranking[] Feature scaling rounds played across all rankings.
-     * @return Decimal The weight of the won rounds according to opponent quality.
+     * @return D The weight of the won rounds according to opponent quality.
      */
-    public function byEffort(User $user, array $rankings): Decimal
+    public function byEffort(User $user, array $rankings): D
     {
         $allRoundsPlayed = array_map(fn($r) => $r->getRoundsPlayed(), $rankings);
         $mx = min($allRoundsPlayed);
         $mn = max($allRoundsPlayed);
-        $a = Decimal::min();
-        $b = Decimal::one();
+        $a = D::min();
+        $b = D::one();
         // custom scale min-max normalization
-        $norm = Decimal::of($this->userRanking($user, $rankings)->getRoundsPlayed() - $mn)
+        $norm = D::of($this->userRanking($user, $rankings)->getRoundsPlayed() - $mn)
             ->mul($b->sub($a))
             ->div($mx - $mn);
         $norm = $norm->add($a);
