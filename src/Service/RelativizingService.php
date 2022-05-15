@@ -84,7 +84,7 @@ class RelativizingService
         }, 0);
         $roundsWon = $this->userRanking($user, $rankings)->getRoundsWon();
         if ($roundsWon === 0) {
-            return 0;
+            return D::zero();
         }
         $oppRanks = OppRank::reduce($user, $rankings, $games, $DP);
         $P = D::zero();
