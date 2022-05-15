@@ -16,8 +16,12 @@ class LadderController extends AbstractController
     {
         $var = [
             'controller_name' => 'LadderController',
-            'season' => $seasonRepo->findActive()
+            'season' => $seasonRepo->findActive(),
         ];
+        $var['pp'] = array_map(
+            fn($r) => ['p' => round(floatval(strval($r->ranking())))],
+            $var['season']->getRankings()->toArray());
+
         return $this->render('ladder/index.html.twig', $var);
     }
 }

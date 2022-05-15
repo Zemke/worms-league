@@ -38,7 +38,7 @@
                 </a>
             </td>
             <td class="text-bold">
-                {{ ranking.points|pad(season.rankings, 'getPoints') }}
+                {{ ranking.points|round|pad(pp, 'p') }}
             </td>
             <td>
                 {{ ranking.roundsPlayed|pad(season.rankings, 'getRoundsPlayed') }}
