@@ -10,6 +10,7 @@ use App\Repository\RankingRepository;
 use App\Repository\GameRepository;
 use App\Repository\SeasonRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Thing\Decimal as D;
 
 class RankingService
 {
@@ -118,8 +119,9 @@ class RankingService
                     && $i === 0) {
                     dump($user->getUsername(), $rels);
                 }
+                $ranking->setPoints(
+                    strval(D::of($ranking->ranking())->mul(D::sum($rels)->div(count($rels)))));
                 //dump(microtime(true) - $s);
-                $ranking->setPoints($ranking->ranking() * (array_sum($rels) / count($rels)));
             }
             dump('------------------------------------');
         }
