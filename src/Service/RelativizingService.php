@@ -104,15 +104,20 @@ class RelativizingService
      *
      * @param User $user The user whose won rounds are to be relativized.
      * @param Ranking[] Feature scaling rounds played across all rankings.
-     * @return float The weight of the won rounds according to opponent quality.
+     * @return Decimal The weight of the won rounds according to opponent quality.
      */
-    // TODO Maybe do this on a per OppRank basis
-    public function byEffort(User $user, array $rankings): float
+    public function byEffort(User $user, array $rankings): Decimal
     {
         $allRoundsPlayed = array_map(fn($r) => $r->getRoundsPlayed(), $rankings);
         $mx = min($allRoundsPlayed);
         $mn = max($allRoundsPlayed);
-        $norm = ($this->userRanking($user, $rankings)->getRoundsPlayed() - $mn) / ($mx - $mn);
+        $a = Decimal::min();
+        $b = Decimal::one();
+        // custom scale min-max normalization
+        $norm = (new Decimal($this->userRanking($user, $rankings)->getRoundsPlayed() - $mn))
+            ->mul($b->sub($a))
+            ->div($mx - $mn);
+        $norm = $norm->add($a);
         return $norm;
     }
 

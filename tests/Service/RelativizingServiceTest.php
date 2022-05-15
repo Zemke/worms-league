@@ -8,6 +8,7 @@ use App\Entity\Game;
 use App\Entity\User;
 use App\Entity\Ranking;
 use App\Service\RelativizingService;
+use App\Thing\Decimal;
 
 class RelativizingServiceTest extends TestCase
 {
@@ -164,10 +165,13 @@ class RelativizingServiceTest extends TestCase
         $dazW = (new RelativizingService())->byEffort($daz, $rankings, []);
         $mabW = (new RelativizingService())->byEffort($mab, $rankings, []);
         $korW = (new RelativizingService())->byEffort($kor, $rankings, []);
-        $this->assertEquals($dazW, 1.);
-        $this->assertTrue($dazW > $mabW && $mabW > $korW);
-        $this->assertEqualsWithDelta($dazW - $mabW, $mabW - $korW, .000001);
-        $this->assertTrue($korW > 0);
+        $this->assertTrue($dazW->comp($mabW) > 0 && $mabW->comp($korW) > 0);
+        $this->assertTrue($korW->comp(0) > 0);
+        $this->assertEquals(strval($dazW->sub($mabW)->sub(Decimal::min())), strval($mabW->sub($korW)));
+        $this->assertEquals("1.00000000000000000000", $dazW);
+        $this->assertEquals("0.50000000000000000000", $mabW);
+        $this->assertEquals("0.00000000000000000001", $korW);
+        $this->assertEquals(strval(Decimal::min()), $korW);
     }
 }
 
