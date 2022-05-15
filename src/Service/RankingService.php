@@ -85,23 +85,6 @@ class RankingService
      */
     public function rank(array &$rankings, array $games): void
     {
-        /* TODO
-        There's an absolute ranking which is simply won rounds.
-        This is then relativized through several weighted factors.
-        Each relativizing step is based on each previous step.
-        The first one is based on the absolute ranking.
-
-        These are the relativizing factors applied
-        on the won rounds (relativizing won rounds):
-        - How good is the opponent?
-        - Entropy values older rounds less.
-        - Opponent variety. Winning rounds against different opponents is
-          worth more than beating the same over and over.
-        - De-value activity by relativizing amount rounds.
-
-        The more relativizing steps are run, the more the absolute ranking
-        is relativized and the less worth is allocated to activity.
-        */
         usort($rankings, fn($a, $b) => $a->getPoints() - $b->getPoints());
         $X = count($rankings);
         $DP = [];
