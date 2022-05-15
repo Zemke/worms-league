@@ -29,7 +29,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for ranking in season.rankings|sort((a,b) => (b.ranking() * 1000) - (a.ranking() * 1000)) %}
+        {% for ranking in season.rankings|sort((a,b) => b.ranking().comp(a.ranking())) %}
         <tr>
             <td>{{ loop.index }}</td>
             <td>
