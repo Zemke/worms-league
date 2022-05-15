@@ -17,9 +17,7 @@ use App\Entity\Texture;
 
 class NNNFixtures extends Fixture
 {
-    private const BATCH_SIZE = 20;
-
-    // TODO memory leaks?
+    private const BATCH_SIZE = 10;
 
     public function __construct(private UserPasswordHasherInterface $hasher,
                                 private KernelInterface $appKernel)
@@ -28,24 +26,54 @@ class NNNFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $this->remove('maps');
-        $this->remove('replays');
-        $season = (new Season())
-            ->setActive(true)
-            ->setStart(new \DateTime('2022-01-22 00:00:00'))
-            ->setEnding(new \DateTime('2022-04-30 00:00:00'))
-            ->setName('NNN40');
-        $manager->persist($season);
-        $gamescsv = fopen(dirname(__FILE__) . '/csv/games.csv', 'r');
-        $head = fgetcsv($gamescsv);
+        $seasons = [
+            (new Season())
+                ->setActive(true)
+                ->setStart(new \DateTime('2021-07-15 00:00:00'))
+                ->setEnding(new \DateTime('2021-10-18 00:00:00'))
+                ->setName('NNN38'),
+            (new Season())
+                ->setActive(false)
+                ->setStart(new \DateTime('2021-10-19 00:00:00'))
+                ->setEnding(new \DateTime('2022-01-22 00:00:00'))
+                ->setName('NNN39'),
+            (new Season())
+                ->setActive(false)
+                ->setStart(new \DateTime('2022-01-22 00:00:00'))
+                ->setEnding(new \DateTime('2022-04-30 00:00:00'))
+                ->setName('NNN40'),
+            (new Season())
+                ->setActive(false)
+                ->setStart(new \DateTime('2022-04-30 00:00:00'))
+                ->setEnding(new \DateTime('2022-07-30 00:00:00'))
+                ->setName('NNN41Current'),
+        ];
         $users = [];
+        foreach ($seasons as $season) {
+            $this->remove('maps');
+            $this->remove('replays');
+            $manager->persist($season);
+            dump('-------------- season ' . $season->getName());
+            $gamescsv = fopen(dirname(__FILE__) . '/csv/games_' . strtolower($season->getName()) . '.csv', 'r');
+            try {
+                $this->perSeason($season, $gamescsv, $users, $manager);
+            } finally {
+                fclose($gamescsv);
+            }
+        }
+        $manager->flush();
+    }
+
+    public function perSeason(Season $season, mixed $gamescsv, &$users, ObjectManager &$manager): void
+    {
+        $head = fgetcsv($gamescsv);
         $c = 0;
         while (($row = fgetcsv($gamescsv)) !== false) {
             $vv = array_combine($head, $row);
             $game = (new Game())
                 ->setSeason($season)
                 ->setCreated(new \DateTime($vv['dateat']));
-            $gUsers = array_map(function ($u) use (&$users, $manager) {
+            $gUsers = array_map(function ($u) use (&$users, &$manager) {
                 $usernames = array_map(fn($u1) => $u1->getUsername(), $users);
                 if (($idx = array_search($u, $usernames)) === false) {
                     $nu = (new User())->setUsername($u)->setEmail("{$u}@zemke.io");
@@ -77,9 +105,6 @@ class NNNFixtures extends Fixture
                 $manager->flush();
             }
         }
-
-        fclose($gamescsv);
-        $manager->flush();
     }
 
     private function remove(string $dir): void
@@ -124,7 +149,11 @@ class TestReplayFactory
         while (($colorAway = array_rand(ReplayData::COLORS)) === $colorHome) {
             continue;
         }
-        $winnerIsHome = $game->isHome($game->winner());
+        if (is_null($winner = $game->winner())) {
+            throw new \RuntimeException(
+                'there\'s got to be a winner for this for simplicity\'s sake');
+        }
+        $winnerIsHome = $game->isHome($winner);
         $winning = str_shuffle(
             str_repeat('H', $game->getScoreHome() - ((int) $winnerIsHome))
             . str_repeat('A', $game->getScoreAway() - ((int) !$winnerIsHome)));
@@ -135,10 +164,14 @@ class TestReplayFactory
             'A' => ['user' => $game->getAway(), 'color' => ucfirst($colorAway)],
         ];
         $loser = ['A' => $winner['H'], 'H' => $winner['A']];
-        $num = range(1, TestReplayFactory::BASE_REPLAYS);
-        shuffle($num);
         $totalScore = $game->getScoreHome() + $game->getScoreAway();
-        $num = array_slice($num, 0, $totalScore);
+        if ($totalScore > 5) {
+            throw new \RuntimeException(
+                'not supporting score > 5 as there are only five example
+                replays and they get deleted once persisted');
+        }
+        $num = array_map(fn($i) => $i % self::BASE_REPLAYS + 1, range(0, $totalScore-1));
+        shuffle($num);
         $ret = [];
         for ($i = 0; $i < $totalScore; $i++) {
             $w = $winning[$i];
