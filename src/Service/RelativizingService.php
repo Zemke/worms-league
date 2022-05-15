@@ -26,7 +26,7 @@ class RelativizingService
     public function byQuality(User $user, array $rankings, array $games, array &$DP = []): Decimal
     {
         $oppRanks = OppRank::reduce($user, $rankings, $games, $DP);
-        $P = new Decimal(0);
+        $P = Decimal::zero();
         $ranking = array_unique(array_map(fn($r) => $r->ranking(), $rankings));
         sort($ranking);
         $roundsWon = $this->userRanking($user, $rankings)->getRoundsWon();
