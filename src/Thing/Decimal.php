@@ -51,6 +51,11 @@ class Decimal implements \Stringable
         return $this->op('\bcpow', $x);
     }
 
+    public function comp(mixed $x): int
+    {
+        return \bccomp($this->s, strval(new Decimal($x)));
+    }
+
     private function op(callable $op, mixed $x): Decimal
     {
         return new Decimal(call_user_func($op, $this->s, new Decimal($x)));
@@ -64,6 +69,16 @@ class Decimal implements \Stringable
     public static function min(): Decimal
     {
         return new Decimal('0.' . str_repeat('0', self::SCALE - 1) . '1');
+    }
+
+    public static function zero(): Decimal
+    {
+        return new Decimal(0);
+    }
+
+    public static function one(): Decimal
+    {
+        return new Decimal(1);
     }
 }
 
