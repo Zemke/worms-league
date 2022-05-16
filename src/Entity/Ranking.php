@@ -114,7 +114,10 @@ class Ranking
      */
     public function updateByGames(array $games): self
     {
-        $today = new \DateTime('today');
+        $latest = array_map(fn($g) => $g->getCreated(), $games);
+        usort($latest, fn($o1, $o2) => $o1->diff($o2)->f);
+        // TODO modify changes the reference (use DateTimeImmutable everywhere)
+        $latest = \DateTimeImmutable::createFromMutable($latest[0])->modify('-7 days');
         $myGames = array_filter($games, fn($g) => $g->isHomeOrAway($this->owner));
         $totalRounds = array_reduce($games, function ($acc, $g) {
             return $acc + $g->getScoreHome() + $g->getScoreAway();
@@ -128,10 +131,8 @@ class Ranking
         }, 0);
         $this->roundsPlayedRatio = $myRounds / $totalRounds;
         $this->gamesPlayedRatio = count($myGames) / count($games);
-        // TODO should be playedAt?
-        // TODO should be related to most recent game played (not $today)
         $recentGames = array_filter(
-            $myGames, fn($g) => $g->getCreated()->modify('+7 days') >= $today);
+            $myGames, fn($g) => $g->getCreated() >= $latest);
         $this->activity = count($recentGames) / Ranking::ACTIVITY_LOOKBACK;
         foreach ($myGames as $g) {
             $this->updateByGame($g);

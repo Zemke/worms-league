@@ -101,6 +101,7 @@ class RankingTest extends TestCase
             ->setScoreAway(2)
             ->setSeason($this->createSeason())
             ->setReporter($homeUser)
+            ->setCreated(new \DateTime('now'))
             ->addReplay($this->createReplay($homeUser))
             ->addReplay($this->createReplay($homeUser))
             ->addReplay($this->createReplay($awayUser))

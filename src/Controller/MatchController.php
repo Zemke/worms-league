@@ -13,10 +13,12 @@ use App\Entity\ReplayData;
 class MatchController extends AbstractController
 {
     #[Route('/matches', name: 'app_match')]
-    public function index(GameRepository $gameRepo,
+    public function index(Request $request,
+                          GameRepository $gameRepo,
                           SeasonRepository $seasonRepo): Response
     {
-        $season = $seasonRepo->findActive();
+        $seasonId = $request->query->getInt('season', -1);
+        $season = $seasonId === -1 ? $seasonRepo->findActive() : $seasonRepo->find($seasonId);
         return $this->render('match/index.html.twig', [
             'games' => $gameRepo->findBySeason($season)
         ]);
