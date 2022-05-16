@@ -26,6 +26,8 @@ class NNNFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+        $this->remove('maps');
+        $this->remove('replays');
         $seasons = [
             (new Season())
                 ->setActive(true)
@@ -50,8 +52,6 @@ class NNNFixtures extends Fixture
         ];
         $users = [];
         foreach ($seasons as $season) {
-            $this->remove('maps');
-            $this->remove('replays');
             $manager->persist($season);
             dump('-------------- season ' . $season->getName());
             $gamescsv = fopen(dirname(__FILE__) . '/csv/games_' . strtolower($season->getName()) . '.csv', 'r');
