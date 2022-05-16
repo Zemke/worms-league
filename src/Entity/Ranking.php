@@ -116,7 +116,6 @@ class Ranking
     {
         $latest = array_map(fn($g) => $g->getCreated(), $games);
         usort($latest, fn($o1, $o2) => $o1->diff($o2)->f);
-        // TODO modify changes the reference (use DateTimeImmutable everywhere)
         $latest = \DateTimeImmutable::createFromMutable($latest[0])->modify('-7 days');
         $myGames = array_filter($games, fn($g) => $g->isHomeOrAway($this->owner));
         $totalRounds = array_reduce($games, function ($acc, $g) {
