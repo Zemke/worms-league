@@ -34,7 +34,7 @@ class RankingCalcCommand extends Command
     {
         $season = $this->seasonRepo->findActive();
         if (is_null($season)) {
-            throw RuntimeException('There is no active season');
+            throw new \RuntimeException('There is no active season');
         }
 
         $this->rankingService->reCalc($season);
