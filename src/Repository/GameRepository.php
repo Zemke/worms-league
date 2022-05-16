@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Game;
 use App\Entity\User;
+use App\Entity\Season;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -56,6 +57,21 @@ class GameRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('g')
             ->where('g.home = :user or g.away = :user')
             ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Find games a user played.
+     *
+     * @return Game[] Returns an array of Game where user is home or away.
+     */
+    public function findOfUserAndSeason(User $user, Season $season): array
+    {
+        return $this->createQueryBuilder('g')
+            ->where('(g.home = :user or g.away = :user) and g.season = :season')
+            ->setParameter('user', $user)
+            ->setParameter('season', $season)
             ->getQuery()
             ->getResult();
     }

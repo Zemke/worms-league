@@ -4,21 +4,27 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\UserRepository;
 use App\Repository\GameRepository;
+use App\Repository\SeasonRepository;
 
 class UserController extends AbstractController
 {
     #[Route('/user/{usernameOrId}', name: 'app_user_view')]
     public function index(string $usernameOrId,
+                          Request $request,
+                          SeasonRepository $seasonRepo,
                           UserRepository $userRepo,
                           GameRepository $gameRepo,): Response
     {
         $user = ctype_digit($usernameOrId)
             ? $userRepo->find($usernameOrId)
             : $userRepo->findOneByUsername($usernameOrId);
-        $games = array_reduce($gameRepo->findOfUser($user), function ($acc, $g) use ($user) {
+        $seasonId = $request->query->getInt('season', -1);
+        $season = $seasonId === -1 ? $seasonRepo->findActive() : $seasonRepo->find($seasonId);
+        $games = array_reduce($gameRepo->findOfUserAndSeason($user, $season), function ($acc, $g) use ($user) {
             if (!$g->fullyProcessed()) {
                 return $acc;
             }
