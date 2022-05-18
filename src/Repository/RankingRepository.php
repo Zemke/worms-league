@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr;
 use App\Entity\Season;
 use App\Entity\User;
 
@@ -57,6 +58,22 @@ class RankingRepository extends ServiceEntityRepository
             $this->_em->persist($ranking);
         }
         return $ranking;
+    }
+
+    public function findForLadder(Season $season): mixed
+    {
+        return $this->createQueryBuilder('r')
+            ->addSelect('u')
+            ->addSelect('g')
+            ->join('r.owner', 'u')
+            ->join('\App\Entity\Game', 'g', 'WITH', '(g.home = u or g.away = u)')
+            //->where('(g.home = :user or g.away = :user) and g.season = :season')
+            ->where('r.season = :season')
+            ->setParameter('season', $season)
+            ->orderBy('r.points', 'DESC')
+            ->getQuery()
+            ->getResult();
+
     }
 
     // /**
