@@ -40,7 +40,6 @@ class RankingTest extends TestCase
         $this->assertEquals($r->getGamesWon(), 2);
         $this->assertEquals($r->getGamesLost(), 1);
         $this->assertEquals($r->getStreak(), 1);
-        $this->assertEquals($r->getRecent(), 'WLWD');
         $this->assertEquals($r->getStreakBest(), 1);
         $this->assertEquals($r->getRoundsWonRatio(), 11 / 21);
         $this->assertEquals($r->getGamesWonRatio(), 2 / 4);

@@ -16,9 +16,6 @@ class Ranking
     /** @var int num of days to look backwards in time to determine activity */
     private const ACTIVITY_LOOKBACK = 7;
 
-    /** @var int num of recent games to list */
-    private const RECENT_TRACK = 5;
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -68,13 +65,6 @@ class Ranking
     #[ORM\Column(type: 'integer', options: ['default' => 0])]
     private $streak;
 
-    /**
-     * N (W for won, L for lost, D for draw)  chars representing
-     * last N games chronologically ascendingly (from left to right).
-     */
-    #[ORM\Column(type: 'string', length: 5, options: ['default' => ''])]
-    private $recent;
-
     #[ORM\Column(type: 'integer', options: ['default' => 0])]
     private $streakBest;
 
@@ -102,7 +92,6 @@ class Ranking
         $this->gamesPlayedRatio = 0.00;
         $this->streak = 0;
         $this->streakBest = 0;
-        $this->recent = '';
         $this->activity = 0.00;
         return $this;
     }
@@ -182,10 +171,6 @@ class Ranking
         } else {
             $this->streak = 0;
         }
-        if (strlen($this->recent) === Ranking::RECENT_TRACK) {
-            $this->recent = substr($this->recent, 0, -1);
-        }
-        $this->recent = ($won ? 'W' : ($draw ? 'D' : 'L')) . $this->recent;
     }
 
     public function ownedBy(User $other): bool
@@ -373,18 +358,6 @@ class Ranking
     public function setStreak(int $streak): self
     {
         $this->streak = $streak;
-
-        return $this;
-    }
-
-    public function getRecent(): ?string
-    {
-        return $this->recent;
-    }
-
-    public function setRecent(string $recent): self
-    {
-        $this->recent = $recent;
 
         return $this;
     }

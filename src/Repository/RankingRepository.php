@@ -92,7 +92,6 @@ class RankingRepository extends ServiceEntityRepository
               sub.games_won_ratio,
               sub.games_lost,
               sub.streak,
-              sub.recent,
               sub.streak_best,
               sub.activity
             from (
