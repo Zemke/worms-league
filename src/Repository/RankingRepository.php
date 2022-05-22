@@ -8,6 +8,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\Query\ResultSetMapping;
 use App\Entity\Season;
 use App\Entity\User;
 
@@ -60,9 +61,9 @@ class RankingRepository extends ServiceEntityRepository
         return $ranking;
     }
 
-    public function findForLadder(Season $season): mixed
+    public function findForLadder(Season $season): array
     {
-        // TODO
+        $rsm = new ResultSetMapping();
 		$sql = '
             select
               sub.owner_id as owner_id,
@@ -74,9 +75,11 @@ class RankingRepository extends ServiceEntityRepository
               case
                 when g.home_id=owner_id then g.score_away
                 when g.away_id=owner_id then g.score_home
-              end as user_score,
+              end as opp_score,
               opp.id as opp_id,
               opp.username as opp,
+              sub.game_id,
+              round(sub.points) as points_rounded,
               sub.points,
               sub.rounds_played,
               sub.rounds_played_ratio,
@@ -104,13 +107,33 @@ class RankingRepository extends ServiceEntityRepository
                 end as opp_id,
                 row_number() over (partition by g.user_id order by g.created desc)
               from (select home_id as user_id, * from game g union all select away_id as user_id, * from game g) g
-              join ranking r on r.owner_id=g.user_id and r.season_id=46
+              join ranking r on r.owner_id=g.user_id and r.season_id=:seasonId
               join "user" u on u.id = g.user_id
-              where g.season_id=46 order by g.user_id) sub
+              where g.season_id=:seasonId order by g.user_id) sub
             join game g on sub.game_id=g.id
             join "user" opp on opp.id = sub.opp_id
             where sub.row_number < 6
             order by points desc, game_created asc;';
+        $stmt = $this->_em->getConnection()->prepare($sql);
+        $stmt->bindValue('seasonId', $season->getId());
+        $res = $stmt->executeQuery()->fetchAllAssociative();
+        return dump(array_reduce($res, function ($acc, $x) use ($res) {
+            $accIdx = array_search($x['owner_id'], array_column($acc, 'owner_id'));
+            if ($accIdx === false) {
+                $accIdx = array_push($acc, $x) - 1;
+                $acc[$accIdx]['games'] = [];
+            }
+            $acc[$accIdx]['games'][] = [
+                'id' => $x['game_id'],
+                'opp' => ['id' => $x['opp_id'], 'username' => $x['opp']],
+                'score' => ['owner' => $x['user_score'], 'opp' => $x['opp_score']],
+                'draw' => $x['user_score'] === $x['opp_score'],
+                'won' => $x['user_score'] > $x['opp_score'],
+                'label' => $x['user_score'] === $x['opp_score']
+                    ? '' : ($x['user_score'] > $x['opp_score'] ? 'won' : 'lost'),
+            ];
+            return $acc;
+        }, []));
     }
 
     // /**

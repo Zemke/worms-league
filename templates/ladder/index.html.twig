@@ -29,68 +29,65 @@
         </tr>
         </thead>
         <tbody>
-        {% for ranking in season.rankings|sort((a,b) => b.ranking().comp(a.ranking())) %}
+        {% for ranking in ladder %}
         <tr>
             <td>{{ loop.index }}</td>
             <td>
-                <a href="{{ path('app_user_view', {usernameOrId: ranking.owner.username}) }}">
-                    {{ ranking.owner.username }}
+                <a href="{{ path('app_user_view', {usernameOrId: ranking.user}) }}">
+                    {{ ranking.user }}
                 </a>
             </td>
             <td class="text-bold">
-                {{ ranking.points|round|pad(pp, 'p') }}
+                {{ ranking.points_rounded|pad(ladder, 'points_rounded') }}
             </td>
             <td>
-                {{ ranking.roundsPlayed|pad(season.rankings, 'getRoundsPlayed') }}
+                {{ ranking.rounds_played|pad(ladder, 'rounds_played') }}
             </td>
             <td>
-                {{ ranking.roundsPlayedRatio|format_number(style='percent')
-                    |pad(season.rankings, 'getRoundsPlayedRatio') }}
+                {{ ranking.rounds_played_ratio|format_number(style='percent')
+                    |pad(ladder, 'rounds_played_ratio') }}
             </td>
             <td class="text-green">
-                {{ ranking.roundsWon|pad(season.rankings, 'getRoundsWon') }}
+                {{ ranking.rounds_won|pad(ladder, 'rounds_won') }}
             </td>
             <td>
-                {{ ranking.roundsWonRatio|format_number(style='percent')
-                    |pad(season.rankings, 'getRoundsWonRatio') }}
+                {{ ranking.rounds_won_ratio|format_number(style='percent')
+                    |pad(ladder, 'rounds_won_ratio') }}
             </td>
             <td class="text-red">
-                {{ ranking.roundsLost|pad(season.rankings, 'getRoundsLost') }}
+                {{ ranking.rounds_lost|pad(ladder, 'rounds_lost') }}
             </td>
             <td>
-                {{ ranking.gamesPlayed|pad(season.rankings, 'getGamesPlayed') }}
+                {{ ranking.games_played|pad(ladder, 'games_played') }}
             </td>
             <td>
-                {{ ranking.gamesPlayedRatio|format_number(style='percent')|
-                    pad(season.rankings, 'getGamesPlayedRatio') }}
+                {{ ranking.games_played_ratio|format_number(style='percent')|
+                    pad(ladder, 'games_played_ratio') }}
             </td>
             <td class="text-green">
-                {{ ranking.gamesWon|pad(season.rankings, 'getGamesWon') }}
+                {{ ranking.games_won|pad(ladder, 'games_won') }}
             </td>
             <td>
-                {{ ranking.gamesWonRatio|format_number(style='percent')|pad(season.rankings, 'getGamesWonRatio') }}
+                {{ ranking.games_won_ratio|format_number(style='percent')|pad(ladder, 'games_won_ratio') }}
             </td>
             <td class="text-red">
-                {{ ranking.gamesLost|pad(season.rankings, 'getGamesLost') }}
+                {{ ranking.games_lost|pad(ladder, 'games_lost') }}
             </td>
             <td class="streak">
                 <span class="{{ ranking.streak < 0 ? 'text-red' : 'text-green' }}">
-                    {{ ranking.streak|pad(season.rankings, 'getStreak') }}
+                    {{ ranking.streak|pad(ladder, 'streak') }}
                 </span>
             </td>
             <td class="streak letter-spacing-compressed">
-                ({{ ranking.streakBest }})
+                ({{ ranking.streak_best }})
             </td>
             <td>{{ ranking.activity }}</td>
-            <td>
-                {% for rec in ranking.recent|split('') %}
-                    {% if rec == 'W' %}
-                        <i class="recent won"></i>
-                    {% elseif rec == 'L' %}
-                        <i class="recent lost"></i>
-                    {% else %}
-                        <i class="recent"></i>
-                    {% endif %}
+            <td class="text-left">
+                {% for g in ranking.games %}
+                    <a href="{{ path('app_match_view', {gameId: g.id}) }}">
+                        <i class="recent {{ g.label }}"
+                           data-tooltip="{{ g.score.owner}}–{{ g.score.opp }} {{ g.opp.username }}"></i>
+                    </a>
                 {% endfor %}
             </td>
         </tr>
