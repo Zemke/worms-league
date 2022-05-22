@@ -76,6 +76,26 @@ class GameRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Just a games finder with some eager relations.
+     *
+     * @return Game[]
+     */
+    public function findBySeasonEager(Season $season): array
+    {
+        return $this->createQueryBuilder('g')
+            ->select(['g', 'r', 'rd', 'c', 'home', 'away'])
+            ->leftJoin('g.home', 'home')
+            ->leftJoin('g.away', 'away')
+            ->leftJoin('g.comments', 'c')
+            ->leftJoin('g.replays', 'r')
+            ->leftJoin('r.replayData', 'rd')
+            ->where('g.season = :season')
+            ->setParameter('season', $season)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Game[] Returns an array of Game objects
     //  */
