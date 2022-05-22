@@ -179,6 +179,8 @@ class Ranking
             } else {
                 $this->streak = $this->streak < 0 ? ($this->streak - 1) : -1;
             }
+        } else {
+            $this->streak = 0;
         }
         if (strlen($this->recent) === Ranking::RECENT_TRACK) {
             $this->recent = substr($this->recent, 0, -1);
