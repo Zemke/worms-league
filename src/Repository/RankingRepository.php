@@ -62,18 +62,55 @@ class RankingRepository extends ServiceEntityRepository
 
     public function findForLadder(Season $season): mixed
     {
-        return $this->createQueryBuilder('r')
-            ->addSelect('u')
-            ->addSelect('g')
-            ->join('r.owner', 'u')
-            ->join('\App\Entity\Game', 'g', 'WITH', '(g.home = u or g.away = u)')
-            //->where('(g.home = :user or g.away = :user) and g.season = :season')
-            ->where('r.season = :season')
-            ->setParameter('season', $season)
-            ->orderBy('r.points', 'DESC')
-            ->getQuery()
-            ->getResult();
-
+        // TODO
+		$sql = '
+            select
+              sub.owner_id as owner_id,
+              sub.username as "user",
+              case
+                when g.home_id=owner_id then g.score_home
+                when g.away_id=owner_id then g.score_away
+              end as user_score,
+              case
+                when g.home_id=owner_id then g.score_away
+                when g.away_id=owner_id then g.score_home
+              end as user_score,
+              opp.id as opp_id,
+              opp.username as opp,
+              sub.points,
+              sub.rounds_played,
+              sub.rounds_played_ratio,
+              sub.rounds_won,
+              sub.rounds_won_ratio,
+              sub.rounds_lost,
+              sub.games_played,
+              sub.games_played_ratio,
+              sub.games_won,
+              sub.games_won_ratio,
+              sub.games_lost,
+              sub.streak,
+              sub.recent,
+              sub.streak_best,
+              sub.activity
+            from (
+              select
+                g.id as game_id,
+                g.created as game_created,
+                u.username,
+                r.*,
+                case
+                  when g.home_id=g.user_id then g.away_id
+                  when g.away_id=g.user_id then g.home_id
+                end as opp_id,
+                row_number() over (partition by g.user_id order by g.created desc)
+              from (select home_id as user_id, * from game g union all select away_id as user_id, * from game g) g
+              join ranking r on r.owner_id=g.user_id and r.season_id=46
+              join "user" u on u.id = g.user_id
+              where g.season_id=46 order by g.user_id) sub
+            join game g on sub.game_id=g.id
+            join "user" opp on opp.id = sub.opp_id
+            where sub.row_number < 6
+            order by points desc, game_created asc;';
     }
 
     // /**
