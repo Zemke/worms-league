@@ -124,54 +124,49 @@ class Ranking
         $recentGames = array_filter($myGames, fn($g) => $g->getCreated() >= $latest);
         $this->activity = count($recentGames) / Ranking::ACTIVITY_LOOKBACK;
         foreach ($myGames as $g) {
-            $this->updateByGame($g);
-        }
-        return $this;
-    }
+            if ($g->getSeason()->getId() !== $this->season->getId()) {
+                throw new \RuntimeException(
+                    "game {$g->getId()}'s season is {$g->getSeason()?->getId()} "
+                    . "whereas ranking {$this->id} season is {$this->season->getId()}");
+            }
+            if ($this->ownedBy($g->getHome())) {
+                $roundsWon = $g->getScoreHome();
+                $roundsLost = $g->getScoreAway();
+                $roundsDrawn = count($g->getReplays()) - ($roundsWon + $roundsLost);
+            } else if ($this->ownedBy($g->getAway())) {
+                $roundsWon = $g->getScoreAway();
+                $roundsLost = $g->getScoreHome();
+            } else {
+                throw new \RuntimeException(
+                    "neither {$g->getHome()->getId()} nor {$g->getAway()->getId()} "
+                    . "own ranking {$this->id} owned by {$this->owner->getId()}");
+            }
+            $roundsDrawn = count($g->drawnRounds());
+            $this->roundsPlayed += $roundsWon + $roundsLost + $roundsDrawn;
+            $this->roundsWon += $roundsWon;
+            $this->roundsWonRatio = $this->roundsWon / $this->roundsPlayed;
+            $this->roundsLost += $roundsLost;
+            $this->gamesPlayed += 1;
+            $draw = $g->draw();
+            $won = !$draw && $g->winner()->getId() === $this->owner->getId();
+            $this->gamesWon += +($won);
+            $this->gamesWonRatio = $this->gamesWon / $this->gamesPlayed;
+            $this->gamesLost += +(!$draw && !$won);
 
-    private function updateByGame(Game $game): void
-    {
-        if ($game->getSeason()->getId() !== $this->season->getId()) {
-            throw new \RuntimeException(
-                "game {$game->getId()}'s season is {$game->getSeason()?->getId()} "
-                . "whereas ranking {$this->id} season is {$this->season->getId()}");
-        }
-        if ($this->ownedBy($game->getHome())) {
-            $roundsWon = $game->getScoreHome();
-            $roundsLost = $game->getScoreAway();
-            $roundsDrawn = count($game->getReplays()) - ($roundsWon + $roundsLost);
-        } else if ($this->ownedBy($game->getAway())) {
-            $roundsWon = $game->getScoreAway();
-            $roundsLost = $game->getScoreHome();
-        } else {
-            throw new \RuntimeException(
-                "neither {$game->getHome()->getId()} nor {$game->getAway()->getId()} "
-                . "own ranking {$this->id} owned by {$this->owner->getId()}");
-        }
-        $roundsDrawn = count($game->drawnRounds());
-        $this->roundsPlayed += $roundsWon + $roundsLost + $roundsDrawn;
-        $this->roundsWon += $roundsWon;
-        $this->roundsWonRatio = $this->roundsWon / $this->roundsPlayed;
-        $this->roundsLost += $roundsLost;
-        $this->gamesPlayed += 1;
-        $draw = $game->draw();
-        $won = !$draw && $game->winner()->getId() === $this->owner->getId();
-        $this->gamesWon += +($won);
-        $this->gamesWonRatio = $this->gamesWon / $this->gamesPlayed;
-        $this->gamesLost += +(!$draw && !$won);
-
-        if (!$draw) {
-            if ($won) {
-                $this->streak = $this->streak > 0 ? ($this->streak + 1) : 1;
-                if ($this->streakBest < $this->streak) {
-                    $this->streakBest = $this->streak;
+            if (!$draw) {
+                if ($won) {
+                    $this->streak = $this->streak > 0 ? ($this->streak + 1) : 1;
+                    if ($this->streakBest < $this->streak) {
+                        $this->streakBest = $this->streak;
+                    }
+                } else {
+                    $this->streak = $this->streak < 0 ? ($this->streak - 1) : -1;
                 }
             } else {
-                $this->streak = $this->streak < 0 ? ($this->streak - 1) : -1;
+                $this->streak = 0;
             }
-        } else {
-            $this->streak = 0;
         }
+        return $this;
     }
 
     public function ownedBy(User $other): bool
