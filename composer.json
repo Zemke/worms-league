@@ -45,6 +45,7 @@
         "symfony/webpack-encore-bundle": "^1.12",
         "symfony/yaml": "6.0.*",
         "symfonycasts/verify-email-bundle": "^1.9",
+        "twig/cache-extra": "^3.4",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/intl-extra": "^3.3",
         "twig/twig": "^2.12|^3.0",
