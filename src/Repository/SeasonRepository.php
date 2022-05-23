@@ -50,6 +50,22 @@ class SeasonRepository extends ServiceEntityRepository
         return $this->findOneBy(['active' => true]);
     }
 
+    /**
+     * @return Season[]
+     */
+    public function findForArchive(): array
+    {
+        return $this->createQueryBuilder('s')
+            ->select(['s', 'r', 'u',])
+            ->leftJoin('s.rankings', 'r')
+            ->leftJoin('r.owner', 'u')
+            ->where('s.active = false')
+            ->orderBy('s.ending', 'desc')
+            ->addOrderBy('r.points', 'desc')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Season[] Returns an array of Season objects
     //  */
