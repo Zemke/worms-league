@@ -305,6 +305,10 @@ ul li::before {
     color: var(--light);
 }
 
+.alert.info {
+    background-color: var(--tertiary);
+}
+
 .alert.warn {
     background-color: var(--warn);
 }
