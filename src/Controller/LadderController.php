@@ -19,6 +19,14 @@ class LadderController extends AbstractController
         $seasonId = $request->query->getInt('season', -1);
         $season = $seasonId === -1 ? $seasonRepo->findActive() : $seasonRepo->find($seasonId);
         return $this->render('ladder/index.html.twig', [
+            'id' => $request->query->getInt('season', -1),
+        ]);
+    }
+
+    public function view(int $seasonId, RankingRepository $rankingRepo, SeasonRepository $seasonRepo): Response
+    {
+        $season = $seasonId === -1 ? $seasonRepo->findActive() : $seasonRepo->find($seasonId);
+        return $this->render('_fragments/ladder.html.twig', [
             'season' => $season,
             'ladder' => is_null($season) ? null : $rankingRepo->findForLadder($season),
         ]);
