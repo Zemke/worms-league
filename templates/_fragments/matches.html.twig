@@ -11,7 +11,7 @@
                 <th colspan="3">Score</th>
                 <th>
                     <!--<i class="comment"></i>-->
-                    <img src="/img/speech.png" alt="Comments" title="Comments">
+                    <img src="{{ asset('/img/speech.png') }}" alt="Comments" title="Comments">
                 </th>
                 <th colspan="5"></th>
             </tr>
@@ -58,7 +58,7 @@
                         <a href="/replays/{{ game.id }}/{{ replay.name }}"
                            class="inline-block"
                            {% if replay.processed() %}data-tooltip="{{ replay.replayData.startedAt() | date('M. j, H:i') }}"{% endif %}>
-                            <img src="/img/replay.png"
+                            <img src="{{ asset('/img/replay.png') }}"
                                  alt="Download Replay"
                                  title="Download Replay">
                         </a>
@@ -66,10 +66,10 @@
                             <div class="inline-block" data-tooltip="{{ replay.replayData.texture.local() }}">
                                 <a href="/texture/{{ replay.replayData.texture().value }}"
                                    class="texture">
-                                    <img src="img/terrains/{{ replay.replayData.texture().value }}.gif"
+                                    <img src="{{ asset('/img/terrains/' ~ replay.replayData.texture().value ~ '.gif') }}"
                                          alt="{{ replay.replayData.texture().local() }}">
                                     {% if replay.replayData.data.suddenDeath %}
-                                        <img src="img/water.gif"
+                                        <img src="{{ asset('/img/water.gif') }}"
                                              class="sudden-death"
                                              style="left: -{{ random(0,40)/10 }}rem;">
                                     {% endif %}
@@ -81,7 +81,7 @@
                         {% else %}
                             <div class="inline-block" data-tooltip="Processing">
                                 <div class="processing">
-                                    <img src="img/gameoptions.png">
+                                    <img src="{{ asset('/img/gameoptions.png') }}">
                                 </div>
                             </div>
                         {% endif %}
