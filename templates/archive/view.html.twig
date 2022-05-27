@@ -19,7 +19,9 @@
             'App\\Controller\\LadderController::view', {seasonId: seasonId}
         )) }}
     {% else %}
-        Matches
+        {{ render(controller(
+            'App\\Controller\\MatchController::matches', {seasonId: seasonId}
+        )) }}
     {% endif %}
 {% endblock %}
 
