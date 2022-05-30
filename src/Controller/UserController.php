@@ -45,7 +45,7 @@ class UserController extends AbstractController
             $g['wonRatio'] = round((($g['won'] / ($g['won'] + $g['lost'])) * 100));
             $g['total'] = $g['won'] + $g['lost'];
             $g['totalRatio'] = round((($g['total']) / $total) * 100);
-            $g['totalWonRatio'] = round(($g['won'] / $totalWon) * 100);
+            $g['totalWonRatio'] = $totalWon === 0 ? 0 : round(($g['won'] / $totalWon) * 100);
         }
         $games[] = [
             'opp' => null,
