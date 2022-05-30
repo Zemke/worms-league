@@ -51,8 +51,8 @@ class UserController extends AbstractController
             'opp' => null,
             'won' => $totalWon,
             'lost' => $total - $totalWon,
-            'diff' => $totalWon-($total-$totalWon),
-            'wonRatio' => round(($totalWon/$total) * 100),
+            'diff' => $totalWon - ($total - $totalWon),
+            'wonRatio' => round(($totalWon / $total) * 100),
             'total' => $total,
             'totalRatio' => 100,
             'totalWonRatio' => 100,
@@ -62,8 +62,8 @@ class UserController extends AbstractController
             'games' => $games,
             'total' => $total,
             'totalWon' => $totalWon,
-            'totalDiff' => $totalWon-($total-$totalWon),
-            'totalWonRatio' => round(($totalWon/$total) * 100),
+            'totalDiff' => $totalWon - ($total - $totalWon),
+            'totalWonRatio' => round(($totalWon / $total) * 100),
         ]);
     }
 }
