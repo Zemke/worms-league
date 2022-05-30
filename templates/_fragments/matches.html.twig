@@ -20,7 +20,7 @@
             {% for game in games | sort((a,b) => b.created < a.created ? -1 : 1) %}
             <tr>
                 <td>
-                    <a href="/matches/{{ game.id }}">
+                    <a href="{{ path('app_match_view', {gameId: game.id}) }}">
                         {{ game.id }}
                     </a>
                 </td>
@@ -34,7 +34,7 @@
                     {% endif %}
                 </td>
                 <td>
-                    <a href="/user/{{ game.home.id }}">
+                    <a href="{{ path('app_user_view', {usernameOrId: game.home.username}) }}">
                         {{ game.home.username }}
                     </a>
                 </td>
@@ -42,7 +42,7 @@
                     {{ game.scoreHome }}–{{ game.scoreAway }}
                 </td>
                 <td>
-                    <a href="/user/{{ game.away.id }}">
+                    <a href="{{ path('app_user_view', {usernameOrId: game.away.username}) }}">
                         {{ game.away.username }}
                     </a>
                 </td>

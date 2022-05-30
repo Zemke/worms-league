@@ -27,13 +27,13 @@
                   <i class="icon gear text-primary"></i>
               </button>
               <div class="dropdown" data-dropdown-target>
-                <a href="/logout">
+                <a href="{{ path('app_logout') }}">
                   Log out
                 </a>
-                <a href="/report">
+                <a href="{{ path('app_report') }}">
                   Report
                 </a>
-                <a href="/settings">
+                <a href="/todo">
                   Settings
                 </a>
               </div>
@@ -65,19 +65,19 @@
     </div>
     <nav class="nav">
       <a class="nav-item {{ app.request.pathinfo starts with '/ladder' ? 'active' : '' }}"
-         href="/ladder">
+         href="{{ path('app_ladder') }}">
         Ladder
       </a>
       <a class="nav-item {{ app.request.pathinfo starts with '/matches' ? 'active' : '' }}"
-         href="/matches">
+         href="{{ path('app_match') }}">
         Matches
       </a>
       <a class="nav-item {{ app.request.pathinfo starts with '/archive' ? 'active' : '' }}"
-         href="/archive">
+         href="{{ path('app_archive') }}">
         Archive
       </a>
       <a class="nav-item {{ app.request.pathinfo starts with '/help' ? 'active' : '' }}"
-         href="/help">
+         href="{{ path('app_help') }}">
         Help
       </a>
     </nav>
