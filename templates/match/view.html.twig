@@ -105,10 +105,10 @@
                           rows="4"
                           placeholder="Why not compose a comment?"></textarea>
             </div>
+            <input type="hidden" name="token" value="{{ csrf_token('add-comment') }}"/>
             <div class="text-right justthetip">
                 <input type="submit" value="Comment">
             </div>
-            <!-- TODO CSRF -->
         </form>
         <br>
         <div class="comments whitepad">
