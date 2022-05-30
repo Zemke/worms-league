@@ -14,7 +14,7 @@
     </div>
     {% for replay in game.replays %}
         <div class="text-right">
-            <a href="/replays/{{ game.id }}/{{ replay.name }}"
+            <a href="{{ asset('/replays/' ~ game.id ~ '/' ~ replay.name) }}"
                class="inline-block">
                 <img src="{{ asset('/img/replay.png') }}"
                      height="30"
@@ -68,7 +68,7 @@
                 {% for rep in game.replays | sort((a,b) =>
                     (a.replayData is null or b.replayData is null)
                         ? 0 : ((a.replayData.data.startedAt|date("U")) - (b.replayData.data.startedAt|date("U")) ? 1 : -1)) %}
-                    <a href="/replays/{{ game.id }}/{{ rep.name }}"
+                    <a href="{{ asset('/replays/' ~ game.id ~ '/' ~ rep.name) }}"
                        class="inline-block"
                        {% if rep.processed() %}data-tooltip="{{ rep.replayData.startedAt() | date('M. j, H:i') }}"{% endif %}>
                         <img src="{{ asset('/img/replay.png') }}"

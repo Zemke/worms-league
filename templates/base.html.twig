@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="theme-color" content="#1f3f5e">
   <title>{% block title %}Worms League{% endblock %}</title>
-  <link rel="shortcut icon" href="/icons/favicon.ico" type="image/x-icon">
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"/>
+  <link rel="shortcut icon" href="{{ asset('/icons/favicon.ico') }}" type="image/x-icon">
+  <link rel="manifest" href="{{ asset('/manifest.json') }}">
+  <link rel="apple-touch-icon" href="{{ asset('/icons/apple-touch-icon.png') }}"/>
   {% block stylesheets %}
     {{ encore_entry_link_tags('bootstrap') }}
     {{ encore_entry_link_tags('app') }}

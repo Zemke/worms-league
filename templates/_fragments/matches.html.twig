@@ -55,7 +55,7 @@
                     (a.replayData is null or b.replayData is null)
                         ? 0 : ((a.replayData.data.startedAt|date("U")) - (b.replayData.data.startedAt|date("U")) ? 1 : -1)) %}
                     <td>
-                        <a href="/replays/{{ game.id }}/{{ replay.name }}"
+                        <a href="{{ asset('/replays/' ~ game.id ~ '/' ~ replay.name) }}"
                            class="inline-block"
                            {% if replay.processed() %}data-tooltip="{{ replay.replayData.startedAt() | date('M. j, H:i') }}"{% endif %}>
                             <img src="{{ asset('/img/replay.png') }}"
@@ -64,7 +64,7 @@
                         </a>
                         {% if replay.processed() %}
                             <div class="inline-block" data-tooltip="{{ replay.replayData.texture.local() }}">
-                                <a href="/texture/{{ replay.replayData.texture().value }}"
+                                <a href="{{ asset(['texture', replay.replayData.texture().value]|join('/')) }}"
                                    class="texture">
                                     <img src="{{ asset('/img/terrains/' ~ replay.replayData.texture().value ~ '.gif') }}"
                                          alt="{{ replay.replayData.texture().local() }}">
