@@ -7,6 +7,7 @@ use App\Entity\Game;
 use App\Entity\Replay;
 use App\Entity\ReplayData;
 use App\Entity\User;
+use App\Tests\Helper;
 
 class GameTest extends TestCase
 {
@@ -49,8 +50,8 @@ class GameTest extends TestCase
 
     public function testScore(): void
     {
-        $daz = $this->stubUser(1, 'Daz');
-        $mab = $this->stubUser(2, 'Mab');
+        $daz = Helper::setId(new User(), 1)->setUsername('Daz');
+        $mab = Helper::setId(new User(), 2)->setUsername('Mab');
         $m = ['Daz' => $daz, 'Mab' => $mab];
         $params = [['Daz', $m], ['Mab', $m], ['Daz', $m], ['Daz', $m]];
         $replays = array_map(
@@ -102,13 +103,5 @@ class GameTest extends TestCase
         $rd->method('matchUsers')->willReturn($matchUsers);
         $rd->method('getData')->willReturn(['asdf' => 'asdf']);
         return $rd;
-    }
-
-    private function stubUser(int $id, ?string $username = null): User
-    {
-        $stub = $this->createStub(User::class);
-        $stub->method('getId')->willReturn($id);
-        $stub->method('getUsername')->willReturn($username);
-        return $stub;
     }
 }

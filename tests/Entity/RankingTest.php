@@ -8,14 +8,15 @@ use App\Entity\Ranking;
 use App\Entity\Replay;
 use App\Entity\Season;
 use App\Entity\User;
+use App\Tests\Helper;
 
 class RankingTest extends TestCase
 {
     public function testUpdateByGame(): void
     {
-        $homeUser = $this->createUser(1);
-        $awayUser = $this->createUser(2);
-        $thirdUser = $this->createUser(3);
+        $homeUser = Helper::setId(new User(), 1);
+        $awayUser = Helper::setId(new User(), 2);
+        $thirdUser = Helper::setId(new User(), 3);
         $drawnGame = $this->createGame($homeUser, $thirdUser);
         $drawnGame->addReplay($this->createReplay($awayUser));
         $drawnGame->setScoreHome(3);
@@ -28,7 +29,7 @@ class RankingTest extends TestCase
             $this->createGame($homeUser, $thirdUser),
         ];
         $r = (new Ranking())
-            ->setSeason($this->createSeason())
+            ->setSeason(Helper::setId(new Season(), 1))
             ->setOwner($homeUser);
 
         $r->updateByGames($games);
@@ -51,24 +52,24 @@ class RankingTest extends TestCase
 
     public function testUpdateByAllGames(): void
     {
-        $homeUser = $this->createUser(1);
-        $awayUser = $this->createUser(2);
-        $thirdUser = $this->createUser(3);
+        $homeUser = Helper::setId(new User(), 1);
+        $awayUser = Helper::setId(new User(), 2);
+        $thirdUser = Helper::setId(new User(), 3);
         $games = [
             $this->createGame($homeUser, $awayUser),
             $this->createGame($awayUser, $homeUser),
             $this->createGame($homeUser, $thirdUser),
         ];
         $homeRanking = (new Ranking())
-           ->setSeason($this->createSeason())
+           ->setSeason(Helper::setId(new Season(), 1))
            ->setOwner($homeUser)
            ->updateByGames($games);
         $awayRanking = (new Ranking())
-           ->setSeason($this->createSeason())
+           ->setSeason(Helper::setId(new Season(), 1))
            ->setOwner($awayUser)
            ->updateByGames($games);
         $thirdRanking = (new Ranking())
-           ->setSeason($this->createSeason())
+           ->setSeason(Helper::setId(new Season(), 1))
            ->setOwner($thirdUser)
            ->updateByGames($games);
 
@@ -98,7 +99,7 @@ class RankingTest extends TestCase
             ->setAway($awayUser)
             ->setScoreHome(3)
             ->setScoreAway(2)
-            ->setSeason($this->createSeason())
+            ->setSeason(Helper::setId(new Season(), 1))
             ->setReporter($homeUser)
             ->setCreated(new \DateTime('now'))
             ->addReplay($this->createReplay($homeUser))
@@ -113,20 +114,6 @@ class RankingTest extends TestCase
         $m = $this->getMockBuilder(Replay::class)->getMock();
         $m->method('processed')->willReturn(true);
         $m->method('winner')->willReturn($winner);
-        return $m;
-    }
-
-    private function createSeason(int $id = 1): Season
-    {
-        $m = $this->getMockBuilder(Season::class)->getMock();
-        $m->method('getId')->willReturn($id);
-        return $m;
-    }
-
-    private function createUser(int $id): User
-    {
-        $m = $this->getMockBuilder(User::class)->getMock();
-        $m->method('getId')->willReturn($id);
         return $m;
     }
 }

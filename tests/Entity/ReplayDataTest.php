@@ -5,6 +5,7 @@ namespace App\Tests\Entity;
 use PHPUnit\Framework\TestCase;
 use App\Entity\ReplayData;
 use App\Entity\User;
+use App\Tests\Helper;
 
 class ReplayDataTest extends TestCase
 {
@@ -17,8 +18,8 @@ class ReplayDataTest extends TestCase
             ]
         ];
         $rd = (new ReplayData())->setData($d);
-        $uZemke = $this->user(1, 'Zemke');
-        $uRafka = $this->user(2, 'Rafka');
+        $uZemke = Helper::setId(new User(), 1)->setUsername('Zemke');
+        $uRafka = Helper::setId(new User(), 2)->setUsername('Rafka');
         $this->assertEquals(
             $rd->matchUsers($uZemke, $uRafka),
             ['Zemke' => $uZemke, 'Rafka' => $uRafka]);
@@ -33,8 +34,8 @@ class ReplayDataTest extends TestCase
             ]
         ];
         $rd = (new ReplayData())->setData($d);
-        $uDaz = $this->user(1, 'Dario');
-        $uMab = $this->user(2, 'Mablak');
+        $uDaz = Helper::setId(new User(), 1)->setUsername('Dario');
+        $uMab = Helper::setId(new User(), 2)->setUsername('Mablak');
         $this->assertEquals(
             $rd->matchUsers($uMab, $uDaz),
             ['Daz' => $uDaz, 'Mab' => $uMab]);
@@ -49,8 +50,8 @@ class ReplayDataTest extends TestCase
             ]
         ];
         $rd = (new ReplayData())->setData($d);
-        $uKayz = $this->user(1, 'Kayz');
-        $uKoras = $this->user(2, 'Koras');
+        $uKayz = Helper::setId(new User(), 1)->setUsername('Kayz');
+        $uKoras = Helper::setId(new User(), 2)->setUsername('Koras');
         $this->assertEquals(
             $rd->matchUsers($uKoras, $uKayz),
             ['NNNxKayz' => $uKayz, 'NNNlKoras' => $uKoras]);
@@ -63,14 +64,6 @@ class ReplayDataTest extends TestCase
         $this->assertEquals(
             $rd->matchUsers($uKayz, $uKoras),
             [ 'NNNxKayz' => $uKayz, 'NNNlKoras' => $uKoras]);
-    }
-
-    private function user(int $id, string $username): User
-    {
-        $m = $this->getMockBuilder(User::class)->getMock();
-        $m->method('getId')->willReturn($id);
-        $m->method('getUsername')->willReturn($username);
-        return $m;
     }
 
     public function testNames(): void
