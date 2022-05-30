@@ -117,7 +117,7 @@
             {% endif %}
             {% for comment in game.comments|sort((a, b) => b.modified <=> a.modified) %}
                 <div>
-                    <a href="todo">
+                    <a href="{{ path('app_user_view', {usernameOrId: comment.author.username}) }}">
                         {{ comment.author.username }}
                     </a>
                     <div class="small float-right">
