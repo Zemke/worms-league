@@ -111,7 +111,6 @@ class ReplayData
     {
         [$n1, $n2] = $this->names();
         $mxmatch = array_reduce([$ua, $ub], function ($mx, $u) use ($n1, $n2) {
-            // TODO lower boundary for matching
             $sm = [$u->similarUsername($n1), $u->similarUsername($n2)];
             $mxp = max($sm);
             if (is_null($mx) || $mxp > $mx[1]) {
