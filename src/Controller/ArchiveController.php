@@ -14,7 +14,6 @@ class ArchiveController extends AbstractController
     public function index(SeasonRepository $seasonRepo): Response
     {
         $var['seasons'] = $seasonRepo->findForArchive();
-        dump($var['seasons']);
         return $this->render('archive/index.html.twig', $var);
     }
 

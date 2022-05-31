@@ -90,7 +90,6 @@ class RankingService
         $DP = [];
         for ($i = 0; $i < 5; $i++) {
             foreach ($rankings as &$ranking) {
-                $s = microtime(true);
                 $user = $ranking->getOwner();
                 $rels = [
                     2.6,
@@ -98,15 +97,9 @@ class RankingService
                     $this->relativizingService->byFarming($user, $rankings, $games, $DP),
                     $this->relativizingService->byEffort ($user, $rankings, $games, $DP),
                 ];
-                if (in_array($user->getUsername(), ['chuvash', 'Kayz', 'Master', 'KinslayeR', 'Rafka'])
-                    && $i === 0) {
-                    dump($user->getUsername(), $rels);
-                }
                 $ranking->setPoints(
                     strval(D::of($ranking->ranking())->mul(D::sum($rels)->div(count($rels)))));
-                //dump(microtime(true) - $s);
             }
-            dump('------------------------------------');
         }
         return;
     }

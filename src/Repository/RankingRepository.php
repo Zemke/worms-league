@@ -116,7 +116,7 @@ class RankingRepository extends ServiceEntityRepository
         $stmt = $this->_em->getConnection()->prepare($sql);
         $stmt->bindValue('seasonId', $season->getId());
         $res = $stmt->executeQuery()->fetchAllAssociative();
-        return dump(array_reduce($res, function ($acc, $x) use ($res) {
+        return array_reduce($res, function ($acc, $x) use ($res) {
             $accIdx = array_search($x['owner_id'], array_column($acc, 'owner_id'));
             if ($accIdx === false) {
                 $accIdx = array_push($acc, $x) - 1;
@@ -132,7 +132,7 @@ class RankingRepository extends ServiceEntityRepository
                     ? '' : ($x['user_score'] > $x['opp_score'] ? 'won' : 'lost'),
             ];
             return $acc;
-        }, []));
+        }, []);
     }
 
     // /**

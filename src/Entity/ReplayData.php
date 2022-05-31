@@ -128,7 +128,6 @@ class ReplayData
     #[Assert\IsTrue(message: 'Players are not two.')]
     public function isDataTwoNames(): bool
     {
-        dump('called');
         return empty($this->getData()) || count($this->names()) === 2;
     }
 
