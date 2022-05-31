@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ReplayDataRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: ReplayDataRepository::class)]
@@ -68,12 +69,7 @@ class ReplayData
      */
     public function names(): array
     {
-        $names = array_map(fn($v) => $v['user'], $this->data['teams']);
-        $c = count($names);
-        if ($c !== 2) { // TODO make this entity validation prepersist
-            throw new \RuntimeException("Therea are {$c} teams");
-        }
-        return $names;
+        return array_map(fn($v) => $v['user'], $this->data['teams']);
     }
 
     /**
@@ -127,6 +123,13 @@ class ReplayData
         $res = [$mxmatch[0][1] => $mxmatch[0][0]];
         $res[$mxmatch[0][1] === $n1 ? $n2 : $n1] = $mxmatch[0][0]->getId() === $ua->getId() ? $ub : $ua;
         return $res;
+    }
+
+    #[Assert\IsTrue(message: 'Players are not two.')]
+    public function isDataTwoNames(): bool
+    {
+        dump('called');
+        return empty($this->getData()) || count($this->names()) === 2;
     }
 
     #[ORM\PrePersist]

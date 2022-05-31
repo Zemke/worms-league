@@ -5,8 +5,10 @@ namespace App\MessageHandler;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Psr\Log\LoggerInterface;
 use App\Entity\ReplayMap;
+use App\Entity\ReplayData;
 use App\Message\SendReplayMessage;
 use App\Message\RankingCalcMessage;
 use App\Repository\GameRepository;
@@ -19,6 +21,7 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
                                 private WaaasService $waaasService,
                                 private GameRepository $gameRepo,
                                 private ReplayRepository $replayRepo,
+                                private ValidatorInterface $validator,
                                 private MessageBusInterface $bus,)
     {}
 
@@ -27,6 +30,9 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
         $replay = $this->replayRepo->find($message->getReplayId());
         if (!$replay->processed()) {
             $replayData = $this->waaasService->send($replay);
+            if (count($err = $this->validator->validate($replayData)) > 0) {
+                throw new \RuntimeException($err);
+            }
             $replay->setReplayData($replayData);
             $this->replayRepo->add($replay, true);
         } else {
