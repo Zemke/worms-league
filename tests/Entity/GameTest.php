@@ -14,9 +14,9 @@ class GameTest extends TestCase
     public function testFullyProcessed_positive(): void
     {
         $replay1 = (new Replay())->setReplayData(
-            (new ReplayData())->setData(['hello' => 'world']));
+            (new ReplayData())->setData(['startedAt' => '2022-01-02 19:23:05 GMT']));
         $replay2 = (new Replay())->setReplayData(
-            (new ReplayData())->setData(['hello' => 'world']));
+            (new ReplayData())->setData(['startedAt' => '2022-01-02 19:23:05 GMT']));
         $game = (new Game())->addReplay($replay1)->addReplay($replay2);
         $this->assertTrue(count($game->getReplays()) === 2);
         $this->assertFalse(empty($game->getReplays()[0]->getReplayData()->getData()));
@@ -27,7 +27,7 @@ class GameTest extends TestCase
     public function testFullyProcessed_negativeByMissingReplayData(): void
     {
         $replay1 = (new Replay())->setReplayData(
-            (new ReplayData())->setData(['hello' => 'world']));
+            (new ReplayData())->setData(['startedAt' => '2022-01-02 19:23:05 GMT']));
         $replay2 = new Replay();
         $game = (new Game())->addReplay($replay1)->addReplay($replay2);
         $this->assertTrue(count($game->getReplays()) === 2);
@@ -39,7 +39,7 @@ class GameTest extends TestCase
     public function testFullyProcessed_negativeByEmptyData(): void
     {
         $replay1 = (new Replay())->setReplayData(
-            (new ReplayData())->setData(['hello' => 'world']));
+            (new ReplayData())->setData(['startedAt' => '2022-01-02 19:23:05 GMT']));
         $replay2 = (new Replay())->setReplayData((new ReplayData()));
         $game = (new Game())->addReplay($replay1)->addReplay($replay2);
         $this->assertTrue(count($game->getReplays()) === 2);
@@ -101,7 +101,7 @@ class GameTest extends TestCase
         $rd = $this->createStub(ReplayData::class);
         $rd->method('winner')->willReturn($winner);
         $rd->method('matchUsers')->willReturn($matchUsers);
-        $rd->method('getData')->willReturn(['asdf' => 'asdf']);
+        $rd->method('getData')->willReturn(['startedAt' => '2022-01-02 19:23:05 GMT']);
         return $rd;
     }
 }

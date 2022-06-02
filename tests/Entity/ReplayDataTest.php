@@ -83,6 +83,8 @@ class ReplayDataTest extends TestCase
     public function testWinner(): void
     {
         $d = [
+            'startedAt' => '2022-01-02 19:23:05 GMT',
+            'gameEnd' => '00:19:07.46',
             'teams' => [
                 ['user' => 'Daz'],
                 ['user' => 'Mab'],
@@ -95,6 +97,7 @@ class ReplayDataTest extends TestCase
                             'kills' => 2
                         ]
                     ],
+                    'weapons' => [],
                 ],
                 [
                     'damages' => [
@@ -103,6 +106,7 @@ class ReplayDataTest extends TestCase
                             'kills' => 5
                         ]
                     ],
+                    'weapons' => [],
                 ],
                 [
                     'damages' => [
@@ -111,6 +115,7 @@ class ReplayDataTest extends TestCase
                             'kills' => 4
                         ]
                     ],
+                    'weapons' => [],
                 ],
             ]
         ];
@@ -121,8 +126,9 @@ class ReplayDataTest extends TestCase
                 [
                     'victim' => 'Mab',
                     'kills' => 2
-                ]
+                ],
             ],
+            'weapons' => [],
         ];
         $this->assertEquals((new ReplayData())->setData($d)->winner(), 'Daz');
 
@@ -131,8 +137,9 @@ class ReplayDataTest extends TestCase
                 [
                     'victim' => 'Daz',
                     'kills' => 1
-                ]
+                ],
             ],
+            'weapons' => [],
         ];
         $this->assertNull((new ReplayData())->setData($d)->winner());
     }
