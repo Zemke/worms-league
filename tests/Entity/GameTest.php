@@ -66,6 +66,53 @@ class GameTest extends TestCase
         $this->assertEquals($game->getScoreAway(), 1);
     }
 
+    public function testScore_mass(): void
+    {
+        $users = [];
+        $getUser = function ($username) use (&$users) {
+            array_key_exists($username, $users)
+                ? $users[$username]
+                : ($users[$username] = Helper::setId((new User())->setUsername($username), count($users) + 1));
+            return $users[$username];
+        };
+        $f = fopen(dirname(__FILE__) . '/../../src/DataFixtures/csv/games_nnn40.csv', 'r');
+        $head = fgetcsv($f);
+        $total = 0;
+        $correct = 0;
+        while (($row = fgetcsv($f)) !== false) {
+            [
+                $dateAt,
+                $scoreConfirmer,
+                $scoreConfirmed,
+                $userConfirmer,
+                $userConfirmed,
+                $uploadId
+            ] = $row;
+            if (in_array($uploadId, [23273, 22977, 22890, 22893, 22922, 22909, 22989, 22950, 22961])) {
+                // 23273, 22977, 22890, 22893, 22922, 22909 incomplete or wrong replay upload
+                // 22950 second round is a disconnect that was taken as a draw
+                // 22961 second round is a disconnect
+                // 22989 last round is a rage quit
+                continue;
+            }
+            $game = (new Game())
+                ->setHome($getUser($userConfirmer))
+                ->setAway($getUser($userConfirmed));
+                $files = glob(dirname(__FILE__) . "/../../src/DataFixtures/games_nnn40_stats/{$uploadId}/*/*.json");
+                foreach ($files as $file) {
+                    $d = json_decode(file_get_contents($file), true);
+                    $replay = (new Replay())->setReplayData((new ReplayData())->setData($d));
+                    $game->addReplay($replay);
+                }
+                $game->score();
+                $isCorrect = $game->getScoreHome() == $scoreConfirmer && $game->getScoreAway() == $scoreConfirmed;
+                $correct += intval($isCorrect);
+                $total++;
+        }
+        // There are many incomplete replays, replays with connections or quits etc.
+        $this->assertTrue(dump($correct / $total) > .87);
+    }
+
     public function testReplayData(): void
     {
         $inOrder = [
