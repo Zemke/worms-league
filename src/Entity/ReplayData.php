@@ -77,10 +77,25 @@ class ReplayData
      *
      * @return string Wining in-game user's name or null if drawn.
      */
-    // TODO mass test with CWT data
     public function winner(): ?string
     {
         $names = $this->names();
+        [$hour, $minute, $second] = explode(':', $this->data['gameEnd']); // 00:25:13.98
+        $past = (intval($hour) * 60 * 60) + (intval($minute) * 60) + intval($second);
+        foreach ($this->data['turns'] as $turn) {
+            if (in_array('Surrender', $turn['weapons'])) {
+                if ($past > 90) {
+                    return $names[0] === $turn['user'] ? $names[1] : $names[0];
+                } else {
+                    return null; // propbably just skipping the round
+                }
+            }
+        }
+
+        // A hint that might be interesting in the future:
+        // A disconnect/quit round might be identifiable by the last turn
+        // having to retreat and false lossOfControl
+
         $victims = array_reduce($this->data['turns'], function($acc, $turn) use ($names) {
             foreach ($turn['damages'] as $dmg) {
                 if (!in_array($dmg['victim'], $names)) {
@@ -95,13 +110,18 @@ class ReplayData
         $c = array_values($victims)[0] - array_values($victims)[1];
         $winner = null;
         if ($c === 0) {
+            if (!empty($this->data['winsTheRound'])) {
+                return (array_combine(
+                    array_column($this->data['teams'], 'team'),
+                    array_column($this->data['teams'], 'user')))[$this->data['winsTheRound']];
+            }
             return null;
         } else {
             return $c > 0 ? array_keys($victims)[1] : array_keys($victims)[0];
         }
     }
 
-    // TODO massa test with CWT data
+    // TODO mass test with CWT data
     /**
      * Match user to in-game users' names.
      *

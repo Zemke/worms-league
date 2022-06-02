@@ -87,7 +87,9 @@ class Replay
 
     public function processed(): bool
     {
-        return !is_null($this->getReplayData()) && !empty($this->getReplayData()->getData());
+        return !is_null($this->getReplayData())
+            && !empty($this->getReplayData()->getData())
+            && array_key_exists('startedAt', $this->getReplayData()->getData());
     }
 
     public function homeColor(): ?string
