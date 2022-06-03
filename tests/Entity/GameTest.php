@@ -83,7 +83,7 @@ class GameTest extends TestCase
         $Z = new \ZipArchive();
         $res = $Z->open(dirname(__FILE__) . "/../../src/DataFixtures/games_nnn40_stats.zip");
         if ($res === false) {
-            throw new \RuntimeException("could not open {$basename} archive");
+            throw new \RuntimeException("could not open archive");
         }
         $loc = sys_get_temp_dir() . '/php_wl_gametest_scoremass';
         $Z->extractTo($loc);
