@@ -79,6 +79,15 @@ class GameTest extends TestCase
         $head = fgetcsv($f);
         $total = 0;
         $correct = 0;
+
+        $Z = new \ZipArchive();
+        $res = $Z->open(dirname(__FILE__) . "/../../src/DataFixtures/games_nnn40_stats.zip");
+        if ($res === false) {
+            throw new \RuntimeException("could not open {$basename} archive");
+        }
+        $loc = sys_get_temp_dir() . '/php_wl_gametest_scoremass';
+        $Z->extractTo($loc);
+
         while (($row = fgetcsv($f)) !== false) {
             [
                 $dateAt,
@@ -93,12 +102,13 @@ class GameTest extends TestCase
                 // 22950 second round is a disconnect that was taken as a draw
                 // 22961 second round is a disconnect
                 // 22989 last round is a rage quit
+                // there are many more erroneous replay sets but I didn't check them all
                 continue;
             }
             $game = (new Game())
                 ->setHome($getUser($userConfirmer))
                 ->setAway($getUser($userConfirmed));
-                $files = glob(dirname(__FILE__) . "/../../src/DataFixtures/games_nnn40_stats/{$uploadId}/*/*.json");
+                $files = glob("{$loc}/games_nnn40_stats/{$uploadId}/*/*.json");
                 foreach ($files as $file) {
                     $d = json_decode(file_get_contents($file), true);
                     $replay = (new Replay())->setReplayData((new ReplayData())->setData($d));
