@@ -121,7 +121,6 @@ class ReplayData
         }
     }
 
-    // TODO mass test with CWT data
     /**
      * Match user to in-game users' names.
      *
