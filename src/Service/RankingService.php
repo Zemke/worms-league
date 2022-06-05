@@ -83,7 +83,7 @@ class RankingService
      * @param Ranking[] $rankings
      * @param Game[] $games
      */
-    public function rank(array &$rankings, array $games): void
+    private function rank(array &$rankings, array $games): void
     {
         usort($rankings, fn($a, $b) => $a->getPoints() - $b->getPoints());
         $X = count($rankings);
