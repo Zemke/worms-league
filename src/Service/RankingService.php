@@ -14,6 +14,8 @@ use App\Thing\Decimal as D;
 
 class RankingService
 {
+    /** @var float moderate relativizing effect */
+    private const REL_REL = 2.6;
 
     public function __construct(private RankingRepository $rankingRepo,
                                 private GameRepository $gameRepo,
@@ -92,7 +94,7 @@ class RankingService
             foreach ($rankings as &$ranking) {
                 $user = $ranking->getOwner();
                 $rels = [
-                    2.6,
+                    self::REL_REL,
                     $this->relativizingService->byQuality($user, $rankings, $games, $DP),
                     $this->relativizingService->byFarming($user, $rankings, $games, $DP),
                     $this->relativizingService->byEffort ($user, $rankings, $games, $DP),
