@@ -17,6 +17,9 @@ class RankingService
     /** @var float moderate relativizing effect */
     private const REL_REL = 2.6;
 
+    /** @var int num of relativizing steps */
+    private const REL_STEPS= 5;
+
     public function __construct(private RankingRepository $rankingRepo,
                                 private GameRepository $gameRepo,
                                 private SeasonRepository $seasonRepo,
@@ -90,7 +93,7 @@ class RankingService
         usort($rankings, fn($a, $b) => $a->getPoints() - $b->getPoints());
         $X = count($rankings);
         $DP = [];
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < self::REL_STEPS; $i++) {
             foreach ($rankings as &$ranking) {
                 $user = $ranking->getOwner();
                 $rels = [
