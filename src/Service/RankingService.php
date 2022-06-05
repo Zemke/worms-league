@@ -25,7 +25,7 @@ class RankingService
     /**
      * Trigger re-calc because there's a new game to include in the ranking calc.
      */
-    public function calc(Game $game): void
+    public function calc(Game &$game): void
     {
         if (!$game->played()) {
             throw new \RuntimeException("Game {$game->getId()} is not played");
