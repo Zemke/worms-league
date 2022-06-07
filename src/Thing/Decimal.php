@@ -51,6 +51,11 @@ class Decimal implements \Stringable
         return $this->op('\bcpow', $x);
     }
 
+    public function sqrt(): Decimal
+    {
+        return self::of(\bcsqrt(strval($this)));
+    }
+
     public function comp(mixed $x): int
     {
         return \bccomp($this->s, strval(self::of($x)));
@@ -74,6 +79,22 @@ class Decimal implements \Stringable
     public static function sum(array $xx): Decimal
     {
         return array_reduce($xx, fn($acc, $x) => $acc->add($x), self::zero());
+    }
+
+    public static function min(array $xx): Decimal
+    {
+        return self::of(array_reduce(
+            array_slice($xx, 1),
+            fn($acc, $x) => self::of($x)->comp($acc) > 0 ? $acc : $x,
+            $xx[0]));
+    }
+
+    public static function max(array $xx): Decimal
+    {
+        return self::of(array_reduce(
+            $xx,
+            fn($acc, $x) => self::of($x)->comp($acc) > 0 ? $x : $acc,
+            self::least()));
     }
 
     public static function abs(mixed $x): Decimal
