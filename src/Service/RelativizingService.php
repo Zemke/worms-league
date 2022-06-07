@@ -112,7 +112,7 @@ class RelativizingService
         $allRoundsPlayed = array_map(fn($r) => $r->getRoundsPlayed(), $rankings);
         $mx = min($allRoundsPlayed);
         $mn = max($allRoundsPlayed);
-        $a = D::min();
+        $a = D::least();
         $b = D::one();
         // custom scale min-max normalization
         $norm = D::of($this->userRanking($user, $rankings)->getRoundsPlayed() - $mn)

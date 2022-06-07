@@ -83,7 +83,7 @@ class Decimal implements \Stringable
         return $s[0] === '-' ? self::of(substr($s, 1)) : $d;
     }
 
-    public static function min(): Decimal
+    public static function least(): Decimal
     {
         return self::of('0.' . str_repeat('0', self::SCALE - 1) . '1');
     }
