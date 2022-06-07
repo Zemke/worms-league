@@ -179,6 +179,32 @@ class RankingServiceTest extends TestCase
             ->setMethodsExcept(['reCalc', 'calc', 'rank'])
             ->getMock();
         $actual = array_filter($cut->reCalc($season), fn($r) => $r->getRoundsWon() >= 5);
+        $actualUserIds = array_map(fn($r) => $r->getOwner()->getId(), $actual);
+        $nnnRankings = array_filter($nnnRankings, fn($r) => in_array($r->getOwner()->getId(), $actualUserIds));
+        $nnnPoints = array_map(fn($r) => $r->getPoints(), $nnnRankings);
+        $actPoints = array_map(fn($r) => $r->getPoints(), $actual);
+        $a = D::min($actPoints);
+        $b = D::max($actPoints);
+        $mn = D::min($nnnPoints);
+        $mx = D::max($nnnPoints);
+        foreach ($nnnRankings as &$r) {
+            $r->setPoints(D::of($a)
+                ->add(
+                    D::of($r->getPoints())->sub($mn)
+                        ->mul($b->sub($a))
+                        ->div($mx->sub($mn))
+                ));
+        }
+
+        // uncomment and run the following command to see the tables
+        // ./bin/phpunit --filter ::testReCalc tests/Service/RankingServiceTest.php | grep 'username\|points'
+        //usort($nnnRankings, fn($r1, $r2) => D::of($r2->getPoints())->comp($r1->getPoints()));
+        //usort($actual, fn($r1, $r2) => D::of($r2->getPoints())->comp($r1->getPoints()));
+        //dump($actual);
+        //dump('----- username -----');
+        //dump($nnnRankings);
+        //die();
+
         $sum = D::zero();
         $diffs = [];
         foreach ($actual as $r) {
@@ -187,36 +213,23 @@ class RankingServiceTest extends TestCase
             $sum = $sum->add(D::abs($diff));
             $diffs[] = $diff;
         }
-        $mean = $sum->div(count($actual));
+        echo "\n";
+        foreach ($diffs as $diff) {
+            echo strval($diff) . ",";
+        }
+        //$diffs = array_map(fn($n) => D::of($n), [10, 12, 23, 23, 16, 23, 21, 16]);
+        $avg = $sum->div(count($actual));
+        dump('avg ' . $avg);
+        $count = count($diffs);
+        $variance = D::zero();
+        $mean = D::sum($diffs)->div($count);
         dump('mean ' . $mean);
-
-
-        // min-max norm
-        // $weight = ($r->getOpp()->ranking() - $mn) / ($mx - $mn);
-
-        // TODO assertions
-        // scale WL points to max/min boundaries of NNN points (min-max norm)
-        // diff points per user
-        // average of diffs
-        // variance of diffs
-        // std deviation of diffs
-        // https://www.calculator.net/standard-deviation-calculator.html
-
-        /*
-        custom boundary min-max norm:
-
-        $allRoundsPlayed = array_map(fn($r) => $r->getRoundsPlayed(), $rankings);
-        $mx = min($allRoundsPlayed);
-        $mn = max($allRoundsPlayed);
-        $a = D::min();
-        $b = D::one();
-        // custom scale min-max normalization
-        $norm = D::of($this->userRanking($user, $rankings)->getRoundsPlayed() - $mn)
-            ->mul($b->sub($a))
-            ->div($mx - $mn);
-        $norm = $norm->add($a);
-        return $norm;
-        */
+        foreach ($diffs as $diff) {
+            $variance = $variance->add($diff->sub($mean)->pow(2));
+        }
+        dump('var ' . $variance->div($count));
+        $std = $variance->div($count)->sqrt();
+        dump('std ' . $std);
     }
 }
 
