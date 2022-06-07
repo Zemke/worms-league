@@ -53,8 +53,9 @@ class RankingService
      * Take given games into account for a full recalc.
      *
      * @param Season $season The season to run re-calc for.
+     * @return Ranking[] Rankings of the given season.
      */
-    public function reCalc(Season $season): void
+    public function reCalc(Season $season): array
     {
         $games = $this->gameRepo->findBySeason($season);
         usort($games, fn($a, $b) => $a->playedAt()->diff($b->playedAt())->f);
@@ -80,6 +81,7 @@ class RankingService
             $this->em->persist($r);
         }
         $this->em->flush();
+        return $rankings;
     }
 
     /**
