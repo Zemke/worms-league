@@ -218,6 +218,7 @@ class RankingServiceTest extends TestCase
             echo strval($diff) . ",";
         }
         //$diffs = array_map(fn($n) => D::of($n), [10, 12, 23, 23, 16, 23, 21, 16]);
+        dump('diffs ' . json_encode(array_map(fn($d) => strval($d), $diffs)));
         $avg = $sum->div(count($actual));
         dump('avg ' . $avg);
         $count = count($diffs);
