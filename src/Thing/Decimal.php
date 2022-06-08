@@ -78,23 +78,33 @@ class Decimal implements \Stringable
 
     public static function sum(array $xx): Decimal
     {
+        self::assertNotEmpty($xx);
         return array_reduce($xx, fn($acc, $x) => $acc->add($x), self::zero());
     }
 
     public static function min(array $xx): Decimal
     {
+        self::assertNotEmpty($xx);
         return self::of(array_reduce(
             array_slice($xx, 1),
             fn($acc, $x) => self::of($x)->comp($acc) > 0 ? $acc : $x,
-            $xx[0]));
+            array_values($xx)[0]));
     }
 
     public static function max(array $xx): Decimal
     {
+        self::assertNotEmpty($xx);
         return self::of(array_reduce(
             $xx,
             fn($acc, $x) => self::of($x)->comp($acc) > 0 ? $x : $acc,
             self::least()));
+    }
+
+    public static function assertNotEmpty(array $xx): void
+    {
+        if (empty($xx)) {
+            throw new \RuntimeException('Array must contain at least one argument');
+        }
     }
 
     public static function abs(mixed $x): Decimal
