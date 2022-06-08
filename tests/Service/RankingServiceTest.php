@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Service\RelativizingService;
 use App\Service\RankingService;
 use App\Tests\Helper;
-use App\Tests\Data;
+use App\Tests\GamesGenerator;
 use App\Thing\Decimal as D;
 
 class RankingServiceTest extends TestCase
@@ -122,7 +122,7 @@ class RankingServiceTest extends TestCase
                     $f = fopen($file, 'r');
                     $users = [];
                     $games = [];
-                    Data::gamesFromCsv($season, $f, $users, false, function ($o) use (&$users, &$games) {
+                    GamesGenerator::fromCsv($season, $f, $users, false, function ($o) use (&$users, &$games) {
                         if ($o instanceof User) {
                             $users[] = Helper::setId($o, count($users));
                         } else if ($o instanceof Game) {

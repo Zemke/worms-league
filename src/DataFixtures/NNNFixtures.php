@@ -14,7 +14,7 @@ use App\Entity\Replay;
 use App\Entity\ReplayData;
 use App\Entity\ReplayMap;
 use App\Entity\Texture;
-use App\Tests\Data;
+use App\Tests\GamesGenerator;
 
 class NNNFixtures extends Fixture
 {
@@ -58,7 +58,7 @@ class NNNFixtures extends Fixture
             $gamescsv = fopen(dirname(__FILE__) . '/csv/games_' . strtolower($season->getName()) . '.csv', 'r');
             try {
                 $c = 0;
-                $games = Data::gamesFromCsv($season, $gamescsv, $users, true,
+                $games = GamesGenerator::fromCsv($season, $gamescsv, $users, true,
                     function ($o) use (&$c, &$manager) {
                         if ($o instanceof User) {
                             $o->setPassword(

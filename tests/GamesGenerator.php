@@ -11,10 +11,9 @@ use App\Entity\ReplayData;
 use App\Entity\ReplayMap;
 use App\Entity\Texture;
 
-// TODO more specific naming
-class Data
+class GamesGenerator
 {
-    public static function gamesFromCsv(Season $season, mixed $gamescsv, &$users, bool $addReplays, callable $createFn): array
+    public static function fromCsv(Season $season, mixed $gamescsv, &$users, bool $addReplays, callable $createFn): array
     {
         $games = [];
         $head = fgetcsv($gamescsv);
