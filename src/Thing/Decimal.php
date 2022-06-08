@@ -4,7 +4,7 @@ namespace App\Thing;
 
 class Decimal implements \Stringable
 {
-    public const SCALE = 20;
+    public const SCALE = 50;
 
     private string $s;
 
