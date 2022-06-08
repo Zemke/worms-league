@@ -170,7 +170,7 @@ class RelativizingServiceTest extends TestCase
         $this->assertEquals(strval($dazW->sub($mabW)->sub(Decimal::least())), strval($mabW->sub($korW)));
         $this->assertEquals("1.00000000000000000000", $dazW);
         $this->assertEquals("0.50000000000000000000", $mabW);
-        $this->assertEquals("0.00000000000000000001", $korW);
+        $this->assertEquals("0.00000000000000000000000000000000000000000000000001", $korW);
         $this->assertEquals(strval(Decimal::least()), $korW);
     }
 }

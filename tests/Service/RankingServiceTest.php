@@ -87,6 +87,8 @@ class RankingServiceTest extends TestCase
                 $seasonRepo,
                 $this->createMock(RelativizingService::class),
                 $this->createMock(EntityManagerInterface::class),
+                2.6,
+                5,
             ])
             ->setMethodsExcept(['calc'])
             ->getMock();
