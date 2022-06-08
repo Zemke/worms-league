@@ -45,10 +45,6 @@ class Data
             }
             $createFn($game);
             $games[] = $game;
-            dump($game->getHome()->getUsername() . ' '
-                 . $game->getScoreHome() . '–' . $game->getScoreAway() . ' '
-                 . $game->getAway()->getUsername());
-            dump($vv);
         }
         return $games;
     }

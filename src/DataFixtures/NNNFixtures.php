@@ -63,6 +63,10 @@ class NNNFixtures extends Fixture
                         if ($o instanceof User) {
                             $o->setPassword(
                                 $this->hasher->hashPassword($o, 'adminadminadmin'));
+                        } else if ($o instanceof Game) {
+                            dump($o->getHome()->getUsername() . ' '
+                                 . $o->getScoreHome() . '–' . $o->getScoreAway() . ' '
+                                 . $o->getAway()->getUsername());
                         }
                         $manager->persist($o);
                         $c++;
