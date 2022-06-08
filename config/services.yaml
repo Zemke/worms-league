@@ -23,6 +23,11 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+    App\Service\RankingService:
+        arguments:
+            $relRel: 2.6 # moderate relativizing effect
+            $relSteps: 5 # num of relativizing steps
+
     App\Service\WaaasService:
         arguments:
             $waaas: 'https://waaas.zemke.io'

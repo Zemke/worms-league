@@ -24,7 +24,9 @@ class RankingService
                                 private GameRepository $gameRepo,
                                 private SeasonRepository $seasonRepo,
                                 private RelativizingService $relativizingService,
-                                private EntityManagerInterface $em,)
+                                private EntityManagerInterface $em,
+                                private float $relRel,
+                                private int $relSteps,)
     {}
 
     /**
@@ -95,11 +97,11 @@ class RankingService
         usort($rankings, fn($a, $b) => $a->getPoints() - $b->getPoints());
         $X = count($rankings);
         $DP = [];
-        for ($i = 0; $i < self::REL_STEPS; $i++) {
+        for ($i = 0; $i < $this->relSteps; $i++) {
             foreach ($rankings as &$ranking) {
                 $user = $ranking->getOwner();
                 $rels = [
-                    self::REL_REL,
+                    $this->relRel,
                     $this->relativizingService->byQuality($user, $rankings, $games, $DP),
                     $this->relativizingService->byFarming($user, $rankings, $games, $DP),
                     $this->relativizingService->byEffort ($user, $rankings, $games, $DP),
