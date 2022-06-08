@@ -60,7 +60,8 @@ class RankingService
     public function reCalc(Season $season): array
     {
         $games = $this->gameRepo->findBySeason($season);
-        usort($games, fn($a, $b) => $a->playedAt()->diff($b->playedAt())->f);
+        // TODO sorthing is garbage as ->f is an absolute number
+        usort($games, fn($a, $b) => $a->getCreated()->diff($b->getCreated())->f);
 
         $rankings = $this->rankingRepo->findBySeason($season);
         foreach ($rankings as &$ranking) {
