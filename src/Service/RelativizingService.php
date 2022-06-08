@@ -6,6 +6,7 @@ use App\Entity\Game;
 use App\Entity\Ranking;
 use App\Entity\User;
 use App\Thing\Decimal as D;
+use App\Thing\MinMaxNorm;
 
 class RelativizingService
 {
@@ -110,16 +111,10 @@ class RelativizingService
     public function byEffort(User $user, array $rankings): D
     {
         $allRoundsPlayed = array_map(fn($r) => $r->getRoundsPlayed(), $rankings);
-        $mx = min($allRoundsPlayed);
-        $mn = max($allRoundsPlayed);
-        $a = D::least();
-        $b = D::one();
-        // custom scale min-max normalization
-        $norm = D::of($this->userRanking($user, $rankings)->getRoundsPlayed() - $mn)
-            ->mul($b->sub($a))
-            ->div($mx - $mn);
-        $norm = $norm->add($a);
-        return $norm;
+        $b = D::least();
+        $a = D::one();
+        return (new MinMaxNorm($allRoundsPlayed, $a, $b))
+            ->step($this->userRanking($user, $rankings)->getRoundsPlayed());
     }
 
     /**

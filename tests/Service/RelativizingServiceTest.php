@@ -167,9 +167,9 @@ class RelativizingServiceTest extends TestCase
         $korW = (new RelativizingService())->byEffort($kor, $rankings, []);
         $this->assertTrue($dazW->comp($mabW) > 0 && $mabW->comp($korW) > 0);
         $this->assertTrue($korW->comp(0) > 0);
-        $this->assertEquals(strval($dazW->sub($mabW)->sub(Decimal::least())), strval($mabW->sub($korW)));
-        $this->assertEquals("1.00000000000000000000", $dazW);
-        $this->assertEquals("0.50000000000000000000", $mabW);
+        $this->assertEquals(strval($dazW->sub($mabW)->add(Decimal::least())), strval($mabW->sub($korW)));
+        $this->assertEquals("1.00000000000000000000000000000000000000000000000000", $dazW);
+        $this->assertEquals("0.50000000000000000000000000000000000000000000000000", $mabW);
         $this->assertEquals("0.00000000000000000000000000000000000000000000000001", $korW);
         $this->assertEquals(strval(Decimal::least()), $korW);
     }

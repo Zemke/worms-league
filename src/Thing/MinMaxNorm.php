@@ -33,7 +33,12 @@ class MinMaxNorm
         return array_map(fn($x) => $this->step($x), array_values($this->xx));
     }
 
-    private function step(mixed $x): D
+    /**
+     * Scale a certain value in this context.
+     *
+     * @return D[] Scaled value.
+     */
+    public function step(mixed $x): D
     {
         return D::of($this->a)
             ->add(

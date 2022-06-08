@@ -203,7 +203,6 @@ class RankingServiceTest extends TestCase
                     $mx = D::max($nnnPoints);
                     foreach ($nnnRankings as &$r) {
                         // TODO absolute a to b ranges applied to all rankings equally so things are actually comparable
-                        // TODO dedicated class -- tested
                         $r->setPoints(D::of($a)
                             ->add(
                                 D::of($r->getPoints())->sub($mn)
