@@ -16,6 +16,7 @@ use App\Service\RankingService;
 use App\Tests\Helper;
 use App\Tests\GamesGenerator;
 use App\Thing\Decimal as D;
+use App\Thing\MinMaxNorm;
 
 class RankingServiceTest extends TestCase
 {
@@ -99,6 +100,8 @@ class RankingServiceTest extends TestCase
 
     public function testReCalc(): void
     {
+        $A = 10;
+        $B = 1_000;
         $files = glob(dirname(__FILE__) . '/../../src/DataFixtures/csv/games_nnn*.csv');
         $numOfSeasons = count($files);
         $res = [];
@@ -196,19 +199,14 @@ class RankingServiceTest extends TestCase
                     $nnnRankings = array_filter($nnnRankings, fn($r) => in_array($r->getOwner()->getId(), $actualUserIds));
                     $nnnPoints = array_map(fn($r) => $r->getPoints(), $nnnRankings);
                     $actPoints = array_map(fn($r) => $r->getPoints(), $actual);
-                    $a = D::min($actPoints);
-                    $b = D::max($actPoints);
-                    dump("range {$a} -> {$b}");
-                    $mn = D::min($nnnPoints);
-                    $mx = D::max($nnnPoints);
+                    $allPoints = [...$nnnPoints, ...$actPoints];
+                    $nnnNormer = new MinMaxNorm($nnnPoints, $A, $B);
                     foreach ($nnnRankings as &$r) {
-                        // TODO absolute a to b ranges applied to all rankings equally so things are actually comparable
-                        $r->setPoints(D::of($a)
-                            ->add(
-                                D::of($r->getPoints())->sub($mn)
-                                    ->mul($b->sub($a))
-                                    ->div($mx->sub($mn))
-                            ));
+                        $r->setPoints($nnnNormer->step($r->getPoints()));
+                    }
+                    $actualNormer = new MinMaxNorm($actPoints, $A, $B);
+                    foreach ($actual as &$r) {
+                        $r->setPoints($actualNormer->step($r->getPoints()));
                     }
 
                     // uncomment and run the following command to see the tables
