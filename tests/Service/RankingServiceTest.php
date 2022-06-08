@@ -122,7 +122,7 @@ class RankingServiceTest extends TestCase
                     $f = fopen($file, 'r');
                     $users = [];
                     $games = [];
-                    Data::gamesFromCsv($season, $f, $users, function ($o) use (&$users, &$games) {
+                    Data::gamesFromCsv($season, $f, $users, false, function ($o) use (&$users, &$games) {
                         if ($o instanceof User) {
                             $users[] = Helper::setId($o, count($users));
                         } else if ($o instanceof Game) {

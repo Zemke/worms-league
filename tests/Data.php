@@ -14,7 +14,7 @@ use App\Entity\Texture;
 // TODO more specific naming
 class Data
 {
-    public static function gamesFromCsv(Season $season, mixed $gamescsv, &$users, callable $createFn): array
+    public static function gamesFromCsv(Season $season, mixed $gamescsv, &$users, bool $addReplays, callable $createFn): array
     {
         $games = [];
         $head = fgetcsv($gamescsv);
@@ -41,10 +41,11 @@ class Data
             $game->setScoreHome((int) $vv['score_confirmer']);
             $game->setScoreAway((int) $vv['score_confirmed']);
 
-            // TODO This should be optional
-            $trf = new TestReplayFactory();
-            foreach ($trf->inst($game) as $replay) {
-                $game->addReplay($replay);
+            if ($addReplays) {
+                $trf = new TestReplayFactory();
+                foreach ($trf->inst($game) as $replay) {
+                    $game->addReplay($replay);
+                }
             }
 
             $createFn($game);

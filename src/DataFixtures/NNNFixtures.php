@@ -58,7 +58,7 @@ class NNNFixtures extends Fixture
             $gamescsv = fopen(dirname(__FILE__) . '/csv/games_' . strtolower($season->getName()) . '.csv', 'r');
             try {
                 $c = 0;
-                $games = Data::gamesFromCsv($season, $gamescsv, $users,
+                $games = Data::gamesFromCsv($season, $gamescsv, $users, true,
                     function ($o) use (&$c, &$manager) {
                         if ($o instanceof User) {
                             $o->setPassword(
