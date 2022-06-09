@@ -121,6 +121,12 @@ class RankingServiceTest extends TestCase
                     $season = Helper::setId(
                         (new Season())->setActive(true)->setName(strtoupper($name)),
                         1);
+                    if ($season->getName() === 'NNN38') {
+                        // TODO For some reason NNN ranking is missing users that have games played in that season.
+                        // Potentially the whole NNN ranking cannot be trusted.
+                        // That seems to be the case with season NNN38 only, though.
+                        continue;
+                    }
                     dump($season->getName());
 
                     // games
@@ -197,10 +203,6 @@ class RankingServiceTest extends TestCase
                     $actual = array_filter($cut->reCalc($season), fn($r) => $r->getRoundsWon() >= 5);
                     $actualUserIds = array_map(fn($r) => $r->getOwner()->getId(), $actual);
                     $nnnRankings = array_filter($nnnRankings, fn($r) => in_array($r->getOwner()->getId(), $actualUserIds));
-
-                    // TODO For some reason NNN ranking is missing users that have games played in that season.  Potentially the whole NNN ranking cannot be trusted.
-                    $nnnUserIds = array_map(fn($r) => $r->getOwner()->getId(), $nnnRankings);
-                    $actual = array_filter($actual, fn($r) => in_array($r->getOwner()->getId(), $nnnUserIds));
 
                     $nnnPoints = array_map(fn($r) => $r->getPoints(), $nnnRankings);
                     $actPoints = array_map(fn($r) => $r->getPoints(), $actual);
