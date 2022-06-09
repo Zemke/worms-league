@@ -119,18 +119,15 @@ class RankingServiceTest extends TestCase
             -1);
     }
 
+    // Use this test to find the best relRel and relStep values by trying them all out
+    // and sorting by standard deviation from NNN ranking
+    /*
     public function testReCalc_mass(): void
     {
-        // TODO uncomment
-        //$this->markTestSkipped(
-        //    'This is high volume for finding the relRel and relSteps with '
-        //    . 'lowest standard deviation to NNN ranking');
         $seasons = $this->genNnnSeasons();
         $res = [];
-        //for ($relRel = .5; $relRel <= 1; $relRel += .5) {
         for ($relRel = 0.; $relRel <= 5; $relRel += .2) {
             dump('relRel ' . $relRel);
-            //for ($relSteps = 1; $relSteps <= 2; $relSteps++) {
             for ($relSteps = 1; $relSteps <= 10; $relSteps++) {
                 dump('relSteps ' . $relSteps);
                 $ress = [];
@@ -148,6 +145,7 @@ class RankingServiceTest extends TestCase
             dump($r); // prevent truncation by not dumping all at once
         }
     }
+    */
 
     private function averageSeason(array $ress): array
     {
