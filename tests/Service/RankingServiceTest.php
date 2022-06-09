@@ -3,6 +3,8 @@
 namespace App\Tests\Service;
 
 use PHPUnit\Framework\TestCase;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Yaml\Yaml;
 use App\Entity\Game;
 use App\Entity\Ranking;
 use App\Entity\Season;
@@ -10,7 +12,6 @@ use App\Entity\User;
 use App\Repository\RankingRepository;
 use App\Repository\GameRepository;
 use App\Repository\SeasonRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Service\RelativizingService;
 use App\Service\RankingService;
 use App\Tests\Helper;
@@ -100,12 +101,15 @@ class RankingServiceTest extends TestCase
 
     public function testReCalc(): void
     {
+        ['$relRel' => $relRel, '$relSteps' => $relSteps] =
+            Yaml::parseFile(dirname(__FILE__) . '/../../config/services.yaml')
+                ['services']['App\Service\RankingService']['arguments'];
+        // making sure this is like when the test was written
+        $this->assertEquals($relRel, 3.8);
+        $this->assertEquals($relSteps, 6);
         $seasons = $this->genNnnSeasons();
         $res = [];
         foreach ($seasons as $season) {
-            // TODO get vars from config
-            $relRel = 3.8;
-            $relSteps = 6;
             $res[] = dump($this->forSeason($season, $relRel, $relSteps));
         }
         $actual = dump($this->averageSeason($res));
