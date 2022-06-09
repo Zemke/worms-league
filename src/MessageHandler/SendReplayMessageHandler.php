@@ -31,7 +31,7 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
         if (!$replay->processed()) {
             $replayData = $this->waaasService->send($replay);
             if (count($err = $this->validator->validate($replayData)) > 0) {
-                throw new \RuntimeException($err);
+                throw new \RuntimeException(strval($err));
             }
             $replay->setReplayData($replayData);
             $this->replayRepo->add($replay, true);

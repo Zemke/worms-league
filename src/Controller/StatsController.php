@@ -43,7 +43,7 @@ class StatsController extends AbstractController
 
     private function suddenDeathBeforeTurn(array $stats): int
     {
-        $timestampToSeconds = function (string $timestamp): int {
+        $timestampToSeconds = function (string $timestamp): float {
             $timeParts = array_map(fn($v) => (int) $v, preg_split('/[^\d]/', $timestamp));
             return (
                 ($timeParts[0] * 60 * 60)

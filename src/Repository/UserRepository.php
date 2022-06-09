@@ -63,7 +63,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
-    public function loadUserByIdentifier(string $usernameOrEmail): ?User
+    public function loadUserByIdentifier(string $identifier): ?User
     {
         return $this->_em->createQuery(
                 'SELECT u
@@ -71,7 +71,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 WHERE lower(u.username) = lower(:query)
                 OR lower(u.email) = lower(:query)'
             )
-            ->setParameter('query', strtolower($usernameOrEmail))
+            ->setParameter('query', strtolower($identifier))
             ->getOneOrNullResult();
     }
 

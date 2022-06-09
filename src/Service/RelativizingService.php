@@ -144,7 +144,7 @@ class OppRank
     public function plusWon(int $n): self
     {
         if ($n < 0) {
-            throw new RuntimeException($n . ' is negative');
+            throw new \RuntimeException($n . ' is negative');
         }
         $this->won += $n;
         return $this;
@@ -167,7 +167,7 @@ class OppRank
      * @param Ranking[] $rankings All the rankings
      * @param Game[] $games All games that lead to the rankings.
      * @param array $DP User ID to OppRank[] mapping to apply memoization (Dynamic Programming).
-     * @return The OppRank array for the given user.
+     * @return OppRank[] The OppRank array for the given user.
      */
     public static function reduce(User $user, array $rankings, array $games, array &$DP = []): array
     {

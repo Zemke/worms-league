@@ -3,7 +3,9 @@
 namespace App\Service;
 
 use App\Entity\Game;
+use App\Repository\GameRepository;
 use App\Repository\RankingRepository;
+use App\Repository\SeasonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class GameService

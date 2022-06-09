@@ -6,6 +6,7 @@ use App\Repository\ReplayMapRepository;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: ReplayMapRepository::class)]

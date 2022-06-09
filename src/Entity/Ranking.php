@@ -177,7 +177,7 @@ class Ranking
     /**
      * Get absolute ranking if points are not relativized yet.
      *
-     * @return roundsWon if points are null, points otherwise.
+     * @return Decimal roundsWon if points are null, points otherwise.
      */
     public function ranking(): Decimal
     {
