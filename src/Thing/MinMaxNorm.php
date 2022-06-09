@@ -9,6 +9,12 @@ use App\Thing\Decimal as D;
  */
 class MinMaxNorm
 {
+    private array $xx;
+    private D $mn;
+    private D $mx;
+    private D $a;
+    private D $b;
+
     /**
      * @param $mn The original dataset.
      * @param $a  Lower bound of the range to scale to.
@@ -36,7 +42,7 @@ class MinMaxNorm
     /**
      * Scale a certain value in this context.
      *
-     * @return D[] Scaled value.
+     * @return D Scaled value.
      */
     public function step(mixed $x): D
     {
@@ -48,5 +54,4 @@ class MinMaxNorm
             );
     }
 }
-
 
