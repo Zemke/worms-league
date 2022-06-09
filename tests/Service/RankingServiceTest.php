@@ -234,7 +234,7 @@ class RankingServiceTest extends TestCase
                         $absDiff = D::abs($diff);
                         $sum = $sum->add($absDiff);
                         if (empty($maxDiff) || $maxDiff[2]->comp($absDiff) < 0) {
-                            $maxDiff = [$season->getName(), $r->getOwner()->getUsername(), $absDiff];
+                            $maxDiff = [$season->getName(), $r->getOwner()->getUsername(), $absDiff, $diff->comp(0)];
                         }
                         //dump($diff . ' ' . $r->getOwner()->getUsername());
                         $diffs[] = $diff;
