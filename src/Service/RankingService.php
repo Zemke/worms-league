@@ -102,7 +102,7 @@ class RankingService
                     $this->relRel,
                     $this->relativizingService->byQuality($user, $rankings, $games, $DP),
                     $this->relativizingService->byFarming($user, $rankings, $games, $DP),
-                    $this->relativizingService->byEffort ($user, $rankings, $games, $DP),
+                    $this->relativizingService->byEffort($user, $rankings, $games, $DP),
                 ];
                 $ranking->setPoints(
                     strval(D::of($ranking->ranking())->mul(D::sum($rels)->div(count($rels)))));
