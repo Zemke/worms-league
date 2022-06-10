@@ -628,6 +628,50 @@ div.color-badge {
     white-space: nowrap;
 }
 
+table.ladder thead tr:nth-child(1) th {
+    text-align: center;
+}
+
+table.ladder thead tr:nth-child(1) th:nth-child(1),
+table.ladder thead tr:nth-child(2) th:nth-child(3),
+table.ladder tbody td:nth-child(3),
+
+table.ladder thead tr:nth-child(1) th:nth-child(2),
+table.ladder thead tr:nth-child(2) th:nth-child(6),
+table.ladder tbody td:nth-child(8),
+
+table.ladder thead tr:nth-child(1) th:nth-child(3),
+table.ladder thead tr:nth-child(2) th:nth-child(10),
+table.ladder tbody td:nth-child(15) {
+    border-right: 1px solid rgba(0, 0, 0, .2);
+}
+
+table.ladder tbody td:nth-child(4),
+table.ladder tbody td:nth-child(6),
+table.ladder tbody td:nth-child(9),
+table.ladder tbody td:nth-child(11) {
+    padding-right: .1rem;
+}
+
+table.ladder tbody td:nth-child(5),
+table.ladder tbody td:nth-child(7),
+table.ladder tbody td:nth-child(10),
+table.ladder tbody td:nth-child(12) {
+    padding-left: .1rem;
+}
+
+table.ladder thead tr:last-child th:nth-child(10) {
+    padding-right: .1rem;
+}
+
+table.ladder thead tr:first-child {
+    border-bottom: none;
+}
+
+table.ladder thead tr:nth-child(2) {
+    border-top: none;
+}
+
 table.ladder th {
     font-size: .8rem;
     padding-left: 0;
@@ -650,8 +694,8 @@ table.ladder td:last-child {
 
 table.ladder td,
 table.ladder th {
-    padding-left: .2rem;
-    padding-right: .2rem;
+    padding-left: .9rem;
+    padding-right: .9rem;
 }
 
 table.ladder td:first-child,

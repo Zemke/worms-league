@@ -92,7 +92,7 @@ class RankingRepository extends ServiceEntityRepository
               sub.games_won_ratio,
               sub.games_lost,
               sub.streak,
-              sub.streak_best,
+              \'(\' || sub.streak_best || \')\' as streak_best,
               sub.activity
             from (
               select
@@ -111,7 +111,7 @@ class RankingRepository extends ServiceEntityRepository
               where g.season_id=:seasonId order by g.user_id) sub
             join game g on sub.game_id=g.id
             join "user" opp on opp.id = sub.opp_id
-            where sub.row_number < 6
+            where sub.row_number < 7
             order by points desc, game_created asc;';
         $stmt = $this->_em->getConnection()->prepare($sql);
         $stmt->bindValue('seasonId', $season->getId());

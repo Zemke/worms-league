@@ -6,23 +6,25 @@
     </div>
 {% else %}
     <div class="whitepad">
-        <table class="ladder">
+        <table class="ladder w100">
             <thead>
+            <tr>
+                <th colspan="3"></th>
+                <th colspan="5">Rounds</th>
+                <th colspan="7">Games</th>
+                <th colspan="2"></th>
+            </tr>
             <tr>
                 <th>#</th>
                 <th>Player</th>
                 <th>Points</th>
-                <th>Rounds Played</th>
-                <th>Rounds Played %</th>
-                <th>Rounds Won</th>
-                <th>Rounds Won %</th>
-                <th>Rounds Lost</th>
-                <th>Games Played</th>
-                <th>Games Played %</th>
-                <th>Games Won</th>
-                <th>Games Won %</th>
-                <th>Games Lost</th>
-                <th colspan="2">Streak (Best)</th>
+                <th colspan="2">Played</th>
+                <th colspan="2">Won</th>
+                <th>Lost</th>
+                <th colspan="2">Played</th>
+                <th colspan="2">Won</th>
+                <th>Lost</th>
+                <th colspan="2">Streak<br>(Best)</th>
                 <th>Activity</th>
                 <th>Recent</th>
             </tr>
@@ -78,7 +80,7 @@
                     </span>
                 </td>
                 <td class="streak letter-spacing-compressed">
-                    ({{ ranking.streak_best }})
+                    {{ ranking.streak_best|pad(ladder, 'streak_best') }}
                 </td>
                 <td>{{ ranking.activity }}</td>
                 <td class="text-left">
