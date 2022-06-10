@@ -173,5 +173,42 @@ class RelativizingServiceTest extends TestCase
         $this->assertEquals("0.00000000000000000000000000000000000000000000000001", $korW);
         $this->assertEquals(strval(Decimal::least()), $korW);
     }
+
+    public function testByEntropy(): void
+    {
+        $kor = Helper::setId(new User(), 2)
+            ->setUsername('Kor');
+        $mab = Helper::setId(new User(), 3)
+            ->setUsername('Mab');
+        $daz = Helper::setId(new User(), 4)
+            ->setUsername('Daz');
+        $games = [
+            Helper::setId(new Game(), 1)
+                ->setHome($daz)->setScoreHome(2)
+                ->setAway($kor)->setScoreAway(1)
+                ->setCreated(new \DateTime('now -1 hours')),
+            Helper::setId(new Game(), 1)
+                ->setHome($daz)->setScoreHome(3)
+                ->setAway($kor)->setScoreAway(1)
+                ->setCreated(new \DateTime('now -2 hours')),
+            Helper::setId(new Game(), 3)
+                ->setHome($mab)->setScoreHome(3)
+                ->setAway($daz)->setScoreAway(1)
+                ->setCreated(new \DateTime('now -1 days')),
+        ];
+        $entropyNorm = [];
+        $korW = (new RelativizingService())->byEntropy($kor, $games, $entropyNorm);
+        $mabW = (new RelativizingService())->byEntropy($mab, $games, $entropyNorm);
+        $dazW = (new RelativizingService())->byEntropy($daz, $games, $entropyNorm);
+        $this->assertEquals(
+            $korW->comp('0.98478260869565217391304347826086956521739130434782'),
+            0);
+        $this->assertEquals(
+            $mabW->comp('0.30000000000000000000000000000000000000000000000000'),
+            0);
+        $this->assertEquals(
+            $dazW->comp('0.86811594202898550724637681159420289855072463768115'),
+            0);
+    }
 }
 

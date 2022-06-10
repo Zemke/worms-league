@@ -117,9 +117,25 @@ class RelativizingService
     /**
      * Value of rounds won decay over time. The older a won round, the less value.
      */
-    private function byEntropy(User $user, array $rankings, array $games, array &$DP = []): float
+    public function byEntropy(User $user, array $games, array &$entropyNorm): D
     {
-        return 1.; // TODO byEntropy
+        if (empty($entropyNorm)) {
+            usort($games, fn($g1, $g2) => $g2->getCreated() > $g1->getCreated() ? 1 : 0);
+            $tss = array_map(fn($g) => $g->getCreated()->getTimestamp(), $games);
+            $tssNorm = (new MinMaxNorm($tss, .3))->full();
+            array_push($entropyNorm, ...array_map(null, $games, $tssNorm));
+        }
+        $vv = array_reduce($entropyNorm, function ($acc, $gv) use ($user) {
+            [$g, $v] = $gv;
+            if ($g->isHomeOrAway($user)) {
+                array_push($acc, ...array_fill(0, $g->scoreOf($user), $v));
+            }
+            return $acc;
+        }, []);
+        if (empty($vv)) {
+            return D::zero();
+        }
+        return D::sum($vv)->div(count($vv));
     }
 
     private function userRanking(User $user, array $rankings): Ranking
