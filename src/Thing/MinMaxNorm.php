@@ -46,6 +46,9 @@ class MinMaxNorm
      */
     public function step(mixed $x): D
     {
+        if ($this->mn->comp($this->mx) === 0) {
+            return $this->mn;
+        }
         return D::of($this->a)
             ->add(
                 D::of($x)->sub($this->mn)
