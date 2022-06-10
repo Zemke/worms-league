@@ -10,9 +10,6 @@ use App\Thing\MinMaxNorm;
 
 class RelativizingService
 {
-    /** @var float just so that there are no zero value points */
-    private const JUMP_MIN = .00001;
-
     public function __construct()
     {}
 
@@ -44,18 +41,18 @@ class RelativizingService
     }
 
     // this is an alternative using min max rather than rank exponentially
-    public function byQualityMinMax(User $user, array $rankings, array $games, array &$DP = []): float
+    public function byQualityMinMax(User $user, array $rankings, array $games, array &$DP = []): D
     {
         $oppRanks = OppRank::reduce($user, $rankings, $games, $DP);
         $roundsWon = $this->userRanking($user, $rankings)->getRoundsWon();
         assert(array_sum(array_map(fn($or) => $or->getWon(), $oppRanks)) === $roundsWon);
         $allRankings = array_map(fn($r) => $r->ranking(), $rankings);
-        $mn = min($allRankings) - self::JUMP_MIN;
-        $mx = max($allRankings);
-        $P = 0;
+        $mn = D::min($allRankings)->sub(D::least());
+        $mx = D::max($allRankings);
+        $P = D::zero();
         foreach ($oppRanks as $r) {
-            $weight = ($r->getOpp()->ranking() - $mn) / ($mx - $mn);
-            $P += ($weight) * ($r->getWon() / $roundsWon);
+            $y = ($r->getOpp()->ranking()->sub($mn))->div($mx->sub($mn));
+            $P = $P->add($y->mul((D::of($r->getWon())->div($roundsWon))));
         }
         return $P;
     }
