@@ -3,97 +3,99 @@
         There are no matches in this season.
     </div>
 {% else %}
-    <table class="matches w100">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Reported</th>
-                <th colspan="3">Score</th>
-                <th>
-                    <!--<i class="comment"></i>-->
-                    <img src="{{ asset('/img/speech.png') }}" alt="Comments" title="Comments">
-                </th>
-                <th colspan="5"></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for game in games | sort((a,b) => b.created < a.created ? -1 : 1) %}
-            <tr>
-                <td>
-                    <a href="{{ path('app_match_view', {gameId: game.id}) }}">
-                        {{ game.id }}
-                    </a>
-                </td>
-                <td class="letter-spacing-compressed">
-                    {% if game.fullyProcessed() %}
-                        <span data-tooltip="Played at {{ game.playedAt() | date('M. j, H:i') }}">
-                            {{ game.created | date('M. j, H:i') }}
-                        </span>
-                    {% else %}
-                        {{ game.created | date('M. j, H:i') }}
-                    {% endif %}
-                </td>
-                <td>
-                    <a href="{{ path('app_user_view', {usernameOrId: game.home.username}) }}">
-                        {{ game.home.username }}
-                    </a>
-                </td>
-                <td class="text-bold">
-                    {{ game.scoreHome }}–{{ game.scoreAway }}
-                </td>
-                <td>
-                    <a href="{{ path('app_user_view', {usernameOrId: game.away.username}) }}">
-                        {{ game.away.username }}
-                    </a>
-                </td>
-                <td>
-                    <a href="{{ path('app_match_view', {gameId: game.id}) }}#comments">
-                        {{ game.comments|length }}
-                    </a>
-                </td>
-                {% for replay in game.replays | sort((a,b) =>
-                    (a.replayData is null or b.replayData is null)
-                        ? 0 : ((a.replayData.data.startedAt|date("U")) - (b.replayData.data.startedAt|date("U")) ? 1 : -1)) %}
+    <div class="whitepad">
+        <table class="matches w100">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Reported</th>
+                    <th colspan="3">Score</th>
+                    <th>
+                        <!--<i class="comment"></i>-->
+                        <img src="{{ asset('/img/speech.png') }}" alt="Comments" title="Comments">
+                    </th>
+                    <th colspan="5"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for game in games | sort((a,b) => b.created < a.created ? -1 : 1) %}
+                <tr>
                     <td>
-                        <a href="{{ asset('/replays/' ~ game.id ~ '/' ~ replay.name) }}"
-                           class="inline-block"
-                           {% if replay.processed() %}data-tooltip="{{ replay.replayData.startedAt() | date('M. j, H:i') }}"{% endif %}>
-                            <img src="{{ asset('/img/replay.png') }}"
-                                 alt="Download Replay"
-                                 title="Download Replay">
+                        <a href="{{ path('app_match_view', {gameId: game.id}) }}">
+                            {{ game.id }}
                         </a>
-                        {% if replay.processed() %}
-                            <div class="inline-block" data-tooltip="{{ replay.replayData.texture.local() }}">
-                                <a href="/todo"
-                                   class="texture">
-                                    <img src="{{ asset('/img/terrains/' ~ replay.replayData.texture().value ~ '.gif') }}"
-                                         alt="{{ replay.replayData.texture().local() }}">
-                                    {% if replay.replayData.data.suddenDeath %}
-                                        <img src="{{ asset('/img/water.gif') }}"
-                                             class="sudden-death"
-                                             style="left: -{{ random(0,40)/10 }}rem;">
-                                    {% endif %}
-                                </a>
-                            </div>
-                            <div class="color-badge {{ replay.winnerColor() | lower }}"
-                                 data-tooltip="{{ replay.replayData.winner() }}">
-                            </div>
+                    </td>
+                    <td class="letter-spacing-compressed">
+                        {% if game.fullyProcessed() %}
+                            <span data-tooltip="Played at {{ game.playedAt() | date('M. j, H:i') }}">
+                                {{ game.created | date('M. j, H:i') }}
+                            </span>
                         {% else %}
-                            <div class="inline-block" data-tooltip="Processing">
-                                <div class="processing">
-                                    <img src="{{ asset('/img/gameoptions.png') }}">
-                                </div>
-                            </div>
+                            {{ game.created | date('M. j, H:i') }}
                         {% endif %}
                     </td>
+                    <td>
+                        <a href="{{ path('app_user_view', {usernameOrId: game.home.username}) }}">
+                            {{ game.home.username }}
+                        </a>
+                    </td>
+                    <td class="text-bold">
+                        {{ game.scoreHome }}–{{ game.scoreAway }}
+                    </td>
+                    <td>
+                        <a href="{{ path('app_user_view', {usernameOrId: game.away.username}) }}">
+                            {{ game.away.username }}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ path('app_match_view', {gameId: game.id}) }}#comments">
+                            {{ game.comments|length }}
+                        </a>
+                    </td>
+                    {% for replay in game.replays | sort((a,b) =>
+                        (a.replayData is null or b.replayData is null)
+                            ? 0 : ((a.replayData.data.startedAt|date("U")) - (b.replayData.data.startedAt|date("U")) ? 1 : -1)) %}
+                        <td class="ministat">
+                            <a href="{{ asset('/replays/' ~ game.id ~ '/' ~ replay.name) }}"
+                               class="inline-block"
+                               {% if replay.processed() %}data-tooltip="{{ replay.replayData.startedAt() | date('M. j, H:i') }}"{% endif %}>
+                                <img src="{{ asset('/img/replay.png') }}"
+                                     alt="Download Replay"
+                                     title="Download Replay">
+                            </a>
+                            {% if replay.processed() %}
+                                <div class="inline-block" data-tooltip="{{ replay.replayData.texture.local() }}">
+                                    <a href="/todo"
+                                       class="texture">
+                                        <img src="{{ asset('/img/terrains/' ~ replay.replayData.texture().value ~ '.gif') }}"
+                                             alt="{{ replay.replayData.texture().local() }}">
+                                        {% if replay.replayData.data.suddenDeath %}
+                                            <img src="{{ asset('/img/water.gif') }}"
+                                                 class="sudden-death"
+                                                 style="left: -{{ random(0,40)/10 }}rem;">
+                                        {% endif %}
+                                    </a>
+                                </div>
+                                <div class="color-badge {{ replay.winnerColor() | lower }}"
+                                     data-tooltip="{{ replay.replayData.winner() }}">
+                                </div>
+                            {% else %}
+                                <div class="inline-block" data-tooltip="Processing">
+                                    <div class="processing">
+                                        <img src="{{ asset('/img/gameoptions.png') }}">
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                    {% if 5-(game.replays|length) > 0 %}
+                        <td colspan="{{ 5-(game.replays|length) }}"></td>
+                    {% endif %}
+                </tr>
                 {% endfor %}
-                {% if 5-(game.replays|length) > 0 %}
-                    <td colspan="{{ 5-(game.replays|length) }}"></td>
-                {% endif %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 {% endif %}
 
 

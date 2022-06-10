@@ -542,6 +542,19 @@ table.matches .processing > img {
     transform: scale(1.2) translateX(-.4rem);
 }
 
+table.matches td {
+    padding: .2rem .3rem;
+}
+
+table.matches .ministat {
+    letter-spacing: -.15rem;
+}
+
+table.matches td:nth-child(4) {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .letter-spacing-compressed {
     letter-spacing: -.05rem;
 }
