@@ -105,84 +105,74 @@ class RankingServiceTest extends TestCase
             Yaml::parseFile(dirname(__FILE__) . '/../../config/services.yaml')
                 ['services']['App\Service\RankingService']['arguments'];
         // making sure this is like when the test was written
-        $this->assertEquals($relRel, 3.4);
-        $this->assertEquals($relSteps, 6);
-        $seasons = $this->genNnnSeasons();
-        $res = [];
-        foreach ($seasons as $season) {
-            $res[] = dump($this->forSeason($season, $relRel, $relSteps));
+        $this->assertEquals($relRel, 5.5);
+        $this->assertEquals($relSteps, 9);
+        dump('relRel ' . $relRel);
+        dump('relSteps ' . $relSteps);
+        $data = $this->gen();
+        $diffs = [];
+        foreach ($data as $d) {
+            array_push($diffs, ...$this->forSeason($d, $relRel, $relSteps));
         }
-        $actual = dump($this->averageSeason($res));
-        $avgs = array_column($res, 'avg');
-        dump(D::sum($avgs)->div(count($avgs)));
-        $this->assertEquals($actual['std']->comp('133.3'), -1);
-        $this->assertEquals($actual['var']->comp('299724.2'), -1);
-        $this->assertEquals(D::abs($actual['mean'])->comp('21.'), -1);
-        $this->assertEquals($actual['avg']->comp('105.5'), -1);
-        $this->assertEquals(
-            D::max(array_map(fn($d) => D::abs($d), array_column($actual['maxDiffs'], 2)))
-                ->comp('394.'),
-            -1);
+        dump($this->rmse($diffs));
     }
 
+    /*
     // Use this test to find the best relRel and relStep values by trying them all out
     // and sorting by standard deviation from NNN ranking
-    /*
+    */
     public function testReCalc_mass(): void
     {
-        $seasons = $this->genNnnSeasons();
+        $data = $this->gen();
         $res = [];
         for ($relRel = D::of(0.); $relRel->comp(10.1) === -1; $relRel = $relRel->add(.2)) {
             $effRelRel = floatval(strval($relRel));
             dump('relRel ' . $effRelRel);
-            for ($relSteps = 1; $relSteps <= 10; $relSteps++) {
+            for ($relSteps = 2; $relSteps <= 13; $relSteps++) {
                 dump('relSteps ' . $relSteps);
-                $ress = [];
-                foreach ($seasons as $season) {
-                    $ress[] = $this->forSeason($season, $effRelRel, $relSteps);
+                $diffs = [];
+                foreach ($data as $d) {
+                    array_push($diffs, ...$this->forSeason($d, $effRelRel, $relSteps));
                 }
-                $res[] = dump([
-                    '_config' => ['relRel' => $relRel, 'relSteps' => $relSteps],
-                    ...$this->averageSeason($ress),
-                ]);
+                $res[] = [
+                    '_config' => ['relRel' => floatval(strval($relRel)), 'relSteps' => $relSteps],
+                    'rmse' => dump(strval($this->rmse($diffs))),
+                ];
             }
         }
-        usort($res, fn($r1, $r2) => D::of($r2['avg'])->comp($r1['avg']));
+        usort($res, fn($r1, $r2) => D::of($r2['rmse'])->comp($r1['rmse']));
         foreach ($res as $r) {
-            dump($r); // prevent truncation by not dumping all at once
+            dump(strval($r['rmse']) . json_encode($r['_config']));
         }
     }
-    */
 
-    private function averageSeason(array $ress): array
-    {
-        $numOfSeasons = count($ress);
-        return [
-            'std' => D::sum(array_column($ress, 'std'))->div($numOfSeasons),
-            'var' => D::sum(array_column($ress, 'var'))->div($numOfSeasons),
-            'mean'=> D::sum(array_column($ress, 'mean'))->div($numOfSeasons),
-            'avg' => D::sum(array_column($ress, 'avg'))->div($numOfSeasons),
-            //'maxDiffs' => array_map(fn($diff) => implode(', ', $diff), array_column($ress, 'maxDiff')),
-            'maxDiffs' => array_column($ress, 'maxDiff'),
-        ];
+    private function rmse(array $xx) {
+        $mse = D::sum(array_map(fn($x) => $x->pow(2), $xx));
+        return $mse->sqrt();
     }
 
-    private function genNnnSeasons(): array
+    private function gen(): array
     {
-        $files = glob(dirname(__FILE__) . '/../../src/DataFixtures/csv/games_nnn*.csv');
-        $res = array_map(function ($f) {
-            $name = substr(basename($f), 6, -4);
-            return (new Season())->setActive(true)->setName(strtoupper($name));
+        $files = array_filter(
+            glob(dirname(__FILE__) . '/../../src/DataFixtures/csv/games_nnn*.csv'),
+            fn($f) => !str_ends_with($f, '_nnn38.csv')); // season 38 is corrupt
+        return array_map(function ($f) {
+            $season = (new Season())
+                ->setActive(true)
+                ->setName(strtoupper(substr(basename($f), 6, -4)));
+            return [
+                'season' => $season,
+                'gr' => $this->genFromCsv($season),
+            ];
         }, $files);
-        return array_values(array_filter($res, fn($s) => $s->getName() !== 'NNN38'));
     }
 
-    private function forSeason(Season $season, float $relRel, int $relSteps): array
+    private function genFromCsv($season): array
     {
         $path = dirname(__FILE__) . '/../../src/DataFixtures/csv';
 
         // games
-        $f = fopen("${path}/games_{$season->getName()}.csv", 'r');
+        $f = fopen("{$path}/games_{$season->getName()}.csv", 'r');
         $users = [];
         $games = [];
         GamesGenerator::fromCsv($season, $f, $users, false, function ($o) use (&$users, &$games) {
@@ -198,7 +188,7 @@ class RankingServiceTest extends TestCase
         // rankings
         $f = fopen("${path}/ranking_{$season->getName()}.tsv", 'r');
         $head = fgetcsv($f, 0, "\t");
-        $nnnRankings = [];
+        $rankings = [];
         while (($row = fgetcsv($f, 0, "\t")) !== false) {
             [
               $rank, // 24
@@ -217,11 +207,18 @@ class RankingServiceTest extends TestCase
                 );
                 $users[] = $owner;
             }
-            $nnnRankings[] = (new Ranking())
+            $rankings[] = (new Ranking())
                 ->setSeason($season)
                 ->setOwner($owner)
                 ->setPoints(strval($points));
         }
+        return [$games, $rankings,];
+    }
+
+    private function forSeason(array $data, float $relRel, int $relSteps): array
+    {
+        $season = $data['season'];
+        [$games, $nnnRankings] = $data['gr'];
 
         $gameRepo = $this->getMockBuilder(GameRepository::class)
             ->disableOriginalConstructor()
@@ -245,56 +242,23 @@ class RankingServiceTest extends TestCase
             ])
             ->setMethodsExcept(['reCalc', 'calc', 'rank'])
             ->getMock();
-        $actual = array_filter($cut->reCalc($season), fn($r) => $r->getRoundsWon() >= 5);
-        $actualUserIds = array_map(fn($r) => $r->getOwner()->getId(), $actual);
-        $nnnRankings = array_filter($nnnRankings, fn($r) => in_array($r->getOwner()->getId(), $actualUserIds));
 
+        // only users with minimum of won rounds
+        $cutRankings = array_filter($cut->reCalc($season), fn($r) => $r->getRoundsWon() >= 5);
+        $actualRankingOwnerIds = array_map(fn($r) => $r->getOwner()->getId(), $cutRankings);
+        $nnnRankings = array_filter(
+            $nnnRankings,
+            fn($r) => in_array($r->getOwner()->getId(), $actualRankingOwnerIds));
+
+        $this->normPoints($cutRankings);
         $this->normPoints($nnnRankings);
-        $this->normPoints($actual);
 
-        // uncomment and run the following command to see the tables
-        // ./bin/phpunit --filter ::testReCalc tests/Service/RankingServiceTest.php | grep 'username\|points'
-        //usort($nnnRankings, fn($r1, $r2) => D::of($r2->getPoints())->comp($r1->getPoints()));
-        //usort($actual, fn($r1, $r2) => D::of($r2->getPoints())->comp($r1->getPoints()));
-        //dump($actual);
-        //dump('----- username -----');
-        //dump($nnnRankings);
-        //die();
-
-        $sum = D::zero();
         $diffs = [];
-        $maxDiff = [];
-        foreach ($actual as $r) {
+        foreach ($cutRankings as $r) {
             $o = current(array_filter($nnnRankings, fn($r1) => $r1->ownedBy($r->getOwner())));
-            $diff = D::of($r->getPoints())->sub($o->getPoints());
-            $absDiff = D::abs($diff);
-            $sum = $sum->add($absDiff);
-            if (empty($maxDiff) || $maxDiff[2]->comp($absDiff) < 0) {
-                $maxDiff = [$r->getOwner()->getUsername(), $diff, $absDiff];
-            }
-            $diffs[] = $diff;
+            $diffs[] = D::of($r->getPoints())->sub($o->getPoints());
         }
-        return [
-            ...$this->std($diffs),
-            'avg' => $sum->div(count($actual)),
-            'maxDiff' => [$season->getName(), ...array_slice($maxDiff, 0, 2)],
-        ];
-    }
-
-    private function std(array $xx): array
-    {
-        $count = count($xx);
-        $var = D::zero();
-        $mean = D::sum($xx)->div($count);
-        foreach ($xx as $x) {
-            $var = $var->add($x->sub($mean)->pow(2));
-        }
-        $std = $var->div($count)->sqrt();
-        return [
-            'std' => $std,
-            'var' => $var,
-            'mean' => $mean,
-        ];
+        return $diffs;
     }
 
     private function normPoints(array &$rankings): void
