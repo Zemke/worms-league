@@ -59,7 +59,9 @@ class RankingService
      */
     public function reCalc(Season $season): array
     {
-        $games = $this->gameRepo->findBySeason($season);
+        $games = array_filter(
+            $this->gameRepo->findBySeason($season),
+            fn($g) => $g->fullyProcessed());
         $rankings = $this->rankingRepo->findBySeason($season);
         foreach ($rankings as &$ranking) {
             $ranking->reset();
