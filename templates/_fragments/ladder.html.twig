@@ -34,6 +34,7 @@
             <tr>
                 <td>{{ loop.index }}</td>
                 <td>
+                    {# TODO should link to matching season #}
                     <a href="{{ path('app_user_view', {usernameOrId: ranking.user}) }}">
                         {{ ranking.user }}
                     </a>
