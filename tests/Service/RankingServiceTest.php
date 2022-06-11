@@ -272,13 +272,6 @@ class RankingServiceTest extends TestCase
             }
             $diffs[] = $diff;
         }
-        $count = count($diffs);
-        $var = D::zero();
-        $mean = D::sum($diffs)->div($count);
-        foreach ($diffs as $diff) {
-            $var = $var->add($diff->sub($mean)->pow(2));
-        }
-        $std = $var->div($count)->sqrt();
         return [
             ...$this->std($diffs),
             'avg' => $sum->div(count($actual)),
