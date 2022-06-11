@@ -110,13 +110,6 @@ class RankingService
                     strval(D::of($ranking->ranking())->mul(D::sum($rels)->div(count($rels)))));
             }
         }
-        foreach ($rankings as &$r) {
-            $x = D::of(.78);
-            $p = D::one()->sub($x);
-            $r->setPoints(
-                $p->mul($r->getPoints())->add(
-                    D::one()->sub($r->getRoundsPlayedRatio())->mul($x)));
-        }
         return;
     }
 }

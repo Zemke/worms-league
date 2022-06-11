@@ -105,8 +105,8 @@ class RankingServiceTest extends TestCase
             Yaml::parseFile(dirname(__FILE__) . '/../../config/services.yaml')
                 ['services']['App\Service\RankingService']['arguments'];
         // making sure this is like when the test was written
-        $this->assertEquals($relRel, 10.0);
-        $this->assertEquals($relSteps, 13);
+        $this->assertEquals($relRel, 15.2);
+        $this->assertEquals($relSteps, 20);
         dump('relRel ' . $relRel);
         dump('relSteps ' . $relSteps);
         $data = $this->gen();
@@ -115,7 +115,7 @@ class RankingServiceTest extends TestCase
             array_push($diffs, ...$this->forSeason($d, $relRel, $relSteps));
         }
         $this->assertEquals(
-            dump($this->rmse($diffs))->comp('949.79521512002805016075320687011642393806095851742233'),
+            dump($this->rmse($diffs))->comp('939.95542529391305995353654552622559955813065389536453'),
             0);
     }
 
@@ -127,17 +127,17 @@ class RankingServiceTest extends TestCase
     {
         $data = $this->gen();
         $res = [];
-        for ($relRel = D::of(5.); $relRel->comp(15.1) === -1; $relRel = $relRel->add(.2)) {
+        for ($relRel = D::of(9.2); $relRel->comp(19.1) === -1; $relRel = $relRel->add(.2)) {
             $effRelRel = floatval(strval($relRel));
             dump('relRel ' . $effRelRel);
-            for ($relSteps = 5; $relSteps <= 16; $relSteps++) {
+            for ($relSteps = 10; $relSteps <= 22; $relSteps++) {
                 dump('relSteps ' . $relSteps);
                 $diffs = [];
                 foreach ($data as $d) {
                     array_push($diffs, ...$this->forSeason($d, $effRelRel, $relSteps));
                 }
                 $res[] = [
-                    '_config' => ['relRel' => floatval(strval($relRel)), 'relSteps' => $relSteps],
+                    '_config' => ['relRel' => $effRelRel, 'relSteps' => $relSteps],
                     'rmse' => dump(strval($this->rmse($diffs))),
                 ];
             }
