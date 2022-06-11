@@ -127,10 +127,10 @@ class RankingServiceTest extends TestCase
     {
         $data = $this->gen();
         $res = [];
-        for ($relRel = D::of(0.); $relRel->comp(10.1) === -1; $relRel = $relRel->add(.2)) {
+        for ($relRel = D::of(5.); $relRel->comp(15.1) === -1; $relRel = $relRel->add(.2)) {
             $effRelRel = floatval(strval($relRel));
             dump('relRel ' . $effRelRel);
-            for ($relSteps = 2; $relSteps <= 13; $relSteps++) {
+            for ($relSteps = 5; $relSteps <= 16; $relSteps++) {
                 dump('relSteps ' . $relSteps);
                 $diffs = [];
                 foreach ($data as $d) {
