@@ -25,7 +25,7 @@ services:
 
     App\Service\RankingService:
         arguments:
-            $relRel: 3.8 # moderate relativizing effect
+            $relRel: 3.4 # moderate relativizing effect
             $relSteps: 6 # num of relativizing steps
 
     App\Service\WaaasService:

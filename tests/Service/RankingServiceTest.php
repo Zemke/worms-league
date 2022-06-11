@@ -105,7 +105,7 @@ class RankingServiceTest extends TestCase
             Yaml::parseFile(dirname(__FILE__) . '/../../config/services.yaml')
                 ['services']['App\Service\RankingService']['arguments'];
         // making sure this is like when the test was written
-        $this->assertEquals($relRel, 3.8);
+        $this->assertEquals($relRel, 3.4);
         $this->assertEquals($relSteps, 6);
         $seasons = $this->genNnnSeasons();
         $res = [];
@@ -113,7 +113,8 @@ class RankingServiceTest extends TestCase
             $res[] = dump($this->forSeason($season, $relRel, $relSteps));
         }
         $actual = dump($this->averageSeason($res));
-        dump('std ' . $this->std(dump(array_column($res, 'std')))['std']);
+        $avgs = array_column($res, 'avg');
+        dump(D::sum($avgs)->div(count($avgs)));
         $this->assertEquals($actual['std']->comp('133.3'), -1);
         $this->assertEquals($actual['var']->comp('299724.2'), -1);
         $this->assertEquals(D::abs($actual['mean'])->comp('21.'), -1);
@@ -145,7 +146,7 @@ class RankingServiceTest extends TestCase
                 ]);
             }
         }
-        usort($res, fn($r1, $r2) => D::of($r2['std'])->comp($r1['std']));
+        usort($res, fn($r1, $r2) => D::of($r2['avg'])->comp($r1['avg']));
         foreach ($res as $r) {
             dump($r); // prevent truncation by not dumping all at once
         }
