@@ -113,6 +113,7 @@ class RankingServiceTest extends TestCase
             $res[] = dump($this->forSeason($season, $relRel, $relSteps));
         }
         $actual = dump($this->averageSeason($res));
+        dump('std ' . $this->std(dump(array_column($res, 'std')))['std']);
         $this->assertEquals($actual['std']->comp('133.3'), -1);
         $this->assertEquals($actual['var']->comp('299724.2'), -1);
         $this->assertEquals(D::abs($actual['mean'])->comp('21.'), -1);
@@ -271,7 +272,6 @@ class RankingServiceTest extends TestCase
             }
             $diffs[] = $diff;
         }
-        $avg = $sum->div(count($actual));
         $count = count($diffs);
         $var = D::zero();
         $mean = D::sum($diffs)->div($count);
@@ -280,11 +280,25 @@ class RankingServiceTest extends TestCase
         }
         $std = $var->div($count)->sqrt();
         return [
+            ...$this->std($diffs),
+            'avg' => $sum->div(count($actual)),
+            'maxDiff' => [$season->getName(), ...array_slice($maxDiff, 0, 2)],
+        ];
+    }
+
+    private function std(array $xx): array
+    {
+        $count = count($xx);
+        $var = D::zero();
+        $mean = D::sum($xx)->div($count);
+        foreach ($xx as $x) {
+            $var = $var->add($x->sub($mean)->pow(2));
+        }
+        $std = $var->div($count)->sqrt();
+        return [
             'std' => $std,
             'var' => $var,
             'mean' => $mean,
-            'avg' => $avg,
-            'maxDiff' => [$season->getName(), ...array_slice($maxDiff, 0, 2)],
         ];
     }
 
