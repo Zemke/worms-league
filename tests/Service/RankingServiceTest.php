@@ -105,8 +105,8 @@ class RankingServiceTest extends TestCase
             Yaml::parseFile(dirname(__FILE__) . '/../../config/services.yaml')
                 ['services']['App\Service\RankingService']['arguments'];
         // making sure this is like when the test was written
-        $this->assertEquals($relRel, 15.2);
-        $this->assertEquals($relSteps, 20);
+        $this->assertEquals($relRel, 16.4);
+        $this->assertEquals($relSteps, 21);
         dump('relRel ' . $relRel);
         dump('relSteps ' . $relSteps);
         $data = $this->gen();
@@ -115,7 +115,7 @@ class RankingServiceTest extends TestCase
             array_push($diffs, ...$this->forSeason($d, $relRel, $relSteps));
         }
         $this->assertEquals(
-            dump($this->rmse($diffs))->comp('939.95542529391305995353654552622559955813065389536453'),
+            dump($this->rmse($diffs))->comp('937.32647590861975994653974507539207704424720421423701'),
             0);
     }
 
