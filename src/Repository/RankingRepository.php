@@ -11,6 +11,7 @@ use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\Query\ResultSetMapping;
 use App\Entity\Season;
 use App\Entity\User;
+use App\Thing\MinMaxNorm;
 
 /**
  * @method Ranking|null find($id, $lockMode = null, $lockVersion = null)
@@ -116,7 +117,9 @@ class RankingRepository extends ServiceEntityRepository
         $stmt = $this->_em->getConnection()->prepare($sql);
         $stmt->bindValue('seasonId', $season->getId());
         $res = $stmt->executeQuery()->fetchAllAssociative();
-        return array_reduce($res, function ($acc, $x) use ($res) {
+        $b = max(array_column($res, 'rounds_won'));
+        $norm = new MinMaxNorm(array_column($res, 'points'), 0, $b);
+        return array_reduce($res, function ($acc, $x) use ($res, $norm) {
             $accIdx = array_search($x['owner_id'], array_column($acc, 'owner_id'));
             if ($accIdx === false) {
                 $accIdx = array_push($acc, $x) - 1;
@@ -131,6 +134,7 @@ class RankingRepository extends ServiceEntityRepository
                 'label' => $x['user_score'] === $x['opp_score']
                     ? '' : ($x['user_score'] > $x['opp_score'] ? 'won' : 'lost'),
             ];
+            $acc[$accIdx]['points_norm'] = round(floatval(strval($norm->step($acc[$accIdx]['points']))));
             return $acc;
         }, []);
     }
