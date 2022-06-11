@@ -25,7 +25,7 @@ class Ranking
     #[ORM\JoinColumn(nullable: false)]
     private $owner;
 
-    #[ORM\Column(type: 'decimal', precision: 55, scale: Decimal::SCALE)]
+    #[ORM\Column(type: 'decimal', precision: Decimal::SCALE + 5, scale: Decimal::SCALE)]
     private $points;
 
     #[ORM\ManyToOne(targetEntity: Season::class, inversedBy: 'rankings')]
