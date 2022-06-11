@@ -97,7 +97,7 @@ class RankingService
         usort($rankings, fn($a, $b) => $a->getPoints() - $b->getPoints());
         $X = count($rankings);
         $DP = [];
-        for ($i = 0; $i < $this->relSteps; $i++) {
+        for ($i = 0; $i <= $this->relSteps; $i++) {
             foreach ($rankings as &$ranking) {
                 $user = $ranking->getOwner();
                 $rels = [
