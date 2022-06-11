@@ -115,7 +115,7 @@ class Ranking
         $myRounds = array_reduce($myGames, function ($acc, $g) {
             $c = 0;
             if ($this->ownedBy($g->getHome()) || $this->ownedBy($g->getAway())) {
-                return count($g->getReplays()) + $acc;
+                return $g->getScoreHome() + $g->getScoreAway() + $acc;
             }
             return $acc;
         }, 0);
