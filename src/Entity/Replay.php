@@ -138,7 +138,6 @@ class Replay
     public function updateModified()
     {
         $this->modified = new \DateTime();
-        $this->cksum = md5_file($this->file->getRealPath());
     }
 
     public function getId(): ?int
@@ -164,6 +163,7 @@ class Replay
     public function setFile(?File $file = null)
     {
         $this->file = $file;
+        $this->cksum = md5_file($this->file->getRealPath());
         if (null !== $file) {
             $this->modified = new \DateTime();
         }
