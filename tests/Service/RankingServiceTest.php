@@ -132,13 +132,14 @@ class RankingServiceTest extends TestCase
     {
         $seasons = $this->genNnnSeasons();
         $res = [];
-        for ($relRel = 0.; $relRel <= 5; $relRel += .2) {
-            dump('relRel ' . $relRel);
+        for ($relRel = D::of(0.); $relRel->comp(10.1) === -1; $relRel = $relRel->add(.2)) {
+            $effRelRel = floatval(strval($relRel));
+            dump('relRel ' . $effRelRel);
             for ($relSteps = 1; $relSteps <= 10; $relSteps++) {
                 dump('relSteps ' . $relSteps);
                 $ress = [];
                 foreach ($seasons as $season) {
-                    $ress[] = $this->forSeason($season, $relRel, $relSteps);
+                    $ress[] = $this->forSeason($season, $effRelRel, $relSteps);
                 }
                 $res[] = dump([
                     '_config' => ['relRel' => $relRel, 'relSteps' => $relSteps],
