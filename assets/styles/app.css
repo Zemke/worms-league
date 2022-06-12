@@ -610,18 +610,24 @@ div.color-badge {
 
 .recent {
     display: inline-block;
-    height: .8rem;
-    width: .8rem;
+    height: .7rem;
+    width: .7rem;
     border-radius: 50%;
     background-color: var(--dark);
 }
 
 .recent.lost {
     background-color: red;
+    border: .1rem solid red;
 }
 
 .recent.won {
     background-color: green;
+    border: .1rem solid green;
+}
+
+.recent.unranked {
+    background-color: transparent;
 }
 
 .nowrap {

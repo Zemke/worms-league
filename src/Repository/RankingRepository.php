@@ -77,6 +77,7 @@ class RankingRepository extends ServiceEntityRepository
                 when g.home_id=owner_id then g.score_away
                 when g.away_id=owner_id then g.score_home
               end as opp_score,
+              g.ranked,
               opp.id as opp_id,
               opp.username as opp,
               sub.game_id,
@@ -133,6 +134,7 @@ class RankingRepository extends ServiceEntityRepository
                 'won' => $x['user_score'] > $x['opp_score'],
                 'label' => $x['user_score'] === $x['opp_score']
                     ? '' : ($x['user_score'] > $x['opp_score'] ? 'won' : 'lost'),
+                'ranked' => $x['ranked'],
             ];
             $acc[$accIdx]['points_norm'] = round(floatval(strval($norm->step($acc[$accIdx]['points']))));
             return $acc;

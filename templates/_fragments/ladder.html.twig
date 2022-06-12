@@ -87,8 +87,8 @@
                     {% for g in ranking.games %}
                         {# TODO empty circle for unprocessed games #}
                         <a href="{{ path('app_match_view', {gameId: g.id}) }}">
-                            <i class="recent {{ g.label }}"
-                               data-tooltip="{{ g.score.owner}}–{{ g.score.opp }} {{ g.opp.username }}"></i>
+                            <i class="recent {{ g.label }} {{ g.ranked ? '' : 'unranked' }}"
+                               data-tooltip="{{ g.score.owner}}–{{ g.score.opp }} {{ g.opp.username }} {{ g.ranked ? '' : '(processing)' }}"></i>
                         </a>
                     {% endfor %}
                 </td>
