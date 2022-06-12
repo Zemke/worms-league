@@ -120,9 +120,8 @@ class RankingServiceTest extends TestCase
     }
 
     /*
-    // Use this test to find the best relRel and relStep values by trying them all out
-    // and sorting by standard deviation from NNN ranking
-    */
+    Use this test to find the best relRel and relStep values by trying them all out
+    and sorting by standard deviation from NNN ranking
     public function testReCalc_mass(): void
     {
         $data = $this->gen();
@@ -147,6 +146,7 @@ class RankingServiceTest extends TestCase
             dump(strval($r['rmse']) . json_encode($r['_config']));
         }
     }
+    */
 
     private function rmse(array $xx) {
         $mse = D::sum(array_map(fn($x) => $x->pow(2), $xx));
