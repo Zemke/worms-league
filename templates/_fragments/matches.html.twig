@@ -37,7 +37,7 @@
                         {% endif %}
                     </td>
                     <td>
-                        <a href="{{ path('app_user_view', {usernameOrId: game.home.username}) }}">
+                        <a href="{{ path('app_user_view', {usernameOrId: game.home.username}) }}{{ season.active ? '' : '?season=' ~ season.id }}">
                             {{ game.home.username }}
                         </a>
                     </td>
@@ -45,7 +45,7 @@
                         {{ game.scoreHome }}–{{ game.scoreAway }}
                     </td>
                     <td>
-                        <a href="{{ path('app_user_view', {usernameOrId: game.away.username}) }}">
+                        <a href="{{ path('app_user_view', {usernameOrId: game.away.username}) }}{{ season.active ? '' : '?season=' ~ season.id }}">
                             {{ game.away.username }}
                         </a>
                     </td>
