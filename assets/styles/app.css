@@ -995,10 +995,6 @@ ul.tabs > li.active a {
     margin-left: -1.5rem;
 }
 
-.justthetip {
-    margin-top: .1rem;
-}
-
 .bg-light {
     background-color: var(--light);
 }
