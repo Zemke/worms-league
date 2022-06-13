@@ -13,11 +13,11 @@ use App\Repository\SeasonRepository;
 class UserController extends AbstractController
 {
     #[Route('/user/{usernameOrId}', name: 'app_user_view')]
-    public function index(string $usernameOrId,
-                          Request $request,
-                          SeasonRepository $seasonRepo,
-                          UserRepository $userRepo,
-                          GameRepository $gameRepo,): Response
+    public function view(string $usernameOrId,
+                         Request $request,
+                         SeasonRepository $seasonRepo,
+                         UserRepository $userRepo,
+                         GameRepository $gameRepo,): Response
     {
         $user = ctype_digit($usernameOrId)
             ? $userRepo->find($usernameOrId)
