@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
-{% block title %}Ladder{% endblock %}
+{% block title %}
+    {{ season.name }} — {{ tab == 'ladder' ? 'Ladder' : 'Matches' }}
+{% endblock %}
 {% block body %}
     <ul class="tabs">
         <li class="{{ tab == 'ladder' ? 'active' : '' }}">
@@ -15,11 +17,11 @@
     </ul>
     {% if tab == 'ladder' %}
         {{ render(controller(
-            'App\\Controller\\LadderController::view', {seasonId: seasonId}
+            'App\\Controller\\LadderController::view', {seasonId: season.id}
         )) }}
     {% else %}
         {{ render(controller(
-            'App\\Controller\\MatchController::matches', {seasonId: seasonId}
+            'App\\Controller\\MatchController::matches', {seasonId: season.id}
         )) }}
     {% endif %}
 {% endblock %}

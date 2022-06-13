@@ -18,12 +18,13 @@ class ArchiveController extends AbstractController
     }
 
     #[Route('/archive/{seasonId}', name: 'app_archive_view')]
-    public function view(SeasonRepository $seasonRepo, Request $request ,int $seasonId): Response
+    public function view(SeasonRepository $seasonRepo, Request $request, int $seasonId): Response
     {
+        $season = $seasonRepo->find($seasonId);
         $tab = $request->query->get('tab', 'ladder');
         if ($tab !== 'matches') {
             $tab = 'ladder';
         }
-        return $this->render('archive/view.html.twig', ['seasonId' => $seasonId, 'tab' => $tab]);
+        return $this->render('archive/view.html.twig', ['season' => $season, 'tab' => $tab]);
     }
 }
