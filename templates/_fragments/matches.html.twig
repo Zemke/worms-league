@@ -67,8 +67,7 @@
                             </a>
                             {% if replay.processed() %}
                                 <div class="inline-block" data-tooltip="{{ replay.replayData.texture.local() }}">
-                                    <a href="/todo"
-                                       class="texture">
+                                    <div class="texture">
                                         <img src="{{ asset('/img/terrains/' ~ replay.replayData.texture().value ~ '.gif') }}"
                                              alt="{{ replay.replayData.texture().local() }}">
                                         {% if replay.replayData.data.suddenDeath %}
@@ -76,7 +75,7 @@
                                                  class="sudden-death"
                                                  style="left: -{{ random(0,40)/10 }}rem;">
                                         {% endif %}
-                                    </a>
+                                    </div>
                                 </div>
                                 <div class="color-badge {{ replay.winnerColor() | lower }}"
                                      data-tooltip="{{ replay.replayData.winner() }}">

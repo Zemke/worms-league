@@ -483,14 +483,14 @@ button.void {
     display: block;
 }
 
-a.texture {
+table.matches .texture {
     position: relative;
     display: inline-block;
     overflow: hidden;
     border-radius: .5rem;
 }
 
-a.texture > img {
+table.matches .texture > img {
     vertical-align: middle;
     transform: scale(1.1);
 }
