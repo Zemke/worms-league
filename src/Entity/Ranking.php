@@ -106,8 +106,9 @@ class Ranking
 
         usort(
             $games,
-            fn($g1, $g2) => $g1->getCreated()->getTimestamp() - $g2->getCreated()->getTimestamp());
-        $latest = \DateTimeImmutable::createFromMutable($games[0]->getCreated())->modify('-7 days');
+            fn($g1, $g2) => $g2->getCreated()->getTimestamp() - $g1->getCreated()->getTimestamp());
+        $latest = \DateTimeImmutable::createFromMutable(
+            $games[0]->getCreated())->modify('-' . self::ACTIVITY_LOOKBACK . ' days');
         $myGames = array_filter($games, fn($g) => $g->isHomeOrAway($this->owner));
         $totalRounds = array_reduce($games, function ($acc, $g) {
             return $acc + $g->getScoreHome() + $g->getScoreAway();
