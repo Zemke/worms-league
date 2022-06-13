@@ -49,6 +49,7 @@ class RankingService
         }
         $this->reCalc($season);
         $game->setRanked(true);
+        $this->em->flush();
     }
 
     /**
