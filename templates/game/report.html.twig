@@ -19,6 +19,7 @@
                    data-report-target="fileInput"
                    {{ stimulus_action('report', 'listFiles', 'change') }}
                    multiple>
+            <input type="hidden" name="token" value="{{ csrf_token('report') }}"/>
             <button type="submit">
                 Report
             </button>

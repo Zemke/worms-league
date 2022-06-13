@@ -46,6 +46,9 @@ class GameController extends AbstractController
         if (!isset($season)) {
             $this->addFlash('error', 'There\'s currently no season.');
         } else if ($request->getMethod() === 'POST') {
+            if (!$this->isCsrfTokenValid('report', $request->request->get('token'))) {
+                return new Response('', 403);
+            }
             $game = (new Game())
                 ->setReporter($security->getUser())
                 ->setHome($security->getUser())
