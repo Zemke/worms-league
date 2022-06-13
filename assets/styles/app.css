@@ -339,6 +339,11 @@ ul li::before {
     background-color: var(--error);
 }
 
+.alert a {
+    color: white;
+    text-decoration: underline;
+}
+
 table thead tr {
     background-color: var(--tertiary);
     border-top: .18rem solid #2e5e8f;

@@ -6,6 +6,13 @@
 
 {% block body %}
 
+<div class="alert info">
+    Stats from season
+    <a href="{{ path('app_archive_view', {seasonId: season.id}) }}">
+        {{ season.name }}
+    </a>
+</div>
+
 <table class="w100">
     <thead>
         <tr>
