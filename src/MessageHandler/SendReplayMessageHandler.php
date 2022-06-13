@@ -57,6 +57,9 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
             }
         }
         if ($replay->getGame()->fullyProcessed()) {
+            if (count($err = $this->validator->validate($game)) > 0) {
+                throw new \RuntimeException(strval($err));
+            }
             $this->gameRepo->add($replay->getGame()->score(), true);
             if (!$replay->getGame()->getRanked()) {
                 $this->bus->dispatch(new RankingCalcMessage($replay->getGame()->getId()));

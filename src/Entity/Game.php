@@ -222,6 +222,43 @@ class Game
         return end($rd)->startedAt();
     }
 
+    #[Assert\IsTrue(message: "One must not play against oneself.")]
+    public function isOpponentDifferent(): bool
+    {
+        return $this->home?->getId() !== $this->away?->getId();
+    }
+
+    #[Assert\IsTrue(message: "Replay is not from within the season.")]
+    public function isWithinSeason(): bool
+    {
+        if (!$this->fullyProcessed()) {
+            return true;
+        }
+        $playedAt = $this->playedAt();
+        return $this->season->getStart() <= $playedAt
+            && $this->season->getEnding() >= $playedAt;
+    }
+
+    #[Assert\IsTrue(message: 'The season has ended.')]
+    public function isReportWithinSeason(): bool
+    {
+        $now = new \DateTime('now');
+        return $this->season->getStart() <= $now
+            && $this->season->getEnding() >= $now;
+    }
+
+    #[Assert\IsTrue(message: 'The season is not active.')]
+    public function isSeasonActive(): bool
+    {
+        return $this->season->getActive();
+    }
+
+    #[Assert\IsTrue(message: "There are not enough replays.")]
+    public function isEnoughReplays(): bool
+    {
+        return ($this->scoreHome + $this->scoreAway) <= count($this->replays);
+    }
+
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
     public function updateModified()
@@ -340,29 +377,6 @@ class Game
         $this->voided = $voided;
 
         return $this;
-    }
-
-    #[Assert\IsTrue(message: "One must not play against oneself.")]
-    public function isOpponentDifferent(): bool
-    {
-        return $this->home?->getId() !== $this->away?->getId();
-    }
-
-    #[Assert\IsTrue(message: "Replay is not from within the season.")]
-    public function isWithinSeason(): bool
-    {
-        if (!$this->fullyProcessed()) {
-            return true;
-        }
-        $playedAt = $this->playedAt();
-        return $this->season->getStart() <= $playedAt
-            && $this->season->getEnding() >= $playedAt;
-    }
-
-    #[Assert\IsTrue(message: "There are not enough replays.")]
-    public function isEnoughReplays(): bool
-    {
-        return ($this->scoreHome + $this->scoreAway) <= count($this->replays);
     }
 
     /**
