@@ -59,6 +59,7 @@ class UserController extends AbstractController
         ];
         return $this->render('user/view.html.twig', [
             'user' => $user,
+            'season' => $season,
             'games' => $games,
             'total' => $total,
             'totalWon' => $totalWon,

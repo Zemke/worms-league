@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ user.username }}{% endblock %}
+{% block title %}
+    {{ season.active ? '' : season.name ~ ' — ' }}{{ user.username }}
+{% endblock %}
 
 {% block body %}
 
