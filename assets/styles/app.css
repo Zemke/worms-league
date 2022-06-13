@@ -614,6 +614,10 @@ table.ladder thead tr:nth-child(1) th {
     text-align: center;
 }
 
+table.ladder tbody tr.user {
+    background-color: white;
+}
+
 table.ladder thead tr:nth-child(1) th:nth-child(1),
 table.ladder thead tr:nth-child(2) th:nth-child(3),
 table.ladder tbody td:nth-child(3),

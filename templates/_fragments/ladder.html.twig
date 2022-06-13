@@ -31,7 +31,7 @@
             </thead>
             <tbody>
             {% for ranking in ladder %}
-            <tr>
+            <tr class="{{ app.user and ranking.owner_id == app.user.id ? 'user' : '' }}">
                 <td>{{ loop.index }}</td>
                 <td>
                     <a href="{{ path('app_user_view', {usernameOrId: ranking.user}) }}{{ season.active ? '' : '?season=' ~ season.id }}">
