@@ -19,6 +19,7 @@ class UserController extends AbstractController
                          UserRepository $userRepo,
                          GameRepository $gameRepo,): Response
     {
+        // TODO performance (mainly through lazy loading assocs)
         $user = ctype_digit($usernameOrId)
             ? $userRepo->find($usernameOrId)
             : $userRepo->findOneByUsername($usernameOrId);
