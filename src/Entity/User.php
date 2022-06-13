@@ -24,7 +24,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 16, unique: true)]
     #[Assert\Length(min: 3, max: 16)]
-    #[Assert\Unique]
+    #[Assert\Unique] // TODO unique case-insensitive
     #[Assert\Regex(
         pattern: '/[A-Za-z0-9-]/',
         match: true,
