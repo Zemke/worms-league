@@ -24,8 +24,10 @@
         {% if app.user %}
           <div class="dropdown-wrapper">
               {# TODO gear icon might look weird in other browsers (i.e. Safari) #}
-              <button class="void gear-wrapper" data-dropdown-action>
-                  <i class="icon gear text-primary"></i>
+              <button class="void gear" data-dropdown-action>
+                <div>+</div>
+                <div>+</div>
+                <div></div>
               </button>
               <div class="dropdown" data-dropdown-target>
                 <a href="{{ path('app_logout') }}">

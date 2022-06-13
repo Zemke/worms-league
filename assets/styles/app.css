@@ -33,6 +33,7 @@ body, html {
 .top-bar {
     background-color: var(--dark);
     padding: .2rem 0;
+    height: 1rem;
 }
 
 .top-bar .container {
@@ -422,51 +423,49 @@ i.comment:after {
     border-bottom-left-radius: .1rem;
 }
 
-.gear-wrapper {
+.gear {
     position: relative;
     height: 1rem;
     width: 1rem;
     border-radius: 50%;
 }
 
-.gear-wrapper:hover,
-.gear-wrapper:focus,
-button.gear-wrapper:focus {
+.gear:hover,
+.gear:focus,
+button.gear:focus {
     animation: rotation 1.5s infinite linear;
     box-shadow: none;
 }
 
-.gear-wrapper::after {
-    content: "";
-    display: inline-block;
-    position: relative;
-    height: .9rem;
-    width: .9rem;
-    background-color: var(--dark);
-    border: .2rem solid var(--primary);
-    box-sizing: border-box;
-    border-radius: 50%;
-    margin: 0 .2rem;
-    left: -0.13rem;
-}
-
-i.icon.gear {
+.gear {
     position: absolute;
-    left: -0.15rem;
+    display: inline-block;
 }
 
-i.icon.gear::before,
-i.icon.gear::after {
-    content: "+";
+.gear * {
+    color: var(--primary);
+    font-family: 'Arial';
     display: inline-block;
     position: absolute;
     font-size: 2.4rem;
-    left: -.05rem;
-    top: -.9rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
-i.icon.gear::after {
-    transform: rotate(45deg);
+.gear div:first-child {
+    transform: translate(-50%, -50%) rotate(45deg);
+    -webkit-transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.gear div:last-child {
+    height: .7rem;
+    width: .7rem;
+    background-color: var(--dark);
+    border-radius: 50%;
+    border: .1rem solid var(--primary);
 }
 
 button.void {
