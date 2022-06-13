@@ -95,6 +95,38 @@
                        {gameId: game.id, round: round}
                 )) }}
             </div>
+            <div class="dropdown-wrapper text-right">
+                <button class="void" data-dropdown-action>
+                    <strong>?</strong>
+                </button>
+                <div class="dropdown text-left" data-dropdown-target>
+                    <div class="p1">
+                        <p>
+                            The bars in the background are approximations of health points. They do not include health reductions due
+                            self-killing weapons like Kamikaze or continuous health reductions due to Sudden Death or Skunks or the like.<br>
+                            They’re actually more like accumulations of damage conceded.
+                        </p>
+                        <p>
+                            Other than that the bars in the background depict the state after that turn whose used weapons are shown on top
+                            with a border of the color of the team that used that weapon.
+                        </p>
+                        <p>
+                            Dashed red border means that the turn has ended due to the Worm losing control. Like he or she
+                            slipped or fell off the cliff or the like. Poor worm.
+                        </p>
+                        <p>
+                            Weapons like Ninja Rope are shown to be used even if the usage didn’t reduce ammo.
+                            Like when shooting a Ninja Rope into empty space.
+                        </p>
+                        <p>
+                            Wave means Sudden Death in that turn.
+                        </p>
+                        <p>
+                            Powered by <a href="https://waaas.zemke.io/" target="_blank" class="font-weight-bolder">WAaaS</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     {% endif %}
     <div class="col">
