@@ -31,3 +31,8 @@ services:
     App\Service\WaaasService:
         arguments:
             $waaas: 'https://waaas.zemke.io'
+
+    App\EventListener\ControllerListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller }
+

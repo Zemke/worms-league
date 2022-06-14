@@ -84,6 +84,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getOneOrNullResult();
     }
 
+    public function updateLastActive(User &$user, \DateTime $lastActive = new \DateTime('now')): void
+    {
+        $user->setLastActive($lastActive);
+        $this->_em->flush();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
