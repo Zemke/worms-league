@@ -1,8 +1,8 @@
 {# TODO pagination #}
 
-{% if season is null %}
+{% if season is null or games is empty %}
     <div class="alert info">
-        There are no matches in this season.
+        There are no matches yet.
     </div>
 {% else %}
     <div class="whitepad">
