@@ -20,7 +20,6 @@ class UserController extends AbstractController
                          GameRepository $gameRepo,): Response
     {
         // TODO find username case-insensitively
-        // TODO performance (mainly through lazy loading assocs)
         $user = ctype_digit($usernameOrId)
             ? $userRepo->find($usernameOrId)
             : $userRepo->findOneByUsername($usernameOrId);

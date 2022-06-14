@@ -69,6 +69,11 @@ class GameRepository extends ServiceEntityRepository
     public function findOfUserAndSeason(User $user, Season $season): array
     {
         return $this->createQueryBuilder('g')
+            ->select(['g', 'r', 'rd', 'home', 'away'])
+            ->leftJoin('g.home', 'home')
+            ->leftJoin('g.away', 'away')
+            ->leftJoin('g.replays', 'r')
+            ->leftJoin('r.replayData', 'rd')
             ->where('(g.home = :user or g.away = :user) and g.season = :season')
             ->setParameter('user', $user)
             ->setParameter('season', $season)
