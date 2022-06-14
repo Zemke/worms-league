@@ -21,6 +21,8 @@ use App\Thing\MinMaxNorm;
  */
 class RankingRepository extends ServiceEntityRepository
 {
+    private const MAX_LADDER_FILL = 20;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Ranking::class);
@@ -96,12 +98,14 @@ class RankingRepository extends ServiceEntityRepository
                 sub.games_lost,
                 sub.streak,
                 \'(\' || sub.streak_best || \')\' as streak_best,
-                sub.activity
+                sub.activity,
+                sub.last_active
               from (
                 select
                   g.id as game_id,
                   g.created as game_created,
                   u.username,
+                  u.last_active,
                   r.*,
                   case
                     when g.home_id=g.user_id then g.away_id
@@ -116,9 +120,9 @@ class RankingRepository extends ServiceEntityRepository
               join "user" opp on opp.id = sub.opp_id
               where sub.row_number < 7
               union
-              select
-                u.id as owner_id,
-                u.username as "user",
+              (select
+                id as owner_id,
+                username as "user",
                 null as user_score,
                 null as opp_score,
                 null as ranked,
@@ -139,23 +143,32 @@ class RankingRepository extends ServiceEntityRepository
                 0 as games_lost,
                 0 as streak,
                 \'(0)\' as streak_best,
-                0.00 as activity
-              from "user" u) as ladder
+                0.00 as activity,
+                last_active
+              from "user"
+              order by last_active desc nulls last
+              limit :maxLadderFill)) as ladder
             order by
                 ladder.points desc,
-                ladder.rounds_played desc';
+                ladder.rounds_played desc,
+                ladder."user" asc';
         $stmt = $this->_em->getConnection()->prepare($sql);
         $stmt->bindValue('seasonId', $season->getId());
+        $stmt->bindValue('maxLadderFill', self::MAX_LADDER_FILL);
         $res = $stmt->executeQuery()->fetchAllAssociative();
         $b = max(array_column($res, 'rounds_won'));
         $norm = new MinMaxNorm(array_column($res, 'points'), 0, $b);
         return array_reduce($res, function ($acc, $x) use ($res, $norm) {
+            $isWithoutGames = is_null($x['game_id']);
+            if ($isWithoutGames && count($acc) >= self::MAX_LADDER_FILL) {
+                return $acc;
+            }
             $accIdx = array_search($x['owner_id'], array_column($acc, 'owner_id'));
             if ($accIdx === false) {
                 $accIdx = array_push($acc, $x) - 1;
                 $acc[$accIdx]['games'] = [];
             }
-            if (!is_null($x['game_id'])) {
+            if (!$isWithoutGames) {
                 $acc[$accIdx]['games'][] = [
                     'id' => $x['game_id'],
                     'opp' => ['id' => $x['opp_id'], 'username' => $x['opp']],
