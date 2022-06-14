@@ -65,56 +65,85 @@ class RankingRepository extends ServiceEntityRepository
     public function findForLadder(Season $season): array
     {
         $rsm = new ResultSetMapping();
-		$sql = '
-            select
-              sub.owner_id as owner_id,
-              sub.username as "user",
-              case
-                when g.home_id=owner_id then g.score_home
-                when g.away_id=owner_id then g.score_away
-              end as user_score,
-              case
-                when g.home_id=owner_id then g.score_away
-                when g.away_id=owner_id then g.score_home
-              end as opp_score,
-              g.ranked,
-              opp.id as opp_id,
-              opp.username as opp,
-              sub.game_id,
-              round(sub.points) as points_rounded,
-              sub.points,
-              sub.rounds_played,
-              sub.rounds_played_ratio,
-              sub.rounds_won,
-              sub.rounds_won_ratio,
-              sub.rounds_lost,
-              sub.games_played,
-              sub.games_played_ratio,
-              sub.games_won,
-              sub.games_won_ratio,
-              sub.games_lost,
-              sub.streak,
-              \'(\' || sub.streak_best || \')\' as streak_best,
-              sub.activity
-            from (
+        $sql = '
+            select * from (
               select
-                g.id as game_id,
-                g.created as game_created,
-                u.username,
-                r.*,
+                sub.owner_id as owner_id,
+                sub.username as "user",
                 case
-                  when g.home_id=g.user_id then g.away_id
-                  when g.away_id=g.user_id then g.home_id
-                end as opp_id,
-                row_number() over (partition by g.user_id order by g.created desc)
-              from (select home_id as user_id, * from game g union all select away_id as user_id, * from game g) g
-              join ranking r on r.owner_id=g.user_id and r.season_id=:seasonId
-              join "user" u on u.id = g.user_id
-              where g.season_id=:seasonId order by g.user_id) sub
-            join game g on sub.game_id=g.id
-            join "user" opp on opp.id = sub.opp_id
-            where sub.row_number < 7
-            order by points desc, game_created asc;';
+                  when g.home_id=owner_id then g.score_home
+                  when g.away_id=owner_id then g.score_away
+                end as user_score,
+                case
+                  when g.home_id=owner_id then g.score_away
+                  when g.away_id=owner_id then g.score_home
+                end as opp_score,
+                g.ranked,
+                opp.id as opp_id,
+                opp.username as opp,
+                sub.game_id,
+                round(sub.points) as points_rounded,
+                sub.points,
+                sub.rounds_played,
+                sub.rounds_played_ratio,
+                sub.rounds_won,
+                sub.rounds_won_ratio,
+                sub.rounds_lost,
+                sub.games_played,
+                sub.games_played_ratio,
+                sub.games_won,
+                sub.games_won_ratio,
+                sub.games_lost,
+                sub.streak,
+                \'(\' || sub.streak_best || \')\' as streak_best,
+                sub.activity
+              from (
+                select
+                  g.id as game_id,
+                  g.created as game_created,
+                  u.username,
+                  r.*,
+                  case
+                    when g.home_id=g.user_id then g.away_id
+                    when g.away_id=g.user_id then g.home_id
+                  end as opp_id,
+                  row_number() over (partition by g.user_id order by g.created desc)
+                from (select home_id as user_id, * from game g union all select away_id as user_id, * from game g) g
+                join ranking r on r.owner_id=g.user_id and r.season_id=:seasonId
+                join "user" u on u.id = g.user_id
+                where g.season_id=:seasonId order by g.user_id) sub
+              join game g on sub.game_id=g.id
+              join "user" opp on opp.id = sub.opp_id
+              where sub.row_number < 7
+              union
+              select
+                u.id as owner_id,
+                u.username as "user",
+                null as user_score,
+                null as opp_score,
+                null as ranked,
+                null as opp_id,
+                null as opp,
+                null as game_id,
+                0.0 as points_rounded,
+                0.0 as points,
+                0 as rounds_played,
+                0.0 as rounds_played_ratio,
+                0 as rounds_won,
+                0.0 as rounds_won_ratio,
+                0 as rounds_lost,
+                0 as games_played,
+                0.0 as games_played_ratio,
+                0 as games_won,
+                0.0 as games_won_ratio,
+                0 as games_lost,
+                0 as streak,
+                \'(0)\' as streak_best,
+                0.00 as activity
+              from "user" u) as ladder
+            order by
+                ladder.points desc,
+                ladder.rounds_played desc';
         $stmt = $this->_em->getConnection()->prepare($sql);
         $stmt->bindValue('seasonId', $season->getId());
         $res = $stmt->executeQuery()->fetchAllAssociative();
@@ -126,16 +155,18 @@ class RankingRepository extends ServiceEntityRepository
                 $accIdx = array_push($acc, $x) - 1;
                 $acc[$accIdx]['games'] = [];
             }
-            $acc[$accIdx]['games'][] = [
-                'id' => $x['game_id'],
-                'opp' => ['id' => $x['opp_id'], 'username' => $x['opp']],
-                'score' => ['owner' => $x['user_score'], 'opp' => $x['opp_score']],
-                'draw' => $x['user_score'] === $x['opp_score'],
-                'won' => $x['user_score'] > $x['opp_score'],
-                'label' => $x['user_score'] === $x['opp_score']
-                    ? '' : ($x['user_score'] > $x['opp_score'] ? 'won' : 'lost'),
-                'ranked' => $x['ranked'],
-            ];
+            if (!is_null($x['game_id'])) {
+                $acc[$accIdx]['games'][] = [
+                    'id' => $x['game_id'],
+                    'opp' => ['id' => $x['opp_id'], 'username' => $x['opp']],
+                    'score' => ['owner' => $x['user_score'], 'opp' => $x['opp_score']],
+                    'draw' => $x['user_score'] === $x['opp_score'],
+                    'won' => $x['user_score'] > $x['opp_score'],
+                    'label' => $x['user_score'] === $x['opp_score']
+                        ? '' : ($x['user_score'] > $x['opp_score'] ? 'won' : 'lost'),
+                    'ranked' => $x['ranked'],
+                ];
+            }
             $acc[$accIdx]['points_norm'] = round(floatval(strval($norm->step($acc[$accIdx]['points']))));
             return $acc;
         }, []);
