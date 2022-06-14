@@ -19,10 +19,9 @@ class UserController extends AbstractController
                          UserRepository $userRepo,
                          GameRepository $gameRepo,): Response
     {
-        // TODO find username case-insensitively
         $user = ctype_digit($usernameOrId)
             ? $userRepo->find($usernameOrId)
-            : $userRepo->findOneByUsername($usernameOrId);
+            : $userRepo->findOneByUsernameIgnoreCase($usernameOrId);
         $seasonId = $request->query->getInt('season', -1);
         $season = $seasonId === -1 ? $seasonRepo->findActive() : $seasonRepo->find($seasonId);
         $games = array_reduce($gameRepo->findOfUserAndSeason($user, $season), function ($acc, $g) use ($user) {

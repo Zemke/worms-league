@@ -49,6 +49,15 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }
     }
 
+    public  function findOneByUsernameIgnoreCase(string $username): ?User
+    {
+        return $this->_em->createQuery(
+            'select u from App\Entity\User u where lower(u.username) = lower(:username)'
+        )
+            ->setParameter('username', $username)
+            ->getOneOrNullResult();
+    }
+
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
      */
