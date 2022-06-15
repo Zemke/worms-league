@@ -38,7 +38,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     #[Assert\Email]
-    #[Assert\Unique]
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $email;
 

@@ -63,7 +63,6 @@ class Replay
     private $replayMap;
 
     #[ORM\Column(type: 'string', length: 32, nullable: true)]
-    #[Assert\Unique(message: 'Replay does already exist in another game')]
     private $cksum;
 
     public function __construct()
