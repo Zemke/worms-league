@@ -44,6 +44,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $lastActive;
 
+    #[ORM\Column(type: 'string', length: 32, nullable: true)]
+    private $activationKey;
+
     public function similarUsername(string $username): float
     {
         similar_text($this->getUsername(), $username, $perc);
@@ -140,6 +143,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastActive(?\DateTimeInterface $lastActive): self
     {
         $this->lastActive = $lastActive;
+
+        return $this;
+    }
+
+    public function getActivationKey(): ?string
+    {
+        return $this->activationKey;
+    }
+
+    public function setActivationKey(?string $activationKey): self
+    {
+        $this->activationKey = $activationKey;
 
         return $this;
     }

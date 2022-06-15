@@ -49,13 +49,40 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }
     }
 
-    public  function findOneByUsernameIgnoreCase(string $username): ?User
+    public function findOneByUsernameIgnoreCase(string $username): ?User
     {
         return $this->_em->createQuery(
             'select u from App\Entity\User u where lower(u.username) = lower(:username)'
         )
             ->setParameter('username', $username)
             ->getOneOrNullResult();
+    }
+
+    public function findOneByEmailIgnoreCase(string $email): ?User
+    {
+        return $this->_em->createQuery(
+            'select u from App\Entity\User u where lower(u.email) = lower(:email)'
+        )
+            ->setParameter('email', $email)
+            ->getOneOrNullResult();
+    }
+
+    /**
+     * Set a random activation key to the user that owns the given email address.
+     *
+     * @param $email string The email address whose user's activation key is to be updated.
+     * @return The updated user or null if there's no user with that email.
+     */
+    public function updateActivationKey(string $email): ?User
+    {
+        $user = $this->findOneByEmailIgnoreCase($email);
+        if (is_null($user)) {
+            return $user;
+        }
+        $user->setActivationKey(md5(random_bytes(32)));
+        $this->_em->persist($user);
+        $this->_em->flush();
+        return $user;
     }
 
     /**
