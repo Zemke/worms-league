@@ -71,7 +71,10 @@ class StatsController extends AbstractController
     {
         $losingUser = current(array_filter(
             $stats['teams'],
-            fn($t) => $t['team'] !== $stats['winsTheRound']))['user'];
+            fn($t) => array_key_exists('winsTheRound', $stats) && $t['team'] !== $stats['winsTheRound']));
+        if ($losingUser !== false) {
+            $losingUser = $losingUser['user'];
+        }
         $totalHealthPointsPerTeam = $this->calcLostHealthPoints(
             $stats['turns'], $losingUser ? $losingUser : $stats['teams'][0]['user']);
 

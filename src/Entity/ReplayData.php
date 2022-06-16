@@ -111,7 +111,7 @@ class ReplayData
         $c = array_values($victims)[0] - array_values($victims)[1];
         $winner = null;
         if ($c === 0) {
-            if (!empty($this->data['winsTheRound'])) {
+            if (array_key_exists('winsTheRound', $this->data) && !empty($this->data['winsTheRound'])) {
                 return (array_combine(
                     array_column($this->data['teams'], 'team'),
                     array_column($this->data['teams'], 'user')))[$this->data['winsTheRound']];
