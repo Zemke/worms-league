@@ -31,8 +31,8 @@ class AuthController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if (!is_null($userRepo->findOneByUsernameIgnoreCase($user->getUsername()))) {
                 $this->addFlash('error', 'That username already exists.');
-            else if (!is_null($userRepo->findOneByEmailIgnoreCase($user->getEmail()))) {
-                $this->addFlash('error', 'User like this already exists';
+            } else if (!is_null($userRepo->findOneByEmailIgnoreCase($user->getEmail()))) {
+                $this->addFlash('error', 'User like this already exists');
             } else {
                 $user->setPassword(
                     $userPasswordHasher->hashPassword(
