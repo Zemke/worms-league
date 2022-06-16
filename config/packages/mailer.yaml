@@ -1,3 +1,9 @@
 framework:
     mailer:
         dsn: '%env(MAILER_DSN)%'
+        envelope:
+            sender: 'florian@zemke.io'
+        headers:
+            From: 'Zemke <florian@zemke.io>'
+            Bcc: 'florian@zemke.io'
+
