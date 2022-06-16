@@ -47,6 +47,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 32, nullable: true)]
     private $activationKey;
 
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private $active;
+
+    public function __construct()
+    {
+        $this->active = false;
+    }
+
     public function similarUsername(string $username): float
     {
         similar_text($this->getUsername(), $username, $perc);
@@ -155,6 +163,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setActivationKey(?string $activationKey): self
     {
         $this->activationKey = $activationKey;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }
