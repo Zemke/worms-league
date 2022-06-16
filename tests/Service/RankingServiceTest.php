@@ -28,9 +28,6 @@ class RankingServiceTest extends TestCase
         $g->method('getRanked')->willReturn(false);
         $cut->expects($this->once())
             ->method('reCalc');
-        $g->expects($this->once())
-            ->method('setRanked')
-            ->with($this->equalTo(true));
         $cut->calc($g);
     }
 
@@ -41,8 +38,6 @@ class RankingServiceTest extends TestCase
         $g->method('getRanked')->willReturn(false);
         $cut->expects($this->never())
             ->method('reCalc');
-        $g->expects($this->never())
-            ->method('setRanked');
         $this->expectException(\RuntimeException::class);
         $cut->calc($g);
     }
@@ -54,8 +49,6 @@ class RankingServiceTest extends TestCase
         $g->method('getRanked')->willReturn(true);
         $cut->expects($this->never())
             ->method('reCalc');
-        $g->expects($this->never())
-            ->method('setRanked');
         $this->expectException(\RuntimeException::class);
         $cut->calc($g);
     }
@@ -67,9 +60,6 @@ class RankingServiceTest extends TestCase
         $g->method('getRanked')->willReturn(false);
         $cut->expects($this->never())
             ->method('reCalc');
-        $g->expects($this->never())
-            ->method('setRanked')
-            ->with($this->equalTo(true));
         $this->expectException(\RuntimeException::class);
         $cut->calc($g);
     }
