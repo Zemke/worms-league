@@ -5,12 +5,12 @@
 {% block body %}
 
 <p>
-Found a bug? We're happy to fix. Please give description of the bug.
+Found a bug? We're happy to fix. Please give a description of the bug.
 </p>
 
 <form action="{{ path('app_bug') }}" method="POST">
     <div>
-        <textarea required name="desc" rows="15" placeholder="I just came here and the it happened ... it was crazy!"></textarea>
+        <textarea required name="desc" rows="15" placeholder="I just came here and then it happened ... it was crazy!"></textarea>
     </div>
     <button type="submit">Report</button>
 </form>
