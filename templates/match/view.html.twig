@@ -8,12 +8,14 @@
 
 {% block body %}
 
-<div class="alert info">
-    Game from season
-    <a href="{{ path('app_archive_view', {seasonId: game.season.id}) }}">
-        {{ game.season.name }}
-    </a>
-</div>
+{% if not game.season.active %}
+    <div class="alert info">
+        Game from season
+        <a href="{{ path('app_archive_view', {seasonId: game.season.id}) }}">
+            {{ game.season.name }}
+        </a>
+    </div>
+{% endif %}
 
 {% if not game.fullyProcessed() %}
     <div class="alert warn">

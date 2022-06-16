@@ -6,12 +6,14 @@
 
 {% block body %}
 
-<div class="alert info">
-    Stats from season
-    <a href="{{ path('app_archive_view', {seasonId: season.id}) }}">
-        {{ season.name }}
-    </a>
-</div>
+{% if not season.active %}
+    <div class="alert info">
+        Stats from season
+        <a href="{{ path('app_archive_view', {seasonId: season.id}) }}">
+            {{ season.name }}
+        </a>
+    </div>
+{% endif %}
 
 <table class="w100">
     <thead>
