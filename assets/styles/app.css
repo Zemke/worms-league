@@ -21,6 +21,10 @@
     color: var(--primary);
 }
 
+.text-tertiary {
+    color: var(--tertiary);
+}
+
 body, html {
     background: url('/public/img/checker_dark.png') repeat;
     font-family: Arial, sans-serif;
@@ -1034,5 +1038,19 @@ table.archive tr td:nth-child(3) {
 
 table.archive td {
    white-space: nowrap;
+}
+
+p.prelude {
+    text-align: right;
+    font-size: 2rem;
+    font-weight: bold;
+    background-color: var(--light);
+    margin: 0 -1.2rem 1rem;
+    padding: 2rem 6.2rem;
+}
+
+.shrink {
+    width: 719px;
+    margin: 0 auto;
 }
 
