@@ -42,7 +42,6 @@ class RankingService
                 $game->getSeason()->getId(), $season?->getId()));
         }
         $this->reCalc($season);
-        $game->setRanked(true);
         $this->em->flush();
     }
 
@@ -76,6 +75,9 @@ class RankingService
         $this->rank($rankings, $games);
         foreach ($rankings as &$r) {
             $this->em->persist($r);
+        }
+        foreach ($games as &$g) {
+            $g->setRanked(true);
         }
         $this->em->flush();
         return $rankings;
