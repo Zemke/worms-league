@@ -65,6 +65,11 @@ class GameController extends AbstractController
                 foreach ($game->getReplays() as $replay) {
                     $bus->dispatch(new SendReplayMessage($replay->getId()));
                 }
+                $this->addFlash('success', 'Your game has been reported and is being processed.');
+                return $this->redirectToRoute(
+                    'app_match_view',
+                    ['gameId' => $game->getId()]
+                );
             }
         } else {
             $var['opponents'] = $em->createQueryBuilder()
