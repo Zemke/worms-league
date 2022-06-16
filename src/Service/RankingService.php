@@ -14,12 +14,6 @@ use App\Thing\Decimal as D;
 
 class RankingService
 {
-    /** @var float moderate relativizing effect */
-    private const REL_REL = 2.6;
-
-    /** @var int num of relativizing steps */
-    private const REL_STEPS= 5;
-
     public function __construct(private RankingRepository $rankingRepo,
                                 private GameRepository $gameRepo,
                                 private SeasonRepository $seasonRepo,
