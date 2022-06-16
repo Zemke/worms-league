@@ -99,7 +99,8 @@ class RankingRepository extends ServiceEntityRepository
                 sub.streak,
                 \'(\' || sub.streak_best || \')\' as streak_best,
                 sub.activity,
-                sub.last_active
+                sub.last_active,
+                sub.game_created
               from (
                 select
                   g.id as game_id,
@@ -144,12 +145,15 @@ class RankingRepository extends ServiceEntityRepository
                 0 as streak,
                 \'(0)\' as streak_best,
                 0.00 as activity,
-                last_active
+                last_active,
+                null
               from "user"
               order by last_active desc nulls last
               limit :maxLadderFill)) as ladder
             order by
                 ladder.points desc,
+                ladder.owner_id desc,
+                ladder.game_created asc,
                 ladder.rounds_played desc,
                 ladder."user" asc';
         $stmt = $this->_em->getConnection()->prepare($sql);
