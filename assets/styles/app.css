@@ -7,6 +7,7 @@
     --light: #ececec;
     --warn: #7d5f1e;
     --error: #5b2f3f;
+    --success: #347673;
 
     --wa-green: #80FF80;
     --wa-blue: #9D9FFF;
@@ -321,6 +322,8 @@ ul li::before {
 }
 
 .alert {
+    position: relative;
+    z-index: 99;
     border: .2rem solid var(--light);
     padding: .8rem;
     margin: 1rem 0;
@@ -329,6 +332,10 @@ ul li::before {
 
 .alert.info {
     background-color: var(--tertiary);
+}
+
+.alert.success {
+    background-color: var(--success);
 }
 
 .alert.warn {
