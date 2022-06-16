@@ -3,19 +3,21 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Form\PasswordType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class PasswordForgottenFormType extends AbstractType
+class PasswordResetFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class, [
-                'attr' => ['placeholder' => 'Email address']
-            ])
+            ->add('plainPassword', PasswordType::class)
+            ->add('activationKey', HiddenType::class)
+            ->add('reset', SubmitType::class)
         ;
     }
 
@@ -23,7 +25,6 @@ class PasswordForgottenFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'validation_groups' => false,
         ]);
     }
 }

@@ -67,6 +67,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getOneOrNullResult();
     }
 
+    public function register(User &$user): void
+    {
+        $user->setActive(false);
+        $user->setActivationKey($this->genKey());
+        $this->_em->persist($user);
+        $this->_em->flush();
+    }
+
     /**
      * Set a random activation key to the user that owns the given email address.
      *
@@ -79,7 +87,27 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         if (is_null($user)) {
             return $user;
         }
-        $user->setActivationKey(md5(random_bytes(32)));
+        $user->setActivationKey($this->genKey());
+        $this->_em->persist($user);
+        $this->_em->flush();
+        return $user;
+    }
+
+    private function genKey(): string
+    {
+        return md5(random_bytes(32));
+    }
+
+    public function fulfillActivationKey(string $key, bool $setActive): ?User
+    {
+        $user = $this->findOneByActivationKey($key);
+        if (is_null($user)) {
+            return null;
+        }
+        $user->setActivationKey(null);
+        if ($setActive) {
+            $user->setActive(true);
+        }
         $this->_em->persist($user);
         $this->_em->flush();
         return $user;
@@ -104,8 +132,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $this->_em->createQuery(
                 'SELECT u
                 FROM App\Entity\User u
-                WHERE lower(u.username) = lower(:query)
-                OR lower(u.email) = lower(:query)'
+                WHERE (lower(u.username) = lower(:query)
+                OR lower(u.email) = lower(:query))
+                AND u.active = true'
             )
             ->setParameter('query', strtolower($identifier))
             ->getOneOrNullResult();
