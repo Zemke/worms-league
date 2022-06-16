@@ -87,9 +87,12 @@ class RelativizingService
         $oppRanks = OppRank::reduce($user, $rankings, $games, $DP);
         $P = D::zero();
         foreach ($oppRanks as $or) {
+            if ($or->getWon() === 0) {
+                continue;
+            }
             // Sum[-(99/(100*log(a)))*log(x)+1),{x,1,z}]/z
             $y = D::sum(array_map(fn($x) =>
-                D::of('-'.D::of(99)->div((D::of(100)->mul(log($a)))))->mul(log($x))->add(1),
+                D::of('-'.D::of(99)->div((D::of(100)->mul(D::max([D::least(), log($a)])))))->mul(log($x))->add(1),
                 range(1, $or->getWon())))->div($or->getWon());
             $P = $P->add($y->mul(D::of($or->getWon())->div($roundsWon)));
         }
