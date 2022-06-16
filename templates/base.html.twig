@@ -3,10 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="theme-color" content="#1f3f5e">
+  <meta name="msapplication-TileColor" content="#1f3f5e">
   <title>{% block title %}Worms League{% endblock %}</title>
-  <link rel="shortcut icon" href="{{ asset('/icons/favicon.ico') }}" type="image/x-icon">
+  <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/favicon.ico') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/icons/favicon-32x32.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/icons/favicon-16x16.png') }}">
   <link rel="manifest" href="{{ asset('/manifest.json') }}">
-  <link rel="apple-touch-icon" href="{{ asset('/icons/apple-touch-icon.png') }}"/>
+  <link rel="apple-touch-icon" href="{{ asset('/icons/apple-touch-icon.png') }}">
   {% block stylesheets %}
     {{ encore_entry_link_tags('bootstrap') }}
     {{ encore_entry_link_tags('app') }}
