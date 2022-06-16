@@ -29,20 +29,26 @@ class AuthController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                        $user, $form->get('plainPassword')->getData()));
-            $userRepo->register($user);
-            $targetUrl = $request->server->get('HTTP_ORIGIN')
-                . $this->generateUrl('app_activate')
-                . '?key=' . $user->getActivationKey();
-            $email = (new Email())
-                ->to($user->getEmail())
-                ->subject('Account Activation')
-                ->text('Activate your account here: ' . $targetUrl);
-            $transport->send($email);
-            $this->addFlash('success', 'Please find the activation link in your email inbox.');
-            return $this->redirectToRoute('app_home_index');
+            if (!is_null($userRepo->findOneByUsernameIgnoreCase($user->getUsername()))) {
+                $this->addFlash('error', 'That username already exists.');
+            else if (!is_null($userRepo->findOneByEmailIgnoreCase($user->getEmail()))) {
+                $this->addFlash('error', 'User like this already exists';
+            } else {
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                            $user, $form->get('plainPassword')->getData()));
+                $userRepo->register($user);
+                $targetUrl = $request->server->get('HTTP_ORIGIN')
+                    . $this->generateUrl('app_activate')
+                    . '?key=' . $user->getActivationKey();
+                $email = (new Email())
+                    ->to($user->getEmail())
+                    ->subject('Account Activation')
+                    ->text('Activate your account here: ' . $targetUrl);
+                $transport->send($email);
+                $this->addFlash('success', 'Please find the activation link in your email inbox.');
+                return $this->redirectToRoute('app_home_index');
+            }
         }
 
         return $this->render('auth/register.html.twig', [
