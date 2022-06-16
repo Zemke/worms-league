@@ -14,6 +14,7 @@ use App\Message\RankingCalcMessage;
 use App\Repository\GameRepository;
 use App\Repository\ReplayRepository;
 use App\Service\WaaasService;
+use Symfony\Component\Messenger\Exception\UnrecoverableMessageHandlingException;
 
 final class SendReplayMessageHandler implements MessageHandlerInterface
 {
@@ -31,7 +32,7 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
         if (!$replay->processed()) {
             $replayData = $this->waaasService->send($replay);
             if (count($err = $this->validator->validate($replayData)) > 0) {
-                throw new \RuntimeException(strval($err));
+                throw new UnrecoverableMessageHandlingException(strval($err));
             }
             $replay->setReplayData($replayData);
             $this->replayRepo->add($replay, true);
@@ -57,8 +58,8 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
             }
         }
         if ($replay->getGame()->fullyProcessed()) {
-            if (count($err = $this->validator->validate($game)) > 0) {
-                throw new \RuntimeException(strval($err));
+            if (count($err = $this->validator->validate($replay->getGame())) > 0) {
+                throw new UnrecoverableMessageHandlingException(strval($err));
             }
             $this->gameRepo->add($replay->getGame()->score(), true);
             if (!$replay->getGame()->getRanked()) {
