@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Report a Bug{% endblock %}
+
+{% block body %}
+
+<p>
+Found a bug? We're happy to fix. Please give description of the bug.
+</p>
+
+<form action="{{ path('app_bug') }}" method="POST">
+    <div>
+        <textarea required name="desc" rows="15" placeholder="I just came here and the it happened ... it was crazy!"></textarea>
+    </div>
+    <button type="submit">Report</button>
+</form>
+
+
+{% endblock %}
