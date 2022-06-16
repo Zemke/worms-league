@@ -40,22 +40,26 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
             $this->logger->info("Game {$replay->getGame()->getId()} is already processed");
             $replayData = $replay->getReplayData();
         }
-        $mapUrl = $replayData->getData()['map'];
-        if (is_null($mapUrl)) {
-            $this->logger->warn("ReplayData {$replayData->getId()} has no map apparently");
-        } else {
-            $tmpfile = $this->waaasService->map($mapUrl);
-            try {
-                $uri = stream_get_meta_data($tmpfile)['uri'];
-                $file = new UploadedFile($uri, basename($uri), null, null, true);
-                $replayMap = new ReplayMap($replay->getGame()->getId(), $replay->getName());
-                $replay->setReplayMap($replayMap->setFile($file));
-                $this->replayRepo->add($replay, true);
-            } catch (\Throwable $e) {
-                $this->logger->error('Couldn\'t get map', ['e' => $e]);
-            } finally {
-                fclose($tmpfile);
+        if (is_null($replay->getReplayMap())) {
+            $mapUrl = $replayData->getData()['map'];
+            if (is_null($mapUrl)) {
+                $this->logger->warn("ReplayData {$replayData->getId()} has no map apparently");
+            } else {
+                    $tmpfile = $this->waaasService->map($mapUrl);
+                    try {
+                        $uri = stream_get_meta_data($tmpfile)['uri'];
+                        $file = new UploadedFile($uri, basename($uri), null, null, true);
+                        $replayMap = new ReplayMap($replay->getGame()->getId(), $replay->getName());
+                        $replay->setReplayMap($replayMap->setFile($file));
+                        $this->replayRepo->add($replay, true);
+                    } catch (\Throwable $e) {
+                        $this->logger->error('Couldn\'t get map', ['e' => $e]);
+                    } finally {
+                        fclose($tmpfile);
+                    }
             }
+        } else {
+            $this->logger->info("Replay {$replay->getId()} already has a map.");
         }
         if ($replay->getGame()->fullyProcessed()) {
             if (count($err = $this->validator->validate($replay->getGame())) > 0) {
