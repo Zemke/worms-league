@@ -21,8 +21,8 @@
     <div class="alert warn">
         This game has not been fully processed yet.
     </div>
-    {% for replay in game.replays %}
-        <div class="text-right">
+    <div class="text-right">
+        {% for replay in game.replays %}
             <a href="{{ asset('/replays/' ~ game.id ~ '/' ~ replay.name) }}"
                class="inline-block">
                 <img src="{{ asset('/img/replay.png') }}"
@@ -30,8 +30,8 @@
                      alt="Download Replay"
                      title="Download Replay">
             </a>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
     <br>
 {% else %}
     <div class="gotocomments">
