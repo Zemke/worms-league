@@ -36,9 +36,18 @@ class MatchController extends AbstractController
                          int $gameId,
                          GameRepository $gameRepo): Response
     {
+        $game = $gameRepo->find($gameId);
+        if (is_null($game)) {
+            $this->addFlash('error', 'There is no such game');
+            if (!is_null($ref = $request->headers->get('referer'))) {
+                return $this->redirect($ref);
+            } else {
+                return $this->redirectToRoute('app_match');
+            }
+        }
         return $this->render('match/view.html.twig', [
             'round' => $request->query->getInt('round', 1) - 1,
-            'game' => $gameRepo->find($gameId),
+            'game' => $game,
         ]);
     }
 }
