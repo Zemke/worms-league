@@ -95,7 +95,8 @@ class RankingService
             $rankings,
             fn($acc, $r) => max($acc, $r->getRoundsPlayed()),
             0);
-        $relSteps = (int) round(9 + log($n, 10) * 4.8);
+        // a good curve is 9 + log(x, 1) * 4.8 but it starts to high
+        $relSteps = max((int) round(min(-1 + log($n * .13, 10) * 20, 21)), 1);
         $X = count($rankings);
         $DP = [];
         for ($i = 0; $i <= $relSteps; $i++) {
