@@ -15,58 +15,52 @@
     </div>
 {% endif %}
 
-{% if total == 0 %}
-    <div class="alert info">
-        No games played.
-    </div>
-{% else %}
-    <table class="w100">
-        <thead>
+<table class="w100">
+    <thead>
+        <tr>
+            <th>Opponent</th>
+            <th colspan="3">Score</th>
+            <th width="120">Diff</th>
+            <th width="120">Won %</th>
+            <th width="120">Total</th>
+            <th width="120">Total %</th>
+            <th width="120">Total Won %</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for g in games %}
             <tr>
-                <th>Opponent</th>
-                <th colspan="3">Score</th>
-                <th width="120">Diff</th>
-                <th width="120">Won %</th>
-                <th width="120">Total</th>
-                <th width="120">Total %</th>
-                <th width="120">Total Won %</th>
+                <td>
+                    {{ g.opp is null ? '' : g.opp.username }}
+                </td>
+                <td class="monospace p0 text-red" width="40">
+                    {{ g.lost|pad(games, 'lost') }}
+                </td>
+                <td class="monospace p0 text-center" width="10">
+                    –
+                </td>
+                <td class="monospace p0 text-green" width="40">
+                    {{ g.won|pad(games, 'won') }}
+                </td>
+                <td class="monospace {{ g.diff < 0 ? 'text-red' : 'text-green' }}">
+                    {{ g.diff|pad(games, 'diff') }}
+                </td>
+                <td class="monospace">
+                    {{ g.wonRatio|pad(games, 'wonRatio') }}%
+                </td>
+                <td class="monospace">
+                    {{ g.total|pad(games, 'total') }}
+                </td>
+                <td class="monospace">
+                    {{ g.totalRatio|pad(games, 'totalRatio') }}%
+                </td>
+                <td class="monospace">
+                    {{ g.totalWonRatio|pad(games, 'totalWonRatio') }}%
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            {% for g in games %}
-                <tr>
-                    <td>
-                        {{ g.opp is null ? '' : g.opp.username }}
-                    </td>
-                    <td class="monospace p0 text-red" width="40">
-                        {{ g.lost|pad(games, 'lost') }}
-                    </td>
-                    <td class="monospace p0 text-center" width="10">
-                        –
-                    </td>
-                    <td class="monospace p0 text-green" width="40">
-                        {{ g.won|pad(games, 'won') }}
-                    </td>
-                    <td class="monospace {{ g.diff < 0 ? 'text-red' : 'text-green' }}">
-                        {{ g.diff|pad(games, 'diff') }}
-                    </td>
-                    <td class="monospace">
-                        {{ g.wonRatio|pad(games, 'wonRatio') }}%
-                    </td>
-                    <td class="monospace">
-                        {{ g.total|pad(games, 'total') }}
-                    </td>
-                    <td class="monospace">
-                        {{ g.totalRatio|pad(games, 'totalRatio') }}%
-                    </td>
-                    <td class="monospace">
-                        {{ g.totalWonRatio|pad(games, 'totalWonRatio') }}%
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-{% endif %}
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}
 

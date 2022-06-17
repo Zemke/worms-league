@@ -40,36 +40,31 @@ class UserController extends AbstractController
         }, []);
         $totalWon = array_reduce($games, fn($acc, $g) => $acc + $g['won'], 0);
         $total = array_reduce($games, fn($acc, $g) => $acc + $g['won'] + $g['lost'], 0);
-        $var = [
+        foreach ($games as &$g) {
+            $g['diff'] = $g['won'] - $g['lost'];
+            $g['wonRatio'] = round((($g['won'] / ($g['won'] + $g['lost'])) * 100));
+            $g['total'] = $g['won'] + $g['lost'];
+            $g['totalRatio'] = round((($g['total']) / $total) * 100);
+            $g['totalWonRatio'] = $totalWon === 0 ? 0 : round(($g['won'] / $totalWon) * 100);
+        }
+        $games[] = [
+            'opp' => null,
+            'won' => $totalWon,
+            'lost' => $total - $totalWon,
+            'diff' => $totalWon - ($total - $totalWon),
+            'wonRatio' => round(($totalWon / $total) * 100),
+            'total' => $total,
+            'totalRatio' => 100,
+            'totalWonRatio' => 100,
+        ];
+        return $this->render('user/view.html.twig', [
             'user' => $user,
             'season' => $season,
             'games' => $games,
             'total' => $total,
-        ];
-        if ($total !== 0) {
-            foreach ($games as &$g) {
-                $g['diff'] = $g['won'] - $g['lost'];
-                $g['wonRatio'] = round((($g['won'] / ($g['won'] + $g['lost'])) * 100));
-                $g['total'] = $g['won'] + $g['lost'];
-                $g['totalRatio'] = round((($g['total']) / $total) * 100);
-                $g['totalWonRatio'] = $totalWon === 0 ? 0 : round(($g['won'] / $totalWon) * 100);
-            }
-            $games[] = [
-                'opp' => null,
-                'won' => $totalWon,
-                'lost' => $total - $totalWon,
-                'diff' => $totalWon - ($total - $totalWon),
-                'wonRatio' => round(($totalWon / $total) * 100),
-                'totalRatio' => 100,
-                'totalWonRatio' => 100,
-            ];
-            array_push($var, ...[
-                'total' => $total,
-                'totalWon' => $totalWon,
-                'totalDiff' => $totalWon - ($total - $totalWon),
-                'totalWonRatio' => round(($totalWon / $total) * 100),
-            ]);
-        }
-        return $this->render('user/view.html.twig', $var);
+            'totalWon' => $totalWon,
+            'totalDiff' => $totalWon - ($total - $totalWon),
+            'totalWonRatio' => round(($totalWon / $total) * 100),
+        ]);
     }
 }
