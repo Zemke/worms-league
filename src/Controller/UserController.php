@@ -47,24 +47,28 @@ class UserController extends AbstractController
             $g['totalRatio'] = round((($g['total']) / $total) * 100);
             $g['totalWonRatio'] = $totalWon === 0 ? 0 : round(($g['won'] / $totalWon) * 100);
         }
-        $games[] = [
-            'opp' => null,
-            'won' => $totalWon,
-            'lost' => $total - $totalWon,
-            'diff' => $totalWon - ($total - $totalWon),
-            'wonRatio' => round(($totalWon / $total) * 100),
-            'total' => $total,
-            'totalRatio' => 100,
-            'totalWonRatio' => 100,
-        ];
-        return $this->render('user/view.html.twig', [
+        $var = [
             'user' => $user,
             'season' => $season,
             'games' => $games,
             'total' => $total,
-            'totalWon' => $totalWon,
-            'totalDiff' => $totalWon - ($total - $totalWon),
-            'totalWonRatio' => round(($totalWon / $total) * 100),
-        ]);
+        ];
+        if ($total !== 0) {
+            $var['games'][] = [
+                'opp' => null,
+                'won' => $totalWon,
+                'lost' => $total - $totalWon,
+                'diff' => $totalWon - ($total - $totalWon),
+                'wonRatio' => round(($totalWon / $total) * 100),
+                'total' => $total,
+                'totalRatio' => 100,
+                'totalWonRatio' => 100,
+            ];
+            $var['totalWon'] = $totalWon;
+            $var['totalDiff'] = $totalWon - ($total - $totalWon);
+            $var['totalWonRatio'] = round(($totalWon / $total) * 100);
+        }
+        dump(count($var['games']));
+        return $this->render('user/view.html.twig', $var);
     }
 }
