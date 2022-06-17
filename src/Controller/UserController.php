@@ -68,7 +68,6 @@ class UserController extends AbstractController
             $var['totalDiff'] = $totalWon - ($total - $totalWon);
             $var['totalWonRatio'] = round(($totalWon / $total) * 100);
         }
-        dump(count($var['games']));
         return $this->render('user/view.html.twig', $var);
     }
 }
