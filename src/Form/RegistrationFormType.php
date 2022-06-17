@@ -29,7 +29,7 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['placeholder' => 'Name a WormNET channel',],
                 'constraints' => [
                     new Regex([
-                        'pattern' => '/^#?(ag|anythinggoes|partytime|pt|rh|ropersheaven)$/i',
+                        'pattern' => '/^#?(ag|anything ?goes|party ?time|pt|rh|ropers ?heaven)$/i',
                         'message' => 'Name one of the prominent channels in WormNET',
                     ])
                 ],
