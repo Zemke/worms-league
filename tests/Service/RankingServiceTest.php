@@ -96,7 +96,7 @@ class RankingServiceTest extends TestCase
                 ['services']['App\Service\RankingService']['arguments'];
         // making sure this is like when the test was written
         $this->assertEquals($relRel, 15.9);
-        $this->assertEquals($relSteps, 9);
+        $this->assertEquals($relSteps, 20);
         dump('relRel ' . $relRel);
         dump('relSteps ' . $relSteps);
         $data = $this->gen();
