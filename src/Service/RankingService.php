@@ -91,9 +91,14 @@ class RankingService
      */
     private function rank(array &$rankings, array $games): void
     {
+        $n = array_reduce(
+            $games,
+            fn($acc, $g) => $acc + $g->getScoreHome() + $g->getScoreAway(),
+            0);
+        $relSteps = (int) round($this->relSteps + log($n, 10) * 4);
         $X = count($rankings);
         $DP = [];
-        for ($i = 0; $i <= $this->relSteps; $i++) {
+        for ($i = 0; $i <= $relSteps; $i++) {
             foreach ($rankings as &$ranking) {
                 $user = $ranking->getOwner();
                 $rels = [
