@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,6 +10,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -38,7 +41,9 @@ class GameController extends AbstractController
                            EntityManagerInterface $em,
                            Security $security,
                            ValidatorInterface $validator,
-                           MessageBusInterface $bus,): Response
+                           MessageBusInterface $bus,
+                           LoggerInterface $logger,
+                           MailerInterface $mailer,): Response
     {
 
         $var = [ 'controller_name' => 'GameController', ];
@@ -64,6 +69,15 @@ class GameController extends AbstractController
                 $em->flush();
                 foreach ($game->getReplays() as $replay) {
                     $bus->dispatch(new SendReplayMessage($replay->getId()));
+                }
+                try {
+                    $email = (new Email())
+                        ->to('florian@zemke.io')
+                        ->subject('WL REP: ' . $game->getId())
+                        ->text('https://wl.zemke.io/matches/' . $game->getId());
+                    $mailer->send($email);
+                } catch (\Throwable $e) {
+                    $logger->error($e->getMessage(), ['exception' => $e]);
                 }
                 $this->addFlash('success', 'Your game has been reported and is being processed.');
                 return $this->redirectToRoute(
