@@ -31,7 +31,12 @@ class NNNFixtures extends Fixture
         $this->remove('replays');
         $seasons = [
             (new Season())
-                ->setActive(true)
+                ->setActive(false)
+                ->setStart(new \DateTime('2022-06-17 00:00:00'))
+                ->setEnding(new \DateTime('2022-08-17 00:00:00'))
+                ->setName('ESL1'),
+            (new Season())
+                ->setActive(false)
                 ->setStart(new \DateTime('2021-07-15 00:00:00'))
                 ->setEnding(new \DateTime('2021-10-18 00:00:00'))
                 ->setName('NNN38'),
@@ -41,7 +46,7 @@ class NNNFixtures extends Fixture
                 ->setEnding(new \DateTime('2022-01-22 00:00:00'))
                 ->setName('NNN39'),
             (new Season())
-                ->setActive(false)
+                ->setActive(true)
                 ->setStart(new \DateTime('2022-01-22 00:00:00'))
                 ->setEnding(new \DateTime('2022-04-30 00:00:00'))
                 ->setName('NNN40'),
