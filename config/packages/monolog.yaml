@@ -66,17 +66,20 @@ when@prod:
             filter_for_errors:
                 type: fingers_crossed
                 # if *one* log is error or higher, pass *all* to file_log
+                include_stacktraces: true
                 action_level: error
                 handler: file_log
 
             # now passed *all* logs, but only if one log is error or higher
             file_log:
                 type: stream
+                include_stacktraces: true
                 path: "%kernel.logs_dir%/err_%kernel.environment%.log"
 
             # still passed *all* logs, and still only logs error or higher
             all:
                 type:  rotating_file
+                include_stacktraces: true
                 path: "%kernel.logs_dir%/%kernel.environment%.log"
                 level: debug
                 max_files: 20
