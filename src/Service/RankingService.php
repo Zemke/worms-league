@@ -91,7 +91,6 @@ class RankingService
      */
     private function rank(array &$rankings, array $games): void
     {
-        usort($rankings, fn($a, $b) => $a->getPoints() - $b->getPoints());
         $X = count($rankings);
         $DP = [];
         for ($i = 0; $i <= $this->relSteps; $i++) {
