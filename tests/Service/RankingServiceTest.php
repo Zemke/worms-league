@@ -106,7 +106,7 @@ class RankingServiceTest extends TestCase
         }
         $this->assertEquals(
             dump($this->rmse($diffs))->comp('937.32647590861975994653974507539207704424720421423701'),
-            0);
+            -1);
     }
 
     /*
