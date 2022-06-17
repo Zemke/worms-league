@@ -40,6 +40,29 @@ when@test:
 when@prod:
     monolog:
         handlers:
+            main:
+                type: fingers_crossed
+                action_level: critical
+                include_stacktraces: true
+                handler: grouped
+
+            grouped:
+                type: stream
+                members: [filter_for_errors, dedupe]
+
+            dedupe:
+                type:    deduplication
+                handler: symfony_mailer
+
+            symfony_mailer:
+                type:         symfony_mailer
+                from_email:   'florian@zemke.io'
+                to_email:     'florian@zemke.io'
+                subject:      'WL ERR: %%message%%'
+                level:        critical
+                formatter:    monolog.formatter.html
+                content_type: text/html
+
             filter_for_errors:
                 type: fingers_crossed
                 # if *one* log is error or higher, pass *all* to file_log
