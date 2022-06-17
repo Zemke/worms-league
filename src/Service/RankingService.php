@@ -95,7 +95,7 @@ class RankingService
             $games,
             fn($acc, $g) => $acc + $g->getScoreHome() + $g->getScoreAway(),
             0);
-        $relSteps = (int) round($this->relSteps + log($n, 10) * 4);
+        $relSteps = (int) round($this->relSteps + log($n, 10) * 3.8);
         $X = count($rankings);
         $DP = [];
         for ($i = 0; $i <= $relSteps; $i++) {

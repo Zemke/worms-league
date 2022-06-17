@@ -95,7 +95,7 @@ class RankingServiceTest extends TestCase
             Yaml::parseFile(dirname(__FILE__) . '/../../config/services.yaml')
                 ['services']['App\Service\RankingService']['arguments'];
         // making sure this is like when the test was written
-        $this->assertEquals($relRel, 16.4);
+        $this->assertEquals($relRel, 15.9);
         $this->assertEquals($relSteps, 9);
         dump('relRel ' . $relRel);
         dump('relSteps ' . $relSteps);
