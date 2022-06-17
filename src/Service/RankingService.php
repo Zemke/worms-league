@@ -92,10 +92,10 @@ class RankingService
     private function rank(array &$rankings, array $games): void
     {
         $n = array_reduce(
-            $games,
-            fn($acc, $g) => $acc + $g->getScoreHome() + $g->getScoreAway(),
+            $rankings,
+            fn($acc, $r) => max($acc, $r->getRoundsPlayed()),
             0);
-        $relSteps = (int) round($this->relSteps + log($n, 10) * 3.8);
+        $relSteps = (int) round(9 + log($n, 10) * 4.8);
         $X = count($rankings);
         $DP = [];
         for ($i = 0; $i <= $relSteps; $i++) {
