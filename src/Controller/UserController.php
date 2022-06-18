@@ -22,6 +22,14 @@ class UserController extends AbstractController
         $user = ctype_digit($usernameOrId)
             ? $userRepo->find($usernameOrId)
             : $userRepo->findOneByUsernameIgnoreCase($usernameOrId);
+        if (is_null($user)) {
+            $this->addFlash('error', 'There is no such user.');
+            if (!is_null($ref = $request->headers->get('referer'))) {
+                return $this->redirect($ref);
+            } else {
+                return $this->redirectToRoute('app_home_index');
+            }
+        }
         $seasonId = $request->query->getInt('season', -1);
         $season = $seasonId === -1 ? $seasonRepo->findActive() : $seasonRepo->find($seasonId);
         $games = array_reduce($gameRepo->findOfUserAndSeason($user, $season), function ($acc, $g) use ($user) {
