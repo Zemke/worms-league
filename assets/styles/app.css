@@ -735,6 +735,7 @@ table.ladder td.streak + td.streak {
     content: "";
     transition: opacity .15s linear;
     opacity: 0;
+    display: none;
 }
 
 [data-tooltip]:hover::before {
@@ -758,6 +759,7 @@ table.ladder td.streak + td.streak {
     opacity: 1;
     letter-spacing: initial;
     font-style: normal;
+    display: inline-block;
 }
 
 .inline-block {
