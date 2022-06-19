@@ -151,11 +151,10 @@ class RankingRepository extends ServiceEntityRepository
               order by last_active desc nulls last
               limit :maxLadderFill)) as ladder
             order by
-                ladder.points desc,
-                ladder.owner_id desc,
-                ladder.game_created asc,
-                ladder.rounds_played desc,
-                ladder."user" asc';
+              ladder.points desc,
+              ladder."user" asc,
+              ladder.rounds_played desc,
+              ladder.game_created asc';
         $stmt = $this->_em->getConnection()->prepare($sql);
         $stmt->bindValue('seasonId', $season->getId());
         $stmt->bindValue('maxLadderFill', self::MAX_LADDER_FILL);
