@@ -21,7 +21,7 @@
             </thead>
             <tbody>
                 {% for game in games | sort((a,b) => b.created < a.created ? -1 : 1) %}
-                <tr>
+                <tr onclick="location.href='{{ path('app_match_view', {gameId: game.id}) }}'">
                     <td>
                         <a href="{{ path('app_match_view', {gameId: game.id}) }}">
                             {{ game.id }}

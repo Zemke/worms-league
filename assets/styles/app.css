@@ -511,6 +511,11 @@ table.matches .texture > img {
     transform: scale(1.1);
 }
 
+table.matches tbody tr:hover td {
+    background-color: white !important;
+    cursor: pointer;
+}
+
 table.matches td {
     white-space: nowrap;
 }
