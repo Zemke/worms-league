@@ -62,8 +62,10 @@ class GameController extends AbstractController
             foreach ($request->files->all('replays') as $file) {
                 $game->addReplay((new Replay())->setFile($file));
             }
-            if (count($validator->validate($game)) > 0) {
-                $this->addFlash('error', 'The game is invalid.');
+            if (count($err = $validator->validate($game)) > 0) {
+                foreach ($err as $r) {
+                    $this->addFlash('error', $r->getMessage());
+                }
             } else {
                 $em->persist($game);
                 $em->flush();
@@ -85,18 +87,17 @@ class GameController extends AbstractController
                     ['gameId' => $game->getId()]
                 );
             }
-        } else {
-            $var['opponents'] = $em->createQueryBuilder()
-                ->select('u')
-                ->from('App:User', 'u')
-                ->where('u.id <> :authUserId')
-                ->orderBy('u.username', 'ASC')
-                ->getQuery()
-                ->setParameter('authUserId', $security->getUser()->getId())
-                ->getResult();
-            if (empty($var['opponents'])) {
-                $this->addFlash('info', 'There are no opponents.');
-            }
+        }
+        $var['opponents'] = $em->createQueryBuilder()
+            ->select('u')
+            ->from('App:User', 'u')
+            ->where('u.id <> :authUserId')
+            ->orderBy('u.username', 'ASC')
+            ->getQuery()
+            ->setParameter('authUserId', $security->getUser()->getId())
+            ->getResult();
+        if (empty($var['opponents'])) {
+            $this->addFlash('info', 'There are no opponents.');
         }
         return $this->render('game/report.html.twig', $var);
     }
