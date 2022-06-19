@@ -37,7 +37,7 @@
                 <tr>
                     <td>
                         {% if g.opp is not null %}
-                            <a href="{{ path('app_user_view', {usernameOrId: g.opp.id}) }}{{ season.active ? '' : '?season=' ~ season.id }}">
+                            <a href="{{ path('app_user_view', {usernameOrId: g.opp.username}) }}{{ season.active ? '' : '?season=' ~ season.id }}">
                                 {{ g.opp.username }}
                             </a>
                         {% endif %}
