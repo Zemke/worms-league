@@ -25,7 +25,7 @@ class GamesGenerator
             $gUsers = array_map(function ($u) use (&$users, &$createFn) {
                 $usernames = array_map(fn($u1) => $u1->getUsername(), $users);
                 if (($idx = array_search($u, $usernames)) === false) {
-                    $nu = (new User())->setUsername($u)->setEmail("{$u}@zemke.io");
+                    $nu = (new User())->setUsername($u)->setEmail("{$u}@zemke.io")->setActive(true);
                     $createFn($nu);
                     $nx = $nu;
                 } else {
