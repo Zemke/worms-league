@@ -15,9 +15,8 @@
                     <img src="{{ asset('/img/water.gif') }}" alt="water"/>
                 </div>
             {% endif %}
-            <div class="turn"
-                 style="background: linear-gradient(to right, {{ gradients[loop.index]|join(', ') }})"
-                 [ngClass]="{'lossOfControl': turn.lossOfControl}">
+            <div class="turn {{ turn.lossOfControl ? 'lossOfControl' : '' }}"
+                 style="background: linear-gradient(to right, {{ gradients[loop.index]|join(', ') }})">
                 <div class="kills">
                     {% for _ in range(0, kills[loop.index0][stats.teams[0].user]) %}
                         {% if not loop.first %}
