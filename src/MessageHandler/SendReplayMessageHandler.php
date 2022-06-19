@@ -2,8 +2,10 @@
 
 namespace App\MessageHandler;
 
+use Symfony\Component\Notifier\Message\ChatMessage;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Notifier\ChatterInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Psr\Log\LoggerInterface;
@@ -23,7 +25,8 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
                                 private GameRepository $gameRepo,
                                 private ReplayRepository $replayRepo,
                                 private ValidatorInterface $validator,
-                                private MessageBusInterface $bus,)
+                                private MessageBusInterface $bus,
+                                private ChatterInterface $chatter,)
     {}
 
     public function __invoke(SendReplayMessage $message)
@@ -68,6 +71,15 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
             $this->gameRepo->add($replay->getGame()->score(), true);
             if (!$replay->getGame()->getRanked()) {
                 $this->bus->dispatch(new RankingCalcMessage($replay->getGame()->getId()));
+            }
+            try {
+                $msg = "{$replay->getGame()->getHome()->getUsername()}  {$replay->getGame()->getScoreHome()}"
+                    . '–'
+                    . "{$replay->getGame()->getScoreAway()} {$replay->getGame()->getAway()->getUsername()}"
+                    . ' https://wl.zemke.io/matches/' . $replay->getGame()->getId();
+                $this->chatter->send(new ChatMessage($msg));
+            } catch (\Throwable $e) {
+                $this->logger->critical($e->getMessage(), ['exception' => $e]);
             }
         }
     }
