@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}
-    {{ season.name }} — {{ tab == 'ladder' ? 'Ladder' : 'Matches' }}
-{% endblock %}
+{% block title %}{{ season.name }} — {{ tab == 'ladder' ? 'Ladder' : 'Matches' }}{% endblock %}
 {% block body %}
     <ul class="tabs">
         <li class="{{ tab == 'ladder' ? 'active' : '' }}">
