@@ -4,7 +4,7 @@
     </div>
 {% else %}
     <div class="whitepad">
-        <table class="ladder w100">
+        <table class="ladder hover-rows w100">
             <thead>
             <tr>
                 <th colspan="3"></th>
@@ -29,7 +29,8 @@
             </thead>
             <tbody>
             {% for ranking in ladder %}
-            <tr class="{{ app.user and ranking.owner_id == app.user.id ? 'user' : '' }}">
+            <tr class="{{ app.user and ranking.owner_id == app.user.id ? 'user' : '' }}"
+                onclick="location.href='{{ path('app_user_view', {usernameOrId: ranking.user}) }}{{ season.active ? '' : '?season=' ~ season.id }}'">
                 <td>{{ loop.index }}</td>
                 <td>
                     <a href="{{ path('app_user_view', {usernameOrId: ranking.user}) }}{{ season.active ? '' : '?season=' ~ season.id }}">

@@ -511,7 +511,7 @@ table.matches .texture > img {
     transform: scale(1.1);
 }
 
-table.matches tbody tr:hover td {
+table.hover-rows tbody tr:hover td {
     background-color: white !important;
     cursor: pointer;
 }
