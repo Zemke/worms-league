@@ -79,7 +79,7 @@ class GameController extends AbstractController
                         ->text('https://wl.zemke.io/matches/' . $game->getId());
                     $mailer->send($email);
                 } catch (\Throwable $e) {
-                    $logger->error($e->getMessage(), ['exception' => $e]);
+                    $logger->critical($e->getMessage(), ['exception' => $e]);
                 }
                 $this->addFlash('success', 'Your game has been reported and is being processed.');
                 return $this->redirectToRoute(

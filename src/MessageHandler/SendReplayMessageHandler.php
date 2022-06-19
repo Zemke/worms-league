@@ -53,7 +53,7 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
                         $replay->setReplayMap($replayMap->setFile($file));
                         $this->replayRepo->add($replay, true);
                     } catch (\Throwable $e) {
-                        $this->logger->error('Couldn\'t get map', ['e' => $e]);
+                        $this->logger->critical('Couldn\'t get map', ['e' => $e]);
                     } finally {
                         fclose($tmpfile);
                     }

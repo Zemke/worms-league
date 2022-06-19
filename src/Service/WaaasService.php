@@ -41,7 +41,7 @@ class WaaasService implements \Psr\Log\LoggerAwareInterface
         try {
             return (new ReplayData())->setData($res->toArray());
         } catch (HttpClientException $e) {
-            $this->logger->error($e->getMessage(), ['exception' => $e]);
+            $this->logger->critical($e->getMessage(), ['exception' => $e]);
             throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
     }
