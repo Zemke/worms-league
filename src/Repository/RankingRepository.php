@@ -67,6 +67,7 @@ class RankingRepository extends ServiceEntityRepository
     public function findForLadder(Season $season): array
     {
         $rsm = new ResultSetMapping();
+        // TODO games not shown when either user is not joined into the ranking
         $sql = '
             select * from (
               select
