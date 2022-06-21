@@ -65,9 +65,6 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
             $this->logger->info("Replay {$replay->getId()} already has a map.");
         }
         if ($replay->getGame()->fullyProcessed()) {
-            if (count($err = $this->validator->validate($replay->getGame())) > 0) {
-                throw new UnrecoverableMessageHandlingException(strval($err));
-            }
             $this->gameRepo->add($replay->getGame()->score(), true);
             if (!$replay->getGame()->getRanked()) {
                 $this->bus->dispatch(new RankingCalcMessage($replay->getGame()->getId()));
