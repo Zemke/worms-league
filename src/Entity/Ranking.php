@@ -124,6 +124,7 @@ class Ranking
         $this->gamesPlayedRatio = count($myGames) / count($games);
         $recentGames = array_filter($myGames, fn($g) => $g->getCreated() >= $latest);
         $this->activity = count($recentGames) / Ranking::ACTIVITY_LOOKBACK;
+        usort($myGames, fn($g1, $g2) => $g1->getCreated() > $g2->getCreated() ? 1 : -1);
         foreach ($myGames as $g) {
             if ($g->getSeason()->getId() !== $this->season->getId()) {
                 throw new \RuntimeException(
