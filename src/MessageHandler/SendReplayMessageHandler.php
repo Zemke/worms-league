@@ -68,15 +68,15 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
             $this->gameRepo->add($replay->getGame()->score(), true);
             if (!$replay->getGame()->getRanked()) {
                 $this->bus->dispatch(new RankingCalcMessage($replay->getGame()->getId()));
-            }
-            try {
-                $msg = "{$replay->getGame()->getHome()->getUsername()}  {$replay->getGame()->getScoreHome()}"
-                    . '–'
-                    . "{$replay->getGame()->getScoreAway()} {$replay->getGame()->getAway()->getUsername()}"
-                    . ' https://wl.zemke.io/matches/' . $replay->getGame()->getId();
-                $this->chatter->send(new ChatMessage($msg));
-            } catch (\Throwable $e) {
-                $this->logger->critical($e->getMessage(), ['exception' => $e]);
+                try {
+                    $msg = "{$replay->getGame()->getHome()->getUsername()}  {$replay->getGame()->getScoreHome()}"
+                        . '–'
+                        . "{$replay->getGame()->getScoreAway()} {$replay->getGame()->getAway()->getUsername()}"
+                        . ' https://wl.zemke.io/matches/' . $replay->getGame()->getId();
+                    $this->chatter->send(new ChatMessage($msg));
+                } catch (\Throwable $e) {
+                    $this->logger->critical($e->getMessage(), ['exception' => $e]);
+                }
             }
         }
     }
