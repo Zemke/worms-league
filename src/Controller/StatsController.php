@@ -14,7 +14,7 @@ class StatsController extends AbstractController
                           GameRepository $gameRepo): Response
     {
         $game = $gameRepo->find($gameId);
-        $stats = $game->getReplays()[$round]->getReplayData()->getData();
+        $stats = $game->sortedReplays()[$round]->getReplayData()->getData();
         return $this->render('stats/stats.html.twig', [
             'averageTurnTimes' => $this->averageTurnTimes($stats),
             'stats' => $stats,
