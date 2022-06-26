@@ -26,7 +26,7 @@
                 </div>
                 <div class="weapons">
                     {% for weapon in turn.weapons %}
-                        <div class="weapon {{ stats.teams[(loop.parent.loop.index0 % 2 == 0)|format_number].color|lower }}"
+                        <div class="weapon {{ stats.teams[(loop.parent.loop.index % 2 == 0)|format_number].color|lower }}"
                              data-tooltip="{{ weapon }}">
                             <img src="{{ asset('/img/weapons/' ~ weapon|lower|split(' ')|join ~ '.png') }}" alt="{{ weapon }}">
                         </div>
