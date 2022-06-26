@@ -18,7 +18,7 @@
         This game has not been fully processed yet.
     </div>
     <div class="text-right">
-        {% for replay in game.replays %}
+        {% for replay in game.sortedReplays() %}
             <a href="{{ asset('/replays/' ~ game.id ~ '/' ~ replay.name) }}"
                class="inline-block">
                 <img src="{{ asset('/img/replay.png') }}"
@@ -39,7 +39,7 @@
 {% endif %}
 
 {% if game.fullyProcessed() %}
-    {% for replay in game.replays %}
+    {% for replay in game.sortedReplays() %}
         <div class="whitepad text-bold inline-block">
             Round {{ loop.index }}
         </div>
@@ -70,7 +70,7 @@
     {% if game.fullyProcessed() %}
         <div class="col-4">
             <div class="replays">
-                {% for rep in game.replays %}
+                {% for rep in game.sortedReplays() %}
                     <a href="{{ asset('/replays/' ~ game.id ~ '/' ~ rep.name) }}"
                        class="inline-block"
                        {% if rep.processed() %}data-tooltip="{{ rep.replayData.startedAt() | date('M. j, H:i') }}"{% endif %}>
@@ -84,7 +84,7 @@
                 <li>
                     Round
                 </li>
-                {% for _ in game.replays %}
+                {% for _ in game.sortedReplays() %}
                     <li class="{{ round == (loop.index0) ? 'active' : '' }}">
                         <a href="?round={{ loop.index }}#comments">
                             {{ loop.index }}

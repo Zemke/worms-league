@@ -222,6 +222,24 @@ class Game
         return end($rd)->startedAt();
     }
 
+    /**
+     * Get replays sorted by their replay data's startedAt value.
+     *
+     * @param $order 'asc'|'desc' sort order
+     */
+    public function sortedReplays(string $order = 'asc'): array
+    {
+        $replays = $this->replays->getValues();
+        $ord = $order === 'desc' ? [-1, 1] : [1, -1];
+        usort(
+            $replays,
+            fn($a, $b) =>
+                $a->getReplayData()->startedAt() > $b->getReplayData()->startedAt()
+                ? $ord[0] : $ord[1]
+        );
+        return $replays;
+    }
+
     #[Assert\IsTrue(message: "One must not play against oneself.")]
     public function isOpponentDifferent(): bool
     {
