@@ -69,7 +69,7 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
             if (!$replay->getGame()->getRanked()) {
                 $this->bus->dispatch(new RankingCalcMessage($replay->getGame()->getId()));
                 try {
-                    $msg = "{$replay->getGame()->getHome()->getUsername()}  {$replay->getGame()->getScoreHome()}"
+                    $msg = "{$replay->getGame()->getHome()->getUsername()} {$replay->getGame()->getScoreHome()}"
                         . '–'
                         . "{$replay->getGame()->getScoreAway()} {$replay->getGame()->getAway()->getUsername()}"
                         . ' https://wl.zemke.io/matches/' . $replay->getGame()->getId();
