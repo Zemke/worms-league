@@ -234,7 +234,7 @@ class Game
         usort(
             $replays,
             fn($a, $b) =>
-                $a->getReplayData()->startedAt() > $b->getReplayData()->startedAt()
+                $a?->getReplayData()?->startedAt() > $b?->getReplayData()?->startedAt()
                 ? $ord[0] : $ord[1]
         );
         return $replays;
