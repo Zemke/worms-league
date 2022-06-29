@@ -105,7 +105,7 @@ class RankingServiceTest extends TestCase
             array_push($diffs, ...$this->forSeason($d, $relRel, $relSteps));
         }
         $this->assertEquals(
-            dump($this->rmse($diffs))->comp('937.32647590861975994653974507539207704424720421423701'),
+            dump($this->rmse($diffs))->comp('125'),
             -1);
     }
 
@@ -139,7 +139,7 @@ class RankingServiceTest extends TestCase
     */
 
     private function rmse(array $xx) {
-        $mse = D::sum(array_map(fn($x) => $x->pow(2), $xx));
+        $mse = D::sum(array_map(fn($x) => $x->pow(2), $xx))->div(count($xx));
         return $mse->sqrt();
     }
 
