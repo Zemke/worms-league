@@ -242,8 +242,9 @@ class RankingServiceTest extends TestCase
             $nnnRankings,
             fn($r) => in_array($r->getOwner()->getId(), $actualRankingOwnerIds));
 
-        $this->normPoints($cutRankings);
-        $this->normPoints($nnnRankings);
+        $nnnPoints = array_map(fn($r) => $r->getPoints(), $nnnRankings);
+        [$nnnMxPoints, $nnnMnPoints] = [max($nnnPoints), min($nnnPoints)];
+        $this->normPoints($cutRankings, $nnnMnPoints, $nnnMxPoints);
 
         $diffs = [];
         foreach ($cutRankings as $r) {
@@ -253,9 +254,9 @@ class RankingServiceTest extends TestCase
         return $diffs;
     }
 
-    private function normPoints(array &$rankings): void
+    private function normPoints(array &$rankings, int $a = 10, int $b = 1_000): void
     {
-        $norm = new MinMaxNorm(array_map(fn($r) => $r->getPoints(), $rankings), 10, 1_000);
+        $norm = new MinMaxNorm(array_map(fn($r) => $r->getPoints(), $rankings), $a, $b);
         foreach ($rankings as &$r) {
             $r->setPoints($norm->step($r->getPoints()));
         }
