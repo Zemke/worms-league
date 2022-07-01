@@ -23,6 +23,10 @@ class AuthController extends AbstractController
                              UserPasswordHasherInterface $userPasswordHasher,
                              UserRepository $userRepo,
                              TransportInterface $transport,): Response {
+        if (!is_null($this->getUser())) {
+            $this->addFlash('success', 'You are logged in.');
+            return $this->redirectToRoute('app_home_index');
+        }
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
