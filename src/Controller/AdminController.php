@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Repository\GameRepository;
 use App\Repository\SeasonRepository;
+use App\Service\RankingService;
 
 class AdminController extends AbstractController
 {
@@ -65,6 +66,20 @@ class AdminController extends AbstractController
         $games = $gameRepo->findBySeason($seasonRepo->findActive());
         usort($games, fn($g1, $g2) => $g2->getCreated() > $g1->getCreated() ? 1 : -1);
         return $this->render('admin/index.html.twig', ['games' => $games,]);
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/admin_trigger', name: 'app_admin_trigger', methods: ['POST'])]
+    public function trigger(SeasonRepository $seasonRepo, RankingService $rankingService): Response
+    {
+        $season = $seasonRepo->findActive();
+        if (is_null($season)) {
+            $this->addFlash('error', 'There is no active season.');
+        } else {
+            $rankingService->reCalc($season);
+            $this->addFlash('success', 'Calculation has run successfully.');
+        }
+        return $this->redirectToRoute('app_admin');
     }
 }
 

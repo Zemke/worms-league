@@ -9,6 +9,8 @@
     You have to trigger re-calculation explicitly.
 </div>
 
+<h1>Edit or Delete Game</h1>
+
 <form action="{{ path('app_admin') }}" method="POST">
     <div>
         <label for="game">Edit Game</label>
@@ -37,5 +39,21 @@
         <input type="submit" value="Submit" onclick="return confirm('Are you sure?')">
     </div>
 </form>
+
+<h1>Ranking</h1>
+
+<div class="whitepad">
+    <form action="{{ path('app_admin_trigger') }}" method="POST">
+        <div>
+            <label for="trigger">
+                Calculate the ranking based on the current games.<br>
+                The operation may take some time.<br>
+                The operation is idempotent.
+            </label>
+            <input type="submit" id="trigger" value="Trigger Ranking Calc">
+        </div>
+    </form>
+</div>
+
 
 {% endblock %}
