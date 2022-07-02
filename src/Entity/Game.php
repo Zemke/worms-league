@@ -30,9 +30,11 @@ class Game
     private $away;
 
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Assert\PositiveOrZero(message: 'Home score should be positive.')]
     private $scoreHome;
 
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Assert\PositiveOrZero(message: 'Away score should be positive.')]
     private $scoreAway;
 
     #[ORM\Column(type: 'datetime')]
@@ -238,6 +240,16 @@ class Game
                 ? $ord[0] : $ord[1]
         );
         return $replays;
+    }
+
+    public function asText(): string
+    {
+        $s = $this->getHome()->getUsername();
+        $s .= $this->played()
+            ? " {$this->getScoreHome()}–{$this->getScoreAway()} "
+            : ' – ';
+        $s .= $this->getAway()->getUsername();
+        return $s;
     }
 
     #[Assert\IsTrue(message: "One must not play against oneself.")]
