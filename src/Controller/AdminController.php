@@ -36,8 +36,9 @@ class AdminController extends AbstractController
                     $this->addFlash('error', 'Leave score blank to delete game.');
                 } else {
                     $g = $gameRepo->find($gameId);
+                    $txt = $g->asText();
                     $gameRepo->remove($g, true);
-                    $this->addFlash('success', 'Deleted game ' . $g->asText());
+                    $this->addFlash('success', 'Deleted game ' . $txt);
                 }
             } else {
                 $g = $gameRepo->find($gameId);
