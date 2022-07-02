@@ -177,10 +177,9 @@ class RankingRepository extends ServiceEntityRepository
                     'id' => $x['game_id'],
                     'opp' => ['id' => $x['opp_id'], 'username' => $x['opp']],
                     'score' => ['owner' => $x['user_score'], 'opp' => $x['opp_score']],
-                    'draw' => $x['user_score'] === $x['opp_score'],
                     'won' => $x['user_score'] > $x['opp_score'],
                     'label' => $x['user_score'] === $x['opp_score']
-                        ? '' : ($x['user_score'] > $x['opp_score'] ? 'won' : 'lost'),
+                        ? 'draw' : ($x['user_score'] > $x['opp_score'] ? 'won' : 'lost'),
                     'ranked' => $x['ranked'],
                 ];
             }

@@ -613,6 +613,11 @@ div.color-badge {
     background-color: var(--dark);
 }
 
+.recent.draw {
+    background-color: var(--dark);
+    border: .1rem solid var(--dark);
+}
+
 .recent.lost {
     background-color: red;
     border: .1rem solid red;
