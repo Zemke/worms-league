@@ -10,7 +10,6 @@ use App\Entity\Replay;
 use App\Entity\ReplayData;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerAwareInterface;
-use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 use Vich\UploaderBundle\Storage\StorageInterface;
 
 class WaaasService implements \Psr\Log\LoggerAwareInterface
