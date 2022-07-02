@@ -48,18 +48,18 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
             if (is_null($mapUrl)) {
                 $this->logger->warn("ReplayData {$replayData->getId()} has no map apparently");
             } else {
-                    $tmpfile = $this->waaasService->map($mapUrl);
-                    try {
-                        $uri = stream_get_meta_data($tmpfile)['uri'];
-                        $file = new UploadedFile($uri, basename($uri), null, null, true);
-                        $replayMap = new ReplayMap($replay->getGame()->getId(), $replay->getName());
-                        $replay->setReplayMap($replayMap->setFile($file));
-                        $this->replayRepo->add($replay, true);
-                    } catch (\Throwable $e) {
-                        $this->logger->critical('Couldn\'t get map', ['e' => $e]);
-                    } finally {
-                        fclose($tmpfile);
-                    }
+                $tmpfile = $this->waaasService->map($mapUrl);
+                try {
+                    $uri = stream_get_meta_data($tmpfile)['uri'];
+                    $file = new UploadedFile($uri, basename($uri), null, null, true);
+                    $replayMap = new ReplayMap($replay->getGame()->getId(), $replay->getName());
+                    $replay->setReplayMap($replayMap->setFile($file));
+                    $this->replayRepo->add($replay, true);
+                } catch (\Throwable $e) {
+                    $this->logger->critical('Couldn\'t get map', ['e' => $e]);
+                } finally {
+                    fclose($tmpfile);
+                }
             }
         } else {
             $this->logger->info("Replay {$replay->getId()} already has a map.");
