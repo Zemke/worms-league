@@ -55,7 +55,7 @@ class RankingService
     {
         $games = array_filter(
             $this->gameRepo->findBySeason($season),
-            fn($g) => $g->fullyProcessed() && $g->played());
+            fn($g) => $g->played());
         $rankings = $this->rankingRepo->findBySeason($season);
         if (empty($games)) {
             foreach ($rankings as &$r) {

@@ -195,7 +195,6 @@ class Game
 
     public function scoreOf(User $user): int
     {
-        $this->assertFullyProcessed();
         $this->assertHomeOrAway($user);
         return $this->isHome($user) ? $this->scoreHome : $this->scoreAway;
     }

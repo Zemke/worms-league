@@ -191,7 +191,7 @@ class OppRank
             return $DP[$user->getId()];
         }
         $DP[$user->getId()] = array_reduce($games, function ($acc, $g) use ($user, $rankings) {
-            if (!$g->fullyProcessed() || !$g->isHomeOrAway($user) || ($userScore = $g->scoreOf($user)) === 0) {
+            if (!$g->isHomeOrAway($user) || ($userScore = $g->scoreOf($user)) === 0) {
                 return $acc;
             }
             $opp = $g->opponent($user);
