@@ -162,8 +162,8 @@ class Replay
     public function setFile(?File $file = null)
     {
         $this->file = $file;
-        $this->cksum = md5_file($this->file->getRealPath());
         if (null !== $file) {
+            $this->cksum = md5_file($this->file->getRealPath());
             $this->modified = new \DateTime();
         }
         return $this;
