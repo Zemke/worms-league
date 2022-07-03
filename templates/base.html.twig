@@ -109,7 +109,7 @@
               <a href="{{ path('app_bug') }}">
                 Bug
               </a>
-              {% if app.user.admin %}
+              {% if is_granted('ROLE_ADMIN') %}
               <a href="{{ path('app_admin') }}">
                 Admin
               </a>

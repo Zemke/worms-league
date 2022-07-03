@@ -50,13 +50,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private $active;
 
-    #[ORM\Column(type: 'boolean', options: ['default' => false])]
-    private $admin;
-
     public function __construct()
     {
         $this->active = false;
-        $this->admin = false;
     }
 
     public function similarUsername(string $username): float
@@ -182,16 +178,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-    public function isAdmin(): ?bool
-    {
-        return $this->admin;
-    }
-
-    public function setAdmin(bool $admin): self
-    {
-        $this->admin = $admin;
-
-        return $this;
-    }
 }
+
