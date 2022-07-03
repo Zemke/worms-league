@@ -134,7 +134,6 @@ class Ranking
             if ($this->ownedBy($g->getHome())) {
                 $roundsWon = $g->getScoreHome();
                 $roundsLost = $g->getScoreAway();
-                $roundsDrawn = count($g->getReplays()) - ($roundsWon + $roundsLost);
             } else if ($this->ownedBy($g->getAway())) {
                 $roundsWon = $g->getScoreAway();
                 $roundsLost = $g->getScoreHome();
@@ -143,8 +142,7 @@ class Ranking
                     "neither {$g->getHome()->getId()} nor {$g->getAway()->getId()} "
                     . "own ranking {$this->id} owned by {$this->owner->getId()}");
             }
-            $roundsDrawn = count($g->drawnRounds());
-            $this->roundsPlayed += $roundsWon + $roundsLost + $roundsDrawn;
+            $this->roundsPlayed += $roundsWon + $roundsLost;
             $this->roundsWon += $roundsWon;
             $this->roundsWonRatio = $this->roundsWon / $this->roundsPlayed;
             $this->roundsLost += $roundsLost;

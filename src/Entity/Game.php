@@ -201,19 +201,6 @@ class Game
     }
 
     /**
-     * Get drawn replays.
-     *
-     * @return Replay[]
-     */
-    public function drawnRounds(): array
-    {
-        if (is_null($this->replays)) {
-            return [];
-        }
-        return array_filter($this->replays->getValues(), fn($r) => is_null($r->winner()));
-    }
-
-    /**
      * When the game was actually played.
      * That's the most recent replay's startedAt data property.
      */
