@@ -79,9 +79,9 @@ class Ranking
         $this->reset();
     }
 
-    public function reset(): self
+    public function reset(bool $resetPoints = false): self
     {
-        $this->points = null;
+        $this->points = $resetPoints ? '0' : null;
         $this->roundsPlayed = 0;
         $this->roundsWon = 0;
         $this->roundsLost = 0;
