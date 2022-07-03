@@ -57,6 +57,15 @@ class RankingService
             $this->gameRepo->findBySeason($season),
             fn($g) => $g->fullyProcessed() && $g->played());
         $rankings = $this->rankingRepo->findBySeason($season);
+        if (empty($games)) {
+            foreach ($rankings as &$r) {
+                $r->reset();
+                $r->setPoints('0');
+                $this->em->persist($r);
+            }
+            $this->em->flush();
+            return [];
+        }
         foreach ($rankings as &$ranking) {
             $ranking->reset();
             $ranking->updateByGames($games);
