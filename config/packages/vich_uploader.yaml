@@ -10,15 +10,15 @@ vich_uploader:
                 service: vich_uploader.namer_directory_property
                 options: { property: 'game.id' }
             inject_on_load: false
-            delete_on_update: true
+            delete_on_update: false
             delete_on_remove: false
         map:
             uri_prefix: /maps
             upload_destination: '%kernel.project_dir%/public/maps'
             namer: Vich\UploaderBundle\Naming\HashNamer
             inject_on_load: false
-            delete_on_update: true
-            delete_on_remove: true
+            delete_on_update: false
+            delete_on_remove: false
     metadata:
         type: attribute
 

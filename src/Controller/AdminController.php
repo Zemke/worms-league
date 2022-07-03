@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Vich\UploaderBundle\Storage\StorageInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +15,7 @@ use App\Repository\GameRepository;
 use App\Repository\SeasonRepository;
 use App\Service\RankingService;
 
+
 class AdminController extends AbstractController
 {
     #[IsGranted('ROLE_ADMIN')]
@@ -20,7 +23,9 @@ class AdminController extends AbstractController
     public function index(GameRepository $gameRepo,
                           SeasonRepository $seasonRepo,
                           Request $request,
+                          StorageInterface $storage,
                           EntityManagerInterface $em,
+                          LoggerInterface $logger,
                           ValidatorInterface $validator,): Response
     {
         if ($request->getMethod() === 'POST') {
@@ -37,7 +42,28 @@ class AdminController extends AbstractController
                 } else {
                     $g = $gameRepo->find($gameId);
                     $txt = $g->asText();
+                    try {
+                        $pp = array_map(
+                            fn($rep) => $storage->resolvePath($rep, 'file'),
+                            $g->getReplays()->getValues());
+                    } catch(\Throwable $e) {
+                        $this->logger->critical('Replay could not be deleted', ['e' => $e]);
+                        $this->addFlash('warn', 'The replays could not be deleted');
+                    }
                     $gameRepo->remove($g, true);
+                    if (isset($pp)) {
+                        try {
+                            foreach ($pp as $p) {
+                                \unlink($p);
+                            }
+                            if (!empty($pp)) {
+                                rmdir(dirname($pp[0]));
+                            }
+                        } catch(\Throwable $e) {
+                            $this->logger->critical('Replay could not be deleted', ['e' => $e]);
+                            $this->addFlash('warn', 'The replays could not be deleted');
+                        }
+                    }
                     $this->addFlash('success', 'Deleted game ' . $txt);
                 }
             } else {
