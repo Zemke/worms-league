@@ -200,7 +200,10 @@ input[type=button]:active {
     border-style: inset;
 }
 
-select, input, textarea {
+select,
+input,
+textarea,
+zemke-tagbox::part(input) {
     background-color: #ececec;
     border: 1px #ececec inset;
     font-size: 1rem;
@@ -209,7 +212,8 @@ select, input, textarea {
 
 button:focus,
 input:focus,
-textarea:focus {
+textarea:focus,
+zemke-tagbox::part(input):focus {
     outline: none;
     box-shadow: 0rem 0rem .2rem .1rem var(--primary);
 }
@@ -1060,4 +1064,20 @@ p.prelude {
     width: 719px;
     margin: 0 auto;
 }
+
+
+.shoutbox form {
+    display: flex;
+    align-items: center;
+}
+
+.shoutbox zemke-tagbox {
+    width: 100%;
+    padding-right: .2rem;
+}
+
+zemke-tagbox::part(tag) {
+    background-color: rgb(8, 96, 113, .35);
+}
+
 

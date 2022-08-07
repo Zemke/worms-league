@@ -13,6 +13,20 @@
 
 <img src="{{ asset('/img/artwork/chess.png') }}" class="home">
 
+<div class="shoutbox">
+    <form action="{{ path('app_message') }}" method="POST">
+        <zemke-tagbox ci>
+            <input type="text">
+            <select multiple>
+                {% for u in users %}
+                    <option value="{{ u.id }}">{{ u.username }}</option>
+                {% endfor %}
+            </select>
+        </zemke-tagbox>
+        <input type="submit" value="Send">
+    </form>
+</div>
+
 <p class="prelude text-tertiary">
     <span class="nowrap">Worms League is a multi-purpose rental ladder.</span><br>
     <span class="nowrap">It’s proudly hosting Experimental Schemes League</span>
@@ -56,14 +70,5 @@
         If you find bugs, there’s also an entry “Bug” in that menu where you can report them. Thanks.
     </p>
 </div>
-
-<h1>Zemke Tagbox</h1>
-<zemke-tagbox>
-    <input type="text">
-    <select multiple>
-        <option value="1">Zemke</option>
-        <option value="2">Rafka</option>
-    </select>
-</zemke-tagbox>
 
 {% endblock %}
