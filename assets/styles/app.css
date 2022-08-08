@@ -398,6 +398,11 @@ table, tr, th {
     background-color: var(--light);
 }
 
+.darkpad {
+    padding: .3rem;
+    background-color: var(--dark);
+}
+
 i.icon {
     font-style: normal;
 }
