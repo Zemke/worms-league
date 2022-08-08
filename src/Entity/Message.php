@@ -75,6 +75,14 @@ class Message
         return $this;
     }
 
+    public function addManyRecipients(array $recipients): self
+    {
+        foreach ($recipients as $r) {
+            $this->addRecipient($r);
+        }
+        return $this;
+    }
+
     /**
      * @return Collection<int, User>
      */

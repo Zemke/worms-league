@@ -1070,13 +1070,16 @@ p.prelude {
     margin: 0 auto;
 }
 
+#shoutbox {
+    margin: 1rem 0 1.5rem;
+}
 
-.shoutbox form {
+#shoutbox form {
     display: flex;
     align-items: center;
 }
 
-.shoutbox zemke-tagbox {
+#shoutbox zemke-tagbox {
     width: 100%;
     padding-right: .2rem;
 }
@@ -1085,4 +1088,15 @@ zemke-tagbox::part(tag) {
     background-color: rgb(8, 96, 113, .35);
 }
 
+#shoutbox #messages {
+    margin-top: .3rem;
+}
+
+#shoutbox #messages .message {
+    margin: .4rem 0;
+}
+
+a[name=shoutbox] {
+    margin-top: 5rem;
+}
 

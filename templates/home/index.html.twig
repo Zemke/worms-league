@@ -13,19 +13,8 @@
 
 <img src="{{ asset('/img/artwork/chess.png') }}" class="home">
 
-<div class="shoutbox" class="darkpad">
-    <form action="{{ path('app_message') }}" method="POST">
-        <zemke-tagbox ci>
-            <input type="text" name="body">
-            <select multiple name="recipients">
-                {% for u in users %}
-                    <option value="{{ u.id }}">{{ u.username }}</option>
-                {% endfor %}
-            </select>
-        </zemke-tagbox>
-        <input type="submit" value="Send">
-    </form>
-</div>
+<a name="shoutbox"></a>
+{{ render(controller('App\\Controller\\MessageController::index')) }}
 
 <p class="prelude text-tertiary">
     <span class="nowrap">Worms League is a multi-purpose rental ladder.</span><br>
