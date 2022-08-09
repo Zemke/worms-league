@@ -231,10 +231,7 @@ a {
 }
 
 a[name] {
-    display: block;
-    position: relative;
-    top: -2.2rem;
-    visibility: hidden;
+    /* TODO spacing to top */
 }
 
 a:hover {
@@ -1094,9 +1091,5 @@ zemke-tagbox::part(tag) {
 
 #shoutbox #messages .message {
     margin: .4rem 0;
-}
-
-a[name=shoutbox] {
-    margin-top: 5rem;
 }
 
