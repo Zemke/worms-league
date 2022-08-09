@@ -1088,6 +1088,8 @@ zemke-tagbox::part(tag) {
 
 #shoutbox #messages {
     margin-top: .3rem;
+    max-height: 22rem;
+    overflow-y: scroll;
 }
 
 #shoutbox #messages .message {
