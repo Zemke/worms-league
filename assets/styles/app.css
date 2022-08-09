@@ -231,7 +231,7 @@ a {
 }
 
 a[name] {
-    /* TODO spacing to top */
+    scroll-margin-top: 3rem;
 }
 
 a:hover {
