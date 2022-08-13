@@ -194,6 +194,13 @@ input[type=button] {
     padding: .2rem .5rem;
 }
 
+button[disabled],
+input[type=submit][disabled],
+input[type=button][disabled] {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
 button:active,
 input[type=submit]:active,
 input[type=button]:active {
