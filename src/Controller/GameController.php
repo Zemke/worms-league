@@ -46,11 +46,13 @@ class GameController extends AbstractController
                            MailerInterface $mailer,): Response
     {
 
-        $var = [ 'controller_name' => 'GameController', ];
-        $season = $seasons->findOneBy(['active' => true]);
-        if (!isset($season)) {
+        $var = [ 'season' => $seasons->findOneBy(['active' => true]) ];
+        if (!isset($var['season'])) {
             $this->addFlash('error', 'There\'s currently no season.');
         } else if ($request->getMethod() === 'POST') {
+            if (!$var['season']->current()) {
+                $this->addFlash('error', 'The season has ended.');
+            }
             if (!$this->isCsrfTokenValid('report', $request->request->get('token'))) {
                 return new Response('', 403);
             }
@@ -58,7 +60,7 @@ class GameController extends AbstractController
                 ->setReporter($security->getUser())
                 ->setHome($security->getUser())
                 ->setAway($users->find($request->request->all()['opponent']))
-                ->setSeason($season);
+                ->setSeason($var['season']);
             foreach ($request->files->all('replays') as $file) {
                 $game->addReplay((new Replay())->setFile($file));
             }
