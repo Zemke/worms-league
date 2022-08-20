@@ -1103,6 +1103,14 @@ zemke-tagbox::part(tag) {
     margin: .4rem 0;
 }
 
+#shoutbox #messages .message:first-child {
+    margin-top: 0;
+}
+
+#shoutbox #messages .message:last-child {
+    margin-bottom: 0;
+}
+
 #shoutbox #messages .message.private {
     background-color: rgba(255, 0, 0, 0.2);
     margin: -.3rem;
