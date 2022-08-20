@@ -11,7 +11,7 @@
         <input type="submit" value="Send"{% if not app.user %} disabled{% endif %}>
     </form>
     <div id="messages" class="whitepad">
-        {% for msg in messages %}
+        {% for msg in messages|sort((a,b) => b.created <=> a.created) %}
             <div class="message">
                 <div class="author">
                     <a href="{{ path('app_user_view', { usernameOrId: msg.author.id }) }}">
