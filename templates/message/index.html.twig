@@ -12,7 +12,7 @@
     </form>
     <div id="messages" class="whitepad">
         {% for msg in messages|sort((a,b) => b.created <=> a.created) %}
-            <div class="message">
+            <div class="message{{ msg.recipients|length > 0 ? ' private' : '' }}">
                 <div class="author">
                     <a href="{{ path('app_user_view', { usernameOrId: msg.author.id }) }}">
                         {{ msg.author.username }}
