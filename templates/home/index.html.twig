@@ -7,7 +7,11 @@
         We're currently in off-season.
     {% else %}
         <strong>{{ season.name }}</strong>
-        ending {{ season.ending | countdown('days', 'in') }}
+        {% if season.current() %}
+            ending {{ season.ending | countdown('days', 'in') }}
+        {% else %}
+            has ended.
+        {% endif %}
     {% endif %}
 </div>
 

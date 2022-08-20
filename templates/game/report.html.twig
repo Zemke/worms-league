@@ -4,29 +4,36 @@
 
 {% block body %}
 
-{% if opponents is defined and opponents is not empty %}
-    <div {{ stimulus_controller('report') }}>
-        <form action="{{ path('app_report') }}" method="POST" enctype="multipart/form-data">
-            <select name="opponent" required>
-                <option value="" selected disabled>Opponent</option>
-                {% for opponent in opponents %}
-                    <option value="{{ opponent.id }}">{{ opponent.username }}</option>
-                {% endfor %}
-            </select>
-            <input type="file"
-                   name="replays[]"
-                   required
-                   data-report-target="fileInput"
-                   {{ stimulus_action('report', 'listFiles', 'change') }}
-                   multiple>
-            <input type="hidden" name="token" value="{{ csrf_token('report') }}"/>
-            <button type="submit">
-                Report
-            </button>
-        </form>
-        <ul data-report-target="files" class="small monospace">
-        </ul>
+{% if season.current() %}
+    {% if opponents is defined and opponents is not empty %}
+        <div {{ stimulus_controller('report') }}>
+            <form action="{{ path('app_report') }}" method="POST" enctype="multipart/form-data">
+                <select name="opponent" required>
+                    <option value="" selected disabled>Opponent</option>
+                    {% for opponent in opponents %}
+                        <option value="{{ opponent.id }}">{{ opponent.username }}</option>
+                    {% endfor %}
+                </select>
+                <input type="file"
+                       name="replays[]"
+                       required
+                       data-report-target="fileInput"
+                       {{ stimulus_action('report', 'listFiles', 'change') }}
+                       multiple>
+                <input type="hidden" name="token" value="{{ csrf_token('report') }}"/>
+                <button type="submit">
+                    Report
+                </button>
+            </form>
+            <ul data-report-target="files" class="small monospace">
+            </ul>
+        </div>
+    {% endif %}
+{% else %}
+    <div class="alert info">
+        The season has ended.
     </div>
 {% endif %}
+
 {% endblock %}
 

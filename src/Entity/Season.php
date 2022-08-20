@@ -54,6 +54,15 @@ class Season
         $this->modified = new \DateTime();
     }
 
+    public function current(): bool
+    {
+        if (is_null($this->start) || is_null($this->ending)) {
+            return false;
+        }
+        $now = new \DateTime('now');
+        return $this->start <= $now && $this->ending > $now;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
