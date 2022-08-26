@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Message;
+use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Repository\MessageRepository;
 
@@ -18,8 +19,8 @@ class MessageController extends AbstractController
                           MessageRepository $messageRepo,): Response
     {
         return $this->render('message/index.html.twig', [
+            'messages' => $messageRepo->findForShoutbox($this->getUser()),
             'users' => $userRepo->findAll(),
-            'messages' => $messageRepo->findAll(),
         ]);
     }
 
