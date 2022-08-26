@@ -31,8 +31,6 @@ class MessageController extends AbstractController
                         UserRepository $userRepo,): Response
     {
         $data = $request->request;
-        dump($data);
-        dump($data->get('recipients'));
         $recipients = $userRepo->findBy(['id' => $data->get('recipients')]);
         $msg = (new Message())
             ->setAuthor($this->getUser())
