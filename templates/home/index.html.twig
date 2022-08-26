@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
 
+{% block body %}
 <div class="current-season">
     {% if season is null %}
         We're currently in off-season.
@@ -16,6 +16,8 @@
 </div>
 
 <img src="{{ asset('/img/artwork/chess.png') }}" class="home">
+
+{{ render(controller('App\\Controller\\MessageController::index')) }}
 
 <p class="prelude text-tertiary">
     <span class="nowrap">Worms League is a multi-purpose rental ladder.</span><br>

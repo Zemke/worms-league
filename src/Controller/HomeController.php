@@ -9,7 +9,7 @@ use App\Repository\SeasonRepository;
 
 class HomeController extends AbstractController
 {
-    #[Route('/')]
+    #[Route('/', name: 'app_home')]
     public function index(SeasonRepository $seasonRepo): Response
     {
         $var['season'] = $seasonRepo->findActive();

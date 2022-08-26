@@ -1,0 +1,44 @@
+<div id="shoutbox" class="darkpad">
+    <form action="{{ path('app_message') }}" method="POST">
+        <zemke-tagbox ci>
+            <input type="text" name="body">
+            <select multiple name="recipients[]">
+                {% for u in users %}
+                    <option value="{{ u.id }}">{{ u.username }}</option>
+                {% endfor %}
+            </select>
+        </zemke-tagbox>
+        <input type="submit" value="Send"{% if not app.user %} disabled{% endif %}>
+    </form>
+    <div id="messages" class="whitepad">
+        {% for msg in messages|sort((a,b) => b.created <=> a.created) %}
+            <div class="message{{ msg.recipients > 0 ? ' private' : '' }}">
+                <div class="author">
+                    <a href="{{ path('app_user_view', { usernameOrId: msg.author_id }) }}">
+                        {{ msg.author_username }}
+                    </a>
+                    <span class="small">
+                        on <strong>{{ msg.created|date('M. j') }}</strong>
+                        at <strong>{{ msg.created|date('H:i') }}</strong>
+                    </span>
+                </div>
+                <div class="body">
+                    {{ msg.body }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<script>
+    setTimeout(() => {
+        const elem = document.getElementsByTagName('zemke-tagbox')[0];
+        elem.chatInputEl.placeholder = "Type a message...";
+        {% if app.user %}
+            elem.chatInputEl.placeholder = "Type a message...";
+        {% else %}
+            elem.chatInputEl.placeholder = "Log in to enter a message.";
+            elem.chatInputEl.setAttribute('disabled', '');
+        {% endif %}
+    });
+</script>
+

@@ -48,11 +48,13 @@ Encore
 
     .configureBabel((config) => {
         config.plugins.push('@babel/plugin-proposal-class-properties');
+    }, {
+        includeNodeModules: ['@zemke/tagbox'],
     })
 
     // enables @babel/preset-env polyfills
     .configureBabelPresetEnv((config) => {
-        config.useBuiltIns = 'usage';
+        config.useBuiltIns = 'entry';
         config.corejs = 3;
     })
 

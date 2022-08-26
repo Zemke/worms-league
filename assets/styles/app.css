@@ -194,13 +194,23 @@ input[type=button] {
     padding: .2rem .5rem;
 }
 
+button[disabled],
+input[type=submit][disabled],
+input[type=button][disabled] {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
 button:active,
 input[type=submit]:active,
 input[type=button]:active {
     border-style: inset;
 }
 
-select, input, textarea {
+select,
+input,
+textarea,
+zemke-tagbox::part(input) {
     background-color: #ececec;
     border: 1px #ececec inset;
     font-size: 1rem;
@@ -209,7 +219,8 @@ select, input, textarea {
 
 button:focus,
 input:focus,
-textarea:focus {
+textarea:focus,
+zemke-tagbox::part(input):focus {
     outline: none;
     box-shadow: 0rem 0rem .2rem .1rem var(--primary);
 }
@@ -227,10 +238,7 @@ a {
 }
 
 a[name] {
-    display: block;
-    position: relative;
-    top: -2.2rem;
-    visibility: hidden;
+    scroll-margin-top: 3rem;
 }
 
 a:hover {
@@ -392,6 +400,11 @@ table, tr, th {
 .whitepad {
     padding: .3rem;
     background-color: var(--light);
+}
+
+.darkpad {
+    padding: .3rem;
+    background-color: var(--dark);
 }
 
 i.icon {
@@ -1059,5 +1072,48 @@ p.prelude {
 .shrink {
     width: 719px;
     margin: 0 auto;
+}
+
+#shoutbox {
+    scroll-margin-top: 3rem;
+    margin: 1rem 0 1.5rem;
+}
+
+#shoutbox form {
+    display: flex;
+    align-items: center;
+}
+
+#shoutbox zemke-tagbox {
+    width: 100%;
+    padding-right: .2rem;
+}
+
+zemke-tagbox::part(tag) {
+    background-color: rgb(8, 96, 113, .35);
+}
+
+#shoutbox #messages {
+    margin-top: .3rem;
+    max-height: 22rem;
+    overflow-y: scroll;
+}
+
+#shoutbox #messages .message {
+    margin: .4rem 0;
+}
+
+#shoutbox #messages .message:first-child {
+    margin-top: 0;
+}
+
+#shoutbox #messages .message:last-child {
+    margin-bottom: 0;
+}
+
+#shoutbox #messages .message.private {
+    background-color: #f0bdbd;
+    margin: -.3rem;
+    padding: .3rem;
 }
 
