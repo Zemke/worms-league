@@ -1112,7 +1112,7 @@ zemke-tagbox::part(tag) {
 }
 
 #shoutbox #messages .message.private {
-    background-color: rgba(255, 0, 0, 0.2);
+    background-color: #f0bdbd;
     margin: -.3rem;
     padding: .3rem;
 }
