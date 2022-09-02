@@ -27,7 +27,7 @@ class UserController extends AbstractController
             if (!is_null($ref = $request->headers->get('referer'))) {
                 return $this->redirect($ref);
             } else {
-                return $this->redirectToRoute('app_home_index');
+                return $this->redirectToRoute('app_home');
             }
         }
         $seasonId = $request->query->getInt('season', -1);

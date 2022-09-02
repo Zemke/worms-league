@@ -25,7 +25,7 @@ class AuthController extends AbstractController
                              TransportInterface $transport,): Response {
         if (!is_null($this->getUser())) {
             $this->addFlash('success', 'You are logged in.');
-            return $this->redirectToRoute('app_home_index');
+            return $this->redirectToRoute('app_home');
         }
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -50,7 +50,7 @@ class AuthController extends AbstractController
                     ->text('Activate your account here: ' . $targetUrl);
                 $transport->send($email);
                 $this->addFlash('success', 'Please find the activation link in your email inbox.');
-                return $this->redirectToRoute('app_home_index');
+                return $this->redirectToRoute('app_home');
             }
         }
 
@@ -81,7 +81,7 @@ class AuthController extends AbstractController
     {
         if (!is_null($this->getUser())) {
             $this->addFlash('success', 'You are logged in.');
-            return $this->redirectToRoute('app_home_index');
+            return $this->redirectToRoute('app_home');
         }
         return $this->render('auth/login.html.twig', [
             'last_username' => $authenticationUtils->getLastUsername(),
@@ -138,7 +138,7 @@ class AuthController extends AbstractController
                 $transport->send($mail);
             }
             $this->addFlash('success', 'Check your inbox for instructions.');
-            return $this->redirectToRoute('app_home_index');
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('auth/forgotten.html.twig', [
