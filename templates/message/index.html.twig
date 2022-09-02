@@ -1,7 +1,7 @@
 <div id="shoutbox" class="darkpad">
     <form action="{{ path('app_message') }}" method="POST">
         <zemke-tagbox ci>
-            <input type="text" name="body">
+            <input type="text" name="body" required>
             <select multiple name="recipients[]">
                 {% for u in users %}
                     <option value="{{ u.id }}">{{ u.username }}</option>
