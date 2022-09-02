@@ -17,7 +17,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "@zemke/tagbox": "github:zemke/tagbox"
+        "@zemke/tagbox": "github:zemke/tagbox#v0.2.0"
     },
     "browserslist": [
         "defaults"

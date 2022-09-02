@@ -30,14 +30,14 @@
     </div>
 </div>
 <script>
-    setTimeout(() => {
+    document.addEventListener('DOMContentLoaded', (event) => {
         const elem = document.getElementsByTagName('zemke-tagbox')[0];
-        elem.chatInputEl.placeholder = "Type a message...";
+        elem.zemkeInput.placeholder = "Type a message...";
         {% if app.user %}
-            elem.chatInputEl.placeholder = "Type a message...";
+            elem.zemkeInput.placeholder = "Type a message...";
         {% else %}
-            elem.chatInputEl.placeholder = "Log in to enter a message.";
-            elem.chatInputEl.setAttribute('disabled', '');
+            elem.zemkeInput.placeholder = "Log in to enter a message.";
+            elem.zemkeInput.setAttribute('disabled', '');
         {% endif %}
     });
 </script>
