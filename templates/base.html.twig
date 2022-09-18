@@ -154,6 +154,10 @@
          href="{{ path('app_match') }}">
         Matches
       </a>
+      <a class="nav-item {{ app.request.pathinfo starts with '/archive' ? 'active' : '' }}"
+         href="{{ path('app_archive') }}">
+        Archive
+      </a>
     </nav>
     <div class="page">
         <div class="head">
