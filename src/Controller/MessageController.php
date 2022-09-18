@@ -31,12 +31,16 @@ class MessageController extends AbstractController
                         UserRepository $userRepo,): Response
     {
         $data = $request->request;
-        $recipients = $userRepo->findBy(['id' => $data->all('recipients')]);
-        $msg = (new Message())
-            ->setAuthor($this->getUser())
-            ->setBody($data->get('body'))
-            ->addManyRecipients($recipients);
-        $messageRepo->add($msg, true);
+        if (empty(trim($data->get('body')))) {
+            $this->addFlash('error', 'Message is empty.');
+        } else {
+            $recipients = $userRepo->findBy(['id' => $data->all('recipients')]);
+            $msg = (new Message())
+                ->setAuthor($this->getUser())
+                ->setBody($data->get('body'))
+                ->addManyRecipients($recipients);
+            $messageRepo->add($msg, true);
+        }
         return $this->redirectToRoute('app_home', ['_fragment' => 'shoutbox']);
     }
 }
