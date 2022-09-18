@@ -4,50 +4,56 @@
 
 {% block body %}
 
-<table class="w100 archive">
-    <thead>
-        <tr>
-            <th colspan="3">
-            </th>
-            <th>
-                <img src="{{ asset('/img/trophies/gold.png') }}" alt="Gold">
-            </th>
-            <th>
-                <img src="{{ asset('/img/trophies/silver.png') }}" alt="Silver">
-            </th>
-            <th>
-                <img src="{{ asset('/img/trophies/bronze.png') }}" alt="Bronze">
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for s in seasons %}
+{% if seasons|length > 0 %}
+    <table class="w100 archive">
+        <thead>
             <tr>
-                <td class="monospace">
-                    {{ s.start|date('Y-m-d') }}
-                    —
-                    {{ s.ending|date('Y-m-d') }}
-                </td>
-                <td class="monospace text-right">
-                    ({{ s.start.diff(s.ending).days }} days)
-                </td>
-                <td>
-                     <a href="{{ path('app_archive_view', {seasonId: s.id}) }}">
-                         {{ s.name }}
-                     </a>
-                </td>
-                {% for i in range(0, 2) %}
-                    <td>
-                        {% if s.rankings[i] is defined %}
-                            <a href="{{ path('app_user_view', {usernameOrId: s.rankings[i].owner.username}) }}?season={{ s.id }}">
-                                {{ s.rankings[i].owner.username }}
-                            </a>
-                        {% endif %}
-                    </td>
-                {% endfor %}
+                <th colspan="3">
+                </th>
+                <th>
+                    <img src="{{ asset('/img/trophies/gold.png') }}" alt="Gold">
+                </th>
+                <th>
+                    <img src="{{ asset('/img/trophies/silver.png') }}" alt="Silver">
+                </th>
+                <th>
+                    <img src="{{ asset('/img/trophies/bronze.png') }}" alt="Bronze">
+                </th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {% for s in seasons %}
+                <tr>
+                    <td class="monospace">
+                        {{ s.start|date('Y-m-d') }}
+                        —
+                        {{ s.ending|date('Y-m-d') }}
+                    </td>
+                    <td class="monospace text-right">
+                        ({{ s.start.diff(s.ending).days }} days)
+                    </td>
+                    <td>
+                         <a href="{{ path('app_archive_view', {seasonId: s.id}) }}">
+                             {{ s.name }}
+                         </a>
+                    </td>
+                    {% for i in range(0, 2) %}
+                        <td>
+                            {% if s.rankings[i] is defined %}
+                                <a href="{{ path('app_user_view', {usernameOrId: s.rankings[i].owner.username}) }}?season={{ s.id }}">
+                                    {{ s.rankings[i].owner.username }}
+                                </a>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="alert info">
+        There has been no season yet.
+    </div>
+{% endif %}
 
 {% endblock %}
