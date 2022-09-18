@@ -4,7 +4,7 @@
 
 {% block body %}
 
-{% if season.current() %}
+{% if season and season.current() %}
     {% if opponents is defined and opponents is not empty %}
         <div {{ stimulus_controller('report') }}>
             <form action="{{ path('app_report') }}" method="POST" enctype="multipart/form-data">
