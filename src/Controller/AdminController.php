@@ -11,10 +11,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use App\Entity\ConfigName;
+use App\Entity\Config;
+use App\Repository\ConfigRepository;
 use App\Repository\GameRepository;
 use App\Repository\SeasonRepository;
 use App\Service\RankingService;
-
 
 class AdminController extends AbstractController
 {
@@ -22,6 +24,7 @@ class AdminController extends AbstractController
     #[Route('/admin', name: 'app_admin')]
     public function index(GameRepository $gameRepo,
                           SeasonRepository $seasonRepo,
+                          ConfigRepository $configRepo,
                           Request $request,
                           StorageInterface $storage,
                           EntityManagerInterface $em,
@@ -91,13 +94,14 @@ class AdminController extends AbstractController
             }
         }
         $games = $gameRepo->findBySeason($seasonRepo->findActive());
+        $text = $configRepo->find(ConfigName::TEXT->toId());
         usort($games, fn($g1, $g2) => $g2->getCreated() > $g1->getCreated() ? 1 : -1);
-        return $this->render('admin/index.html.twig', ['games' => $games,]);
+        return $this->render('admin/index.html.twig', ['games' => $games, 'text' => $text?->getValue()]);
     }
 
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/admin_trigger', name: 'app_admin_trigger', methods: ['POST'])]
-    public function trigger(SeasonRepository $seasonRepo, RankingService $rankingService): Response
+    public function text(SeasonRepository $seasonRepo, RankingService $rankingService): Response
     {
         $season = $seasonRepo->findActive();
         if (is_null($season)) {
@@ -105,6 +109,33 @@ class AdminController extends AbstractController
         } else {
             $rankingService->reCalc($season);
             $this->addFlash('success', 'Calculation has run successfully.');
+        }
+        return $this->redirectToRoute('app_admin');
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/admin_text', name: 'app_admin_text', methods: ['POST'])]
+    public function trigger(Request $request,
+                            ConfigRepository $configRepo): Response
+    {
+        $id = ConfigName::TEXT->toId();
+        $c = $configRepo->find($id);
+        if (empty(trim($request->request->get('text')))) {
+            $configRepo->remove($c, true);
+            $this->addFlash('success', 'Successfully removed text.');
+        } else {
+            if (is_null($c)) {
+                $c = (new Config)
+                    ->setAuthor($this->getUser())
+                    ->setName($id)
+                    ->setValue($request->request->get('text'));
+            } else {
+                $c
+                    ->setValue($request->request->get('text'))
+                    ->setAuthor($this->getUser());
+            }
+            $configRepo->add($c, true);
+            $this->addFlash('success', 'Successfully added text.');
         }
         return $this->redirectToRoute('app_admin');
     }

@@ -55,5 +55,20 @@
     </form>
 </div>
 
+<h1>Text</h1>
+
+<div class="whitepad">
+    <form action="{{ path('app_admin_text') }}" method="POST">
+        <div>
+            <label for="trigger">
+                Enter text to appear on the home page.<br>
+                You can use basic syntax <a href="https://www.markdownguide.org/cheat-sheet/#basic-syntax" target="_blank">Markdown</a>
+            </label>
+            <textarea rows="20" name="text" placeholder="Enter text here...">{{ text }}</textarea>
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+</div>
 
 {% endblock %}
+
