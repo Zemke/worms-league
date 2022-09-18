@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\ConfigName;
 use App\Entity\Config;
+use App\Entity\Season;
 use App\Repository\ConfigRepository;
 use App\Repository\GameRepository;
 use App\Repository\SeasonRepository;
@@ -94,9 +95,22 @@ class AdminController extends AbstractController
             }
         }
         $games = $gameRepo->findBySeason($seasonRepo->findActive());
+        $seasons = $seasonRepo->findAll();
         $text = $configRepo->find(ConfigName::TEXT->toId());
         usort($games, fn($g1, $g2) => $g2->getCreated() > $g1->getCreated() ? 1 : -1);
-        return $this->render('admin/index.html.twig', ['games' => $games, 'text' => $text?->getValue()]);
+        $hasActive = false;
+        foreach ($seasons as $s) {
+            if ($s->getActive()) {
+                $hasActive = true;
+                break;
+            }
+        }
+        return $this->render('admin/index.html.twig', [
+            'games' => $games,
+            'text' => $text?->getValue(),
+            'seasons' => $seasons,
+            'hasActive' => $hasActive,
+        ]);
     }
 
     #[IsGranted('ROLE_ADMIN')]
@@ -137,6 +151,64 @@ class AdminController extends AbstractController
             $configRepo->add($c, true);
             $this->addFlash('success', 'Successfully added text.');
         }
+        return $this->redirectToRoute('app_admin');
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/admin_active', name: 'app_admin_active', methods: ['POST'])]
+    public function active(SeasonRepository $seasonRepo,
+                           Request $request): Response
+    {
+        $sel = $request->request->get('active');
+        if (empty($sel)) {
+            $actSeason = $seasonRepo->findActive();
+            if (!is_null($actSeason)) {
+                $seasonRepo->add($actSeason->setActive(false), true);
+            }
+            $this->addFlash('success', 'No season is active currently');
+        } else {
+            $ss = $seasonRepo->findAll();
+            foreach ($ss as &$s) {
+                if ($s->getActive()) {
+                    $s->setActive(false);
+                    $seasonRepo->add($s);
+                }
+            }
+            $selSeason = $seasonRepo->find($sel);
+            $selSeason->setActive(true);
+            $seasonRepo->add($selSeason, true);
+            $this->addFlash('success', "Successfully set active season: {$selSeason->getName()}.");
+        }
+        return $this->redirectToRoute('app_admin');
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/admin_new_season', name: 'app_admin_new_season', methods: ['POST'])]
+    public function newSeason(SeasonRepository $seasonRepo, Request $request): Response
+    {
+        $season = $seasonRepo->findActive();
+        $d = $request->request->all();
+        $s = (new Season())
+            ->setName($d['name'])
+            ->setActive(false)
+            ->setStart(new \DateTime($d['start']))
+            ->setEnding(new \DateTime($d['ending']));
+        $seasonRepo->add($s, true);
+        $this->addFlash('success', 'Season has been created');
+        return $this->redirectToRoute('app_admin');
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/admin_edit_season', name: 'app_admin_edit_season', methods: ['POST'])]
+    public function editSeason(SeasonRepository $seasonRepo, Request $request): Response
+    {
+        $d = $request->request->all();
+        $s = $seasonRepo->find($d['id'])
+            ->setName($d['name'])
+            ->setStart(new \DateTime($d['start']))
+            ->setEnding(new \DateTime($d['ending']));
+        $seasonRepo->add($s, true);
+        $this->addFlash('success', 'Saved season');
         return $this->redirectToRoute('app_admin');
     }
 }

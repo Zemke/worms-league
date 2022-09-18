@@ -11,49 +11,55 @@
 
 <h1>Edit or Delete Game</h1>
 
-<form action="{{ path('app_admin') }}" method="POST">
-    <div>
-        <label for="game">Edit Game</label>
-        <select id="game" name="game" required>
-            <option value="" selected disabled></option>
-            {% for g in games %}
-                <option value="{{ g.id }}">
-                    {{ g.id }} {{ g.home.username }} {{ g.scoreHome }}–{{ g.scoreAway }} {{ g.away.username }}
-                </option>
-            {% endfor %}
-        </select>
-    </div>
-    <div>
-        <label for="scoreHome">Score Home</label>
-        <input type="number" name="scoreHome" id="scoreHome">
-    </div>
-    <div>
-        <label for="scoreAway">Score Away</label>
-        <input type="number" name="scoreAway" id="scoreAway">
-    </div>
-    <div>
-        <label for="delete">Delete</label>
-        <input type="checkbox" name="delete" id="delete">
-    </div>
-    <div>
-        <input type="submit" value="Submit" onclick="return confirm('Are you sure?')">
-    </div>
-</form>
+{% if hasActive %}
+    {% if games|length > 0 %}
+        <form action="{{ path('app_admin') }}" method="POST">
+            <div>
+                <label for="game">Edit Game</label>
+                <select id="game" name="game" required>
+                    <option value="" selected disabled></option>
+                    {% for g in games %}
+                        <option value="{{ g.id }}">
+                            {{ g.id }} {{ g.home.username }} {{ g.scoreHome }}–{{ g.scoreAway }} {{ g.away.username }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label for="scoreHome">Score Home</label>
+                <input type="number" name="scoreHome" id="scoreHome">
+            </div>
+            <div>
+                <label for="scoreAway">Score Away</label>
+                <input type="number" name="scoreAway" id="scoreAway">
+            </div>
+            <div>
+                <label for="delete">Delete</label>
+                <input type="checkbox" name="delete" id="delete">
+            </div>
+            <div>
+                <input type="submit" value="Submit" onclick="return confirm('Are you sure?')">
+            </div>
+        </form>
+    {% else %}
+        <p>There are no games yet.</p>
+    {% endif %}
 
-<h1>Ranking</h1>
+    <h1>Ranking</h1>
 
-<div class="whitepad">
-    <form action="{{ path('app_admin_trigger') }}" method="POST">
-        <div>
-            <label for="trigger">
-                Calculate the ranking based on the current games.<br>
-                The operation may take some time.<br>
-                The operation is idempotent.
-            </label>
-            <input type="submit" id="trigger" value="Trigger Ranking Calc">
-        </div>
-    </form>
-</div>
+    <div class="whitepad">
+        <form action="{{ path('app_admin_trigger') }}" method="POST">
+            <div>
+                <label for="trigger">
+                    Calculate the ranking based on the current games.<br>
+                    The operation may take some time.<br>
+                    The operation is idempotent.
+                </label>
+                <input type="submit" id="trigger" value="Trigger Ranking Calc">
+            </div>
+        </form>
+    </div>
+{% endif %}
 
 <h1>Text</h1>
 
@@ -73,6 +79,87 @@
         </div>
     </form>
 </div>
+
+<h1>Seasons</h1>
+
+<div class="whitepad">
+    <h2>Active Season</h2>
+    <form action="{{ path('app_admin_active') }}" method="POST">
+        <div>
+            <label for="active">
+                Set the currently active season. All other season are moved to the archive.
+            </label>
+            Active Season:
+            <select name="active" id="active">
+                {% for s in seasons|sort((a,b) => b.ending <=> a.ending) %}
+                    <option value="{{ s.id }}" {% if s.active %}selected{% endif %}>{{ s.name }}</option>
+                {% endfor %}
+                <option value="" {% if not hasActive %}selected{% endif %}>- None -</option>
+            </select>
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+</div>
+
+<div class="whitepad">
+    <h2>Create Season</h2>
+    <form action="{{ path('app_admin_new_season') }}" method="POST">
+        <div>
+            <label for="name">
+                Name of season:
+            </label>
+            <input type="text" name="name" placeholder="Descriptive" required>
+        </div>
+        <div>
+            <label for="start">
+                Start of season (GMT):
+            </label>
+            <input type="datetime-local" name="start" required placeholder="YYYY-MM-DD HH:MM:SS">
+        </div>
+        <div>
+            <label for="ending">
+                End of season (GMT):
+            </label>
+            <input type="datetime-local" name="ending" required placeholder="YYYY-MM-DD HH:MM:SS">
+        </div>
+        <div>
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+</div>
+
+<div class="whitepad">
+    <h2>Edit Season</h2>
+    <div style="height: 15rem; width: 25rem; overflow-y: scroll; border: 1px solid black; padding: 1rem;">
+        {% for s in seasons|sort((a,b) => b.ending <=> a.ending) %}
+            <form action="{{ path('app_admin_edit_season') }}" method="POST">
+                <input type="hidden" value="{{ s.id }}" name="id">
+                <div>
+                    <label for="name">
+                        Name of season:
+                    </label>
+                    <input type="text" name="name" placeholder="Descriptive" required value="{{ s.name }}">
+                </div>
+                <div>
+                    <label for="start">
+                        Start of season (GMT):
+                    </label>
+                    <input type="datetime-local" name="start" required value="{{ s.start|date("Y-m-d H:i:s") }}">
+                </div>
+                <div>
+                    <label for="ending">
+                        End of season (GMT):
+                    </label>
+                    <input type="datetime-local" name="ending" required value="{{ s.ending|date("Y-m-d H:i:s") }}">
+                </div>
+                <div>
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+        {% endfor %}
+    </div>
+</div>
+
 
 {% endblock %}
 
