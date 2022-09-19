@@ -25,14 +25,6 @@ use App\Message\SendReplayMessage;
 
 class GameController extends AbstractController
 {
-    #[Route('/game', name: 'app_game')]
-    public function index(): Response
-    {
-        return $this->render('game/index.html.twig', [
-            'controller_name' => 'GameController',
-        ]);
-    }
-
     #[Route('/report', name: 'app_report', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
     public function report(Request $request,
