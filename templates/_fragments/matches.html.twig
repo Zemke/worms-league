@@ -77,9 +77,12 @@
                                         {% endif %}
                                     </div>
                                 </div>
-                                <div class="color-badge {{ replay.winnerColor() | lower }}"
-                                     data-tooltip="{{ replay.replayData.winner() ?? 'draw' }}">
-                                </div>
+                                {% set winner = replay.replayData.winner() %}
+                                {% if winner is not null or game.replays|length <= 5 %}
+                                    <div class="color-badge {{ replay.winnerColor() | lower }}"
+                                         data-tooltip="{{ winner ?? 'draw' }}">
+                                    </div>
+                                {% endif %}
                             {% else %}
                                 <div class="inline-block" data-tooltip="Processing">
                                     <div class="processing">
