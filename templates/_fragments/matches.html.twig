@@ -54,7 +54,8 @@
                             {{ game.comments|length }}
                         </a>
                     </td>
-                    {% for replay in game.replays | sort((a,b) =>
+                    {% set replays = game.replays|filter(r => r.winner is not null)  %}
+                    {% for replay in replays | sort((a,b) =>
                         (a.replayData is null or b.replayData is null) ? 0 : (a.replayData.data.startedAt <=> b.replayData.data.startedAt)) %}
                         <td class="ministat">
                             <a href="{{ asset('/replays/' ~ game.id ~ '/' ~ replay.name) }}"
@@ -76,12 +77,9 @@
                                         {% endif %}
                                     </div>
                                 </div>
-                                {% set winner = replay.replayData.winner() %}
-                                {% if winner is not null or game.replays|length <= 5 %}
-                                    <div class="color-badge {{ replay.winnerColor() | lower }}"
-                                         data-tooltip="{{ winner ?? 'draw' }}">
-                                    </div>
-                                {% endif %}
+                                <div class="color-badge {{ replay.winnerColor() | lower }}"
+                                     data-tooltip="{{ replay.replayData.winner() }}">
+                                </div>
                             {% else %}
                                 <div class="inline-block" data-tooltip="Processing">
                                     <div class="processing">
@@ -91,8 +89,8 @@
                             {% endif %}
                         </td>
                     {% endfor %}
-                    {% if 5-(game.replays|length) > 0 %}
-                        <td colspan="{{ 5-(game.replays|length) }}"></td>
+                    {% if 5-(replays|length) > 0 %}
+                        <td colspan="{{ 5-(replays|length) }}"></td>
                     {% endif %}
                 </tr>
                 {% endfor %}
