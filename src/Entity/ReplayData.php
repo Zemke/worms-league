@@ -80,6 +80,16 @@ class ReplayData
      */
     public function winner(): ?string
     {
+        foreach (['winsTheRound', 'winsTheMatch'] as $rom) {
+            if (array_key_exists($rom, $this->data) && !empty($this->data[$rom])) {
+                return (array_combine(
+                    array_column($this->data['teams'], 'team'),
+                    array_column($this->data['teams'], 'user')))[$this->data[$rom]];
+            }
+        }
+        return null;
+
+        /* invalid because test data json has no winsTheMatch element
         $names = $this->names();
         [$hour, $minute, $second] = explode(':', $this->data['gameEnd']); // 00:25:13.98
         $past = (intval($hour) * 60 * 60) + (intval($minute) * 60) + intval($second);
@@ -120,6 +130,7 @@ class ReplayData
         } else {
             return $c > 0 ? array_keys($victims)[1] : array_keys($victims)[0];
         }
+        */
     }
 
     /**

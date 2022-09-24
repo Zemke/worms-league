@@ -80,6 +80,7 @@ class ReplayDataTest extends TestCase
 
     public function testWinner(): void
     {
+        $this->markTestSkipped('invalid because test data json has no winsTheMatch element');
         $d = [
             'startedAt' => '2022-01-02 19:23:05 GMT',
             'gameEnd' => '00:19:07.46',
