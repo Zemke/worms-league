@@ -76,7 +76,7 @@ class ReplayData
     /**
      * Find the winner by accumulating kills. The winner is the one with fewer victims.
      *
-     * @return string Wining in-game user's name or null if drawn.
+     * @return string Winning in-game user's name or null if drawn.
      */
     public function winner(): ?string
     {
