@@ -78,7 +78,7 @@
                                     </div>
                                 </div>
                                 <div class="color-badge {{ replay.winnerColor() | lower }}"
-                                     data-tooltip="{{ replay.replayData.winner() }}">
+                                     data-tooltip="{{ replay.replayData.winner() ?? 'draw' }}">
                                 </div>
                             {% else %}
                                 <div class="inline-block" data-tooltip="Processing">
