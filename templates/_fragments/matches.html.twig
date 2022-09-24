@@ -54,7 +54,7 @@
                             {{ game.comments|length }}
                         </a>
                     </td>
-                    {% set replays = game.replays|filter(r => r.winner is not null)  %}
+                    {% set replays = game.replays|filter(r => not r.processed() or (r.processed() and r.winner() is not null))  %}
                     {% for replay in replays | sort((a,b) =>
                         (a.replayData is null or b.replayData is null) ? 0 : (a.replayData.data.startedAt <=> b.replayData.data.startedAt)) %}
                         <td class="ministat">
