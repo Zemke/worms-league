@@ -160,7 +160,7 @@
                         at <strong>{{ comment.modified|date('H:i') }}</strong>
                     </div>
                     {% for ln in comment.body|split("\n\n") %}
-                        {% if ln != '' %}<p>{{ ln|e|nl2br }}</p>{% endif %}
+                        {% if ln != '' %}<p>{{ ln|nl2br|auto_link|striptags('<a><br>')|raw }}</p>{% endif %}
                     {% endfor %}
                 </div>
             {% endfor %}

@@ -23,7 +23,7 @@
                     </span>
                 </div>
                 <div class="body">
-                    {{ msg.body }}
+                    {{ msg.body|auto_link|striptags('<a>')|raw }}
                 </div>
             </div>
         {% endfor %}
