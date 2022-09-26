@@ -211,5 +211,18 @@ class AdminController extends AbstractController
         $this->addFlash('success', 'Saved season');
         return $this->redirectToRoute('app_admin');
     }
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/admin/playoffs', name: 'app_admin_playoffs', methods: ['GET', 'POST'])]
+    public function playoffs(SeasonRepository $seasonRepo, Request $request): Response
+    {
+        if ($request->getMethod() === 'POST') {
+            // TODO
+            return $this->redirectToRoute('app_admin');
+        } else {
+            return $this->render('admin/playoffs.html.twig', [
+            ]);
+        }
+    }
 }
 
