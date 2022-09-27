@@ -32,6 +32,7 @@ class UserController extends AbstractController
         }
         $seasonId = $request->query->getInt('season', -1);
         $season = $seasonId === -1 ? $seasonRepo->findActive() : $seasonRepo->find($seasonId);
+        // TODO Do not include playoff games!
         $games = array_reduce($gameRepo->findOfUserAndSeason($user, $season), function ($acc, $g) use ($user) {
             if (!$g->fullyProcessed()) {
                 return $acc;

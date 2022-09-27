@@ -24,6 +24,7 @@ class MatchController extends AbstractController
                             GameRepository $gameRepo,
                             SeasonRepository $seasonRepo): Response
     {
+        // TODO Do not include playoff games!
         $season = $seasonId === -1 ? $seasonRepo->findActive() : $seasonRepo->find($seasonId);
         return $this->render('_fragments/matches.html.twig', [
             'season' => $season,
