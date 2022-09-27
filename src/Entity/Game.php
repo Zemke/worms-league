@@ -72,6 +72,9 @@ class Game
     #[ORM\OneToMany(mappedBy: 'game', targetEntity: Comment::class, orphanRemoval: true)]
     private $comments;
 
+    #[ORM\OneToOne(targetEntity: Playoff::class, cascade: ['persist', 'remove'])]
+    private $playoff;
+
     public function __construct()
     {
         $this->voided = false;
@@ -452,6 +455,18 @@ class Game
                 $comment->setGame(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPlayoff(): ?Playoff
+    {
+        return $this->playoff;
+    }
+
+    public function setPlayoff(?Playoff $playoff): self
+    {
+        $this->playoff = $playoff;
 
         return $this;
     }
