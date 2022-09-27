@@ -154,6 +154,11 @@
          href="{{ path('app_match') }}">
         Matches
       </a>
+      {# TODO only show when there are actually playoffs #}
+      <a class="nav-item {{ app.request.pathinfo starts with '/playoffs' ? 'active' : '' }}"
+         href="{{ path('app_playoffs') }}">
+        Playoffs
+      </a>
       <a class="nav-item {{ app.request.pathinfo starts with '/archive' ? 'active' : '' }}"
          href="{{ path('app_archive') }}">
         Archive

@@ -1,25 +1,26 @@
 {% extends 'base.html.twig' %}
-{% block title %}{{ season.name }} — {{ tab == 'ladder' ? 'Ladder' : 'Matches' }}{% endblock %}
+{% block title %}{{ season.name }} — {{ tab|capitalize }}{% endblock %}
 {% block body %}
     <ul class="tabs">
-        <li class="{{ tab == 'ladder' ? 'active' : '' }}">
-            <a href="?tab=ladder">
-                Ladder
-            </a>
-        </li>
-        <li class="{{ tab == 'matches' ? 'active' : '' }}">
-            <a href="?tab=matches">
-                Matches
-            </a>
-        </li>
+        {% for t in tabs %}
+            <li class="{{ tab == t ? 'active' : '' }}">
+                <a href="?tab={{ t }}">
+                    {{ t|capitalize }}
+                </a>
+            </li>
+        {% endfor %}
     </ul>
     {% if tab == 'ladder' %}
         {{ render(controller(
             'App\\Controller\\LadderController::view', {seasonId: season.id}
         )) }}
-    {% else %}
+    {% elseif tab == 'matches' %}
         {{ render(controller(
             'App\\Controller\\MatchController::matches', {seasonId: season.id}
+        )) }}
+    {% elseif tab == 'playoffs' %}
+        {{ render(controller(
+            'App\\Controller\\PlayoffsController::view', {seasonId: season.id}
         )) }}
     {% endif %}
 {% endblock %}
