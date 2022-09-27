@@ -14,12 +14,46 @@
 
 <h1>Start Playoffs</h1>
 
-<div>
-    <p>
-        Hello, World!
-    </p>
-</div>
+{% if final %}
+    <p>First Playoff Bracket</p>
+{% endif %}
 
+{% if not final %}
+    <form method="GET" action="{{ path('app_admin_playoffs') }}">
+        <div>
+            <label for="users">Who should be in the playoffs?</label>
+            <select name="users[]" id="users" multiple size="30" required>
+                {% for u in users|sort((a,b) => a.username|lower <=> b.username|lower) %}
+                    <option value="{{ u.id }}">{{ u.username }} ({{ u.place|format_ordinal_number }})</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <input type="submit" value="Next Step">
+        </div>
+    </form>
+{% else %}
+    <form method="POST" action="{{ path('app_admin_playoffs', app.request.query.all()) }}">
+        {% for i in 1..((users|length)/2) %}
+            <div>
+                <label>Game {{ loop.index }}</label>
+                <select name="game{{ loop.index }}_home" id="game{{ loop.index }}_home" required>
+                    {% for u in users|sort((a,b) => a.username|lower <=> b.username|lower) %}
+                        <option value="{{ u.id }}">{{ u.username }} ({{ u.place|format_ordinal_number }})</option>
+                    {% endfor %}
+                </select>
+                <select name="game{{ loop.index }}_away" id="game{{ loop.index }}_away" required>
+                    {% for u in users|sort((a,b) => a.username|lower <=> b.username|lower) %}
+                        <option value="{{ u.id }}">{{ u.username }} ({{ u.place|format_ordinal_number }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endfor %}
+        <div>
+            <input type="submit" value="Start Playoffs">
+        </div>
+    </form>
+{% endif %}
 
 {% endblock %}
 

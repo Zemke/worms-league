@@ -5,18 +5,19 @@ namespace App\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use Vich\UploaderBundle\Storage\StorageInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController; use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\ConfigName;
 use App\Entity\Config;
+use App\Entity\Game;
 use App\Entity\Season;
 use App\Repository\ConfigRepository;
 use App\Repository\GameRepository;
 use App\Repository\SeasonRepository;
+use App\Repository\UserRepository;
 use App\Service\RankingService;
 
 class AdminController extends AbstractController
@@ -189,6 +190,7 @@ class AdminController extends AbstractController
         $season = $seasonRepo->findActive();
         $d = $request->request->all();
         $s = (new Season())
+
             ->setName($d['name'])
             ->setActive(false)
             ->setStart(new \DateTime($d['start']))
@@ -214,15 +216,62 @@ class AdminController extends AbstractController
 
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/admin/playoffs', name: 'app_admin_playoffs', methods: ['GET', 'POST'])]
-    public function playoffs(SeasonRepository $seasonRepo, Request $request): Response
+    public function playoffs(SeasonRepository $seasonRepo,
+                             UserRepository $userRepo,
+                             Request $request): Response
     {
         if ($request->getMethod() === 'POST') {
-            // TODO
-            return $this->redirectToRoute('app_admin');
+            $i = 1;
+            $gg = [];
+            $payload = $request->request->all();
+            while (array_key_exists("game{$i}_home", $payload)
+                   && array_key_exists("game{$i}_away", $payload)) {
+                $gg[] = $payload["game{$i}_home"];
+                $gg[] = $payload["game{$i}_away"];
+                $i++;
+            }
+            if (count(array_unique($gg)) !== count($gg)) {
+                $this->addFlash('error', 'You have assigned user(s) twice.');
+                return $this->redirect($request->getUri());
+            } else {
+                $games = array_reduce($userRepo->findBy(['id' => $gg]), function ($acc, $u) {
+                    $g = end($acc);
+                    if ($g !== false && is_null($g->getAway())) {
+                        $g->setAway($u);
+                    } else {
+                        $acc[] = (new Game())->setHome($u);
+                    }
+                    return $acc;
+                }, []);
+                dd($games);
+                // TODO persist playoff games and set season status
+                $this->addFlash('success', 'Playoffs created successfully.');
+                return $this->redirectToRoute('app_playoffs');
+            }
         } else {
-            return $this->render('admin/playoffs.html.twig', [
-            ]);
+            $rankings = $seasonRepo->findActive()->getRankings()->getValues();
+            usort($rankings, fn($a, $b) => $a->ranking()->comp($b->ranking()));
+            $in = array_map(fn($u) => intval($u), $request->query->all('users'));
+            $final = !empty($in);
+            $place = 1;
+            $users = array_reduce($rankings, function ($acc, $r) use (&$place, $in, $final) {
+                if (!$final || in_array($r->getOwner()->getId(), $in)) {
+                    $acc[] = [
+                        'username' => $r->getOwner()->getUsername(),
+                        'place' => $place,
+                        'id' => $r->getOwner()->getId(),
+                    ];
+                }
+                $place++;
+                return $acc;
+            }, []);
+            if ($final && count($users) % 2 !== 0) {
+                $this->addFlash('error', 'Please select an even number of players.');
+                $final = false;
+                return $this->redirectToRoute('app_admin_playoffs');
+            }
         }
+        return $this->render('admin/playoffs.html.twig', ['users' => $users, 'final' => $final]);
     }
 }
 
