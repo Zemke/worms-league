@@ -101,6 +101,23 @@ class GameRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return Game[] Persisted playoff games.
+     */
+    public function savePlayoff(array $games, bool $flush = false): array
+    {
+        foreach ($games as &$g) {
+            if (is_null($g->getPlayoff())) {
+                throw new \RuntimeException("{$g->asText()} is not a playoff game");
+            }
+            $this->_em->persist($g);
+        }
+        if ($flush) {
+            $this->_em->flush();
+        }
+        return $games;
+    }
+
     // /**
     //  * @return Game[] Returns an array of Game objects
     //  */

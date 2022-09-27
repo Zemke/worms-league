@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\ConfigName;
 use App\Entity\Config;
 use App\Entity\Game;
+use App\Entity\Playoff;
 use App\Entity\Season;
 use App\Repository\ConfigRepository;
 use App\Repository\GameRepository;
@@ -219,6 +220,7 @@ class AdminController extends AbstractController
     #[Route('/admin/playoffs', name: 'app_admin_playoffs', methods: ['GET', 'POST'])]
     public function playoffs(SeasonRepository $seasonRepo,
                              UserRepository $userRepo,
+                             GameRepository $gameRepo,
                              Request $request): Response
     {
         if ($request->getMethod() === 'POST') {
@@ -227,25 +229,29 @@ class AdminController extends AbstractController
             $payload = $request->request->all();
             while (array_key_exists("game{$i}_home", $payload)
                    && array_key_exists("game{$i}_away", $payload)) {
-                $gg[] = $payload["game{$i}_home"];
-                $gg[] = $payload["game{$i}_away"];
+                $gg[] = intval($payload["game{$i}_home"]);
+                $gg[] = intval($payload["game{$i}_away"]);
                 $i++;
             }
             if (count(array_unique($gg)) !== count($gg)) {
                 $this->addFlash('error', 'You have assigned user(s) twice.');
                 return $this->redirect($request->getUri());
             } else {
-                $games = array_reduce($userRepo->findBy(['id' => $gg]), function ($acc, $u) {
+                $spot = 1;
+                $found = $userRepo->findBy(['id' => $gg]);
+                $games = array_reduce($gg, function ($acc, $uId) use (&$spot, $found) {
+                    $u = current(array_filter($found, fn($u) => $u->getId() === $uId));
                     $g = end($acc);
                     if ($g !== false && is_null($g->getAway())) {
                         $g->setAway($u);
                     } else {
-                        $acc[] = (new Game())->setHome($u);
+                        $acc[] = (new Game())
+                            ->setHome($u)
+                            ->setPlayoff((new Playoff())->setStep(1)->setSpot($spot++));
                     }
                     return $acc;
                 }, []);
-                dd($games);
-                // TODO persist playoff games and set season status
+                $gameRepo->savePlayoff($games, true);
                 $this->addFlash('success', 'Playoffs created successfully.');
                 return $this->redirectToRoute('app_playoffs');
             }
