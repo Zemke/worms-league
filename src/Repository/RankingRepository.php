@@ -68,7 +68,6 @@ class RankingRepository extends ServiceEntityRepository
     {
         $rsm = new ResultSetMapping();
         // TODO games not shown when either user is not joined into the ranking
-        // TODO Do not include playoff games!
         $sql = '
             select * from (
               select
@@ -118,10 +117,10 @@ class RankingRepository extends ServiceEntityRepository
                 from (select home_id as user_id, * from game g union all select away_id as user_id, * from game g) g
                 join ranking r on r.owner_id=g.user_id and r.season_id=:seasonId
                 join "user" u on u.id = g.user_id
-                where g.season_id=:seasonId order by g.user_id) sub
+                where g.season_id=:seasonId and g.playoff_id is null order by g.user_id) sub
               join game g on sub.game_id=g.id
               join "user" opp on opp.id = sub.opp_id
-              where sub.row_number < 7
+              where sub.row_number < 7 and g.playoff_id is null
               union
               (select
                 id as owner_id,
