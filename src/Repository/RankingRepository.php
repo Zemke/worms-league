@@ -68,6 +68,7 @@ class RankingRepository extends ServiceEntityRepository
     {
         $rsm = new ResultSetMapping();
         // TODO games not shown when either user is not joined into the ranking
+        // TODO Do not include playoff games!
         $sql = '
             select * from (
               select
