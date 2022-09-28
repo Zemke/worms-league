@@ -95,7 +95,7 @@ class GameRepository extends ServiceEntityRepository
             ->leftJoin('g.comments', 'c')
             ->leftJoin('g.replays', 'r')
             ->leftJoin('r.replayData', 'rd')
-            ->where('g.season = :season')
+            ->where('g.season = :season and g.playoff is null')
             ->setParameter('season', $season)
             ->getQuery()
             ->getResult();
