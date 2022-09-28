@@ -53,10 +53,9 @@ class RankingService
      */
     public function reCalc(Season $season): array
     {
-        // TODO Do not include playoff games!
         $games = array_filter(
             $this->gameRepo->findBySeason($season),
-            fn($g) => $g->played());
+            fn($g) => !$g->isPlayoff() && $g->played());
         $rankings = $this->rankingRepo->findBySeason($season);
         if (empty($games)) {
             foreach ($rankings as &$r) {

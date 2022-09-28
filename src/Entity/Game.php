@@ -190,6 +190,11 @@ class Game
         return $this->isHome($user) || $this->isAway($user);
     }
 
+    public function isPlayoff(): bool
+    {
+        return !is_null($this->getPlayoff());
+    }
+
     public function opponent(User $user): User
     {
         $this->assertHomeOrAway($user);
