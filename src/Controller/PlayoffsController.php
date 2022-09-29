@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Season;
 use App\Repository\GameRepository;
+use App\Repository\PlayoffRepository;
 use App\Repository\SeasonRepository;
 
 class PlayoffsController extends AbstractController
@@ -22,12 +23,24 @@ class PlayoffsController extends AbstractController
 
     public function view(int $seasonId,
                          GameRepository $gameRepo,
-                         SeasonRepository $seasonRepo): Response
+                         SeasonRepository $seasonRepo,
+                         PlayoffRepository $playoffRepo): Response
     {
         $season = $seasonId === -1 ? $seasonRepo->findActive() : $seasonRepo->find($seasonId);
-        $games = $gameRepo->findBySeason($season); // TODO get playoff games of that season
+        $games = $playoffRepo->findForPlayoffs($season);
+        $tree = array_reduce($games, function ($acc, $g) {
+            $step = $g->getPlayoff()->getStep();
+            if (!in_array($step, array_keys($acc))) {
+                $acc[$step] = [];
+            }
+            $acc[$step][$g->getPlayoff()->getSpot()] = $g;
+            return $acc;
+        }, []);
         return $this->render('_fragments/playoffs.html.twig', [
-            'games' => $games
+            'steps' => (int) log(count($tree[1]), 2) + 1,
+            'games' => $games,
+            'tree' => $tree,
+            'season' => $season,
         ]);
     }
 }
