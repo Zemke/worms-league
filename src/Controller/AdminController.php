@@ -244,7 +244,7 @@ class AdminController extends AbstractController
             } else {
                 $spot = 1;
                 $found = $userRepo->findBy(['id' => $gg]);
-                $games = array_reduce($gg, function ($acc, $uId) use (&$spot, $found) {
+                $games = array_reduce($gg, function ($acc, $uId) use (&$spot, $found, &$season) {
                     $u = current(array_filter($found, fn($u) => $u->getId() === $uId));
                     $g = end($acc);
                     if ($g !== false && is_null($g->getAway())) {
