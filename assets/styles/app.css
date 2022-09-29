@@ -1125,3 +1125,36 @@ zemke-tagbox::part(tag) {
     padding: .3rem;
 }
 
+.playoffs {
+    border: 1px dotted red;
+    display: flex;
+    align-items: flext-start;
+    justify-content: space-between;
+    overflow-x: scroll;
+}
+
+.playoffs .step {
+    border: 1px dotted green;
+    position: relative;
+    flex-grow: 1;
+    max-width: 15rem;
+}
+
+.playoffs .step .spot {
+    border: 1px dotted yellow;
+    position: relative;
+    width: 100%;
+    height: 4.6rem;
+    margin: .2rem 0;
+}
+
+.playoffs .step .spot td {
+    background: var(--gray);
+    text-align: left;
+}
+
+/*
+there's per spot offset and per step offset
+spot offset is always plus half a spot and then per spot in step it's plus 0, plus 1 etc.
+*/
+

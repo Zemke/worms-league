@@ -2,49 +2,46 @@
 <pre>{{ dump(tree) }}</pre>
 <pre>{{ dump(steps) }}</pre>
 
-<div class="playoff">
+<div class="playoffs">
     {% for step in 1..steps %}
         <div class="step">
-            step:{{ step }}
             {% set spots = step == 1 ? (tree[1]|length) : (tree[1]|length)/((step-1)*2) %}
             {% for spot in 1..spots %}
                 {% set g = tree[step] is defined and tree[step][spot] is defined ? tree[step][spot] : null %}
-                <div class="spot">
-                    <table>
-                        <tbody>
-                        {% if g is null %}
-                            <tr>
-                                <td colspan="2"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"></td>
-                            </tr>
-                        {% else %}
-                            <tr>
-                                <td>
-                                    <a href="{{ path('app_user_view', {usernameOrId: g.home.username}) }}{{ season.active ? '' : '?season=' ~ season.id }}">
-                                        {{ g.home.username }}
-                                    </a>
-                                </td>
-                                <td>
-                                    {{ g.scoreHome }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="{{ path('app_user_view', {usernameOrId: g.away.username}) }}{{ season.active ? '' : '?season=' ~ season.id }}">
-                                        {{ g.away.username }}
-                                    </a>
-                                </td>
-                                <td>
-                                    {{ g.scoreAway }}
-                                </td>
-                            </tr>
-                        {% endif %}
-                        </tbody>
-                    </table>
-                    spot:{{ step }}
-                </div>
+                {% set top = step == 1 ? 0 : ((2.5 + 5 * (spot-1)) + ((step-2)*5)) %}
+                <table class="spot" style="top: {{ top }}rem;">
+                    <tbody>
+                    {% if g is null %}
+                        <tr>
+                            <td colspan="2">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">&nbsp;</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('app_user_view', {usernameOrId: g.home.username}) }}{{ season.active ? '' : '?season=' ~ season.id }}">
+                                    {{ g.home.username }}
+                                </a>
+                            </td>
+                            <td>
+                                {{ g.scoreHome }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{{ path('app_user_view', {usernameOrId: g.away.username}) }}{{ season.active ? '' : '?season=' ~ season.id }}">
+                                    {{ g.away.username }}
+                                </a>
+                            </td>
+                            <td>
+                                {{ g.scoreAway }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
             {% endfor %}
         </div>
     {% endfor %}
