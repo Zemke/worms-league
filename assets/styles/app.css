@@ -1126,7 +1126,6 @@ zemke-tagbox::part(tag) {
 }
 
 .playoffs {
-    border: 1px dotted red;
     display: flex;
     align-items: stretch;
     justify-content: space-between;
@@ -1134,14 +1133,12 @@ zemke-tagbox::part(tag) {
 }
 
 .playoffs .step {
-    border: 1px dotted green;
     position: relative;
     flex-grow: 1;
     max-width: 15rem;
 }
 
 .playoffs .step .spot {
-    border: 1px dotted yellow;
     position: relative;
     width: 100%;
     height: 5rem;
