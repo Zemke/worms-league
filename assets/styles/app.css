@@ -1160,3 +1160,15 @@ zemke-tagbox::part(tag) {
     align-items: center;
 }
 
+.playoffs .step .spot:nth-child(2n+1) {
+    margin-top: 0.5rem;
+}
+
+.playoffs .step .spot:nth-child(2n) {
+    margin-top: 0.2rem;
+}
+
+.playoffs .step:not(:last-child) {
+    margin-right: 0.2rem;
+}
+
