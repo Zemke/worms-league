@@ -5,7 +5,7 @@
 <div class="playoffs">
     {% for step in 1..steps %}
         <div class="step">
-            {% set spots = step == 1 ? (tree[1]|length) : (tree[1]|length)/((step-1)*2) %}
+            {% set spots = step == 1 ? (tree[1]|length) : (tree[1]|length)//((step-1)*2) %}
             {% for spot in 1..spots %}
                 {% set g = tree[step] is defined and tree[step][spot] is defined ? tree[step][spot] : null %}
                 {% set top = step == 1 ? 0 : ((2.5 + 5 * (spot-1)) + ((step-2)*5)) %}
