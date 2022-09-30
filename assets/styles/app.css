@@ -1128,7 +1128,7 @@ zemke-tagbox::part(tag) {
 .playoffs {
     border: 1px dotted red;
     display: flex;
-    align-items: flext-start;
+    align-items: flex-start;
     justify-content: space-between;
     overflow-x: scroll;
 }
