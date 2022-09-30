@@ -1153,8 +1153,3 @@ zemke-tagbox::part(tag) {
     text-align: left;
 }
 
-/*
-there's per spot offset and per step offset
-spot offset is always plus half a spot and then per spot in step it's plus 0, plus 1 etc.
-*/
-
