@@ -803,10 +803,11 @@ img.sudden-death {
     font-size: 1.3rem;
     z-index: 10;
     position: relative;
+    text-align: right;
 }
 
 img.home {
-    margin-top: -5rem;
+    margin-top: -6.5rem;
 }
 
 ul.tabs {

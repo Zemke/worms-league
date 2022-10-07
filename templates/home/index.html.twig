@@ -1,15 +1,18 @@
 {% extends 'base.html.twig' %}
 
-
 {% block body %}
+
 <div class="current-season">
-    {% if season is null %}
-        We're currently in off-season.
+    {% if state.state.name == 'NONE' %}
+        We're currently<br>
+        <strong>off-season</strong>.
     {% else %}
-        <strong>{{ season.name }}</strong>
-        {% if season.current() %}
+        <strong>{{ season.name }}</strong><br>
+        {% if state.state.name == 'LADDER' %}
             ending {{ season.ending | countdown('days', 'in') }}
-        {% else %}
+        {% elseif state.state.name == 'PLAYOFFS' %}
+            playoffs are under way
+        {% elseif state.state.name == 'ENDING' %}
             has ended.
         {% endif %}
     {% endif %}
