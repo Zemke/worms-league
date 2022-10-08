@@ -815,6 +815,7 @@ img.home {
     margin-bottom: -1.6rem;
     position: relative;
     z-index: 1;
+    pointer-events: none;
 }
 
 ul.tabs {
