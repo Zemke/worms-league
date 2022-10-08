@@ -26,7 +26,7 @@
 }
 
 body, html {
-    background: url('/public/img/checker_dark.png') repeat;
+    background: url('/public/img/checker_dark.png') repeat fixed;
     font-family: Arial, sans-serif;
 }
 
