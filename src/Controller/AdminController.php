@@ -20,6 +20,7 @@ use App\Repository\ConfigRepository;
 use App\Repository\GameRepository;
 use App\Repository\SeasonRepository;
 use App\Repository\UserRepository;
+use App\Repository\PlayoffRepository;
 use App\Service\RankingService;
 
 class AdminController extends AbstractController
@@ -221,11 +222,16 @@ class AdminController extends AbstractController
     public function playoffs(SeasonRepository $seasonRepo,
                              UserRepository $userRepo,
                              GameRepository $gameRepo,
+                             PlayoffRepository $playoffRepo,
                              Request $request): Response
     {
         $season = $seasonRepo->findActive();
         if (is_null($season)) {
             $this->addFlash('error', 'There is no active season');
+            return $this->redirectToRoute('app_admin');
+        }
+        if (!empty($playoffRepo->findForPlayoffs($season))) {
+            $this->addFlash('error', 'There are already playoffs for this season.');
             return $this->redirectToRoute('app_admin');
         }
         if ($request->getMethod() === 'POST') {
