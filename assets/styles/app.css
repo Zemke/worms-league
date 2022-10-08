@@ -1125,6 +1125,7 @@ zemke-tagbox::part(tag) {
     margin-top: .3rem;
     max-height: 22rem;
     overflow-y: scroll;
+    padding: .3rem .5rem;
 }
 
 #shoutbox #messages .message {
@@ -1141,8 +1142,8 @@ zemke-tagbox::part(tag) {
 
 #shoutbox #messages .message.private {
     background-color: #f0bdbd;
-    margin: -.3rem;
-    padding: .3rem;
+    margin: -.3rem -.5rem;
+    padding: .3rem .5rem;
 }
 
 .admin-text {
