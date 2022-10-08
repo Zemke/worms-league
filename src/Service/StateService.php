@@ -41,8 +41,8 @@ class StateService
         if ($s->current()) {
             return State::LADDER;
         }
-        foreach ($this->playoffRepo->findForPlayoffs() as $g) {
-            if (!$g->played) {
+        foreach ($this->playoffRepo->findForPlayoffs($s) as $g) {
+            if (!$g->played()) {
                 return State::PLAYOFFS;
             }
         }
