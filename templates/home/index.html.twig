@@ -23,7 +23,7 @@
 {{ render(controller('App\\Controller\\MessageController::index')) }}
 
 {% if text %}
-    <div class="whitepad">
+    <div class="whitepad admin-text">
         {{ text|markdown_to_html }}
     </div>
 {% endif %}

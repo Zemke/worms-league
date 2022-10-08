@@ -808,6 +808,13 @@ img.sudden-death {
 
 img.home {
     margin-top: -6.5rem;
+    width: 60.8rem;
+    transform: rotate(-0.7deg);
+    margin: ;
+    margin-left: -0.6rem;
+    margin-bottom: -1.6rem;
+    position: relative;
+    z-index: 1;
 }
 
 ul.tabs {
@@ -1085,7 +1092,18 @@ p.prelude {
 
 #shoutbox {
     scroll-margin-top: 3rem;
-    margin: 1rem 0 1.5rem;
+    position: relative;
+}
+
+#shoutbox::after {
+    content: "";
+    position: absolute;
+    border-left: 2rem solid transparent;
+    border-right: 2rem solid transparent;
+    border-top: 1.2rem solid var(--dark);
+    bottom: -1.2rem;
+    left: 0;
+    right: 0;
 }
 
 #shoutbox form {
@@ -1124,6 +1142,35 @@ zemke-tagbox::part(tag) {
     background-color: #f0bdbd;
     margin: -.3rem;
     padding: .3rem;
+}
+
+.admin-text {
+    margin-top: 4.7rem;
+    padding: 0.5rem 2rem;
+    position: relative;
+}
+
+.admin-text::before {
+    content: "";
+    position: absolute;
+    border-left: 2rem solid transparent;
+    border-right: 2rem solid transparent;
+    border-bottom: 3.5rem solid #fff;
+    top: -3.5rem;
+    left: 0;
+    right: 0;
+}
+
+.admin-text::after {
+    content: "";
+    position: absolute;
+    border-left: 1.2rem solid transparent;
+    border-right: 1.2rem solid transparent;
+    border-bottom: 1.3rem solid #fff;
+    margin: 0 -1.2rem;
+    bottom: -1.2rem;
+    left: 0;
+    right: 0;
 }
 
 .playoffs {
