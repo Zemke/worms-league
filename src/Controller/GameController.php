@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Mailer\MailerInterface;
@@ -31,13 +30,13 @@ class GameController extends AbstractController
                            UserRepository $users,
                            SeasonRepository $seasons,
                            EntityManagerInterface $em,
-                           Security $security,
                            ValidatorInterface $validator,
                            MessageBusInterface $bus,
                            LoggerInterface $logger,
                            MailerInterface $mailer,): Response
     {
 
+        $user = $this->getUser();
         $var = [ 'season' => $seasons->findOneBy(['active' => true]) ];
         if (!isset($var['season'])) {
             $this->addFlash('error', 'There\'s currently no season.');
@@ -49,8 +48,8 @@ class GameController extends AbstractController
                 return new Response('', 403);
             }
             $game = (new Game())
-                ->setReporter($security->getUser())
-                ->setHome($security->getUser())
+                ->setReporter($user)
+                ->setHome($user)
                 ->setAway($users->find($request->request->all()['opponent']))
                 ->setSeason($var['season']);
             foreach ($request->files->all('replays') as $file) {
@@ -88,7 +87,7 @@ class GameController extends AbstractController
             ->where('u.id <> :authUserId')
             ->orderBy('u.username', 'ASC')
             ->getQuery()
-            ->setParameter('authUserId', $security->getUser()->getId())
+            ->setParameter('authUserId', $user->getId())
             ->getResult();
         if (empty($var['opponents'])) {
             $this->addFlash('info', 'There are no opponents.');
