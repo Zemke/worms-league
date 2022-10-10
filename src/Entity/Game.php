@@ -177,12 +177,12 @@ class Game
 
     public function isHome(User $user): bool
     {
-        return $this->home->getId() === $user->getId();
+        return $this->home?->getId() === $user->getId();
     }
 
     public function isAway(User $user): bool
     {
-        return $this->away->getId() === $user->getId();
+        return $this->away?->getId() === $user->getId();
     }
 
     public function isHomeOrAway(User $user): bool
