@@ -79,6 +79,7 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
         $this->gameRepo->add($replay->getGame(), true);
         if ($replay->getGame()->isPlayoff()) {
             // playoff
+            // TODO advancing playoff spot may already exist
             $finalStep = log(array_reduce(
                $this->playoffRepo->findForPlayoffs($replay->getGame()->getSeason()),
                 fn ($acc, $g) => $acc + ($g->getPlayoff()->getStep() === 1),
