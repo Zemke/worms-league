@@ -89,6 +89,7 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
                 $advUsers = [$loser, $winner];
                 for ($i = 0; $i <= 1; $i++) {
                     $advGame = (new Game())
+                        ->setSeason($replay->getGame()->getSeason())
                         ->setPlayoff((new Playoff())
                             ->setSpot(1)
                             ->setStep($finalStep + $i));
@@ -102,6 +103,7 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
             } else if ($replay->getGame()->getPlayoff()->getStep() < $finalStep) {
                 // pre-semifinal
                 $advGame = (new Game())
+                    ->setSeason($replay->getGame()->getSeason())
                     ->setPlayoff((new Playoff())
                         ->setSpot(ceil($replay->getGame()->getPlayoff()->getStep() / 2))
                         ->setStep($replay->getGame()->getPlayoff()->getStep() + 1));
