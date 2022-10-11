@@ -19,9 +19,13 @@
                     {% else %}
                         <tr>
                             <td>
-                                <a href="{{ path('app_user_view', {usernameOrId: g.home.username}) }}{{ season.active ? '' : '?season=' ~ season.id }}">
-                                    {{ g.home.username }}
-                                </a>
+                                {% if g.home %}
+                                    <a href="{{ path('app_user_view', {usernameOrId: g.home.username}) }}{{ season.active ? '' : '?season=' ~ season.id }}">
+                                        {{ g.home.username }}
+                                    </a>
+                                {% else %}
+                                    &nbsp;
+                                {% endif %}
                             </td>
                             <td>
                                 {{ g.scoreHome }}
@@ -29,9 +33,13 @@
                         </tr>
                         <tr>
                             <td>
-                                <a href="{{ path('app_user_view', {usernameOrId: g.away.username}) }}{{ season.active ? '' : '?season=' ~ season.id }}">
-                                    {{ g.away.username }}
-                                </a>
+                                {% if g.away %}
+                                    <a href="{{ path('app_user_view', {usernameOrId: g.away.username}) }}{{ season.active ? '' : '?season=' ~ season.id }}">
+                                        {{ g.away.username }}
+                                    </a>
+                                {% else %}
+                                    &nbsp;
+                                {% endif %}
                             </td>
                             <td>
                                 {{ g.scoreAway }}
