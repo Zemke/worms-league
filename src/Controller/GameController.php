@@ -50,12 +50,16 @@ class GameController extends AbstractController
                 ->setParameter('authUserId', $user->getId())
                 ->getResult();
         } else {
-            $var['opponents'] = array_reduce($playoffRepo->findForPlayoffs($var['season']), function ($acc, $g) use ($user) {
+            $game = null;
+            foreach ($playoffRepo->findForPlayoffs($var['season']) as &$g) {
                 if ($g->isHomeOrAway($user) && !$g->played()) {
-                    $acc[] = $g->opponent($user);
+                    $game = $g;
+                    break;
                 }
-                return $acc;
-            }, []);
+            }
+            if (!is_null($game)) {
+                $var['opponents'] = [$game->opponent($user)];
+            }
         }
         if (empty($var['opponents'])) {
             $this->addFlash('info', 'There are no opponents for you.');
@@ -70,11 +74,15 @@ class GameController extends AbstractController
             if (is_null($opp) || !in_array($opp->getId(), array_map(fn($u) => $u->getId(), $var['opponents']))) {
                 $this->addFlash('error', 'Invalid opponent.');
             } else {
-                $game = (new Game())
-                    ->setReporter($user)
-                    ->setHome($user)
-                    ->setAway($opp)
-                    ->setSeason($var['season']);
+                if (isset($game)) {
+                    $game->setReporter($user);
+                } else {
+                    $game = (new Game())
+                        ->setReporter($user)
+                        ->setHome($user)
+                        ->setAway($opp)
+                        ->setSeason($var['season']);
+                }
                 foreach ($request->files->all('replays') as $file) {
                     $game->addReplay((new Replay())->setFile($file));
                 }
