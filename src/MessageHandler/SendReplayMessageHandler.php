@@ -9,11 +9,14 @@ use Symfony\Component\Notifier\ChatterInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Psr\Log\LoggerInterface;
+use App\Entity\Game;
+use App\Entity\Playoff;
 use App\Entity\ReplayMap;
 use App\Entity\ReplayData;
 use App\Message\SendReplayMessage;
 use App\Message\RankingCalcMessage;
 use App\Repository\GameRepository;
+use App\Repository\PlayoffRepository;
 use App\Repository\ReplayRepository;
 use App\Service\WaaasService;
 use Symfony\Component\Messenger\Exception\UnrecoverableMessageHandlingException;
@@ -23,6 +26,7 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
     public function __construct(private LoggerInterface $logger,
                                 private WaaasService $waaasService,
                                 private GameRepository $gameRepo,
+                                private PlayoffRepository $playoffRepo,
                                 private ReplayRepository $replayRepo,
                                 private ValidatorInterface $validator,
                                 private MessageBusInterface $bus,
@@ -76,9 +80,9 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
         if ($replay->getGame()->isPlayoff()) {
             // playoff
             $finalStep = log(array_reduce(
-               $playoffRepo->findForPlayoffs($replay->getGame()->getSeason(),
+               $this->playoffRepo->findForPlayoffs($replay->getGame()->getSeason()),
                 fn ($acc, $g) => $acc + ($g->getPlayoff()->getStep() === 1),
-                0)), 2) + 1;
+                0), 2) + 1;
             $winner = $replay->getGame()->winner();
             if ($finalStep - 1 === $replay->getGame()->getPlayoff()->getStep()) {
                 // semifinal
