@@ -256,8 +256,9 @@ class Game
     public function isReportWithinSeason(): bool
     {
         $now = new \DateTime('now');
-        return $this->season->getStart() <= $now
-            && $this->season->getEnding() >= $now;
+        return $this->isPlayoff()
+            || ($this->season->getStart() <= $now
+            && $this->season->getEnding() >= $now);
     }
 
     #[Assert\IsTrue(message: 'The season is not active.')]
