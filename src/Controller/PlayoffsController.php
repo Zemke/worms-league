@@ -37,7 +37,7 @@ class PlayoffsController extends AbstractController
             return $acc;
         }, []);
         return $this->render('_fragments/playoffs.html.twig', [
-            'steps' =>  log(count($tree[1]), 2) + 1,
+            'steps' => intval(log(count($tree[1]), 2) + 1),
             'games' => $games,
             'tree' => $tree,
             'season' => $season,
