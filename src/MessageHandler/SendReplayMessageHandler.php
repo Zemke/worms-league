@@ -79,7 +79,6 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
         $this->gameRepo->add($replay->getGame(), true);
         if ($replay->getGame()->isPlayoff()) {
             // playoff
-            // TODO advancing playoff spot may already exist
             $finalStep = log(array_reduce(
                $this->playoffRepo->findForPlayoffs($replay->getGame()->getSeason()),
                 fn ($acc, $g) => $acc + ($g->getPlayoff()->getStep() === 1),
@@ -89,11 +88,11 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
                 // semifinal
                 $advUsers = [$loser, $winner];
                 for ($i = 0; $i <= 1; $i++) {
-                    $advGame = (new Game())
-                        ->setSeason($replay->getGame()->getSeason())
-                        ->setPlayoff((new Playoff())
-                            ->setSpot(1)
-                            ->setStep($finalStep + $i));
+                    $po = (new Playoff())->setSpot(1)->setStep($finalStep + $i);
+                    $advGame = $this->playoffRepo->findPlayoffGame($replay->getGame()->getSeason(), $po)
+                        ?? (new Game())
+                            ->setSeason($replay->getGame()->getSeason())
+                            ->setPlayoff($po);
                     if ($replay->getGame()->getPlayoff()->getSpot() % 2 !== 0) {
                         $advGame->setHome($advUsers[$i]);
                     } else {
@@ -103,11 +102,13 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
                 }
             } else if ($replay->getGame()->getPlayoff()->getStep() < $finalStep) {
                 // pre-semifinal
-                $advGame = (new Game())
-                    ->setSeason($replay->getGame()->getSeason())
-                    ->setPlayoff((new Playoff())
+                $po = (new Playoff())
                         ->setSpot(ceil($replay->getGame()->getPlayoff()->getStep() / 2))
-                        ->setStep($replay->getGame()->getPlayoff()->getStep() + 1));
+                        ->setStep($replay->getGame()->getPlayoff()->getStep() + 1);
+                $advGame = $this->playoffRepo->findPlayoffGame($replay->getGame()->getSeason(), $po)
+                    ?? (new Game())
+                        ->setSeason($replay->getGame()->getSeason())
+                        ->setPlayoff($po);
                 if ($replay->getGame()->getPlayoff()->getSpot() % 2 !== 0) {
                     $advGame->setHome($winner);
                 } else {

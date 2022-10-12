@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Game;
 use App\Entity\Playoff;
 use App\Entity\Season;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -56,6 +57,23 @@ class PlayoffRepository extends ServiceEntityRepository
             ->setParameter('season', $season)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @return Game[] Playoff games.
+     */
+    public function findPlayoffGame(Season $season, Playoff $playoff): ?Game
+    {
+        return $this->createQueryBuilder('p')
+            ->from('App\Entity\Game', 'g')
+            ->select(['g', 'po'])
+            ->leftJoin('g.playoff', 'po')
+            ->where('g.season = :season and po.step = :step and po.spot = :spot')
+            ->setParameter('season', $season)
+            ->setParameter('step', $playoff->getStep())
+            ->setParameter('spot', $playoff->getSpot())
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
 //    /**
