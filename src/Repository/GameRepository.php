@@ -86,16 +86,18 @@ class GameRepository extends ServiceEntityRepository
      *
      * @return Game[]
      */
-    public function findBySeasonEager(Season $season): array
+    public function findBySeasonEager(Season $season, bool $playoffs = false): array
     {
-        return $this->createQueryBuilder('g')
+        $qb = $this->createQueryBuilder('g');
+        return $qb
             ->select(['g', 'r', 'rd', 'c', 'home', 'away'])
-            ->leftJoin('g.home', 'home')
-            ->leftJoin('g.away', 'away')
+            ->join('g.home', 'home')
+            ->join('g.away', 'away')
             ->leftJoin('g.comments', 'c')
             ->leftJoin('g.replays', 'r')
-            ->leftJoin('r.replayData', 'rd')
-            ->where('g.season = :season and g.playoff is null')
+            ->join('r.replayData', 'rd')
+            ->where('g.season = :season')
+            ->andWhere($playoffs ? $qb->expr()->isNotNull('g.playoff') : $qb->expr()->isNull('g.playoff'))
             ->setParameter('season', $season)
             ->getQuery()
             ->getResult();

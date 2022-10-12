@@ -1180,6 +1180,7 @@ zemke-tagbox::part(tag) {
     align-items: stretch;
     justify-content: space-between;
     overflow-x: scroll;
+    margin-bottom: 1.8rem;
 }
 
 .playoffs .step {

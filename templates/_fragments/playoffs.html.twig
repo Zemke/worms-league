@@ -53,3 +53,7 @@
     {% endfor %}
 </div>
 
+{{ render(controller(
+    'App\\Controller\\MatchController::matches', {seasonId: season.id, playoffs: true}
+)) }}
+
