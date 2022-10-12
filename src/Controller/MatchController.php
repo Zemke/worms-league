@@ -32,12 +32,18 @@ class MatchController extends AbstractController
         ]);
     }
 
+    #[Route('/playoffs/{gameId}', name: 'app_po_view')]
     #[Route('/matches/{gameId}', name: 'app_match_view')]
     public function view(Request $request,
                          int $gameId,
                          GameRepository $gameRepo): Response
     {
         $game = $gameRepo->find($gameId);
+        if ($request->get('_route') === 'app_po_view' && !$game->isPlayoff()) {
+            return $this->redirectToRoute('app_match_view', [ 'gameId' => $gameId ]);
+        } else if ($request->get('_route') === 'app_match_view' && $game->isPlayoff()) {
+            return $this->redirectToRoute('app_po_view', [ 'gameId' => $gameId ]);
+        }
         if (is_null($game)) {
             $this->addFlash('error', 'There is no such game.');
             if (!is_null($ref = $request->headers->get('referer'))) {
