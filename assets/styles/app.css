@@ -1220,3 +1220,8 @@ zemke-tagbox::part(tag) {
     margin-right: 0.2rem;
 }
 
+.playoffs .step .spot td:last-child {
+    font-weight: bold;
+    text-align: right;
+}
+
