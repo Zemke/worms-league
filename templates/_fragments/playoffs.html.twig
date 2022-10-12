@@ -28,7 +28,9 @@
                                 {% endif %}
                             </td>
                             <td>
-                                {{ g.scoreHome }}
+                                <a href="{{ path('app_po_view', {gameId: g.id}) }}">
+                                    {{ g.scoreHome }}
+                                </a>
                             </td>
                         </tr>
                         <tr>
@@ -42,7 +44,9 @@
                                 {% endif %}
                             </td>
                             <td>
-                                {{ g.scoreAway }}
+                                <a href="{{ path('app_po_view', {gameId: g.id}) }}">
+                                    {{ g.scoreAway }}
+                                </a>
                             </td>
                         </tr>
                     {% endif %}
