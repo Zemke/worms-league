@@ -127,8 +127,11 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
     private function chat(Game $game): void
     {
         try {
-            $this->chatter->send(new ChatMessage(
-                $game->asText() . ' https://wl.zemke.io/matches/' . $game->getId()));
+            $txt = $game->asText()
+                . ' https://wl.zemke.io/'
+                . ($game->isPlayoff() ? 'playoffs' : 'matches')
+                . '/' . $game->getId();
+            $this->chatter->send(new ChatMessage($txt));
         } catch (\Throwable $e) {
             $this->logger->critical($e->getMessage(), ['exception' => $e]);
         }
