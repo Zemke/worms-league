@@ -55,19 +55,20 @@ class StateService
     /**
      * @return Game[]
      */
-    public function opponents(User $user): array
+    public function openGames(User $user): array
     {
         $s = $this->seasonRepo->findActive();
         if ($s->current()) {
-            return $this->userRepo->findOther($user);
+            return array_map(fn($u) => (new Game())->setHome($user)->setAway($u), $this->userRepo->findOther($user));
         }
         foreach ($this->playoffRepo->findForPlayoffs($s) as &$g) {
             if ($g->isHomeOrAway($user) && !$g->played()) {
-                return [$g->opponent($user)];
+                return [$g];
             }
         }
         return [];
     }
+
 }
 
 

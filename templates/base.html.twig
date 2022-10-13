@@ -113,7 +113,7 @@
                 Admin
               </a>
               {% endif %}
-              {% if state.opponents(app.user) is not empty %}
+              {% if state.openGames(app.user) is not empty %}
                   <a href="{{ path('app_report') }}">
                     Report
                   </a>

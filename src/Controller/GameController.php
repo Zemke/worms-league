@@ -40,7 +40,11 @@ class GameController extends AbstractController
 
         $user = $this->getUser();
         $var = [ 'season' => $seasons->findOneBy(['active' => true]) ];
-        $var['opponents'] = $stateService->opponents($user);
+        $openGames = $stateService->openGames($user);
+        if (count($openGames) === 1 && current($openGames)->isPlayoff()) {
+            $game = current($openGames);
+        }
+        $var['opponents'] = array_map(fn($g) => $g->opponent($user), $stateService->openGames($user));
         if (empty($var['opponents'])) {
             $this->addFlash('info', 'There are no opponents for you.');
         }
