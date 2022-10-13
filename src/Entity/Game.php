@@ -63,6 +63,8 @@ class Game
         cascade: ['persist', 'remove'])]
     private $replays;
 
+    // TODO there's got to be a reportedAt because PO games are created before they're reported
+
     /**
      * Whether or not the game had already been included when last calculating the ranking.
      */
