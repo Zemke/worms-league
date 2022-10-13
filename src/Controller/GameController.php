@@ -14,12 +14,12 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use App\Repository\PlayoffRepository;
 use App\Repository\UserRepository;
 use App\Repository\SeasonRepository;
 use App\Entity\Game;
 use App\Entity\Replay;
 use App\Service\RankingService;
+use App\Service\StateService;
 use App\Service\WaaasService;
 use App\Message\SendReplayMessage;
 
@@ -28,7 +28,7 @@ class GameController extends AbstractController
     #[Route('/report', name: 'app_report', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
     public function report(Request $request,
-                           PlayoffRepository $playoffRepo,
+                           StateService $stateService,
                            UserRepository $users,
                            SeasonRepository $seasons,
                            EntityManagerInterface $em,
@@ -40,27 +40,7 @@ class GameController extends AbstractController
 
         $user = $this->getUser();
         $var = [ 'season' => $seasons->findOneBy(['active' => true]) ];
-        if ($var['season']->current()) {
-            $var['opponents'] = $em->createQueryBuilder()
-                ->select('u')
-                ->from('App:User', 'u')
-                ->where('u.id <> :authUserId')
-                ->orderBy('u.username', 'ASC')
-                ->getQuery()
-                ->setParameter('authUserId', $user->getId())
-                ->getResult();
-        } else {
-            $game = null;
-            foreach ($playoffRepo->findForPlayoffs($var['season']) as &$g) {
-                if ($g->isHomeOrAway($user) && !$g->played()) {
-                    $game = $g;
-                    break;
-                }
-            }
-            if (!is_null($game)) {
-                $var['opponents'] = [$game->opponent($user)];
-            }
-        }
+        $var['opponents'] = $stateService->opponents($user);
         if (empty($var['opponents'])) {
             $this->addFlash('info', 'There are no opponents for you.');
         }

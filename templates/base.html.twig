@@ -113,9 +113,11 @@
                 Admin
               </a>
               {% endif %}
-              <a href="{{ path('app_report') }}">
-                Report
-              </a>
+              {% if state.opponents(app.user) is not empty %}
+                  <a href="{{ path('app_report') }}">
+                    Report
+                  </a>
+              {% endif %}
             </div>
         </div>
       {% else %}
