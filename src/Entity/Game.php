@@ -153,6 +153,11 @@ class Game
         }
     }
 
+    public function isPaired(): bool
+    {
+        return !is_null($this->home) && !is_null($this->away);
+    }
+
     /**
      * Convenience for getting every replay's data sorted by its startedAt ascendingly.
      *

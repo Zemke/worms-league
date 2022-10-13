@@ -62,8 +62,8 @@ class StateService
             return array_map(fn($u) => (new Game())->setHome($user)->setAway($u), $this->userRepo->findOther($user));
         }
         foreach ($this->playoffRepo->findForPlayoffs($s) as &$g) {
-            if ($g->isHomeOrAway($user) && !$g->played()) {
-                return [$g];
+            if ($g->isHomeOrAway($user) && !$g->played() && $g->isPaired()) {
+                return [dump($g)];
             }
         }
         return [];
