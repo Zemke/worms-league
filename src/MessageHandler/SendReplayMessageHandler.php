@@ -36,6 +36,7 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
     public function __invoke(SendReplayMessage $message)
     {
         $replay = $this->replayRepo->find($message->getReplayId());
+        $game = &$replay->getGame();
         if (!$replay->processed()) {
             $replayData = $this->waaasService->send($replay);
             if (count($err = $this->validator->validate($replayData)) > 0) {
@@ -44,7 +45,7 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
             $replay->setReplayData($replayData);
             $this->replayRepo->add($replay, true);
         } else {
-            $this->logger->info("Game {$replay->getGame()->getId()} is already processed");
+            $this->logger->info("Game {$game->getId()} is already processed");
             $replayData = $replay->getReplayData();
         }
         if (is_null($replay->getReplayMap())) {
@@ -56,7 +57,7 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
                 try {
                     $uri = stream_get_meta_data($tmpfile)['uri'];
                     $file = new UploadedFile($uri, basename($uri), null, null, true);
-                    $replayMap = new ReplayMap($replay->getGame()->getId(), $replay->getName());
+                    $replayMap = new ReplayMap($game->getId(), $replay->getName());
                     $replay->setReplayMap($replayMap->setFile($file));
                     $this->replayRepo->add($replay, true);
                 } catch (\Throwable $e) {
@@ -68,59 +69,59 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
         } else {
             $this->logger->info("Replay {$replay->getId()} already has a map.");
         }
-        if (!$replay->getGame()->fullyProcessed()) {
+        if (!$game->fullyProcessed()) {
             return;
         }
-        $replay->getGame()->score();
-        if ($replay->getGame()->isPlayoff() && is_null($replay->getGame()->winner())) {
+        $game->score();
+        if ($game->isPlayoff() && is_null($game->winner())) {
             throw new UnrecoverableMessageHandlingException(
-                "{$replay->getGame()->asText()} is a playoff game and mustn't be drawn.");
+                "{$game->asText()} is a playoff game and mustn't be drawn.");
         }
-        $this->gameRepo->add($replay->getGame(), true);
-        if ($replay->getGame()->isPlayoff()) {
+        $this->gameRepo->add($game, true);
+        if ($game->isPlayoff()) {
             // playoff
             $finalStep = log(array_reduce(
-               $this->playoffRepo->findForPlayoffs($replay->getGame()->getSeason()),
+               $this->playoffRepo->findForPlayoffs($game->getSeason()),
                 fn ($acc, $g) => $acc + ($g->getPlayoff()->getStep() === 1),
                 0), 2) + 1;
-            $winner = $replay->getGame()->winner();
-            if ($finalStep - 1 === $replay->getGame()->getPlayoff()->getStep()) {
+            $winner = $game->winner();
+            if ($finalStep - 1 === $game->getPlayoff()->getStep()) {
                 // semifinal
                 $advUsers = [$loser, $winner];
                 for ($i = 0; $i <= 1; $i++) {
                     $po = (new Playoff())->setSpot(1)->setStep($finalStep + $i);
-                    $advGame = $this->playoffRepo->findPlayoffGame($replay->getGame()->getSeason(), $po)
+                    $advGame = $this->playoffRepo->findPlayoffGame($game->getSeason(), $po)
                         ?? (new Game())
-                            ->setSeason($replay->getGame()->getSeason())
+                            ->setSeason($game->getSeason())
                             ->setPlayoff($po);
-                    if ($replay->getGame()->getPlayoff()->getSpot() % 2 !== 0) {
+                    if ($game->getPlayoff()->getSpot() % 2 !== 0) {
                         $advGame->setHome($advUsers[$i]);
                     } else {
                         $advGame->setAway($advUsers[$i]);
                     }
                     $this->gameRepo->add($advGame, $i === 1);
                 }
-            } else if ($replay->getGame()->getPlayoff()->getStep() < $finalStep) {
+            } else if ($game->getPlayoff()->getStep() < $finalStep) {
                 // pre-semifinal
                 $po = (new Playoff())
-                        ->setSpot(ceil($replay->getGame()->getPlayoff()->getSpot() / 2))
-                        ->setStep($replay->getGame()->getPlayoff()->getStep() + 1);
-                $advGame = $this->playoffRepo->findPlayoffGame($replay->getGame()->getSeason(), $po)
+                        ->setSpot(ceil($game->getPlayoff()->getSpot() / 2))
+                        ->setStep($game->getPlayoff()->getStep() + 1);
+                $advGame = $this->playoffRepo->findPlayoffGame($game->getSeason(), $po)
                     ?? (new Game())
-                        ->setSeason($replay->getGame()->getSeason())
+                        ->setSeason($game->getSeason())
                         ->setPlayoff($po);
-                if ($replay->getGame()->getPlayoff()->getSpot() % 2 !== 0) {
+                if ($game->getPlayoff()->getSpot() % 2 !== 0) {
                     $advGame->setHome($winner);
                 } else {
                     $advGame->setAway($winner);
                 }
                 $this->gameRepo->add($advGame, true);
             }
-            $this->chat($replay->getGame());
-        } else if (!$replay->getGame()->getRanked()) {
+            $this->chat($game);
+        } else if (!$game->getRanked()) {
             // ladder
-            $this->bus->dispatch(new RankingCalcMessage($replay->getGame()->getId()));
-            $this->chat($replay->getGame());
+            $this->bus->dispatch(new RankingCalcMessage($game->getId()));
+            $this->chat($game);
         }
     }
 
