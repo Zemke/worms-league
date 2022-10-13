@@ -28,7 +28,9 @@ class MatchController extends AbstractController
         $season = $seasonId === -1 ? $seasonRepo->findActive() : $seasonRepo->find($seasonId);
         return $this->render('_fragments/matches.html.twig', [
             'season' => $season,
-            'games' => is_null($season) ? null : $gameRepo->findBySeasonEager($season, $playoffs),
+            'games' => is_null($season)
+                ? null
+                : array_filter($gameRepo->findBySeasonEager($season, $playoffs), fn($g) => $g->played()),
         ]);
     }
 
