@@ -103,7 +103,7 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
             } else if ($replay->getGame()->getPlayoff()->getStep() < $finalStep) {
                 // pre-semifinal
                 $po = (new Playoff())
-                        ->setSpot(ceil($replay->getGame()->getPlayoff()->getStep() / 2))
+                        ->setSpot(ceil($replay->getGame()->getPlayoff()->getSpot() / 2))
                         ->setStep($replay->getGame()->getPlayoff()->getStep() + 1);
                 $advGame = $this->playoffRepo->findPlayoffGame($replay->getGame()->getSeason(), $po)
                     ?? (new Game())
