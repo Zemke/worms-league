@@ -1225,3 +1225,16 @@ zemke-tagbox::part(tag) {
     text-align: right;
 }
 
+.playoffs .step.finals {
+    position: relative;
+}
+
+.playoffs .step.finals .spot:last-child {
+    position: absolute;
+    bottom: 0;
+}
+
+.playoffs .step.finals .spot:last-child th {
+    font-size: .8rem;
+}
+

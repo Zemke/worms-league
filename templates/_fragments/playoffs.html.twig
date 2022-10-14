@@ -3,7 +3,7 @@
 <pre>{{ dump(steps) }}</pre>
 
 <div class="playoffs">
-    {% for step in 1..steps %}
+    {% for step in 1..(steps-1) %}
         <div class="step">
             {% for spot in 1..(tree[1]|length)//(2**(step-1)) %}
                 {% set g = tree[step] is defined and tree[step][spot] is defined ? tree[step][spot] : null %}
@@ -55,6 +55,63 @@
             {% endfor %}
         </div>
     {% endfor %}
+    <div class="step finals">
+        {% for step in (steps+1)..(steps) %}
+        {% set g = tree[step] is defined and tree[step][1] is defined ? tree[step][1] : null %}
+            <table class="spot">
+                <thead>
+                    <tr>
+                        <th colspan="2">
+                            {% if loop.last %}Third Place{% else %}Final{% endif %}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% if g is null %}
+                    <tr>
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td>
+                            {% if g.home %}
+                                <a href="{{ path('app_user_view', {usernameOrId: g.home.username}) }}{{ season.active ? '' : '?season=' ~ season.id }}">
+                                    {{ g.home.username }}
+                                </a>
+                            {% else %}
+                                &nbsp;
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ path('app_po_view', {gameId: g.id}) }}">
+                                {{ g.scoreHome }}
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% if g.away %}
+                                <a href="{{ path('app_user_view', {usernameOrId: g.away.username}) }}{{ season.active ? '' : '?season=' ~ season.id }}">
+                                    {{ g.away.username }}
+                                </a>
+                            {% else %}
+                                &nbsp;
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ path('app_po_view', {gameId: g.id}) }}">
+                                {{ g.scoreAway }}
+                            </a>
+                        </td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        {% endfor %}
+    </div>
 </div>
 
 {{ render(controller(
