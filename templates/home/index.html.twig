@@ -12,8 +12,34 @@
             ending {{ season.ending | countdown('days', 'in') }}
         {% elseif state.state.name == 'PLAYOFFS' %}
             playoffs are under way
-        {% elseif state.state.name == 'ENDING' %}
-            has ended.
+        {% elseif state.state.name in ['PLAYOFFS_ENDING', 'LADDER_ENDING'] %}
+            <table class="attribution">
+                <tbody>
+                {% set tt = ['gold', 'silver', 'bronze'] %}
+                {% for m in ['ladder', 'playoffs'] %}
+                    {% set winners = attribute(state, m ~ 'Winners') %}
+                    <tr>
+                        <td>
+                            {{ m|capitalize }}
+                        </td>
+                        {% for w in winners %}
+                            {% if w is not null %}
+                                <td>
+                                    <img src="{{ asset('/img/trophies/' ~ tt[loop.index0] ~ '.png') }}"
+                                         alt="{{ tt[loop.index0]|capitalize }}">
+                                </td>
+                                <td>
+                                    {{ w.username }}
+                                </td>
+                            {% else %}
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         {% endif %}
     {% endif %}
 </div>

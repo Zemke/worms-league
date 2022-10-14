@@ -77,6 +77,23 @@ class StateService
         return [];
     }
 
+    public function ladderWinners(): array
+    {
+        return [ // TODO ladderWinners
+            (new User())->setUsername('Mega`Adnan'),
+            (new User())->setUsername('Kayz'),
+            (new User())->setUsername('WorldMaster'),
+        ];
+    }
+
+    public function playoffsWinners(): array
+    {
+        return [ // TODO playoffsWinners
+            (new User())->setUsername('Rafka'),
+            (new User())->setUsername('Mablak'),
+            (new User())->setUsername('GopnicK'),
+        ];
+    }
 }
 
 
