@@ -75,6 +75,9 @@ class Game
     #[ORM\OneToOne(targetEntity: Playoff::class, cascade: ['persist', 'remove'])]
     private $playoff;
 
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private $reportedAt;
+
     public function __construct()
     {
         $this->voided = false;
@@ -92,7 +95,7 @@ class Game
 
     public function reported(): bool
     {
-        return !is_null($this->reporter); // TODO add reportedAt field
+        return !is_null($this->reporter) && !is_null($this->reportedAt);
     }
 
     public function draw(): bool
@@ -483,6 +486,18 @@ class Game
     public function setPlayoff(?Playoff $playoff): self
     {
         $this->playoff = $playoff;
+
+        return $this;
+    }
+
+    public function getReportedAt(): ?\DateTimeImmutable
+    {
+        return $this->reportedAt;
+    }
+
+    public function setReportedAt(?\DateTimeImmutable $reportedAt): self
+    {
+        $this->reportedAt = $reportedAt;
 
         return $this;
     }

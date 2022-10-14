@@ -58,15 +58,15 @@ class GameController extends AbstractController
             if (is_null($opp) || !in_array($opp->getId(), array_map(fn($u) => $u->getId(), $var['opponents']))) {
                 $this->addFlash('error', 'Invalid opponent.');
             } else {
-                if (isset($game)) {
-                    $game->setReporter($user);
-                } else {
+                if (!isset($game)) {
                     $game = (new Game())
-                        ->setReporter($user)
                         ->setHome($user)
                         ->setAway($opp)
                         ->setSeason($var['season']);
                 }
+                $game
+                    ->setReporter($user)
+                    ->setReportedAt(new \DateTimeImmutable('now'));
                 foreach ($request->files->all('replays') as $file) {
                     $game->addReplay((new Replay())->setFile($file));
                 }

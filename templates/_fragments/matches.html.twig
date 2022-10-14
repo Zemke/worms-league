@@ -20,7 +20,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for game in games | sort((a,b) => b.created <=> a.created) %}
+                {% for game in games | sort((a,b) => b.reportedAt <=> a.reportedAt) %}
                 <tr>
                     <td>
                         <a href="{{ path(game.isPlayoff() ? 'app_po_view' : 'app_match_view', {gameId: game.id}) }}">
@@ -30,10 +30,10 @@
                     <td class="letter-spacing-compressed">
                         {% if game.fullyProcessed() %}
                             <span data-tooltip="Played at {{ game.playedAt() | date('M. j, H:i') }}">
-                                {{ game.created | date('M. j, H:i') }}
+                                {{ game.reportedAt | date('M. j, H:i') }}
                             </span>
                         {% else %}
-                            {{ game.created | date('M. j, H:i') }}
+                            {{ game.reportedAt | date('M. j, H:i') }}
                         {% endif %}
                     </td>
                     <td>
