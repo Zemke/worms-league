@@ -36,7 +36,7 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
     public function __invoke(SendReplayMessage $message)
     {
         $replay = $this->replayRepo->find($message->getReplayId());
-        $game = &$replay->getGame();
+        $game = $replay->getGame();
         if (!$replay->processed()) {
             $replayData = $this->waaasService->send($replay);
             if (count($err = $this->validator->validate($replayData)) > 0) {
