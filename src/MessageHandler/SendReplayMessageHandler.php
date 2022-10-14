@@ -81,7 +81,7 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
         if ($game->isPlayoff()) {
             // playoff
             $finalStep = log(array_reduce(
-               $this->playoffRepo->findForPlayoffs($game->getSeason()),
+                $this->playoffRepo->findForPlayoffs($game->getSeason()),
                 fn ($acc, $g) => $acc + ($g->getPlayoff()->getStep() === 1),
                 0), 2) + 1;
             $winner = $game->winner();
