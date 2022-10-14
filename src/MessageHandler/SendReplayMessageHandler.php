@@ -87,7 +87,7 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
             $winner = $game->winner();
             if ($finalStep - 1 === $game->getPlayoff()->getStep()) {
                 // semifinal
-                $advUsers = [$loser, $winner];
+                $advUsers = [$game->loser(), $winner];
                 for ($i = 0; $i <= 1; $i++) {
                     $po = (new Playoff())->setSpot(1)->setStep($finalStep + $i);
                     $advGame = $this->playoffRepo->findPlayoffGame($game->getSeason(), $po)
