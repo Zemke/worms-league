@@ -22,8 +22,11 @@ enum State
     /** active season outside its datetime range but with unplayed playoff games */
     case PLAYOFFS;
 
-    /** active season outside its datetime range without unplayed playoff games */
-    case ENDING;
+    /** active season outside its datetime range without any playoff games */
+    case LADDER_ENDING;
+
+    /** active season outside its datetime range with playoff games that are all played */
+    case PLAYOFFS_ENDING;
 }
 
 
@@ -44,12 +47,17 @@ class StateService
         if ($s->current()) {
             return State::LADDER;
         }
-        foreach ($this->playoffRepo->findForPlayoffs($s) as $g) {
-            if (!$g->played()) {
-                return State::PLAYOFFS;
-            }
+        $po = $this->playoffRepo->findForPlayoffs($s);
+        $poC = count($po);
+        $poPl = count(array_filter($po, fn($g) => $g->played()));
+        $poUn = $poC - $poPl;
+        if ($poC === 0) {
+            return State::LADDER_ENDING;
         }
-        return State::ENDING;
+        if ($poUn === 0) {
+            return State::PLAYOFFS_ENDING;
+        }
+        return State::PLAYOFFS;
     }
 
     /**

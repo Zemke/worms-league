@@ -156,7 +156,7 @@
          href="{{ path('app_match') }}">
         Matches
       </a>
-      {% if state.state.name == 'PLAYOFFS' %}
+      {% if state.state.name in ['PLAYOFFS_ENDING', 'PLAYOFFS'] %}
           <a class="nav-item {{ app.request.pathinfo starts with '/playoffs' ? 'active' : '' }}"
              href="{{ path('app_playoffs') }}">
             Playoffs
