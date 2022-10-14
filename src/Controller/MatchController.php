@@ -30,7 +30,7 @@ class MatchController extends AbstractController
             'season' => $season,
             'games' => is_null($season)
                 ? null
-                : array_filter($gameRepo->findBySeasonEager($season, $playoffs), fn($g) => $g->played()),
+                : array_filter($gameRepo->findBySeasonEager($season, $playoffs), fn($g) => $g->reported()),
         ]);
     }
 
