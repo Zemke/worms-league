@@ -19,12 +19,14 @@ use App\Repository\GameRepository;
 use App\Repository\PlayoffRepository;
 use App\Repository\ReplayRepository;
 use App\Service\WaaasService;
+use App\Service\StateService;
 use Symfony\Component\Messenger\Exception\UnrecoverableMessageHandlingException;
 
 final class SendReplayMessageHandler implements MessageHandlerInterface
 {
     public function __construct(private LoggerInterface $logger,
                                 private WaaasService $waaasService,
+                                private StateService $stateService,
                                 private GameRepository $gameRepo,
                                 private PlayoffRepository $playoffRepo,
                                 private ReplayRepository $replayRepo,
@@ -80,10 +82,7 @@ final class SendReplayMessageHandler implements MessageHandlerInterface
         $this->gameRepo->add($game, true);
         if ($game->isPlayoff()) {
             // playoff
-            $finalStep = (int) log(array_reduce(
-                $this->playoffRepo->findForPlayoffs($game->getSeason()),
-                fn ($acc, $g) => $acc + ($g->getPlayoff()->getStep() === 1),
-                0), 2) + 1;
+            $finalSteps = $this->stateService->playoffsFinalStep($game->getSeason());
             $winner = $game->winner();
             if ($finalStep - 1 === $game->getPlayoff()->getStep()) {
                 // semifinal
