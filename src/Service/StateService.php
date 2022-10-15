@@ -92,7 +92,7 @@ class StateService
     {
         $s = $this->seasonRepo->findActive();
         $po = $this->playoffRepo->findForPlayoffs($s);
-        $finalStep = $this->playoffFinalStep($s);
+        $finalStep = $this->playoffsFinalStep($s);
         $thp = $this->playoffRepo->findPlayoffGame($s, (new Playoff())->setSpot(1)->setStep($finalStep));
         $fin = $this->playoffRepo->findPlayoffGame($s, (new Playoff())->setSpot(1)->setStep($finalStep + 1));
         return [
@@ -107,7 +107,7 @@ class StateService
      * The first final step should be that of the third place game
      * with the next being the final.
      */
-    public function playoffFinalStep(Season $season): int
+    public function playoffsFinalStep(Season $season): int
     {
         return (int) log(array_reduce(
             $this->playoffRepo->findForPlayoffs($season),
