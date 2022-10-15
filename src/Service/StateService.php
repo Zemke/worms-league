@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Game;
 use App\Entity\User;
 use App\Repository\PlayoffRepository;
+use App\Repository\RankingRepository;
 use App\Repository\SeasonRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -35,7 +36,8 @@ class StateService
 
     public function __construct(private SeasonRepository $seasonRepo,
                                 private PlayoffRepository $playoffRepo,
-                                private UserRepository $userRepo,)
+                                private UserRepository $userRepo,
+                                private RankingRepository $rankingRepo,)
     {}
 
     public function state(): State
@@ -79,11 +81,9 @@ class StateService
 
     public function ladderWinners(): array
     {
-        return [ // TODO ladderWinners
-            (new User())->setUsername('Mega`Adnan'),
-            (new User())->setUsername('Kayz'),
-            (new User())->setUsername('WorldMaster'),
-        ];
+        return array_map(
+            fn($r) => $this->userRepo->find($r['owner_id']),
+            array_slice($this->rankingRepo->findForLadder($this->seasonRepo->findActive()), 0, 3));
     }
 
     public function playoffsWinners(): array
