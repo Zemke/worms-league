@@ -3,6 +3,8 @@
 namespace App\Service;
 
 use App\Entity\Game;
+use App\Entity\Playoff;
+use App\Entity\Season;
 use App\Entity\User;
 use App\Repository\PlayoffRepository;
 use App\Repository\RankingRepository;
@@ -88,12 +90,29 @@ class StateService
 
     public function playoffsWinners(): array
     {
-        return [ // TODO playoffsWinners
-            (new User())->setUsername('Rafka'),
-            (new User())->setUsername('Mablak'),
-            (new User())->setUsername('GopnicK'),
+        $s = $this->seasonRepo->findActive();
+        $po = $this->playoffRepo->findForPlayoffs($s);
+        $finalStep = $this->playoffFinalStep($s);
+        $thp = $this->playoffRepo->findPlayoffGame($s, (new Playoff())->setSpot(1)->setStep($finalStep));
+        $fin = $this->playoffRepo->findPlayoffGame($s, (new Playoff())->setSpot(1)->setStep($finalStep + 1));
+        return [
+            $fin->winner(),
+            $fin->loser(),
+            $thp->winner(),
         ];
     }
-}
 
+    /**
+     * Returns the first final step.
+     * The first final step should be that of the third place game
+     * with the next being the final.
+     */
+    public function playoffFinalStep(Season $season): int
+    {
+        return (int) log(array_reduce(
+            $this->playoffRepo->findForPlayoffs($season),
+            fn ($acc, $g) => $acc + ($g->getPlayoff()->getStep() === 1),
+            0), 2) + 1;
+    }
+}
 
