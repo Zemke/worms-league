@@ -81,16 +81,17 @@ class StateService
         return [];
     }
 
-    public function ladderWinners(): array
+    public function ladderWinners(Season $season = null): array
     {
+        $s = $season ?? $this->seasonRepo->findActive();
         return array_map(
             fn($r) => $this->userRepo->find($r['owner_id']),
-            array_slice($this->rankingRepo->findForLadder($this->seasonRepo->findActive()), 0, 3));
+            array_slice($this->rankingRepo->findForLadder($s), 0, 3));
     }
 
-    public function playoffsWinners(): array
+    public function playoffsWinners(Season $season = null): array
     {
-        $s = $this->seasonRepo->findActive();
+        $s = $season ?? $this->seasonRepo->findActive();
         $po = $this->playoffRepo->findForPlayoffs($s);
         $finalStep = $this->playoffsFinalStep($s);
         $thp = $this->playoffRepo->findPlayoffGame($s, (new Playoff())->setSpot(1)->setStep($finalStep));
