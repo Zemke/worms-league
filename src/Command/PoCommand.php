@@ -122,7 +122,7 @@ class PoCommand extends Command
             ;
             $g->addReplay($r);
         }
-        // TODO scores seem to always be zero $g->score();
+        $g->score();
         return $g;
     }
 
