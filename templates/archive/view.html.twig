@@ -19,9 +19,11 @@
             'App\\Controller\\MatchController::matches', {seasonId: season.id}
         )) }}
     {% elseif tab == 'playoffs' %}
-        {{ render(controller(
-            'App\\Controller\\PlayoffsController::view', {seasonId: season.id}
-        )) }}
+        <div class="whitepad">
+            {{ render(controller(
+                'App\\Controller\\PlayoffsController::view', {seasonId: season.id}
+            )) }}
+        </div>
     {% endif %}
 {% endblock %}
 
