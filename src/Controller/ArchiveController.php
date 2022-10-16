@@ -8,13 +8,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\SeasonRepository;
 use App\Repository\PlayoffRepository;
+use App\Service\StateService;
 
 class ArchiveController extends AbstractController
 {
     #[Route('/archive', name: 'app_archive')]
-    public function index(SeasonRepository $seasonRepo): Response
+    public function index(SeasonRepository $seasonRepo,
+                          StateService $stateService,): Response
     {
         $var['seasons'] = $seasonRepo->findForArchive();
+        $var['playoffsWinners'] = array_combine(
+            array_map(fn($s) => $s->getId(), $var['seasons']),
+            array_map(fn($s) => $stateService->playoffsWinners($s), $var['seasons']));
         return $this->render('archive/index.html.twig', $var);
     }
 

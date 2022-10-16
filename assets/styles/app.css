@@ -1060,24 +1060,54 @@ ul.tabs > li.active a {
     margin-left: .1rem;
 }
 
-table.archive tr td:first-child {
-   width: 23%;
-   white-space: nowrap;
-   padding-right: 0;
+table.archive tbody td {
+    white-space: nowrap;
 }
 
-table.archive tr td:nth-child(2) {
-   width: 10%;
-   white-space: nowrap;
-   padding-left: 0;
+table.archive tbody tr:nth-child(odd) td:first-child {
+    width: 0;
 }
 
-table.archive tr td:nth-child(3) {
-   width: 33%;
+table.archive tbody tr:nth-child(odd) td:nth-child(2) {
+    width: 0;
 }
 
-table.archive td {
-   white-space: nowrap;
+table.archive tbody tr:nth-child(odd) td:nth-child(4) {
+    width: 0;
+}
+
+table.archive tbody tr:nth-child(odd) td:nth-child(3) {
+    white-space: normal;
+    width: 35%;
+}
+
+table.archive tbody tr.odd,
+table.archive tbody tr.even {
+    border: none;
+}
+
+table.archive tbody tr.even:nth-child(odd) td,
+table.archive tbody tr.odd:nth-child(odd) td {
+    border-top: 1px solid #000;
+    padding-top: .5rem;
+}
+
+table.archive tbody tr.odd:nth-child(even) td,
+table.archive tbody tr.even:nth-child(even) td {
+    padding-bottom: .5rem;
+}
+
+table.archive tbody tr.odd {
+    background-color: var(--gray);
+}
+
+table.archive tbody tr.even {
+    background-color: #a9a9a9;
+}
+
+table.archive td.competition {
+    font-variant: all-petite-caps;
+    text-align: right;
 }
 
 p.prelude {

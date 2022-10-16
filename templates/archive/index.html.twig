@@ -8,7 +8,7 @@
     <table class="w100 archive">
         <thead>
             <tr>
-                <th colspan="3">
+                <th colspan="4">
                 </th>
                 <th>
                     <img src="{{ asset('/img/trophies/gold.png') }}" alt="Gold">
@@ -23,25 +23,42 @@
         </thead>
         <tbody>
             {% for s in seasons %}
-                <tr>
-                    <td class="monospace">
-                        {{ s.start|date('Y-m-d') }}
-                        —
+                {% set oddeven = loop.index % 2 == 0 ? 'even' : 'odd' %}
+                <tr class="{{ oddeven }}">
+                    <td class="monospace" rowspan="2">
+                        {{ s.start|date('Y-m-d') }}<br>
                         {{ s.ending|date('Y-m-d') }}
                     </td>
-                    <td class="monospace text-right">
+                    <td class="monospace text-right" rowspan="2">
                         ({{ s.start.diff(s.ending).days }} days)
                     </td>
-                    <td>
+                    <td rowspan="2">
                          <a href="{{ path('app_archive_view', {seasonId: s.id}) }}">
                              {{ s.name }}
                          </a>
+                    </td>
+                    <td class="competition">
+                        Ladder
                     </td>
                     {% for i in range(0, 2) %}
                         <td>
                             {% if s.rankings[i] is defined %}
                                 <a href="{{ path('app_user_view', {usernameOrId: s.rankings[i].owner.username}) }}?season={{ s.id }}">
                                     {{ s.rankings[i].owner.username }}
+                                </a>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr class="{{ oddeven }}">
+                    <td class="competition">
+                        Playoffs
+                    </td>
+                    {% for w in playoffsWinners[s.id] %}
+                        <td>
+                            {% if w is not null %}
+                                <a href="{{ path('app_user_view', {usernameOrId: w.username}) }}?season={{ s.id }}">
+                                    {{ w.username }}
                                 </a>
                             {% endif %}
                         </td>
