@@ -66,9 +66,9 @@ class PoCommand extends Command
         }
 
         // quarterfinal
-        for ($i = 0; $i < count($users); $i += 2) {
+        for ($i = 1; $i < count($users); $i += 2) {
             $g = $this->play(
-                $users[$i], $users[$i+1],
+                $users[$i-1], $users[$i],
                 (new Playoff())->setStep(1)->setSpot(intval(ceil($i/2))));
             $this->gameRepo->add($g);
         }
