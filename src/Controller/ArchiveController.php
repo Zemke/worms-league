@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\SeasonRepository;
+use App\Repository\PlayoffRepository;
 
 class ArchiveController extends AbstractController
 {
@@ -18,11 +19,16 @@ class ArchiveController extends AbstractController
     }
 
     #[Route('/archive/{seasonId}', name: 'app_archive_view')]
-    public function view(SeasonRepository $seasonRepo, Request $request, int $seasonId): Response
+    public function view(PlayoffRepository $playoffRepo,
+                         SeasonRepository $seasonRepo,
+                         Request $request,
+                         int $seasonId): Response
     {
         $season = $seasonRepo->find($seasonId);
-        // TODO only show when there are actually playoffs for that season
-        $tabs = ['ladder', 'matches', 'playoffs'];
+        $tabs = ['ladder', 'matches'];
+        if (!empty($playoffRepo->findForPlayoffs($season))) {
+            $tabs[] = 'playoffs';
+        }
         $tab = $request->query->get('tab') ?? $tabs[0];
         return $this->render('archive/view.html.twig', [
             'season' => $season,
