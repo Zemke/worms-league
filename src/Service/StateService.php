@@ -70,6 +70,9 @@ class StateService
     public function openGames(User $user): array
     {
         $s = $this->seasonRepo->findActive();
+        if (is_null($s)) {
+            return [];
+        }
         if ($s->current()) {
             return array_map(fn($u) => (new Game())->setHome($user)->setAway($u), $this->userRepo->findOther($user));
         }
