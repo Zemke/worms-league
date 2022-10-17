@@ -5,7 +5,9 @@
 {% block body %}
 
 {% if error %}
-    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    <div class="alert error">
+        {{ error.messageKey|trans(error.messageData, 'security') }}
+    </div>
 {% endif %}
 
 <form action="{{ path('app_login') }}" method="post">
