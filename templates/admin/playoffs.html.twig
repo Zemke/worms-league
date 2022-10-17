@@ -27,7 +27,10 @@
 {% if not final %}
     <form method="GET" action="{{ path('app_admin_playoffs') }}">
         <div>
-            <label for="users">Who should be in the playoffs?</label>
+            <label for="users">
+                Who should be in the playoffs?<br>
+                Hold <kbd>Ctrl</kbd> or <kbd>CMD</kbd> to select multiple.
+            </label>
             <select name="users[]" id="users" multiple size="30" required>
                 {% for u in users|sort((a,b) => a.username|lower <=> b.username|lower) %}
                     <option value="{{ u.id }}">{{ u.username }} ({{ u.place|format_ordinal_number }})</option>
