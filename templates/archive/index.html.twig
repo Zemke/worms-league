@@ -60,6 +60,8 @@
                                 <a href="{{ path('app_user_view', {usernameOrId: w.username}) }}?season={{ s.id }}">
                                     {{ w.username }}
                                 </a>
+                            {% else %}
+                                —
                             {% endif %}
                         </td>
                     {% endfor %}
