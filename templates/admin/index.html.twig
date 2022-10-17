@@ -4,46 +4,48 @@
 
 {% block body %}
 
-<div class="alert info">
-    Updating or deleting games does not update the ranking.
-    You have to trigger re-calculation explicitly.
-</div>
-
 <h1>Edit or Delete Game</h1>
 
 {% if hasActive %}
-    {% if games|length > 0 %}
-        <form action="{{ path('app_admin') }}" method="POST">
-            <div>
-                <label for="game">Edit Game</label>
-                <select id="game" name="game" required>
-                    <option value="" selected disabled></option>
-                    {% for g in games %}
-                        <option value="{{ g.id }}">
-                            {{ g.id }} {{ g.home.username }} {{ g.scoreHome }}–{{ g.scoreAway }} {{ g.away.username }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div>
-                <label for="scoreHome">Score Home</label>
-                <input type="number" name="scoreHome" id="scoreHome">
-            </div>
-            <div>
-                <label for="scoreAway">Score Away</label>
-                <input type="number" name="scoreAway" id="scoreAway">
-            </div>
-            <div>
-                <label for="delete">Delete</label>
-                <input type="checkbox" name="delete" id="delete">
-            </div>
-            <div>
-                <input type="submit" value="Submit" onclick="return confirm('Are you sure?')">
-            </div>
-        </form>
-    {% else %}
-        <p>There are no games yet.</p>
-    {% endif %}
+    <div class="whitepad">
+        {% if games|length > 0 %}
+            <p>
+                Updating or deleting ladder games does not update the ranking.
+                You have to trigger re-calculation explicitly.<br>
+                Playoff games cannot be deleted and the playoff tree is not fixed by changing winners.
+            </p>
+            <form action="{{ path('app_admin') }}" method="POST">
+                <div>
+                    <label for="game">Edit Game</label>
+                    <select id="game" name="game" required>
+                        <option value="" selected disabled></option>
+                        {% for g in games %}
+                            <option value="{{ g.id }}">
+                                {{ g.id }} {{ g.home.username }} {{ g.scoreHome }}–{{ g.scoreAway }} {{ g.away.username }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label for="scoreHome">Score Home</label>
+                    <input type="number" name="scoreHome" id="scoreHome">
+                </div>
+                <div>
+                    <label for="scoreAway">Score Away</label>
+                    <input type="number" name="scoreAway" id="scoreAway">
+                </div>
+                <div>
+                    <label for="delete">Delete</label>
+                    <input type="checkbox" name="delete" id="delete">
+                </div>
+                <div>
+                    <input type="submit" value="Submit" onclick="return confirm('Are you sure?')">
+                </div>
+            </form>
+        {% else %}
+            <p>There are no games yet.</p>
+        {% endif %}
+    </div>
 
     <h1>Ranking</h1>
 
