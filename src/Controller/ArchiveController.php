@@ -35,10 +35,13 @@ class ArchiveController extends AbstractController
             return $this->redirectToRoute('app_archive');
         } else {
             $tabs = ['ladder', 'matches'];
+            $tab = $request->query->get('tab') ?? $tabs[0];
             if (!empty($playoffRepo->findForPlayoffs($season))) {
                 $tabs[] = 'playoffs';
+            } else if ($tab === 'playoffs') {
+                $tab = 'ladder';
+                $this->addFlash('error', 'There have been no playoffs in this season');
             }
-            $tab = $request->query->get('tab') ?? $tabs[0];
             return $this->render('archive/view.html.twig', [
                 'season' => $season,
                 'tab' => $tab,
