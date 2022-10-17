@@ -25,7 +25,6 @@ final class Version20220927161733 extends AbstractMigration
         $this->addSql('ALTER TABLE game ADD playoff_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE game ADD CONSTRAINT FK_232B318CA2B8211C FOREIGN KEY (playoff_id) REFERENCES playoff (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_232B318CA2B8211C ON game (playoff_id)');
-        $this->addSql('ALTER TABLE replay_data DROP data_bak');
         $this->addSql('DROP INDEX season_active_uidx');
         $this->addSql('CREATE UNIQUE INDEX season_active_uidx ON season (active) WHERE active = true');
         $this->addSql('ALTER TABLE messenger_messages ALTER queue_name TYPE VARCHAR(190)');
@@ -38,7 +37,6 @@ final class Version20220927161733 extends AbstractMigration
         $this->addSql('ALTER TABLE game DROP CONSTRAINT FK_232B318CA2B8211C');
         $this->addSql('DROP SEQUENCE playoff_id_seq CASCADE');
         $this->addSql('DROP TABLE playoff');
-        $this->addSql('ALTER TABLE replay_data ADD data_bak JSON DEFAULT NULL');
         $this->addSql('DROP INDEX season_active_uidx');
         $this->addSql('CREATE UNIQUE INDEX season_active_uidx ON season (active) WHERE (active = true)');
         $this->addSql('ALTER TABLE messenger_messages ALTER queue_name TYPE VARCHAR(255)');
