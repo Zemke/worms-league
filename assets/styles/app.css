@@ -367,6 +367,27 @@ ul li::before {
     background-color: var(--error);
 }
 
+.alert.success,
+.alert.error {
+    animation-name: bump;
+    animation-duration: 1s;
+}
+
+@keyframes bump {
+    0% {
+        transform: scale(0.8, 0.8);
+        opacity: 0.7;
+    }
+    30% {
+        transform: scale(1.1, 1.1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1, 1);
+        opacity: 1;
+    }
+}
+
 .alert a {
     color: white;
     text-decoration: underline;
