@@ -97,9 +97,9 @@ class StateService
         $thp = $this->playoffRepo->findPlayoffGame($s, (new Playoff())->setSpot(1)->setStep($finalStep));
         $fin = $this->playoffRepo->findPlayoffGame($s, (new Playoff())->setSpot(1)->setStep($finalStep + 1));
         return [
-            $fin->winner(),
-            $fin->loser(),
-            $thp->winner(),
+            $fin?->winner(),
+            $fin?->loser(),
+            $thp?->winner(),
         ];
     }
 
