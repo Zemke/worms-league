@@ -26,21 +26,32 @@ class PlayoffsController extends AbstractController
                          SeasonRepository $seasonRepo,
                          PlayoffRepository $playoffRepo): Response
     {
+        $tpl = '_fragments/playoffs.html.twig';
         $season = $seasonId === -1 ? $seasonRepo->findActive() : $seasonRepo->find($seasonId);
-        $games = $playoffRepo->findForPlayoffs($season);
-        $tree = array_reduce($games, function ($acc, $g) {
-            $step = $g->getPlayoff()->getStep();
-            if (!in_array($step, array_keys($acc))) {
-                $acc[$step] = [];
+        if ($season->current()) {
+            $this->addFlash('info', 'The playoffs haven\'t started yet.');
+            return $this->render($tpl, []);
+        } else {
+            $games = $playoffRepo->findForPlayoffs($season);
+            if (empty($games)) {
+                $this->addFlash('info', 'There are no playoff games.');
+                return $this->render($tpl, []);
+            } else {
+                $tree = array_reduce($games, function ($acc, $g) {
+                    $step = $g->getPlayoff()->getStep();
+                    if (!in_array($step, array_keys($acc))) {
+                        $acc[$step] = [];
+                    }
+                    $acc[$step][$g->getPlayoff()->getSpot()] = $g;
+                    return $acc;
+                }, []);
+                return $this->render($tpl, [
+                    'steps' => intval(log(count($tree[1]), 2) + 1),
+                    'games' => $games,
+                    'tree' => $tree,
+                    'season' => $season,
+                ]);
             }
-            $acc[$step][$g->getPlayoff()->getSpot()] = $g;
-            return $acc;
-        }, []);
-        return $this->render('_fragments/playoffs.html.twig', [
-            'steps' => intval(log(count($tree[1]), 2) + 1),
-            'games' => $games,
-            'tree' => $tree,
-            'season' => $season,
-        ]);
+        }
     }
 }
