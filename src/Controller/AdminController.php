@@ -45,10 +45,12 @@ class AdminController extends AbstractController
             $scoreHomeNone = is_null($scoreHome) || trim($scoreHome) === '';
             $scoreAwayNone = is_null($scoreAway) || trim($scoreAway) === '';
             if ($request->request->get('delete') === 'on') {
-                if (!$scoreHomeNone || !$scoreAwayNone) {
+                $g = $gameRepo->find($gameId);
+                if ($g->isPlayoff()) {
+                    $this->addFlash('error', 'Playoff games cannot be deleted.');
+                } else if (!$scoreHomeNone || !$scoreAwayNone) {
                     $this->addFlash('error', 'Leave score blank to delete game.');
                 } else {
-                    $g = $gameRepo->find($gameId);
                     $txt = $g->asText();
                     try {
                         $pp = array_map(
