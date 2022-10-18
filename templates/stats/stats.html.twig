@@ -45,7 +45,7 @@
     <div class="top" style="background: linear-gradient(to right, {{ gradients[0]|join(', ') }})">
         {% for averageTurnTime in averageTurnTimes %}
             <div class="user" data-tooltip="Average turn time">
-                {{ averageTurnTime }}s
+                <small>avg.</small> {{ averageTurnTime }}s
             </div>
         {% endfor %}
     </div>
