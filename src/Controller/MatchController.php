@@ -41,11 +41,6 @@ class MatchController extends AbstractController
                          GameRepository $gameRepo): Response
     {
         $game = $gameRepo->find($gameId);
-        if ($request->get('_route') === 'app_po_view' && !$game->isPlayoff()) {
-            return $this->redirectToRoute('app_match_view', [ 'gameId' => $gameId ]);
-        } else if ($request->get('_route') === 'app_match_view' && $game->isPlayoff()) {
-            return $this->redirectToRoute('app_po_view', [ 'gameId' => $gameId ]);
-        }
         if (is_null($game)) {
             $this->addFlash('error', 'There is no such game.');
             if (!is_null($ref = $request->headers->get('referer'))) {
@@ -53,6 +48,11 @@ class MatchController extends AbstractController
             } else {
                 return $this->redirectToRoute('app_match');
             }
+        }
+        if ($request->get('_route') === 'app_po_view' && !$game->isPlayoff()) {
+            return $this->redirectToRoute('app_match_view', [ 'gameId' => $gameId ]);
+        } else if ($request->get('_route') === 'app_match_view' && $game->isPlayoff()) {
+            return $this->redirectToRoute('app_po_view', [ 'gameId' => $gameId ]);
         }
         return $this->render('match/view.html.twig', [
             'round' => $request->query->getInt('round', 1) - 1,
