@@ -250,6 +250,17 @@ class AdminController extends AbstractController
                 $this->addFlash('error', 'You have assigned user(s) twice.');
                 return $this->redirect($request->getUri());
             } else {
+                if (count($gg) % 2 !== 0) {
+                    $this->addFlash('error', 'You haven\'t assigned an even number of players.');
+                    return $this->redirect($request->getUri());
+                }
+                $r = log(count($gg), 2);
+                if ($r !== floor($r)) {
+                    $this->addFlash(
+                        'error',
+                        'Valid number of players in playoffs are 2, 4, 8, 16, 32, 64 etc.');
+                    return $this->redirect($request->getUri());
+                }
                 $spot = 1;
                 $found = $userRepo->findBy(['id' => $gg]);
                 $games = array_reduce($gg, function ($acc, $uId) use (&$spot, $found, &$season) {
