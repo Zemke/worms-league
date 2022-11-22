@@ -129,7 +129,7 @@ class RankingService
                     }
                 }
                 if (!$done) {
-                    throw new \RuntimeException("No update for ranking $id took place.");
+                    throw new \RuntimeException("No update for user $id took place.");
                 }
             }
         }
