@@ -106,6 +106,7 @@ class RankingService
         $relSteps = max((int) round(min(-1 + log($n * .13, 10) * $this->relSteps, 21)), 1);
         $X = count($rankings);
         $DP = [];
+        for ($i = 0; $i < $relSteps; $i++) {
             $updates = [];
             foreach ($rankings as &$ranking) {
                 $user = $ranking->getOwner();
