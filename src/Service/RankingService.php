@@ -106,7 +106,7 @@ class RankingService
         $relSteps = max((int) round(min(-1 + log($n * .13, 10) * $this->relSteps, 21)), 1);
         $X = count($rankings);
         $DP = [];
-        for ($i = 0; $i <= $relSteps; $i++) {
+            $updates = [];
             foreach ($rankings as &$ranking) {
                 $user = $ranking->getOwner();
                 $rels = [
@@ -115,8 +115,21 @@ class RankingService
                     $this->relativizingService->byFarming($user, $rankings, $games, $DP),
                     $this->relativizingService->byEffort($user, $rankings, $games, $DP),
                 ];
-                $ranking->setPoints(
-                    strval(D::of($ranking->ranking())->mul(D::sum($rels)->div(count($rels)))));
+                $updates[$ranking->getOwner()->getId()] =
+                    strval(D::of($ranking->ranking())->mul(D::sum($rels)->div(count($rels))));
+            }
+            foreach ($updates as $id => $p) {
+                $done = false;
+                foreach ($rankings as &$r) {
+                    if ($r->getOwner()->getId() === $id) {
+                        $r->setPoints($p);
+                        $done = true;
+                        break;
+                    }
+                }
+                if (!$done) {
+                    throw new \RuntimeException("No update for ranking $id took place.");
+                }
             }
         }
         return;
