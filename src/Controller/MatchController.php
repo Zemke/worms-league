@@ -41,7 +41,7 @@ class MatchController extends AbstractController
                          GameRepository $gameRepo): Response
     {
         $game = $gameRepo->find($gameId);
-        if (is_null($game) || !$game->played()) {
+        if (is_null($game) || !$game->reported()) {
             $this->addFlash('error', 'There is no such game.');
             if (!is_null($ref = $request->headers->get('referer'))) {
                 return $this->redirect($ref);
