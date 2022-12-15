@@ -78,7 +78,7 @@ class StateService
         }
         foreach ($this->playoffRepo->findForPlayoffs($s) as &$g) {
             if ($g->isHomeOrAway($user) && !$g->played() && $g->isPaired()) {
-                return [dump($g)];
+                return [$g];
             }
         }
         return [];
