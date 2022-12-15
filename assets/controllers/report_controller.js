@@ -8,13 +8,16 @@ export default class extends Controller {
         this.listFiles();
     }
 
-    greet() {
-        console.log('called');
-    }
-
     listFiles() {
         const names = Array.from(this.fileInputTarget.files).map(f => f.name);
-        console.log(names);
+        for (const name of names) {
+          if (!name.toLowerCase().endsWith('.wagame')) {
+            this.fileInputTarget.value = '';
+            alert('Please upload replay WAgame files.');
+            this.listFiles();
+            return;
+          }
+        }
         this.filesTarget.innerHTML = '';
         names.map(n => {
             const li = document.createElement('li');
