@@ -18,6 +18,7 @@
             <input type="file"
                    name="replays[]"
                    required
+                   accept=".WAgame"
                    data-report-target="fileInput"
                    {{ stimulus_action('report', 'listFiles', 'change') }}
                    multiple>
