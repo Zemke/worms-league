@@ -45,13 +45,13 @@
         </div>
         <div class="whitepad">
             <div class="col-12 map">
-                <img src="{{ asset('/maps/' ~ game.replays[loop.index0].replayMap.name) }}"
-                     title="{{ game.replays[loop.index0].replayData.texture.local() }}"
+                <img src="{{ asset('/maps/' ~ replay.replayMap.name) }}"
+                     title="{{ replay.replayData.texture.local() }}"
                      alt="Map">
             </div>
             <div class="col-12">
                 <div class="chat">
-                    {% for message in game.replays[loop.index0].replayData.data.messages %}
+                    {% for message in replay.replayData.data.messages %}
                         <span class="user">{{ message.user }}</span>
                         <span class="body">{{ message.body }}</span>
                         <br>
